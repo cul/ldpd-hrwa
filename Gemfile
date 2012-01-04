@@ -38,6 +38,17 @@ end
 
 group :test do
   # Pretty printed test output
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'minitest-rails'
+  gem 'rcov'
+  gem 'guard-minitest'
+  gem 'guard-rails'
+  gem 'mocha'
+  gem 'growl'
+  gem 'ruby-prof'
   gem 'turn', '~> 0.8.3', :require => false
+  gem 'rb-readline'
 end
 gem "devise"

@@ -1,9 +1,10 @@
 Hrwa::Application.routes.draw do
+  resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
   Blacklight.add_routes(self)
 
-  root :to => "catalog#index"
 
+  root :to => "catalog#index"
   devise_for :users
 
 
