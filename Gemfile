@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.2'
+gem 'rb-readline'
+
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -45,10 +47,10 @@ group :test do
   gem 'rcov'
   gem 'guard-minitest'
   gem 'guard-rails'
+  gem 'ruby_gntp'
   gem 'mocha'
   gem 'growl'
   gem 'ruby-prof'
   gem 'turn', '~> 0.8.3', :require => false
-  gem 'rb-readline'
 end
 gem "devise"
