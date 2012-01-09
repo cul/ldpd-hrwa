@@ -42,7 +42,10 @@ namespace :deploy do
   task :symlink_shared do
     run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}shared/app_config.yml #{release_path}/config/app_config.yml"
+    run "mkdir -p #{release_path}/db"
+    run "ln -nfs #{deploy_to}shared/database.db #{release_path}/db/database.db"
   end
+
 
   desc "Compile asets"
   task :assets do
