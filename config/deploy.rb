@@ -43,7 +43,7 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}shared/app_config.yml #{release_path}/config/app_config.yml"
     run "mkdir -p #{release_path}/db"
-    run "ln -nfs #{deploy_to}shared/database.db #{release_path}/db/database.db"
+    run "ln -nfs #{deploy_to}shared/#{rails_env}.sqlite3 #{release_path}/db/#{rails_env}.sqlite3"
   end
 
 
