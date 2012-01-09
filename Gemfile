@@ -22,10 +22,6 @@ end
 gem 'jquery-rails'
 
 
-group :development do
-  gem 'rails-footnotes', '>=3.7.5'
-  gem 'rsolr-footnotes'
-end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -43,12 +39,12 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
-  gem 'minitest-rails'
   gem 'rcov'
-  gem 'guard-minitest'
+  gem 'guard-test'
   gem 'guard-rails'
   gem 'ruby_gntp'
   gem 'mocha'
+  gem 'rb-fsevent'
   gem 'growl'
   gem 'ruby-prof'
   gem 'turn', '~> 0.8.3', :require => false
