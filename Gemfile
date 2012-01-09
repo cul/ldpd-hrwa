@@ -13,7 +13,8 @@ gem 'json'
 gem 'capistrano'
 gem 'capistrano-ext'
 gem 'mysql2'
-
+gem 'sass'
+gem 'sass-rails', '~> 3.1.5.rc.2'
 
 # Gems used only for assets and not required
 # in production environments by default.
