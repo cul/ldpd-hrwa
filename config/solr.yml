@@ -17,5 +17,7 @@ test: &test
 
 hrwa_dev:
   url: http://harding.cul.columbia.edu:8080/solr-4/asf 
+hrwa_test:
+  url: http://harding.cul.columbia.edu:8080/solr-4/asf 
 cucumber:
   <<: *test

@@ -1,5 +1,5 @@
 set :default_stage, "hrwa_dev"
-set :stages, %w(hrwa_dev)
+set :stages, %w(hrwa_dev hrwa_test)
 
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
