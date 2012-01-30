@@ -16,6 +16,9 @@ module Hrwa
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
+    # lib/dir may not be auto-reloadable anymore.  This is the suggested workaround from
+    # Rails team:
+    # https://rails.lighthouseapp.com/projects/8994/tickets/5218-rails-3-rc-does-not-autoload-from-lib
      config.autoload_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
