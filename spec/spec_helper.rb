@@ -1,3 +1,4 @@
+require 'capybara/rspec'
 require 'rubygems'
 require 'spork'
 
