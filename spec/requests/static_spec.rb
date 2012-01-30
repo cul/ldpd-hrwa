@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'home page' do
-  it 'has heading' do
+  it 'loads with the correct text' do
     visit '/'
-    page.should have_content('Hello Home Pagex!')
-    true
+    page.should have_content('Hello Home Page!')
   end
 end
