@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hrwa</title>
+  <title><%= @title %></title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<a href="/">Home</a>
+<a href="/search">Search</a>
+<a href="/about">About</a>
+<a href="/browse">Browse</a>
+<a href="/contact">Contact</a>
+<a href="/faq">FAQ</a>
 
 <%= yield %>
 

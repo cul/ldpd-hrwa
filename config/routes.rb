@@ -3,10 +3,17 @@ Hrwa::Application.routes.draw do
 
   Blacklight.add_routes(self)
 
-
-  root :to => "catalog#index"
+  # Static pages - no dynamic content at all
+  match '/about'   => 'static#about'
+  match '/browse'  => 'static#collection_browse'
+  match '/contact' => 'static#contact'
+  match '/faq'     => 'static#faq'
+  
+  # Blacklight stuff
+  match '/search'  => 'catalog#index'
+   
+  root :to => "static#index"
   devise_for :users
-
 
 
   # The priority is based upon order of creation:

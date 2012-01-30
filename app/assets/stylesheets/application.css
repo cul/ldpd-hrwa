@@ -12,3 +12,11 @@
  *= require_self
  *= require_tree . 
 */
+
+body {
+	background: white;
+}
+
+#hrwa_test {
+	background-color: red;
+}
