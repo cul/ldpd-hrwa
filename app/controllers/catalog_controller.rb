@@ -3,11 +3,13 @@ require 'blacklight/catalog'
 require 'configurator'
 
 class CatalogController < ApplicationController  
-  before_filter :configure_by_search_type
+  before_filter :_configure_by_search_type
 
   include Blacklight::Catalog  
 
-  def configure_by_search_type
+  private
+
+  def _configure_by_search_type
     # Type instance var for later branching in view code
     @search_type = :archive
 
