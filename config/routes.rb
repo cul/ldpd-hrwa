@@ -12,6 +12,9 @@ Hrwa::Application.routes.draw do
   # Blacklight stuff
   match '/search'  => 'catalog#index'
    
+  # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER 
+  match '/advanced_asf', :to => redirect( '/advanced_asf.html' ) 
+   
   root :to => "static#index"
   devise_for :users
 
