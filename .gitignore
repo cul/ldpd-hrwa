@@ -28,3 +28,7 @@ db/*.sqlite3
 *.sw?
 .sass-cache/**/*
 .project
+
+#elo2112-specific
+reference-files/*
+*.komodoproject
