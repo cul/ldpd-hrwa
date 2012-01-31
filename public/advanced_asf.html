@@ -37,7 +37,7 @@ function loopForm( form, status ) {
     $(function() {
         $( "#crawl_start_date" ).datepicker( datePickerOptions );
         });
-    
+
     $(function() {
         $( "#crawl_end_date" ).datepicker( datePickerOptions );
         });
@@ -99,6 +99,13 @@ Sign in</a>
 </div>
 </div>
 -->
+<a href="/">Home</a>
+<a href="/search">Search</a>
+<a href="/advanced_asf">Advanced ASF Search</a>
+<a href="/about">About</a>
+<a href="/browse">Browse</a>
+<a href="/contact">Contact</a>
+<a href="/faq">FAQ</a>
 
 <table width=100% border=0 cellpadding=0 cellspacing=2 style="margin-top:1em">
 <tr>
@@ -151,7 +158,7 @@ Sign in</a>
                                         <script type="text/javascript" src="js/spin_control.js"></script>
                                             <tr>
         <td>
-            <input id="originalUrl" name="field[]" type="checkbox" 
+            <input id="originalUrl" name="field[]" type="checkbox"
                 defaultChecked="no" value="originalUrl^1"/>
                 URL
         </td>
@@ -170,15 +177,15 @@ Sign in</a>
     spinCtrl_originalUrl.SetMinValue(0);
     spinCtrl_originalUrl.SetCurrentValue( 1 );
     spinCtrl_originalUrl.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'originalUrl_spinnerContainer' ).appendChild(
       spinCtrl_originalUrl.GetContainer() );
-    
+
     spinCtrl_originalUrl.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentTitle" name="field[]" type="checkbox" 
+            <input id="contentTitle" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentTitle^1"/>
                 Page Title
         </td>
@@ -197,15 +204,15 @@ Sign in</a>
     spinCtrl_contentTitle.SetMinValue(0);
     spinCtrl_contentTitle.SetCurrentValue( 1 );
     spinCtrl_contentTitle.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentTitle_spinnerContainer' ).appendChild(
       spinCtrl_contentTitle.GetContainer() );
-    
+
     spinCtrl_contentTitle.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBody" name="field[]" type="checkbox" 
+            <input id="contentBody" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBody^1"/>
                 Page Content
         </td>
@@ -224,15 +231,15 @@ Sign in</a>
     spinCtrl_contentBody.SetMinValue(0);
     spinCtrl_contentBody.SetCurrentValue( 1 );
     spinCtrl_contentBody.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBody_spinnerContainer' ).appendChild(
       spinCtrl_contentBody.GetContainer() );
-    
+
     spinCtrl_contentBody.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentMetaDescription" name="field[]" type="checkbox" 
+            <input id="contentMetaDescription" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentMetaDescription^1"/>
                 Meta-Description
         </td>
@@ -251,15 +258,15 @@ Sign in</a>
     spinCtrl_contentMetaDescription.SetMinValue(0);
     spinCtrl_contentMetaDescription.SetCurrentValue( 1 );
     spinCtrl_contentMetaDescription.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentMetaDescription_spinnerContainer' ).appendChild(
       spinCtrl_contentMetaDescription.GetContainer() );
-    
+
     spinCtrl_contentMetaDescription.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentMetaKeywords" name="field[]" type="checkbox" 
+            <input id="contentMetaKeywords" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentMetaKeywords^1"/>
                 Meta-Keywords
         </td>
@@ -278,15 +285,15 @@ Sign in</a>
     spinCtrl_contentMetaKeywords.SetMinValue(0);
     spinCtrl_contentMetaKeywords.SetCurrentValue( 1 );
     spinCtrl_contentMetaKeywords.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentMetaKeywords_spinnerContainer' ).appendChild(
       spinCtrl_contentMetaKeywords.GetContainer() );
-    
+
     spinCtrl_contentMetaKeywords.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentMetaLanguage" name="field[]" type="checkbox" 
+            <input id="contentMetaLanguage" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentMetaLanguage^1"/>
                 Meta-Language
         </td>
@@ -305,15 +312,15 @@ Sign in</a>
     spinCtrl_contentMetaLanguage.SetMinValue(0);
     spinCtrl_contentMetaLanguage.SetCurrentValue( 1 );
     spinCtrl_contentMetaLanguage.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentMetaLanguage_spinnerContainer' ).appendChild(
       spinCtrl_contentMetaLanguage.GetContainer() );
-    
+
     spinCtrl_contentMetaLanguage.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading1" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading1" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading1^1"/>
                 h1 tags
         </td>
@@ -332,15 +339,15 @@ Sign in</a>
     spinCtrl_contentBodyHeading1.SetMinValue(0);
     spinCtrl_contentBodyHeading1.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading1.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading1_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading1.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading1.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading2" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading2" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading2^1"/>
                 h2 tags
         </td>
@@ -359,15 +366,15 @@ Sign in</a>
     spinCtrl_contentBodyHeading2.SetMinValue(0);
     spinCtrl_contentBodyHeading2.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading2.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading2_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading2.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading2.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading3" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading3" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading3^1"/>
                 h3 tags
         </td>
@@ -386,15 +393,15 @@ Sign in</a>
     spinCtrl_contentBodyHeading3.SetMinValue(0);
     spinCtrl_contentBodyHeading3.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading3.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading3_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading3.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading3.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading4" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading4" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading4^1"/>
                 h4 tags
         </td>
@@ -413,15 +420,15 @@ Sign in</a>
     spinCtrl_contentBodyHeading4.SetMinValue(0);
     spinCtrl_contentBodyHeading4.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading4.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading4_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading4.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading4.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading5" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading5" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading5^1"/>
                 h5 tags
         </td>
@@ -440,15 +447,15 @@ Sign in</a>
     spinCtrl_contentBodyHeading5.SetMinValue(0);
     spinCtrl_contentBodyHeading5.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading5.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading5_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading5.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading5.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBodyHeading6" name="field[]" type="checkbox" 
+            <input id="contentBodyHeading6" name="field[]" type="checkbox"
                 defaultChecked="no" value="contentBodyHeading6^1"/>
                 h6 tags
         </td>
@@ -467,13 +474,13 @@ Sign in</a>
     spinCtrl_contentBodyHeading6.SetMinValue(0);
     spinCtrl_contentBodyHeading6.SetCurrentValue( 1 );
     spinCtrl_contentBodyHeading6.AttachValueChangedListener( spinControlListener );
-      
+
     document.getElementById( 'contentBodyHeading6_spinnerContainer' ).appendChild(
       spinCtrl_contentBodyHeading6.GetContainer() );
-    
+
     spinCtrl_contentBodyHeading6.StartListening();
 </script>
-    
+
                                         <tr>
                                             <td><br />
                                                 <input type="button"
@@ -907,7 +914,7 @@ Sign in</a>
                                      </select>
                                </td>
                            </tr>
-                           
+
                            <!-- MIME TYPE -->
                            <tr>
                                <td class="label">
@@ -922,7 +929,7 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
+
                            <!-- LANGUAGE -->
                            <tr>
                                <td class="label">
@@ -989,7 +996,7 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
+
                            <!-- GEOGRAPHIC FOCUS -->
                            <tr>
                                <td class="label">
@@ -1144,8 +1151,8 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
-                           
+
+
                            <!-- GEOGRAPHIC BASED-IN -->
                            <tr>
                                <td class="label">
@@ -1285,8 +1292,8 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
-                           
+
+
                            <!-- ORGANIZATION TYPE -->
                            <tr>
                                <td class="label">
@@ -1303,7 +1310,7 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
+
                            <!-- CREATOR NAME -->
                            <tr>
                                <td class="label">
@@ -1682,7 +1689,7 @@ Sign in</a>
                                    </select>
                                </td>
                            </tr>
-                           
+
                            <!-- DATE OF CAPTURE -->
                            <tr>
                                <td class=label>
@@ -1715,7 +1722,7 @@ Sign in</a>
                                    </table>
                                </td>
                            </tr>
-                       </table>    
+                       </table>
 
                        <h3 style="margin-top:1em">Display options</h3>
 
@@ -1791,4 +1798,3 @@ Sign in</a>
 
 </body>
 </html>
-
