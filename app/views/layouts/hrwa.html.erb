@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= h(@page_title || application_name) %></title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+    <link href="<%= opensearch_catalog_path(:format => 'xml', :only_path => false) %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+
+    <%= favicon_link_tag asset_path('crown-small-blue.png') %>
+
+    <!-- JS -->
+    <!-- HTML5 shim: IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <%= javascript_include_tag "html5shiv" %>
+    <![endif]-->
+
+    <%= csrf_meta_tags %>
+    <%= raw(render_head_content) %>
+
+    <!-- Styles -->
+    <%= stylesheet_link_tag    "bootstrap.min" %>
+    <%= stylesheet_link_tag    "ldpd" %>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+    <!-- fav and touch icons -->
+    <!--
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+
+  </head>
+  <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
+  <body onload="<%= onload_text %>" class="<%= render_body_class.html_safe %>">
+
+
+
+
+
+
+
+
+
+
+    <%#= render :partial=>'/user_util_links' %>
+    <%#= render :partial=>'/flash_msg' %>
+
+    <!-- Old Blacklight html:
+    <div id="page">
+      <div id="bd">
+        <div id="main">
+          <div id="main_container">
+            <%#= yield %>
+          </div>
+        </div>
+        <div id="sidebar"><%= sidebar_items.join('').html_safe %></div>
+      </div>
+      <div id="ft">
+        <%= raw(@footer) %>
+        <div id="footnotes_holder"/>
+      </div>
+    </div>
+    -->
+
+
+
+
+
+
+
+
+
+
+    <!--
+    <?php
+    if (!isset($_REQUEST['sdf_preview'])) {
+    ?>
+    -->
+    <div class="topbar">
+      <div class="fill">
+	<div class="invisible" id="cul_top">
+	    <div id="cul_inner"><a href="http://columbia.edu" title="Columbia University - Home">CU</a> &gt; <a href="http://library.columbia.edu" title="Columbia University Libraries - Home">Libraries</a> &gt; <a href="http://library.columbia.edu/indiv/humanrights.html" title="Columbia University Libraries Center for Human Rights Documentation and Research">CHRDR</a><span id="cul_right">HUMAN RIGHTS WEB ARCHIVE at Columbia University</span></div>
+	</div>
+        <div class="container">
+	  <ul id="crowndown" class="nav">
+	    <li class="menu">
+	    <a href="#" title="External Links @ Columbia" class="menu"><%= image_tag asset_path('crown-bts-24x24.png') %></a>
+	    <ul class="menu-dropdown">
+		<li><a href="http://columbia.edu">Columbia University - Home</a></li>
+		<li><a href="http://library.columbia.edu">Libraries - Home</a></li>
+		<li><a title="Columbia University Libraries - CHRDR" href="http://library.columbia.edu/indiv/humanrights.html">CUL Center for Human Rights Documentation and Research</a></li>
+	    </ul>
+	    </li>
+	  </ul>
+          <h3 class='topbarlogo'><a href="index.php" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
+	  <form id="topsearchform" action="search.php">
+	    <div class="input-append">
+		    <input class="span6" type="text" value='<%= params[:q] ? '[TODO: Should we echo the current query here?]' : '' %>' placeholder="Enter search terms..." size="16" id="q_t" name="q">
+		    <label class="add-on"><input type="radio" name="in" id="fsfsearch_t" value="fsf" <%= params[:type] == 'archive' ? 'checked="checked"' : '' %>>FSF</label>
+		    <label class="add-on"><input type="radio" name="in" id="asfsearch_t" value="asf" <%= params[:type] == 'archive' ? 'checked="checked"' : '' %>>ASF</label>
+		    <label class="add-on hidden"> <a href="#" class="submitss white">Submit</a></label>
+	    </div>
+
+	    <!--
+	    <?
+	    if ($whichpage != 'home') :
+		if (isset($_REQUEST['fq']) && !empty($_REQUEST['fq'])) {
+		    $hasfq = 1;
+		}
+		$fqval = '';
+		if ($hasfq==1) {
+		    echo '<div id="topfqs"><ul class="nav secondary-nav"><li class="menu"><a href="#" class="menu">Active Facets</a><ul class="menu-dropdown">';
+		    foreach ($_REQUEST['fq'] as $fq) :
+			if (!empty($fq)) { $fqval .= "<li class=\"delfq\">[x] ".htmlspecialchars(urldecode($fq),ENT_QUOTES)."<input type='hidden' name='fq[]' value='".htmlspecialchars(urldecode($fq),ENT_QUOTES)."' /></li>"; }
+		    endforeach;
+		    echo $fqval.'</ul></li></ul></div>';
+		}
+	    endif;
+	    ?>
+	    -->
+	  </form>
+	  <ul id="dropdown" class="nav secondary-nav">
+	    <li class="menu">
+	      <a href="#" class="menu">Menu</a>
+	      <ul class="menu-dropdown">
+	    <li><a href="index.php">HRWA Home</a></li>
+	    <li><a href="about.php">About HRWA</a></li>
+	    <li><a href="#help" class="donothing">Help &amp; Tips</a></li>
+		<li class="divider"></li>
+                <li><%= link_to 'Browse HRWA', browse_path %></li>
+	      </ul>
+	    </li>
+	  </ul>
+	</div>
+      </div>
+    </div> <!-- //.topbar -->
+    <!--
+    <?php
+    }
+    ?>
+    -->
+
+
+
+
+
+
+
+
+
+
+    <%= yield %>
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+      <footer id="site_footer">
+        <!--
+        <?php
+          // Get the application root directory.  It will be either 'hr-archive' or 'hr-archive-da217'.
+          $pattern   = '/ ( .* ( hr-archive [^\/]* ) ) \/ .* /xms';
+          preg_match( $pattern, __FILE__, $matches );
+          define( 'APPLICATION_DIR' , $matches[2] );
+
+          // Get the link for the internal feedback form
+          define( 'INTERNAL_FEEDBACK_LINK', '/' . APPLICATION_DIR
+                         . '/internal/feedback/internal_feedback_form-01.php');
+
+          $internal_feedback_link = INTERNAL_FEEDBACK_LINK;
+          $component_name = component_name();
+
+          if ( $component_name ) {
+                $internal_feedback_link = INTERNAL_FEEDBACK_LINK . "?components=$component_name";
+          }
+          // Attempt to set the component param
+          function component_name() {
+                  if ( 'fsf' == $_GET[ 'in' ] ) {
+                          return '10294';
+                  } elseif ( 'asf' == $_GET[ 'in' ]
+                        && 1 == preg_match( '/search.php$/', $_SERVER[ 'SCRIPT_NAME' ] ) ) {
+                          return '10290';
+                  } elseif ( preg_match( '/sdf.php$/', $_SERVER[ 'SCRIPT_NAME' ] ) ) {
+                          return '10295';
+                  } elseif ( preg_match( '/ccf.php$/', $_SERVER[ 'SCRIPT_NAME' ] ) ) {
+                          return '10293';
+                  } elseif ( preg_match( '/avf.php$/', $_SERVER[ 'SCRIPT_NAME' ] ) ) {
+                          return '10291';
+                  } elseif ( preg_match( '/browse.php$/', $_SERVER[ 'SCRIPT_NAME' ] ) ) {
+                          return '10292';
+                  } else {
+                          return '';
+                  }
+          }
+
+        ?>
+        -->
+        <p class="alignright">Submit bug report</p>
+        <p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2011</span><a href="http://columbia.edu">CU Home</a> &gt; <a href="http://library.columbia.edu">Libraries Home</a></p>
+      </footer>
+    </div> <!-- //.container -->
+
+    <!--respnd.min.js - https://github.com/scottjehl/Respond - Enables media queries in some unsupported browsers-->
+    <%= javascript_include_tag    "respond.min" %>
+
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('/assets/javascripts/libs/jquery-1.6.2.min')</script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script>window.jQuery || document.write('/assets/javascripts/libs/jquery-ui.min')</script>
+
+    <%= javascript_include_tag    "bootstrap-twipsy" %>
+    <%= javascript_include_tag    "bootstrap-dropdown" %>
+    <%= javascript_include_tag    "jquery.tinysort.min" %>
+
+    <!-- load our custom script last -->
+    <%= javascript_include_tag    "hrwa" %>
+
+    </body>
+  </html>
