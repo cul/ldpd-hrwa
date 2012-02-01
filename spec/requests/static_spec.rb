@@ -3,14 +3,14 @@ require 'spec_helper'
 describe 'home page' do
   it 'loads with the correct text' do
     visit '/'
-    page.should have_content('Hello Home Page!')
+    page.should have_content('Human Rights Web Archive')
   end
 end
 
 describe 'about page' do
   it 'loads with the correct text' do
     visit '/about'
-    page.should have_content('Hello About Page!')
+    page.should have_content('About the Project')
   end
 end
 
@@ -24,7 +24,7 @@ end
 describe 'collection browse page' do
   it 'loads with the correct text' do
     visit '/browse'
-    page.should have_content('Hello Collection Browse Page!')
+    page.should have_content('Collection Browse')
   end
 end
 

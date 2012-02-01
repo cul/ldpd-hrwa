@@ -1,1 +1,72 @@
-<h1 id="hrwa_test"><%= @content %></h1>
+    <div id="cbf" class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit hero-border">
+        <h1>Human Rights Web Archive</h1>
+        <h3>@ Columbia University</h3>
+        <p class="invisible"><strong>Portal Prototype 2011.12</strong></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row no-hero-mobile">
+        <div class="span16">
+          <h3>Collection Browse</h3>
+          <p>This could be something very useful about browsing, etc.</p>
+	</div>
+      </div>
+
+
+	<div class="row" class="span16">
+	<div id="cbf_widgets">
+	  <div class="span4">
+		<h6>Site Creators</h6>
+		<div class="results_control"></div>
+		<ul>
+		<%
+		#<?= get_cbf('original_urls','sdf');  ?>
+		%>
+		</ul>
+	</div>
+	  <div class="span3">
+		<h6>Languages</h6>
+		<div class="results_control"></div>
+		<ul>
+		<%
+		#<?= get_cbf('language__facet');  ?>
+		%>
+		</ul>
+	  </div>
+	  <div class="span3">
+		<h6>Subjects</h6>
+		<div class="results_control"></div>
+		<ul>
+		<%
+		#<?= get_cbf('subject__facet');  ?>
+		%>
+		</ul>
+	  </div>
+	  <div class="span3">
+		<h6>Geographic Focus</h6>
+		<div class="results_control"></div>
+		<ul>
+		<%
+		#<?= get_cbf('geographic_focus__facet');  ?>
+		%>
+		</ul>
+	  </div>
+	  <div class="span3">
+		<h6>Organization Type</h6>
+		<div class="results_control"></div>
+		<ul>
+		<%
+		#<?= get_cbf('organization_type__facet');  ?>
+		%>
+		</ul>
+	  </div>
+	</div>
+	</div>
+
+      <footer>
+      </footer>
+
+    </div> <!-- /container -->
