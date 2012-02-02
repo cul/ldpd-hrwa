@@ -107,12 +107,48 @@ end
 
 describe 'process_q_or' do
   it 'leaves all terms as is, because SOLR default is OR' do
-    solr_parameters = { :q => '' }
+    solr_parameters = { :q => 'ngo' }
     user_parameters = { :q_or => %q{women's rights africa} }
     
     mock_catalog_controller.process_q_or solr_parameters, user_parameters
     
-    solr_parameters[ :q ].should eq %q{ women's rights africa}
+    solr_parameters[ :q ].should eq %q{ngo women's rights africa}
+  end
+  
+  it 'gracefully exits if q_or is nil and leaves q param untouched' do
+    solr_parameters = { :q => 'ngo' }
+    user_parameters = { :q_or => nil }
+    
+    mock_catalog_controller.process_q_or solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ngo}
+  end
+  
+  it 'gracefully exits if q_or is blank but non-nil and leaves q param untouched' do
+    solr_parameters = { :q => 'ngo' }
+    user_parameters = { :q_or => %q{} }
+    
+    mock_catalog_controller.process_q_or solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ngo}
+  end
+    
+  it 'gracefully exits if q_or is all whitespace but non-nil and leaves q param untouched' do
+    solr_parameters = { :q => 'ngo' }
+    user_parameters = { :q_or => %q{   } }
+    
+    mock_catalog_controller.process_q_or solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ngo}
+  end
+  
+  it 'does not add a space to beginning of q param if q param was empty' do
+    solr_parameters = { :q => nil }
+    user_parameters = { :q_or => %q{women's rights africa} }
+    
+    mock_catalog_controller.process_q_or solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{women's rights africa}
   end
 end
 

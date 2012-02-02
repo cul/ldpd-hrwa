@@ -22,7 +22,17 @@ module AdvancedSearch
   end
   
   def process_q_or( solr_parameters, user_parameters )
-    solr_parameters[ :q ] << " women's rights africa"
+    q_input_string = user_parameters[ :q_or ]
+    
+    # Early exit if q_and input is nil or all whitespace
+    return if ! q_input_string
+    return if q_input_string.match( '^\s*$')
+    
+    if solr_parameters[ :q ]
+      solr_parameters[ :q ] << ' ' + q_input_string
+    else 
+      solr_parameters[ :q ] = q_input_string
+    end
   end
   
   def process_q_phrase( solr_parameters, user_parameters )
