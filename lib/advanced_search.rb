@@ -23,14 +23,14 @@ module AdvancedSearch
   
   def process_q_or( solr_parameters, user_parameters )
     q_input_string = user_parameters[ :q_or ]
-    return if ! _is_invalid_input?( q_input_string )
+    return if _is_invalid_input?( q_input_string )
     
     _add_to_q_solr_param( solr_parameters, q_input_string )
   end
   
   def process_q_phrase( solr_parameters, user_parameters )
     q_input_string = user_parameters[ :q_phrase ]
-    return if ! _is_invalid_input?( q_input_string )
+    return if _is_invalid_input?( q_input_string )
     
     q_param = %q{"} + q_input_string + %q{"}
     
@@ -55,7 +55,7 @@ module AdvancedSearch
   
   def _process_q_prepend( solr_parameters, user_parameters, param_name, prepend_string)
     q_input_string = user_parameters[ param_name ]
-    return if ! _is_invalid_input?( q_input_string )
+    return if _is_invalid_input?( q_input_string )
     
     q_param = q_input_string
                 .split( /\s+/ )
