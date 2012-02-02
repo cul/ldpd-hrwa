@@ -9,31 +9,48 @@ class MockCatalogController
   include AdvancedSearch 
 end
 
+mock_catalog_controller = MockCatalogController.new
+
 describe 'process_q_and' do
   it 'prepends plus sign before each term' do
     solr_parameters = { :q => '' }
-    user_parameters = { :q_and => "women's rights africa" }
+    user_parameters = { :q_and => %q{women's rights africa} }
     
-    MockCatalogController::process_q_and solr_parameters, user_parameters
+    mock_catalog_controller.process_q_and solr_parameters, user_parameters
     
-    solr_parameters[ :q ].should eq " +women's +rights +africa"
+    solr_parameters[ :q ].should eq %q{ +women's +rights +africa}
   end
 end
 
-# describe 'process_q_or' do
-  # it '?' do
-#     
-  # end
-# end
-# 
-# describe 'process_q_phrase' do
-  # it 'wraps whole textbox input in double quotes' do
-#     
-  # end
-# end
-# 
-# describe 'process_q_exclude' do
-  # it 'prepends minus sign before each term' do
-#     
-  # end
-# end
+describe 'process_q_or' do
+  it 'leaves all terms as is, because SOLR default is OR' do
+    solr_parameters = { :q => '' }
+    user_parameters = { :q_or => %q{women's rights africa} }
+    
+    mock_catalog_controller.process_q_or solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ women's rights africa}
+  end
+end
+
+describe 'process_q_phrase' do
+  it 'wraps whole textbox input in double quotes' do
+    solr_parameters = { :q => '' }
+    user_parameters = { :q_phrase => %q{women's rights africa} }
+    
+    mock_catalog_controller.process_q_phrase solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ "women's rights africa"}
+  end
+end
+
+describe 'process_q_exclude' do
+  it 'prepends minus sign before each term' do
+    solr_parameters = { :q => '' }
+    user_parameters = { :q_exclude => %q{women's rights africa} }
+    
+    mock_catalog_controller.process_q_exclude solr_parameters, user_parameters
+    
+    solr_parameters[ :q ].should eq %q{ -women's -rights -africa}
+  end
+end

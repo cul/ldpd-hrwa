@@ -6,6 +6,7 @@ class CatalogController < ApplicationController
   before_filter :_configure_by_search_type
 
   include Blacklight::Catalog
+  include AdvancedSearch
 
   private
 
