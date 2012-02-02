@@ -22,19 +22,16 @@ module AdvancedSearch
   end
   
   def process_q_or( solr_parameters, user_parameters )
-    q_input_string = user_parameters[ :q_or ]
-    return if not valid_input?( q_input_string )
+    return if not valid_input?( user_parameters[ :q_or ] )
     
-    add_to_q_solr_param( solr_parameters, q_input_string )
+    add_to_q_solr_param( solr_parameters, user_parameters[ :q_or ] )
   end
   
   def process_q_phrase( solr_parameters, user_parameters )
-    q_input_string = user_parameters[ :q_phrase ]
-    return if not valid_input?( q_input_string )
+    return if not valid_input?( user_parameters[ :q_phrase ] )
     
-    q_param = %q{"} + q_input_string + %q{"}
-    
-    add_to_q_solr_param( solr_parameters, q_param )
+    add_to_q_solr_param( solr_parameters,
+                         %q{"} + user_parameters[ :q_phrase ] + %q{"} )
   end
   
   private
@@ -54,10 +51,9 @@ module AdvancedSearch
   end
   
   def process_q_prepend( solr_parameters, user_parameters, param_name, prepend_string)
-    q_input_string = user_parameters[ param_name ]
-    return if not valid_input?( q_input_string )
+    return if not valid_input?( user_parameters[ param_name ] )
     
-    q_param = q_input_string
+    q_param = user_parameters[ param_name ]
                 .split( /\s+/ )
                 .map { |term| "#{prepend_string}#{term}" }
                 .join( ' ' )
