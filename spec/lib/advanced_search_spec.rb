@@ -2,10 +2,6 @@ require 'spec_helper'
 require 'advanced_search'
 
 class MockCatalogController
-  def self.solr_search_params_logic 
-    return [ ]
-  end
-  
   include AdvancedSearch 
 end
 

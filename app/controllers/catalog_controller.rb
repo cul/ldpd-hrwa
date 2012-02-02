@@ -16,9 +16,15 @@ class CatalogController < ApplicationController
 
     @configurator = Configurator.new( @search_type )
     
+    self.solr_search_params_logic << :process_q_and
+    self.solr_search_params_logic << :process_q_or
+    self.solr_search_params_logic << :process_q_phrase
+    self.solr_search_params_logic << :process_q_exclude  
+    
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
+    
   end
 
 end 
