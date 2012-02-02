@@ -14,47 +14,55 @@ module AdvancedSearch
   # @param [Hash] user_parameters a hash of user-supplied parameters (often via `params`) 
    
   def process_q_and( solr_parameters, user_parameters )    
-    process_q_prepend( solr_parameters, user_parameters, :q_and, '+' )
+    _process_q_prepend( solr_parameters, user_parameters, :q_and, '+' )
   end
   
   def process_q_exclude( solr_parameters, user_parameters )
-    process_q_prepend( solr_parameters, user_parameters, :q_exclude, '-' )
+    _process_q_prepend( solr_parameters, user_parameters, :q_exclude, '-' )
   end
   
   def process_q_or( solr_parameters, user_parameters )
     q_input_string = user_parameters[ :q_or ]
+    return if ! _is_invalid_input?( q_input_string )
     
-    # Early exit if q_and input is nil or all whitespace
-    return if ! q_input_string
-    return if q_input_string.match( '^\s*$')
-    
-    if solr_parameters[ :q ]
-      solr_parameters[ :q ] << ' ' + q_input_string
-    else 
-      solr_parameters[ :q ] = q_input_string
-    end
+    _add_to_q_solr_param( solr_parameters, q_input_string )
   end
   
   def process_q_phrase( solr_parameters, user_parameters )
-    solr_parameters[ :q ] << %q{ "women's rights africa"}
+    q_input_string = user_parameters[ :q_phrase ]
+    return if ! _is_invalid_input?( q_input_string )
+    
+    q_param = %q{"} + q_input_string + %q{"}
+    
+    _add_to_q_solr_param( solr_parameters, q_param )
   end
   
-  def process_q_prepend( solr_parameters, user_parameters, param_name, prepend_string)
-    q_input_string = user_parameters[ param_name ]
-    
-    # Early exit if q_and input is nil or all whitespace
-    return if ! q_input_string
-    return if q_input_string.match( '^\s*$')
-    
-    q_param = q_input_string
-                .split( /\s+/ )
-                .map { |term| "#{prepend_string}#{term}" }
-                .join( ' ' )
+  private
+  
+  def _add_to_q_solr_param( solr_parameters, q_param )
     if solr_parameters[ :q ]
       solr_parameters[ :q ] << ' ' + q_param
     else 
       solr_parameters[ :q ] = q_param
     end
+  end
+  
+  def _is_invalid_input?( q_input_string )
+    return true if ! q_input_string
+    return true if q_input_string.match( '^\s*$')
+    return false
+  end
+  
+  def _process_q_prepend( solr_parameters, user_parameters, param_name, prepend_string)
+    q_input_string = user_parameters[ param_name ]
+    return if ! _is_invalid_input?( q_input_string )
+    
+    q_param = q_input_string
+                .split( /\s+/ )
+                .map { |term| "#{prepend_string}#{term}" }
+                .join( ' ' )
+                
+    _add_to_q_solr_param( solr_parameters, q_param )        
   end
     
 end
