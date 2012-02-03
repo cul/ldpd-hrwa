@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
 require 'configurator'
+require 'hrwa/debug'
 require 'pp'
 
 class CatalogController < ApplicationController  
@@ -8,16 +9,13 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
   include Hrwa::AdvancedSearch
-
+  include Hrwa::Debug
+      
   private
 
   def _configure_by_search_type
-    @debug = ''.html_safe
-    Hash[params.sort].each_pair do |key, value|
-      next if value.blank?
-      @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe  
-    end
-    
+    @debug = params_list.html_safe
+  
     # Type instance var for later branching in view code
     @search_type = :archive
 
