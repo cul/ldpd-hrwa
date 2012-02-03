@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
   before_filter :_configure_by_search_type
 
   include Blacklight::Catalog
+  include Hrwa::AdvancedSearch
 
   private
 
@@ -22,9 +23,7 @@ class CatalogController < ApplicationController
 
     @configurator = Configurator.new( @search_type )
     
-    if params[ :mode ] == "advanced"
-      @debug = "Hello Advanced Mode!"
-      include AdvancedSearch
+    if params[ :search_mode ] == "advanced"
       self.solr_search_params_logic << :process_q_and
       self.solr_search_params_logic << :process_q_or
       self.solr_search_params_logic << :process_q_phrase
