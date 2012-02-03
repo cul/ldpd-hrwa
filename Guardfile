@@ -1,3 +1,4 @@
+# notification :gntp, :sticky => true, :host => 'kwan-yin.cul.columbia.edu', :password => 'secret' 
 
 guard 'rails', :port => 3020 do
   watch('Gemfile.lock')
