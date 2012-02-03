@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
 require 'configurator'
+require 'pp'
 
 class CatalogController < ApplicationController  
   before_filter :_configure_by_search_type
@@ -10,12 +11,19 @@ class CatalogController < ApplicationController
   private
 
   def _configure_by_search_type
+    @debug = ''.html_safe
+    Hash[params.sort].each_pair do |key, value|
+      next if value.blank?
+      @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe  
+    end
+    
     # Type instance var for later branching in view code
     @search_type = :archive
 
     @configurator = Configurator.new( @search_type )
     
-    if params[ :mode ] == :advanced
+    if params[ :mode ] == "advanced"
+      @debug = "Hello Advanced Mode!"
       include AdvancedSearch
       self.solr_search_params_logic << :process_q_and
       self.solr_search_params_logic << :process_q_or

@@ -1,1 +1,27 @@
 TODO
+
+NOTE:
+The following param[] names are reserved by Blacklight:
+	action
+	background
+	bookmark
+	carrier
+	color
+	email
+	f
+	id
+	message
+	mode
+	name
+	no_layout
+	page
+	q
+	qt
+	results_view
+	rows
+	search_field
+	start
+	style
+	title
+	to
+	uncolorized

@@ -15,6 +15,13 @@
   	<!-- NAVIGATION BAR -->
     <br/>
 
+	<!-- TODO: TAKE THIS OUT OF PROD -->
+  	<% if Rails.env == "development" %>  	
+  	<div id="debug" style="padding: 10px; border: 1px solid red; margin: 30px;">
+      <%= @debug %>
+    </div>
+    <% end %>
+
     <a href="/">Home</a>
     <a href="/search">Search</a>
     <a href="/about">About</a>
