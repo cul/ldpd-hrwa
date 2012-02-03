@@ -13,4 +13,12 @@ module Debug
     return hash_html.html_safe
   end
   
+  def array_pp_sorted( array )
+    return array.sort.join( '<br/>' ).html_safe
+  end
+  
+  def array_pp( array )
+    return array.join( '<br/>' ).html_safe
+  end
+  
 end
