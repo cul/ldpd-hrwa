@@ -14,7 +14,7 @@ module Debug
   end
   
   def array_pp_sorted( array )
-    return array.sort.join( '<br/>' ).html_safe
+    return array.sort_by{ |x| x.to_s }.join( '<br/>' ).html_safe
   end
   
   def array_pp( array )
