@@ -26,6 +26,9 @@ class CatalogController < ApplicationController
       extra_controller_params = {}
       process_q_type_params extra_controller_params, params
     end
+     
+    @debug << "<h1>extra_controller_params</h3>".html_safe 
+    @debug << hash_pp( extra_controller_params )
           
     (@response, @document_list) = get_search_results( params, extra_controller_params)
     @filters = params[:f] || []
