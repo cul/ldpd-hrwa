@@ -27,7 +27,8 @@ class CatalogController < ApplicationController
       process_q_type_params extra_controller_params, params
     end
          
-    (@response, @document_list) = get_search_results( params, extra_controller_params)
+    (@response, @document_list) = get_search_results( params,
+                                                      extra_controller_params ||= {} )
     @filters = params[:f] || []
     
     @debug << "<h1>extra_controller_params</h3>".html_safe 
