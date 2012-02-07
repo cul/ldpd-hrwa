@@ -26,12 +26,12 @@ class CatalogController < ApplicationController
       extra_controller_params = {}
       process_q_type_params extra_controller_params, params
     end
-     
-    @debug << "<h1>extra_controller_params</h3>".html_safe 
-    @debug << hash_pp( extra_controller_params )
-          
+         
     (@response, @document_list) = get_search_results( params, extra_controller_params)
     @filters = params[:f] || []
+    
+    @debug << "<h1>extra_controller_params</h3>".html_safe 
+    @debug << hash_pp( extra_controller_params )
     
     @debug << "<h1>params[]</h1>".html_safe
     @debug << params_list
@@ -43,6 +43,8 @@ class CatalogController < ApplicationController
     self.solr_search_params.each_pair do |key, value|
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
+    
+    @debug << @response.inspect.html_safe
       
     respond_to do |format|
       format.html { save_current_search_params }
