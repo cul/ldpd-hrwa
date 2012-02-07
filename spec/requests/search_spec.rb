@@ -5,8 +5,8 @@ describe 'advanced_search' do
   # We are overriding so that if 'q' is absent but 'q_*' param(s) are present, the index view still
   # gets rendered
   it 'informs user "No results found" if advanced search returns no hits' do
-    visit '/'
-    page.should have_content('Human Rights Web Archive')
+    visit '/search?type=archive&search_mode=advanced&q_and=and1+and2+and3'
+    page.should have_content('No results found')
   end
   
   # This should never really happen, but just in case...
