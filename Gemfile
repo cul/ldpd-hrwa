@@ -58,6 +58,9 @@ group :test, :development do
   gem 'database_cleaner'
   gem "growl"
   gem 'rb-fsevent'
+  # ruby-debug19 might not be compatible with ruby 1.9.3 yet:
+  # http://rubyforge.org/tracker/index.php?func=detail&aid=29505&group_id=8883&atid=34290
+  # gem 'ruby-debug19'
   gem 'ruby_gntp'
   gem 'ruby-prof'
 
