@@ -5,13 +5,40 @@ require 'pp'
 
 class CatalogController < ApplicationController  
   before_filter :_configure_by_search_type
-
+  
   include Blacklight::Catalog
   include AdvancedSearch
   include Debug
+
+  # get search results from the solr index
+  def index
+      
+    extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
+    extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
+      
+    (@response, @document_list) = get_search_results
+    @filters = params[:f] || []
+    
+    @debug << "<h1>params[]</h1>".html_safe
+    @debug << params_list
+      
+    @debug << '<h1>solr_search_params_logic</h1>'.html_safe
+    @debug << array_pp( self.solr_search_params_logic )
+             
+    @debug << "<h1>solr_search_params after get_search_results has run</h1>\n\n".html_safe
+    self.solr_search_params.each_pair do |key, value|
+      @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
+    end
+      
+    respond_to do |format|
+      format.html { save_current_search_params }
+      format.rss  { render :layout => false }
+      format.atom { render :layout => false }
+    end
+  end
       
   private
-
+  
   def _configure_by_search_type
     @debug =''.html_safe
   
@@ -25,17 +52,6 @@ class CatalogController < ApplicationController
       self.solr_search_params_logic << :process_q_or
       self.solr_search_params_logic << :process_q_phrase
       self.solr_search_params_logic << :process_q_exclude
-      
-      @debug << "<h3>params[]</h3>".html_safe
-      @debug << params_list
-      
-      @debug << '<h3>solr_search_params_logic</h3>'.html_safe
-      @debug << array_pp( self.solr_search_params_logic )
-     
-      @debug << '<h3>solr_search_params</h3>'.html_safe
-      self.solr_search_params.each_pair do |key, value|
-        @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
-      end
     end
        
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
