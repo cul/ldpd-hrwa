@@ -15,11 +15,18 @@ class CatalogController < ApplicationController
       
     extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
     extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
-    
-    # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
-    # hash that is merged into/overrides user_params
-    extra_controller_params = {}
-      
+        
+    if params[ :search_mode ] == "advanced" 
+      # Advanced search form doesn't have a "q" textbox.  Blacklight expects a "q"
+      # param so we must build one from the q_* text params
+      params[ :q ] = nil
+     
+      # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
+      # hash that is merged into/overrides user_params
+      extra_controller_params = {}
+      process_q_type_params extra_controller_params, params
+    end
+          
     (@response, @document_list) = get_search_results( params, extra_controller_params)
     @filters = params[:f] || []
     
@@ -50,13 +57,6 @@ class CatalogController < ApplicationController
     @search_type = :archive
 
     @configurator = Configurator.new( @search_type )
-    
-    if params[ :search_mode ] == "advanced"
-      self.solr_search_params_logic << :process_q_and
-      self.solr_search_params_logic << :process_q_or
-      self.solr_search_params_logic << :process_q_phrase
-      self.solr_search_params_logic << :process_q_exclude
-    end
        
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly

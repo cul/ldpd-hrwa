@@ -26,6 +26,13 @@ module AdvancedSearch
                          %q{"} + user_parameters[ :q_phrase ] + %q{"} )
   end
   
+  def process_q_type_params( solr_parameters, user_parameters )
+    process_q_and     solr_parameters, user_parameters
+    process_q_exclude solr_parameters, user_parameters
+    process_q_phrase  solr_parameters, user_parameters
+    process_q_or      solr_parameters, user_parameters
+  end
+  
   private
   
   def add_to_q_solr_param( solr_parameters, q_param )

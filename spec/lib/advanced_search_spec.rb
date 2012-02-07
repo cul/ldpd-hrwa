@@ -2,12 +2,12 @@ require 'spec_helper'
 require 'advanced_search'
 
 class MockCatalogController
-  include Hrwa::AdvancedSearch 
+  include AdvancedSearch 
 end
 
 mock_catalog_controller = MockCatalogController.new
 
-describe 'process_q_and' do  
+describe 'process_q_and' do
   before( :each ) do
     @solr_parameters = { :q => 'ngo' }
   end
@@ -160,3 +160,36 @@ describe 'process_q_phrase' do
     @solr_parameters[ :q ].should eq %q{"women's rights africa"}
   end
 end
+
+describe 'process_q_type_params' do
+  before( :each ) do
+    @solr_parameters = { :q => nil }
+  end
+  
+  it 'derives correct q param from q_* params' do
+    user_parameters = { :q_and     => %q{and1 and2 and3},
+                        :q_phrase  => %q{this is a phrase},
+                        :q_or      => %q{or1 or2 or3},
+                        :q_exclude => %q{not1 not2 not3},
+                      }
+    mock_catalog_controller.process_q_type_params @solr_parameters, user_parameters
+    @solr_parameters[ :q ].should eq %q{+and1 +and2 +and3 -not1 -not2 -not3 "this is a phrase" or1 or2 or3}
+  end
+  
+  it 'gracefully exits if q_* are nil and leaves q param untouched' do
+    user_parameters = {}
+    mock_catalog_controller.process_q_phrase @solr_parameters, user_parameters
+    @solr_parameters[ :q ].should be_nil
+  end
+  
+  it 'gracefully exits if q_* are all nil or blank and leaves q param untouched' do
+    user_parameters = { :q_and     => %q{},
+                        :q_phrase  => %q{   },
+                        :q_or      => %q{       },
+                        :q_exclude => nil, }
+    mock_catalog_controller.process_q_phrase @solr_parameters, user_parameters
+    @solr_parameters[ :q ].should be_nil
+  end
+end
+
+
