@@ -15,8 +15,12 @@ class CatalogController < ApplicationController
       
     extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
     extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
+    
+    # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
+    # hash that is merged into/overrides user_params
+    extra_controller_params = {}
       
-    (@response, @document_list) = get_search_results
+    (@response, @document_list) = get_search_results( params, extra_controller_params)
     @filters = params[:f] || []
     
     @debug << "<h1>params[]</h1>".html_safe
