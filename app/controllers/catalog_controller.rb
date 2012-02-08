@@ -26,6 +26,9 @@ class CatalogController < ApplicationController
       # hash that is merged into/overrides user_params
       extra_controller_params = {}
       process_q_type_params extra_controller_params, params
+      
+      # Now use interpreted advanced search as user param q for echo purposes
+      params[ :q ] = extra_controller_params[ :q ]
     end
          
     (@response, @document_list) = get_search_results( params,
