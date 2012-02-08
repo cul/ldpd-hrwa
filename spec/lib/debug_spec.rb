@@ -70,5 +70,5 @@ def params
   end
 
   def params_list_expected_html
-    return %q{<strong>action</strong> = index <br/><strong>controller</strong> = catalog <br/><strong>crawl_end_date</strong> = 2012-02-09 <br/><strong>crawl_start_date</strong> = 2012-02-07 <br/><strong>host</strong> = harding.cul.columbia.edu <br/><strong>path</strong> = /solr-4/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
+    return %q{<strong>action</strong> = index <br/><strong>controller</strong> = catalog <br/><strong>crawl_end_date</strong> = 2012-02-09 <br/><strong>crawl_start_date</strong> = 2012-02-07 <br/><strong>path</strong> = /solr-4/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>solr_host</strong> = harding.cul.columbia.edu <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
   end
