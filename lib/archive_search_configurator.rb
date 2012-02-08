@@ -14,7 +14,7 @@ class ArchiveSearchConfigurator
         config.unique_key = "recordIdentifier"
 
         # solr field configuration for search results/index views
-        config.index.show_link           = 'contentTitle'
+        config.index.show_link = 'contentTitle'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
@@ -43,29 +43,36 @@ class ArchiveSearchConfigurator
                                :limit => 10
                                
         config.add_facet_field 'geographic_focus__facet',
-                               :label => 'Organization/Site Geographic Focus'
+                               :label => 'Organization/Site Geographic Focus',
+                               :limit => 10
                                
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization/Site Based In', :limit => 20
+                               :label => 'Organization/Site Based In', :limit => 20,
+                               :limit => 10
                                
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
-                               :limit => true
+                               :limit => 10
                                
         config.add_facet_field 'language__facet',
-                               :label => 'Website Language'
+                               :label => 'Website Language',
+                               :limit => 10
                                                               
         config.add_facet_field 'contentMetaLanguage',
-                               :label => 'Language of page'       
+                               :label => 'Language of page',
+                               :limit => 10       
 
         config.add_facet_field 'creator_name__facet',
-                               :label => 'Creator Name'
+                               :label => 'Creator Name',
+                               :limit => 10
                                
         config.add_facet_field 'mimetype',
-                               :label => 'File Type'
+                               :label => 'File Type',
+                               :limit => 10
                                
         config.add_facet_field 'dateOfCaptureYYYY',
-                               :label => 'Year of Capture'  
+                               :label => 'Year of Capture',
+                               :limit => 10  
                                       
 
         # Have BL send all facet field names to Solr, which has been the default
