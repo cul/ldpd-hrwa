@@ -4,22 +4,22 @@ class ArchiveSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :qf => ["contentTitle^1","contentBody^1", "contentMetaDescription^1", "contentMetaKeywords^1", "contentMetaLanguage^1", "contentBodyHeading1^1", "contentBodyHeading2^1", "contentBodyHeading3^1", "contentBodyHeading4^1", "contentBodyHeading5^1", "contentBodyHeading6^1"],
-          :rows => 10,
+          :qf      => ["contentTitle^1","contentBody^1", "contentMetaDescription^1", "contentMetaKeywords^1", "contentMetaLanguage^1", "contentBodyHeading1^1", "contentBodyHeading2^1", "contentBodyHeading3^1", "contentBodyHeading4^1", "contentBodyHeading5^1", "contentBodyHeading6^1"],
+          :rows    => 10,
           :'q.alt' => "*:*",
-          :facet => true,
+          :facet   => true,
           :defType => "dismax"
         }
 
         config.unique_key = "recordIdentifier"
 
         # solr field configuration for search results/index views
-        config.index.show_link = 'contentTitle'
+        config.index.show_link           = 'contentTitle'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
-        config.show.html_title = 'contentTitle'
-        config.show.heading = 'contentTitle'
+        config.show.html_title   = 'contentTitle'
+        config.show.heading      = 'contentTitle'
         config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
@@ -38,11 +38,35 @@ class ArchiveSearchConfigurator
         # on the solr side in the request handler itself. Request handler defaults
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
-        config.add_facet_field 'domain', :label => 'Domain', :limit => 10
-        config.add_facet_field 'geographic_focus__facet', :label => 'Geographic Focus'
-        config.add_facet_field 'organization_based_in__facet', :label => 'Organization Based In', :limit => 20
-        config.add_facet_field 'organization_type__facet', :label => 'Organization Type', :limit => true
-        config.add_facet_field 'language__facet', :label => 'Language'
+        config.add_facet_field 'domain',
+                               :label => 'Domain',
+                               :limit => 10
+                               
+        config.add_facet_field 'geographic_focus__facet',
+                               :label => 'Organization/Site Geographic Focus'
+                               
+        config.add_facet_field 'organization_based_in__facet',
+                               :label => 'Organization/Site Based In', :limit => 20
+                               
+        config.add_facet_field 'organization_type__facet',
+                               :label => 'Organization Type',
+                               :limit => true
+                               
+        config.add_facet_field 'language__facet',
+                               :label => 'Website Language'
+                                                              
+        config.add_facet_field 'contentMetaLanguage',
+                               :label => 'Language of page'       
+
+        config.add_facet_field 'creator_name__facet',
+                               :label => 'Creator Name'
+                               
+        config.add_facet_field 'mimetype',
+                               :label => 'File Type'
+                               
+        config.add_facet_field 'dateOfCaptureYYYY',
+                               :label => 'Year of Capture'  
+                                      
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
