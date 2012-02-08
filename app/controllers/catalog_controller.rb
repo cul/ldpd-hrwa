@@ -30,7 +30,7 @@ class CatalogController < ApplicationController
       # Now use interpreted advanced search as user param q for echo purposes
       params[ :q ] = extra_controller_params[ :q ]
     end
-         
+             
     (@response, @document_list) = get_search_results( params,
                                                       extra_controller_params ||= {} )
     @filters = params[:f] || []
@@ -49,7 +49,9 @@ class CatalogController < ApplicationController
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
     
-    @debug << "<!-- #{@response.inspect.html_safe} -->\n".html_safe
+    @debug << '<h1>RSolr::Ext::Response stuff</h1>'.html_safe
+    @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
+    @debug << "<pre>#{ @response.original_hash.pretty_inspect }</pre>".html_safe
       
     respond_to do |format|
       format.html { save_current_search_params }
