@@ -17,10 +17,11 @@ class CatalogController < ApplicationController
     extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
         
     if params[ :search_mode ] == "advanced" 
-      # Advanced search form doesn't have a "q" textbox.  Blacklight expects a "q"
-      # param so we must build one from the q_* text params
+      # Advanced search form doesn't have a "q" textbox.  If there's anything in 
+      # user param q it shouldn't be there
       params[ :q ] = nil
      
+      # Blacklight expects a 'q' SOLR param so we must build one from the q_* text params
       # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
       # hash that is merged into/overrides user_params
       extra_controller_params = {}
