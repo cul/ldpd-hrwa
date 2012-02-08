@@ -46,7 +46,7 @@ class CatalogController < ApplicationController
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
     
-    @debug << @response.inspect.html_safe
+    @debug << "<!-- #{@response.inspect.html_safe} -->\n".html_safe
       
     respond_to do |format|
       format.html { save_current_search_params }
