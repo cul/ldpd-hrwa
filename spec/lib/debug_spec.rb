@@ -6,17 +6,17 @@ describe 'array_pp' do
   it 'creates correct HTML given array of mixed types' do
     array_pp( array_to_test ).should eq array_pp_expected_html
   end
-end 
+end
 
 describe 'array_pp_sorted' do
   include Debug
   it 'creates correct HTML given array of mixed types' do
     array_pp_sorted( array_to_test ).should eq array_pp_sorted_expected_html
   end
-end 
+end
 
 describe 'hash_pp' do
-  include Debug       
+  include Debug
   it 'creates correct HTML given hash' do
     hash_pp( params ).should eq params_list_expected_html
   end
@@ -24,14 +24,14 @@ end
 
 
 describe 'params_list' do
-  include Debug       
+  include Debug
   it 'creates correct HTML given list of params' do
     params_list.should eq params_list_expected_html
   end
 end
 
 def params
-  return { 
+  return {
               :action => 'index',
               :controller => 'catalog',
               :type => 'archive',
@@ -51,7 +51,7 @@ def params
               :crawl_end_date => '2012-02-09',
               :rows => '10',
               :sort => 'score desc',
-              :host => 'harding.cul.columbia.edu',
+              :solr_host => 'harding.cul.columbia.edu',
               :path => '/solr-4/asf',
               :submit_search => 'Advanced Search',
          }
@@ -60,7 +60,7 @@ def params
   def array_pp_expected_html
     return %q{one<br/>four<br/>0<br/>zero<br/>true}
   end
-  
+
   def array_pp_sorted_expected_html
     return %q{0<br/>four<br/>one<br/>true<br/>zero}
   end
