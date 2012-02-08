@@ -1,4 +1,4 @@
-# notification :gntp, :sticky => true, :host => 'kwan-yin.cul.columbia.edu', :password => 'secret' 
+notification :gntp, :sticky => true, :host => 'kwan-yin.cul.columbia.edu', :password => 'secret' 
 
 guard 'rails', :port => 3020 do
   watch('Gemfile.lock')
@@ -32,7 +32,7 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
-  watch(%r{^app/views/layouts/.*\.(erb|haml)$})        { |m| "spec/requests" }
+  watch(%r{^app/views/layouts/.*\.(erb|haml)$})       { |m| "spec/requests" }
 end
 
 
