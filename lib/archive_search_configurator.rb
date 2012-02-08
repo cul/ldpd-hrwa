@@ -4,11 +4,22 @@ class ArchiveSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :qf      => ["contentTitle^1","contentBody^1", "contentMetaDescription^1", "contentMetaKeywords^1", "contentMetaLanguage^1", "contentBodyHeading1^1", "contentBodyHeading2^1", "contentBodyHeading3^1", "contentBodyHeading4^1", "contentBodyHeading5^1", "contentBodyHeading6^1"],
-          :rows    => 10,
-          :'q.alt' => "*:*",
-          :facet   => true,
-          :defType => "dismax"
+          :qf               => ["contentTitle^1",
+                                "contntBody^1",
+                                "contentMetaDescription^1",
+                                "contentMetaKeywords^1",
+                                "contentMetaLanguage^1",
+                                "contentBodyHeading1^1",
+                                "contentBodyHeading2^1",
+                                "contentBodyHeading3^1",
+                                "contentBodyHeading4^1",
+                                "contentBodyHeading5^1",
+                                "contentBodyHeading6^1"],
+          :rows             => 10,
+          :'q.alt'          => "*:*",
+          :facet            => true,
+          :'facet.mincount' => 1,
+          :defType          => "dismax"
         }
 
         config.unique_key = "recordIdentifier"
@@ -21,7 +32,7 @@ class ArchiveSearchConfigurator
         config.show.html_title   = 'contentTitle'
         config.show.heading      = 'contentTitle'
         config.show.display_type = ''
-
+        
         # solr fields that will be treated as facets by the blacklight application
         #   The ordering of the field names is the order of the display
         #
