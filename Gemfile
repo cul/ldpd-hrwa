@@ -65,4 +65,6 @@ group :test, :development do
   gem 'ruby-prof'
 
 end
-gem "devise"
+
+#Specify version 1.5.3 because version 2.0.0 causes a deprecation warning
+gem "devise", '~> 1.5.3'
