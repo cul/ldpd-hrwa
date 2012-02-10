@@ -1,10 +1,23 @@
-notification :gntp, :sticky => true, :host => 'kwan-yin.cul.columbia.edu', :password => 'secret' 
+# Developers can customize their notifications in config/local_guardfile_customizations
+# config/local_guardfile_customizations should be in .gitignore
+
+config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.yml'
+
+opts = { :host => 'localhost', :sticky => false }
+
+if File.exists?(config_file)
+  config = YAML.load_file(config_file)
+  opts[:host]   = config["notification_gntp"]["host"]
+  opts[:sticky] = config["notification_gntp"]["sticky"]
+  opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
+end
+
+notification :gntp, opts
 
 guard 'rails', :port => 3020 do
   watch('Gemfile.lock')
   watch(%r{^config/.*})
 end
-
 
 guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
