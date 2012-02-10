@@ -17,5 +17,9 @@ class Configurator
   def config_proc
     return @configurator.config_proc
   end
+  
+  def get_search_results_method
+    return @configurator.get_search_results_method
+  end
 
 end

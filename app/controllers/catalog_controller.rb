@@ -30,9 +30,9 @@ class CatalogController < ApplicationController
       # Now use interpreted advanced search as user param q for echo purposes
       params[ :q ] = extra_controller_params[ :q ]
     end
-             
-    (@response, @document_list) = get_search_results( params,
-                                                      extra_controller_params ||= {} )
+        
+    (@response, @document_list) = @get_search_results_method.call( params,
+                                                                  extra_controller_params ||= {} )
     @filters = params[:f] || []
     
     @debug << "<h1>extra_controller_params</h3>".html_safe 
@@ -49,10 +49,12 @@ class CatalogController < ApplicationController
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
     
-    @debug << '<h1>RSolr::Ext::Response stuff</h1>'.html_safe
-    @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
-    @debug << "<pre>#{ @response.original_hash.pretty_inspect }</pre>".html_safe
-      
+    # @debug << '<h1>RSolr::Ext::Response stuff</h1>'.html_safe
+    # @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
+    # @debug << "<pre>#{ @response.original_hash.pretty_inspect }</pre>".html_safe
+    
+    d @response.pretty_inspect
+    
     respond_to do |format|
       format.html { save_current_search_params }
       format.rss  { render :layout => false }
@@ -63,7 +65,7 @@ class CatalogController < ApplicationController
   private
   
   def _configure_by_search_type
-    @debug =''.html_safe
+    @debug = ''.html_safe
   
     # Type instance var for later branching in view code
     @search_type = :archive
@@ -72,8 +74,9 @@ class CatalogController < ApplicationController
        
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
-    CatalogController.configure_blacklight( &@configurator.config_proc )
+    CatalogController.configure_blacklight( &@configurator.config_proc )   
     
+    @get_search_results_method = @configurator.get_search_results_method 
   end
 
 end 
