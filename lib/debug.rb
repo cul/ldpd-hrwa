@@ -1,7 +1,11 @@
 module Debug
     
-  def params_list
-    return hash_pp( params )
+  def array_pp( array )
+    return array.join( '<br/>' ).html_safe
+  end
+  
+  def array_pp_sorted( array )
+    return array.sort_by{ |x| x.to_s }.join( '<br/>' ).html_safe
   end
   
   def hash_pp( hash, no_blanks = true )
@@ -13,12 +17,8 @@ module Debug
     return hash_html.html_safe
   end
   
-  def array_pp_sorted( array )
-    return array.sort_by{ |x| x.to_s }.join( '<br/>' ).html_safe
-  end
-  
-  def array_pp( array )
-    return array.join( '<br/>' ).html_safe
+  def params_list
+    return hash_pp( params )
   end
   
 end
