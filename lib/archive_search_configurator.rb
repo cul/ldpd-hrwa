@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ArchiveSearchConfigurator
+  unloadable
 
   def config_proc
       return Proc.new { |config|
@@ -32,7 +33,7 @@ class ArchiveSearchConfigurator
         config.show.html_title   = 'contentTitle'
         config.show.heading      = 'contentTitle'
         config.show.display_type = ''
-        
+
         # solr fields that will be treated as facets by the blacklight application
         #   The ordering of the field names is the order of the display
         #
@@ -52,39 +53,39 @@ class ArchiveSearchConfigurator
         config.add_facet_field 'domain',
                                :label => 'Domain',
                                :limit => 10
-                               
+
         config.add_facet_field 'geographic_focus__facet',
                                :label => 'Organization/Site Geographic Focus',
                                :limit => 10
-                               
+
         config.add_facet_field 'organization_based_in__facet',
                                :label => 'Organization/Site Based In', :limit => 20,
                                :limit => 10
-                               
+
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
                                :limit => 10
-                               
+
         config.add_facet_field 'language__facet',
                                :label => 'Website Language',
                                :limit => 10
-                                                              
+
         config.add_facet_field 'contentMetaLanguage',
                                :label => 'Language of page',
-                               :limit => 10       
+                               :limit => 10
 
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator Name',
                                :limit => 10
-                               
+
         config.add_facet_field 'mimetype',
                                :label => 'File Type',
                                :limit => 10
-                               
+
         config.add_facet_field 'dateOfCaptureYYYY',
                                :label => 'Year of Capture',
-                               :limit => 10  
-                                      
+                               :limit => 10
+
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
