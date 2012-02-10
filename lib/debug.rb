@@ -8,6 +8,10 @@ module Debug
     return array.sort_by{ |x| x.to_s }.join( '<br/>' ).html_safe
   end
   
+  def d( message )
+    Rails.logger.debug( message )
+  end
+  
   def hash_pp( hash, no_blanks = true )
     hash_html = ''
     Hash[ hash.sort ].each_pair do |key, value|
