@@ -17,8 +17,6 @@ gem "devise", '~> 1.5.3'
 gem 'jquery-rails'
 gem 'json'
 gem 'mysql2'
-# To use debugger
-#gem 'ruby-debug19', :require => 'ruby-debug'
 gem 'sass'
 gem 'sass-rails', '~> 3.1.5.rc.2'
 gem 'therubyracer'
@@ -54,6 +52,7 @@ group :test, :development do
   gem 'ruby_gntp'
   gem 'ruby-prof'
   gem 'spork', '~>0.9.0.rc2'
+  # To use debugger
   # ruby-debug19 might not be compatible with ruby 1.9.3 yet:
   # http://rubyforge.org/tracker/index.php?func=detail&aid=29505&group_id=8883&atid=34290
   # gem 'ruby-debug19'
