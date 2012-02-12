@@ -32,9 +32,9 @@ class CatalogController < ApplicationController
     end
     
     # TODO: remove me``
-    render :text => "CatalogController currently broken.  This is a temporary " +
-                    " to keep Rails from crashing.\n" +
-                    " [Search Tips] - this string is here to enable Capybara request test to pass" \
+    render :text => %Q{CatalogController currently broken.  This is a temporary 
+                    manual render to keep Rails from crashing.\n
+                    <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
                     and return
         
     (@response, @document_list) = @get_search_results_method.call( params,
