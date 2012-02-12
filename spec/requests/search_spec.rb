@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-# TODO: enable this test
 describe 'all searches' do
-  it 'use correct host when building URLs for facets' do
-    visit '/search?type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search'
-    # page.should # NOT see SOLR host, should see Web host
+  it 'should not have "host" param in querystring' do
+    visit '/advanced_asf'
+    fill_in 'q_and', :with => 'woman'
+    click_button 'submit_search'
+    
+    querystring = URI.parse( current_url ).query
+    params_hash = Rack::Utils.parse_nested_query( querystring ).deep_symbolize_keys
+    params_hash[ :host ].should be_nil
   end
 end
 
