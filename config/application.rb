@@ -20,7 +20,7 @@ module Hrwa
     # Rails team:
     # https://rails.lighthouseapp.com/projects/8994/tickets/5218-rails-3-rc-does-not-autoload-from-lib
      config.autoload_paths += %W(#{config.root}/lib)
-     # Let's autoload heleprs, too
+     # Let's autoload helpers, too
      config.autoload_paths += %W(#{config.root}/helpers/**/)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
