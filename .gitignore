@@ -29,6 +29,9 @@ db/*.sqlite3
 .sass-cache/**/*
 .project
 
+#Guard
+config/local_guardfile_customizations.yml
+
 #elo2112-specific
 reference-files/*
 *.komodoproject

@@ -19,18 +19,18 @@ describe 'advanced_search' do
   it 'informs user "No results found" if advanced search returns no hits' do
     visit '/search?type=archive&search_mode=advanced&q_and=and1+and2+and3'
   end
-  
+
   # TODO: enable this test
   # it 'informs user "Click on + to refine search" in simple search box if doing advanced search' do
     # visit '/search?type=archive&search_mode=advanced&q_and=and1+and2+and3'
     # page.should have_content('Click + to refine search')
   # end
-  
+
   # This should never really happen, but just in case...
   it 'renders the search page if there are no q_* or limit by params (if the are present' +
      ' that is a different use case)' do
      visit '/search?'
      page.should have_content('Search Tips')
   end
- 
+
 end
