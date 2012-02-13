@@ -4,7 +4,7 @@ require 'find_site_search_configurator'
 
 class Configurator
   unloadable
-  
+
   def initialize( search_request_type )
     case search_request_type
       when :archive
@@ -17,9 +17,9 @@ class Configurator
   def config_proc
     return @configurator.config_proc
   end
-  
-  def get_search_results_method
-    return @configurator.get_search_results_method
+
+  def custom_get_search_results_method
+    return @configurator.custom_get_search_results_method
   end
 
 end

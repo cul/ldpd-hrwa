@@ -194,10 +194,10 @@ class ArchiveSearchConfigurator
         config.spell_max = 5
       }
     end
-    
+
     # ASF searches use Field Collapsing, which Blacklight currently doesn't support
-    def get_search_results_method
-      self.method( :get_search_results )  
+    def custom_get_search_results_method
+      self.method( :get_search_results )
     end
-    
+
 end
