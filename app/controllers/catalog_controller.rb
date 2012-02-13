@@ -31,7 +31,7 @@ class CatalogController < ApplicationController
       params[ :q ] = extra_controller_params[ :q ]
     end
     
-    # TODO: remove me``
+    # TODO: remove me
     render :text => %Q{CatalogController currently broken.  This is a temporary 
                     manual render to keep Rails from crashing.\n
                     <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
