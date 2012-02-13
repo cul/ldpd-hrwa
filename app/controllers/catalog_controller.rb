@@ -32,10 +32,12 @@ class CatalogController < ApplicationController
     end
 
     # TODO: remove me
-    render :text => %Q{CatalogController currently broken.  This is a temporary
-                    manual render to keep Rails from crashing.\n
-                    <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
-                    and return
+    if(@search_type == :archive)
+      render :text => %Q{CatalogController currently broken.  This is a temporary
+                      manual render to keep Rails from crashing.\n
+                      <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
+                      and return
+    end
 
     (@response, @document_list) = @get_search_results_method.call( params,
                                                                   extra_controller_params ||= {} )
