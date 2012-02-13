@@ -73,7 +73,9 @@ class CatalogController < ApplicationController
   def _configure_by_search_type
     @debug = ''.html_safe
 
-    @search_type = :archive
+    Rails.logger.debug(params.pretty_inspect)
+
+    @search_type = params[:search_type].to_sym
 
     @configurator = Configurator.new( @search_type )
 
