@@ -18,7 +18,7 @@ gem 'jquery-rails', '1.0.19'
 gem 'json', '1.6.5'
 gem 'mysql2', '0.3.11'
 gem 'sass', '3.1.14'
-gem 'sass-rails', '~> 3.1.5.rc.2'
+gem 'sass-rails', '3.1.5'
 gem 'therubyracer', '0.9.9'
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -28,7 +28,7 @@ gem 'therubyracer', '0.9.9'
 group :assets do
   gem 'compass', '~> 0.12.alpha.2'
   gem 'coffee-rails', '3.1.1'
-  gem 'sass-rails',   '~> 3.1.5.rc.2'
+  gem 'sass-rails',   '3.1.5'
   gem 'uglifier', '1.0.3'
 end
 
