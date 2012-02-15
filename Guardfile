@@ -3,16 +3,16 @@
 
 config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.yml'
 
-opts = { :host => 'localhost', :sticky => false }
+gntp_opts = { :host => 'localhost', :sticky => false }
 
 if File.exists?(config_file)
   config = YAML.load_file(config_file)
-  opts[:host]   = config["notification_gntp"]["host"]
-  opts[:sticky] = config["notification_gntp"]["sticky"]
-  opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
+  gntp_opts[:host]   = config["notification_gntp"]["host"]
+  gntp_opts[:sticky] = config["notification_gntp"]["sticky"]
+  gntp_opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
 end
 
-notification :gntp, opts
+notification :gntp, gntp_opts
 
 guard 'rails', :port => 3020, :debugger => true do
   watch('Gemfile.lock')
