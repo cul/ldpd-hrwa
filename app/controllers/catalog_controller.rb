@@ -91,8 +91,6 @@ class CatalogController < ApplicationController
     @get_search_results_method = @configurator.custom_get_search_results_method
     @get_search_results_method ||= self.method( :get_search_results )
 
-    Rails.logger.debug('------------------------------------------' + YAML.load_file("config/solr.yml")['development_asf']['url'] + '------------------------------------------')
-
     _load_solr_index_based_on_search_type(@search_type)
 
   end
