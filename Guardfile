@@ -14,7 +14,7 @@ end
 
 notification :gntp, opts
 
-guard 'rails', :port => 3020 do
+guard 'rails', :port => 3020, :debugger => true do
   watch('Gemfile.lock')
   watch(%r{^config/.*})
 end
