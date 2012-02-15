@@ -1,18 +1,23 @@
 # Developers can customize their Guard setup using config/local_guardfile_customizations.yml
 # config/local_guardfile_customizations.yml should be in .gitignore
 
+# Default notification options
+gntp_opts = {
+             :host   => 'localhost',
+             :sticky => false,
+            }
+
 config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.yml'
 if File.exists?(config_file)
   config = YAML.load_file(config_file)
+  
+  # Set notification options
+  if config["notification_gntp"]
+    gntp_opts[:host]     = config["notification_gntp"]["host"]     if config["notification_gntp"]["host"]
+    gntp_opts[:sticky]   = config["notification_gntp"]["sticky"]   if config["notification_gntp"]["sticky"]
+    gntp_opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
+  end
 end
-
-# Default gntp opts
-gntp_opts = { :host => 'localhost', :sticky => false }
-
-# Local overrides
-gntp_opts[:host]     = config["notification_gntp"]["host"]     if config["notification_gntp"]["host"]
-gntp_opts[:sticky]   = config["notification_gntp"]["sticky"]   if config["notification_gntp"]["sticky"]
-gntp_opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
 
 notification :gntp, gntp_opts
 
