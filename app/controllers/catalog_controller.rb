@@ -98,9 +98,8 @@ class CatalogController < ApplicationController
   end
 
 
-  # Loads a specific solr config file rather than the default one
-  # This involves modifying the Blacklight module (original: Blacklight
-  # gem --> lib/blacklight.rb)
+  # Loads an asf- or fsf-specific solr configuration,
+  # rather than whatever the default one is
   def _load_solr_index_based_on_search_type (search_type)
 
     if search_type == :archive
