@@ -6,7 +6,13 @@ gntp_opts = {
              :host   => 'localhost',
              :sticky => false,
             }
+            
+# Default rails options
+rails_opts = {
+              :port     => 3020,
+             }
 
+# Local customizations
 config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.yml'
 if File.exists?(config_file)
   config = YAML.load_file(config_file)
@@ -17,11 +23,17 @@ if File.exists?(config_file)
     gntp_opts[:sticky]   = config["notification_gntp"]["sticky"]   if config["notification_gntp"]["sticky"]
     gntp_opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
   end
+  
+  # Set rails options
+  if config["rails"]
+    rails_opts[:debugger] = config["rails"]["debugger"] if config["rails"]["debugger"]
+    rails_opts[:port]     = config["rails"]["port"]     if config["rails"]["port"]
+  end
 end
 
 notification :gntp, gntp_opts
 
-guard 'rails', :port => 3020, :debugger => true do
+guard 'rails', rails_opts do
   watch('Gemfile.lock')
   watch(%r{^config/.*})
 end
