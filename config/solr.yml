@@ -11,13 +11,30 @@
 # how to start up solr, generally for automated testing. 
 
 development:
-  url: http://harding.cul.columbia.edu:8080/solr-4/fsf 
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+development_fsf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+development_asf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/asf
 test: &test
-  url: http://harding.cul.columbia.edu:8080/solr-4/fsf 
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+test_fsf: &test
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+test_asf: &test
+  url: http://harding.cul.columbia.edu:8080/solr-4/asf
 
 hrwa_dev:
-  url: http://harding.cul.columbia.edu:8080/solr-4/fsf 
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+hrwa_dev_fsf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+hrwa_dev_asf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/asf
 hrwa_test:
-  url: http://harding.cul.columbia.edu:8080/solr-4/fsf 
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+hrwa_test_fsf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+hrwa_test_asf:
+  url: http://harding.cul.columbia.edu:8080/solr-4/asf
+
 cucumber:
   <<: *test
