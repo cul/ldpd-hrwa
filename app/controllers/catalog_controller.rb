@@ -41,6 +41,9 @@ class CatalogController < ApplicationController
 
     (@response, @document_list) = @get_search_results_method.call( params,
                                                                   extra_controller_params ||= {} )
+
+    render :text => "<pre>#{@response.pretty_inspect}</pre>" and return
+
     @filters = params[:f] || []
 
     @debug << "<h1>extra_controller_params</h3>".html_safe
@@ -88,6 +91,24 @@ class CatalogController < ApplicationController
     @get_search_results_method = @configurator.custom_get_search_results_method
     @get_search_results_method ||= self.method( :get_search_results )
 
+    # TODO: Either use this or delete this
+    #_load_solr_config_file(@configurator.solr_config_file)
+    #_load_solr_config_file('solr1')
+
   end
+
+
+#  # Loads a specific solr config file rather than the default one
+#  # This involves modifying the Blacklight module (original: Blacklight
+#  # gem --> lib/blacklight.rb)
+#  def _load_solr_config_file (filename)
+#
+#    Blacklight.class_eval {
+#      def self.solr_file
+#        "#{::Rails.root.to_s}/config/" + filename + ".yml"
+#      end
+#    }
+#
+#  end
 
 end

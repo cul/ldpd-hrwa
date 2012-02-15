@@ -5,17 +5,16 @@ class FindSiteSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :qf               => ["contentTitle^1",
-                                "contntBody^1",
-                                "contentMetaDescription^1",
-                                "contentMetaKeywords^1",
-                                "contentMetaLanguage^1",
-                                "contentBodyHeading1^1",
-                                "contentBodyHeading2^1",
-                                "contentBodyHeading3^1",
-                                "contentBodyHeading4^1",
-                                "contentBodyHeading5^1",
-                                "contentBodyHeading6^1"],
+          :qf               => [
+                                "alternate_title^1",
+                                "creator_name^1",
+                                "geographic_focus^1",
+                                "language^1",
+                                "organization_based_in^1",
+                                "original_urls^1",
+                                "summary^1",
+                                "title^1",
+                                ],
           :rows             => 10,
           :'q.alt'          => "*:*",
           :facet            => true,
@@ -23,15 +22,15 @@ class FindSiteSearchConfigurator
           :defType          => "dismax"
         }
 
-        config.unique_key = "recordIdentifier"
+        config.unique_key = "bib_key"
 
         # solr field configuration for search results/index views
-        config.index.show_link = 'contentTitle'
+        config.index.show_link = 'title'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
-        config.show.html_title   = 'contentTitle'
-        config.show.heading      = 'contentTitle'
+        config.show.html_title   = 'title'
+        config.show.heading      = 'title'
         config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
@@ -50,32 +49,25 @@ class FindSiteSearchConfigurator
         # on the solr side in the request handler itself. Request handler defaults
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
-        config.add_facet_field 'domain',
-                               :label => 'Domain',
-                               :limit => 10
-
-        config.add_facet_field 'geographic_focus__facet',
-                               :label => 'Organization/Site Geographic Focus',
-                               :limit => 10
-
-        config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization/Site Based In', :limit => 20,
-                               :limit => 10
 
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
                                :limit => 10
 
+        config.add_facet_field 'organization_based_in__facet',
+                               :label => 'Site Based In',
+                               :limit => 10
+
+        config.add_facet_field 'geographic_focus__facet',
+                               :label => 'Geographic Focus',
+                               :limit => 10
+
+        config.add_facet_field 'subject__facet',
+                               :label => 'Subject',
+                               :limit => 10
+
         config.add_facet_field 'language__facet',
-                               :label => 'Website Language',
-                               :limit => 10
-
-        config.add_facet_field 'contentMetaLanguage',
-                               :label => 'Language of page',
-                               :limit => 10
-
-        config.add_facet_field 'creator_name__facet',
-                               :label => 'Creator Name',
+                               :label => 'Language',
                                :limit => 10
 
 
@@ -86,8 +78,7 @@ class FindSiteSearchConfigurator
 
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
-        config.add_index_field 'contentTitle', :label => 'Title:'
-        config.add_index_field 'contentBody', :label => 'Body:'
+        config.add_index_field 'title', :label => 'Title:'
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
         #config.add_index_field 'author_vern_display', :label => 'Author:'
@@ -99,7 +90,7 @@ class FindSiteSearchConfigurator
 
         # solr fields to be displayed in the show (single result) view
         #   The ordering of the field names is the order of the display
-        config.add_show_field 'contentTitle', :label => 'Title:'
+        config.add_show_field 'title', :label => 'Title:'
         #config.add_show_field 'title_vern_display', :label => 'Title:'
         #config.add_show_field 'subtitle_display', :label => 'Subtitle:'
         #config.add_show_field 'subtitle_vern_display', :label => 'Subtitle:'
@@ -177,7 +168,7 @@ class FindSiteSearchConfigurator
         # label in pulldown is followed by the name of the SOLR field to sort by and
         # whether the sort is ascending or descending (it must be asc or desc
         # except in the relevancy case).
-        config.add_sort_field 'score desc, dateOfCaptureYYYYMMDD desc', :label => 'relevance'
+        config.add_sort_field 'score desc', :label => 'relevance'
 
         # If there are more than this many search results, no spelling ("did you
         # mean") suggestion is offered.

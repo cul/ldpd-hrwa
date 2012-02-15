@@ -1,0 +1,1796 @@
+
+<!doctype html>
+<html>
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<title>FSF: Advanced Search</title>
+
+<link rel="stylesheet" href="css/advanced_search.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/spin_control.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" />
+<!-- <link rel="stylesheet" href="../../shared/jquery-ui-1.8.16/css/le-frog/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" /> -->
+
+<script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+function loopForm( form, status ) {
+    for (var i = 0; i < form.elements.length; i++ ) {
+        if (form.elements[i].type == 'checkbox') {
+            form.elements[i].checked = status;
+        }
+    }
+}
+
+</script>
+
+<script>
+    var datePickerOptions = { changeMonth: true,
+                              changeYear:  true,
+                              constrainInput: true,
+                              dateFormat: 'yy-mm-dd',
+                              yearRange: '2008:2012'
+                            };
+    $(function() {
+        $( "#crawl_start_date" ).datepicker( datePickerOptions );
+        });
+
+    $(function() {
+        $( "#crawl_end_date" ).datepicker( datePickerOptions );
+        });
+</script>
+
+<script type="text/javascript">
+    function spinControlListener( sender, newBoostValue ) {
+        // Get associated field
+        var targetField = sender.Tag;
+        document.getElementById( targetField ).value = targetField + '^' + newBoostValue;
+    }
+</script>
+
+</head>
+<body>
+
+<div style="font-size:119%;margin-top:3px">
+
+<!-- ### Maybe put this back in later for menu options
+<div id=gbar>
+<nobr>
+<b class=gb1>
+Web</b>
+ <a class=gb1 href="http://www.google.com/imghp?q=x&hl=en&tab=wi">
+Images</a>
+ <a class=gb1 href="http://video.google.com/?q=x&hl=en&tab=wv">
+Videos</a>
+ <a class=gb1 href="http://maps.google.com/maps?q=x&hl=en&tab=wl">
+Maps</a>
+ <a class=gb1 href="http://news.google.com/nwshp?q=x&hl=en&tab=wn">
+News</a>
+ <a class=gb1 href="http://www.google.com/prdhp?q=x&hl=en&tab=wf">
+Shopping</a>
+ <a class=gb1 href="https://mail.google.com/mail/?hl=en&tab=wm">
+Gmail</a>
+ <a class=gb1 style="text-decoration:none" href="http://www.google.com/intl/en/options/">
+<u>
+more</u>
+ &raquo;</a>
+</nobr>
+</div>
+<div id=guser width=100%>
+<nobr>
+<span id=gbn class=gbi>
+</span>
+<span id=gbf class=gbf>
+</span>
+<span id=gbe>
+</span>
+<a href="/preferences?hl=en" class=gb4>
+Settings</a>
+ | <a href="https://www.google.com/accounts/ServiceLogin?hl=en&continue=http://www.google.com/advanced_search%3Fq%3Dx" class=gb4>
+Sign in</a>
+</nobr>
+</div>
+<div class=gbh style=left:0>
+</div>
+<div class=gbh style=right:0>
+</div>
+</div>
+-->
+
+<table width=100% border=0 cellpadding=0 cellspacing=2 style="margin-top:1em">
+<tr>
+    <td width=1%><a href="/hr-archive/internal/feedback/internal_feedback_form-01.php?components='1019'" id="internal_feedback_link">Submit bug report</a></td>
+    <td>&nbsp;    </td>
+    <td>
+        <table cellspacing=0 cellpadding=0 width=100% style="border-top:solid 1px #3366cc">
+            <tr>
+                <td class=page-title>&nbsp;Advanced Search    </td>
+                <td align=right nowrap bgcolor="#d5ddf3">
+                    <a href="javascript:alert('Sorry, this is not yet available.');">Advanced Search Tips</a>&nbsp;
+                </td>
+            </tr>
+        </table
+    </td>
+</tr>
+</table>
+
+<table cellspacing=0 cellpadding=0 width=100%>
+<tr>
+    <td align=center>
+        <table cellspacing=0 cellpadding=0 style="margin-top:.75em;width:80%">
+            <tr>
+                <td align=left>
+                    <div class="outer-box">
+                        <div class=qbuilder-env style="display:none">
+                        <div id=gen-query></div>
+                    </div>
+                    <form method=GET action="/search" name="advanced_form" class="block">
+
+                    <input type="hidden" name="search_type" value="archive" />
+                	<input type="hidden" name="search_mode" value="advanced" />
+
+                    <div style="width:100%">
+                        <h3>Find web pages that have...</h3>
+                        <table cellspacing=0 cellpadding=2 width=100%>
+                            <tr>
+                                <td class=label width="62%"><label>all these words:</label></td>
+                                <td class=input>
+                                    <div class=inputwrapper>
+                                        <input class=box type=text value="" name="q_and" style="width:100%">
+                                    </div>
+                                </td>
+                                <td class=input rowspan=5 width="10%">&nbsp;</td>
+                                <td class=input rowspan=5 width="28%">
+                                    <div class=inputwrapper>
+                                        <h3>Search in these fields only</h3>
+                                        <table>
+                                            <th>Field</th>
+                                            <th>&nbsp;</th>
+                                            <th>Boost weight</th>
+                                            </th>
+                                        <script type="text/javascript" src="js/spin_control.js"></script>
+                                            <tr>
+        <td>
+            <input id="originalUrl" name="field[]" type="checkbox"
+                defaultChecked="no" value="originalUrl^1"/>
+                URL
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="originalUrl_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for URL
+    var spinCtrl_originalUrl = new SpinControl();
+    spinCtrl_originalUrl.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_originalUrl.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_originalUrl.Tag = 'originalUrl';
+    spinCtrl_originalUrl.SetMaxValue(500);
+    spinCtrl_originalUrl.SetMinValue(0);
+    spinCtrl_originalUrl.SetCurrentValue( 1 );
+    spinCtrl_originalUrl.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'originalUrl_spinnerContainer' ).appendChild(
+      spinCtrl_originalUrl.GetContainer() );
+
+    spinCtrl_originalUrl.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentTitle" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentTitle^1"/>
+                Page Title
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentTitle_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for Page Title
+    var spinCtrl_contentTitle = new SpinControl();
+    spinCtrl_contentTitle.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentTitle.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentTitle.Tag = 'contentTitle';
+    spinCtrl_contentTitle.SetMaxValue(500);
+    spinCtrl_contentTitle.SetMinValue(0);
+    spinCtrl_contentTitle.SetCurrentValue( 1 );
+    spinCtrl_contentTitle.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentTitle_spinnerContainer' ).appendChild(
+      spinCtrl_contentTitle.GetContainer() );
+
+    spinCtrl_contentTitle.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBody" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBody^1"/>
+                Page Content
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBody_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for Page Content
+    var spinCtrl_contentBody = new SpinControl();
+    spinCtrl_contentBody.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBody.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBody.Tag = 'contentBody';
+    spinCtrl_contentBody.SetMaxValue(500);
+    spinCtrl_contentBody.SetMinValue(0);
+    spinCtrl_contentBody.SetCurrentValue( 1 );
+    spinCtrl_contentBody.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBody_spinnerContainer' ).appendChild(
+      spinCtrl_contentBody.GetContainer() );
+
+    spinCtrl_contentBody.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentMetaDescription" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentMetaDescription^1"/>
+                Meta-Description
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentMetaDescription_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for Meta-Description
+    var spinCtrl_contentMetaDescription = new SpinControl();
+    spinCtrl_contentMetaDescription.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentMetaDescription.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentMetaDescription.Tag = 'contentMetaDescription';
+    spinCtrl_contentMetaDescription.SetMaxValue(500);
+    spinCtrl_contentMetaDescription.SetMinValue(0);
+    spinCtrl_contentMetaDescription.SetCurrentValue( 1 );
+    spinCtrl_contentMetaDescription.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentMetaDescription_spinnerContainer' ).appendChild(
+      spinCtrl_contentMetaDescription.GetContainer() );
+
+    spinCtrl_contentMetaDescription.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentMetaKeywords" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentMetaKeywords^1"/>
+                Meta-Keywords
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentMetaKeywords_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for Meta-Keywords
+    var spinCtrl_contentMetaKeywords = new SpinControl();
+    spinCtrl_contentMetaKeywords.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentMetaKeywords.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentMetaKeywords.Tag = 'contentMetaKeywords';
+    spinCtrl_contentMetaKeywords.SetMaxValue(500);
+    spinCtrl_contentMetaKeywords.SetMinValue(0);
+    spinCtrl_contentMetaKeywords.SetCurrentValue( 1 );
+    spinCtrl_contentMetaKeywords.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentMetaKeywords_spinnerContainer' ).appendChild(
+      spinCtrl_contentMetaKeywords.GetContainer() );
+
+    spinCtrl_contentMetaKeywords.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentMetaLanguage" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentMetaLanguage^1"/>
+                Meta-Language
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentMetaLanguage_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for Meta-Language
+    var spinCtrl_contentMetaLanguage = new SpinControl();
+    spinCtrl_contentMetaLanguage.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentMetaLanguage.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentMetaLanguage.Tag = 'contentMetaLanguage';
+    spinCtrl_contentMetaLanguage.SetMaxValue(500);
+    spinCtrl_contentMetaLanguage.SetMinValue(0);
+    spinCtrl_contentMetaLanguage.SetCurrentValue( 1 );
+    spinCtrl_contentMetaLanguage.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentMetaLanguage_spinnerContainer' ).appendChild(
+      spinCtrl_contentMetaLanguage.GetContainer() );
+
+    spinCtrl_contentMetaLanguage.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading1" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading1^1"/>
+                h1 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading1_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h1 tags
+    var spinCtrl_contentBodyHeading1 = new SpinControl();
+    spinCtrl_contentBodyHeading1.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading1.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading1.Tag = 'contentBodyHeading1';
+    spinCtrl_contentBodyHeading1.SetMaxValue(500);
+    spinCtrl_contentBodyHeading1.SetMinValue(0);
+    spinCtrl_contentBodyHeading1.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading1.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading1_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading1.GetContainer() );
+
+    spinCtrl_contentBodyHeading1.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading2" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading2^1"/>
+                h2 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading2_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h2 tags
+    var spinCtrl_contentBodyHeading2 = new SpinControl();
+    spinCtrl_contentBodyHeading2.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading2.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading2.Tag = 'contentBodyHeading2';
+    spinCtrl_contentBodyHeading2.SetMaxValue(500);
+    spinCtrl_contentBodyHeading2.SetMinValue(0);
+    spinCtrl_contentBodyHeading2.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading2.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading2_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading2.GetContainer() );
+
+    spinCtrl_contentBodyHeading2.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading3" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading3^1"/>
+                h3 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading3_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h3 tags
+    var spinCtrl_contentBodyHeading3 = new SpinControl();
+    spinCtrl_contentBodyHeading3.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading3.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading3.Tag = 'contentBodyHeading3';
+    spinCtrl_contentBodyHeading3.SetMaxValue(500);
+    spinCtrl_contentBodyHeading3.SetMinValue(0);
+    spinCtrl_contentBodyHeading3.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading3.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading3_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading3.GetContainer() );
+
+    spinCtrl_contentBodyHeading3.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading4" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading4^1"/>
+                h4 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading4_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h4 tags
+    var spinCtrl_contentBodyHeading4 = new SpinControl();
+    spinCtrl_contentBodyHeading4.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading4.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading4.Tag = 'contentBodyHeading4';
+    spinCtrl_contentBodyHeading4.SetMaxValue(500);
+    spinCtrl_contentBodyHeading4.SetMinValue(0);
+    spinCtrl_contentBodyHeading4.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading4.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading4_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading4.GetContainer() );
+
+    spinCtrl_contentBodyHeading4.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading5" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading5^1"/>
+                h5 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading5_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h5 tags
+    var spinCtrl_contentBodyHeading5 = new SpinControl();
+    spinCtrl_contentBodyHeading5.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading5.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading5.Tag = 'contentBodyHeading5';
+    spinCtrl_contentBodyHeading5.SetMaxValue(500);
+    spinCtrl_contentBodyHeading5.SetMinValue(0);
+    spinCtrl_contentBodyHeading5.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading5.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading5_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading5.GetContainer() );
+
+    spinCtrl_contentBodyHeading5.StartListening();
+</script>
+        <tr>
+        <td>
+            <input id="contentBodyHeading6" name="field[]" type="checkbox"
+                defaultChecked="no" value="contentBodyHeading6^1"/>
+                h6 tags
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div id="contentBodyHeading6_spinnerContainer"></div>
+        </td>
+    </tr>
+    <script type="text/javascript">
+    // Spin Control for h6 tags
+    var spinCtrl_contentBodyHeading6 = new SpinControl();
+    spinCtrl_contentBodyHeading6.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contentBodyHeading6.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contentBodyHeading6.Tag = 'contentBodyHeading6';
+    spinCtrl_contentBodyHeading6.SetMaxValue(500);
+    spinCtrl_contentBodyHeading6.SetMinValue(0);
+    spinCtrl_contentBodyHeading6.SetCurrentValue( 1 );
+    spinCtrl_contentBodyHeading6.AttachValueChangedListener( spinControlListener );
+
+    document.getElementById( 'contentBodyHeading6_spinnerContainer' ).appendChild(
+      spinCtrl_contentBodyHeading6.GetContainer() );
+
+    spinCtrl_contentBodyHeading6.StartListening();
+</script>
+
+                                        <tr>
+                                            <td><br />
+                                                <input type="button"
+                                                       value="Check All"
+                                                       onClick="loopForm( document.advanced_form, true );">
+                                                <input type="button"
+                                                       value="Clear All"
+                                                       onClick="loopForm( document.advanced_form, false );">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=label><label>this exact wording or phrase:</label></td>
+                                <td class=input>
+                                    <div class=inputwrapper>
+                                        <input class=box type=text value="" name="q_phrase" style="width:100%">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=label><label>one or more of these words:</label></td>
+                                <td id=or-cell class=input>
+                                    <div class=inputwrapper>
+                                        <input class=box type=text value="" name="q_or" style="width:100%">
+                                    </div>
+                                </td>
+                           </tr>
+                           <tr>
+                               <td colspan=3><h3 style="margin-top:.7em">But don&#39;t show pages that have...</h3></td>
+                           </tr>
+                           <tr>
+                                <td class=label><label>any of these unwanted words:</label></td>
+                                <td class=input>
+                                    <div class=inputwrapper>
+                                        <input class=box type=text value="" name="q_exclude" style="width:100%">
+                                    </div>
+                                </td>
+                           </tr>
+                       </table>
+
+                       <h3 style="margin-top:1em">Additional options</h3>
+
+                       <table cellspacing=0 cellpadding=2 width=100%>
+
+                           <!-- SITE/DOMAIN -->
+                           <tr>
+                               <td class="label">
+                                     <label>Search within a site or domain:</label>
+                               </td>
+                               <td>
+                                     <select name="lim_domain">
+                                        <option value="" selected></option>
+<option value="advocacyforum.org" >advocacyforum.org</option>
+<option value="amigosdemujeres.org" >amigosdemujeres.org</option>
+<option value="amnesty.ca" >amnesty.ca</option>
+<option value="amnestyghana.org" >amnestyghana.org</option>
+<option value="amnesty.hu" >amnesty.hu</option>
+<option value="amnesty.ie" >amnesty.ie</option>
+<option value="amnestymauritius.org" >amnestymauritius.org</option>
+<option value="amnestynepal.org" >amnestynepal.org</option>
+<option value="amnesty.org.pl" >amnesty.org.pl</option>
+<option value="amnesty.org.ua" >amnesty.org.ua</option>
+<option value="amnesty.or.jp" >amnesty.or.jp</option>
+<option value="amnesty.tg" >amnesty.tg</option>
+<option value="amnistia.org.mx" >amnistia.org.mx</option>
+<option value="asvdh.net" >asvdh.net</option>
+<option value="awid.org" >awid.org</option>
+<option value="bgcentar.placebo.co.yu" >bgcentar.placebo.co.yu</option>
+<option value="byshr.org" >byshr.org</option>
+<option value="camp.org.pk" >camp.org.pk</option>
+<option value="cdhrap.net" >cdhrap.net</option>
+<option value="centroprodh.org.mx" >centroprodh.org.mx</option>
+<option value="chrr.ultinets.net" >chrr.ultinets.net</option>
+<option value="codeh.hn" >codeh.hn</option>
+<option value="derechoshumanos.pe" >derechoshumanos.pe</option>
+<option value="drom-vidin.org" >drom-vidin.org</option>
+<option value="dte.gn.apc.org" >dte.gn.apc.org</option>
+<option value="eaaf.typepad.com" >eaaf.typepad.com</option>
+<option value="ebfhr.blogspot.com" >ebfhr.blogspot.com</option>
+<option value="ecumene.org" >ecumene.org</option>
+<option value="ecwronline.org" >ecwronline.org</option>
+<option value="hrc-eritrea.org" >hrc-eritrea.org</option>
+<option value="hrcsl.lk" >hrcsl.lk</option>
+<option value="hrfssaudiarabia.org" >hrfssaudiarabia.org</option>
+<option value="humanrights.dk" >humanrights.dk</option>
+<option value="icdcprague.org" >icdcprague.org</option>
+<option value="jinsil.go.kr" >jinsil.go.kr</option>
+<option value="madre.org" >madre.org</option>
+<option value="membres.lycos.fr" >membres.lycos.fr</option>
+<option value="nwrcegypt.org" >nwrcegypt.org</option>
+<option value="ombuds.am" >ombuds.am</option>
+<option value="ombudsman.gov.az" >ombudsman.gov.az</option>
+<option value="openarab.net" >openarab.net</option>
+<option value="physiciansforhumanrights.org" >physiciansforhumanrights.org</option>
+<option value="pointpedro.org" >pointpedro.org</option>
+<option value="raddho.org" >raddho.org</option>
+<option value="savetibet.org" >savetibet.org</option>
+<option value="stopstonningnow.com" >stopstonningnow.com</option>
+<option value="studentsforafreetibet.org" >studentsforafreetibet.org</option>
+<option value="tamaynut.org" >tamaynut.org</option>
+<option value="tapol.gn.apc.org" >tapol.gn.apc.org</option>
+<option value="terradedireitos.org.br" >terradedireitos.org.br</option>
+<option value="therightsexposureproject.com" >therightsexposureproject.com</option>
+<option value="welcome.to" >welcome.to</option>
+<option value="woeser.middle-way.net" >woeser.middle-way.net</option>
+<option value="www.518.org" >www.518.org</option>
+<option value="www.aappb.org" >www.aappb.org</option>
+<option value="www.abrandh.org.br" >www.abrandh.org.br</option>
+<option value="www.abuelas.org.ar" >www.abuelas.org.ar</option>
+<option value="www.accesstojustice-ng.org" >www.accesstojustice-ng.org</option>
+<option value="www.acdauk.org.uk" >www.acdauk.org.uk</option>
+<option value="www.acdhrs.org" >www.acdhrs.org</option>
+<option value="www.achr.org" >www.achr.org</option>
+<option value="www.achrs.org" >www.achrs.org</option>
+<option value="www.achrweb.org" >www.achrweb.org</option>
+<option value="www.acri.org.il" >www.acri.org.il</option>
+<option value="www.adc.org.ar" >www.adc.org.ar</option>
+<option value="www.afad-online.org" >www.afad-online.org</option>
+<option value="www.afapredesa.org" >www.afapredesa.org</option>
+<option value="www.africaidp.org" >www.africaidp.org</option>
+<option value="www.africancourtcoalition.org" >www.africancourtcoalition.org</option>
+<option value="www.aihrc.org.af" >www.aihrc.org.af</option>
+<option value="www.aldameer.org" >www.aldameer.org</option>
+<option value="www.algeria-watch.org" >www.algeria-watch.org</option>
+<option value="www.algerie-laddh.org" >www.algerie-laddh.org</option>
+<option value="www.alhaq.org" >www.alhaq.org</option>
+<option value="www.amdh.org.ma" >www.amdh.org.ma</option>
+<option value="www.amnesty.at" >www.amnesty.at</option>
+<option value="www.amnesty.ch" >www.amnesty.ch</option>
+<option value="www.amnesty.cz" >www.amnesty.cz</option>
+<option value="www.amnesty.eu" >www.amnesty.eu</option>
+<option value="www.amnesty.fi" >www.amnesty.fi</option>
+<option value="www.amnesty.fo" >www.amnesty.fo</option>
+<option value="www.amnesty.fr" >www.amnesty.fr</option>
+<option value="www.amnesty.hr" >www.amnesty.hr</option>
+<option value="www.amnesty.is" >www.amnesty.is</option>
+<option value="www.amnesty.lu" >www.amnesty.lu</option>
+<option value="www.amnesty.md" >www.amnesty.md</option>
+<option value="www.amnesty.no" >www.amnesty.no</option>
+<option value="www.amnesty.org" >www.amnesty.org</option>
+<option value="www.amnesty.org.ar" >www.amnesty.org.ar</option>
+<option value="www.amnesty.org.gr" >www.amnesty.org.gr</option>
+<option value="www.amnesty.org.ph" >www.amnesty.org.ph</option>
+<option value="www.amnesty.org.py" >www.amnesty.org.py</option>
+<option value="www.amnesty.org.tr" >www.amnesty.org.tr</option>
+<option value="www.amnesty.org.za" >www.amnesty.org.za</option>
+<option value="www.amnesty.se" >www.amnesty.se</option>
+<option value="www.amnesty.sk" >www.amnesty.sk</option>
+<option value="www.amnistia.cl" >www.amnistia.cl</option>
+<option value="www.amnistia-internacional.pt" >www.amnistia-internacional.pt</option>
+<option value="www.amnistia.org.pe" >www.amnistia.org.pe</option>
+<option value="www.amnistia.org.uy" >www.amnistia.org.uy</option>
+<option value="www.amnistiapr.org" >www.amnistiapr.org</option>
+<option value="www.andalusitas.net" >www.andalusitas.net</option>
+<option value="www.anhri.net" >www.anhri.net</option>
+<option value="www.aphra.org" >www.aphra.org</option>
+<option value="www.aproarab.org" >www.aproarab.org</option>
+<option value="www.apt.ch" >www.apt.ch</option>
+<option value="www.arabhra.org" >www.arabhra.org</option>
+<option value="www.ardhd.org" >www.ardhd.org</option>
+<option value="www.asiapacificforum.net" >www.asiapacificforum.net</option>
+<option value="www.asper-eritrea.com" >www.asper-eritrea.com</option>
+<option value="www.aware.org.sg" >www.aware.org.sg</option>
+<option value="www.baheyya.blogspot.com" >www.baheyya.blogspot.com</option>
+<option value="www.baobabwomen.org" >www.baobabwomen.org</option>
+<option value="www.belhelcom.org" >www.belhelcom.org</option>
+<option value="www.bgcentar.org.rs" >www.bgcentar.org.rs</option>
+<option value="www.bimkom.org" >www.bimkom.org</option>
+<option value="www.blc-burma.org" >www.blc-burma.org</option>
+<option value="www.bo.amnesty.org" >www.bo.amnesty.org</option>
+<option value="www.breakthrough.tv" >www.breakthrough.tv</option>
+<option value="www.btselem.org" >www.btselem.org</option>
+<option value="www.burmacampaign.org.uk" >www.burmacampaign.org.uk</option>
+<option value="www.cacit.org" >www.cacit.org</option>
+<option value="www.caldh.org" >www.caldh.org</option>
+<option value="www.cavr-timorleste.org" >www.cavr-timorleste.org</option>
+<option value="www.ccdh.org.ma" >www.ccdh.org.ma</option>
+<option value="www.cddghana.org" >www.cddghana.org</option>
+<option value="www.cdhr.info" >www.cdhr.info</option>
+<option value="www.cdifdh.org.ma" >www.cdifdh.org.ma</option>
+<option value="www.ceddert.com" >www.ceddert.com</option>
+<option value="www.cedha.org.ar" >www.cedha.org.ar</option>
+<option value="www.cejil.org" >www.cejil.org</option>
+<option value="www.cels.org.ar" >www.cels.org.ar</option>
+<option value="www.centrojuanmontalvo.org.do" >www.centrojuanmontalvo.org.do</option>
+<option value="www.cepad.org.mx" >www.cepad.org.mx</option>
+<option value="www.cesr.org" >www.cesr.org</option>
+<option value="www.cfob.org" >www.cfob.org</option>
+<option value="www.cgb.nl" >www.cgb.nl</option>
+<option value="www.chipsites.com" >www.chipsites.com</option>
+<option value="www.chragg.go.tz" >www.chragg.go.tz</option>
+<option value="www.chr.gov.ph" >www.chr.gov.ph</option>
+<option value="www.cidct.org.ua" >www.cidct.org.ua</option>
+<option value="www.cihrs.org" >www.cihrs.org</option>
+<option value="www.citizenshiprightsinafrica.org" >www.citizenshiprightsinafrica.org</option>
+<option value="www.cja.org" >www.cja.org</option>
+<option value="www.cladem.org" >www.cladem.org</option>
+<option value="www.cmdpdh.org" >www.cmdpdh.org</option>
+<option value="www.cncdh.fr" >www.cncdh.fr</option>
+<option value="www.cndh.org.mx" >www.cndh.org.mx</option>
+<option value="www.cndh-togo.org" >www.cndh-togo.org</option>
+<option value="www.codehupy.org" >www.codehupy.org</option>
+<option value="www.codepu.cl" >www.codepu.cl</option>
+<option value="www.cofadeh.org" >www.cofadeh.org</option>
+<option value="www.columbia.edu" >www.columbia.edu</option>
+<option value="www.columbia.edu" >www.columbia.edu</option>
+<option value="www.columbia.edu" >www.columbia.edu</option>
+<option value="www.conadeh.hn" >www.conadeh.hn</option>
+<option value="www.concernedhistorians.org" >www.concernedhistorians.org</option>
+<option value="www.conectas.org" >www.conectas.org</option>
+<option value="www.congonline.com" >www.congonline.com</option>
+<option value="www.cpj.org" >www.cpj.org</option>
+<option value="www.cridoc.net" >www.cridoc.net</option>
+<option value="www.crisisgroup.org" >www.crisisgroup.org</option>
+<option value="www.crldht.info" >www.crldht.info</option>
+<option value="www.crldht.org" >www.crldht.org</option>
+<option value="www.csdcambodia.org" >www.csdcambodia.org</option>
+<option value="www.csdh.sn" >www.csdh.sn</option>
+<option value="www.csvr.org.za" >www.csvr.org.za</option>
+<option value="www.cvict.org.np" >www.cvict.org.np</option>
+<option value="www.cwvhr.org" >www.cwvhr.org</option>
+<option value="www.darfurconsortium.org" >www.darfurconsortium.org</option>
+<option value="www.defensordelpueblo.gov.ec" >www.defensordelpueblo.gov.ec</option>
+<option value="www.defensoresenlinea.com" >www.defensoresenlinea.com</option>
+<option value="www.defensor.gov.bo" >www.defensor.gov.bo</option>
+<option value="www.defensoriadelpueblo.gob.pa" >www.defensoriadelpueblo.gob.pa</option>
+<option value="www.defensoriadelpueblo.gov.py" >www.defensoriadelpueblo.gov.py</option>
+<option value="www.defensoria.gob.bo" >www.defensoria.gob.bo</option>
+<option value="www.defensoria.gob.pe" >www.defensoria.gob.pe</option>
+<option value="www.desdecuba.com" >www.desdecuba.com</option>
+<option value="www.dhperu.org" >www.dhperu.org</option>
+<option value="www.dhr.go.cr" >www.dhr.go.cr</option>
+<option value="www.ditshwanelo.org.bw" >www.ditshwanelo.org.bw</option>
+<option value="www.docip.org" >www.docip.org</option>
+<option value="www.do.se" >www.do.se</option>
+<option value="www.downtoearth-indonesia.org" >www.downtoearth-indonesia.org</option>
+<option value="www.dpn.gob.ar" >www.dpn.gob.ar</option>
+<option value="www.dwatch-bd.org" >www.dwatch-bd.org</option>
+<option value="www.dzeno.cz" >www.dzeno.cz</option>
+<option value="www.ecpat.net" >www.ecpat.net</option>
+<option value="www.ehrco.org" >www.ehrco.org</option>
+<option value="www.ehrea.org" >www.ehrea.org</option>
+<option value="www.eisa.org.za" >www.eisa.org.za</option>
+<option value="www.elsam.or.id" >www.elsam.or.id</option>
+<option value="www.en.mosharka.org" >www.en.mosharka.org</option>
+<option value="www.eohr.org" >www.eohr.org</option>
+<option value="www.equalityhumanrights.com" >www.equalityhumanrights.com</option>
+<option value="www.erichina.org" >www.erichina.org</option>
+<option value="www.errc.org" >www.errc.org</option>
+<option value="www.es.amnesty.org" >www.es.amnesty.org</option>
+<option value="www.fafg.org" >www.fafg.org</option>
+<option value="www.fasic.org" >www.fasic.org</option>
+<option value="www.fawe.org" >www.fawe.org</option>
+<option value="www.fhri.or.ug" >www.fhri.or.ug</option>
+<option value="www.flamnet.info" >www.flamnet.info</option>
+<option value="www.flamnet.net" >www.flamnet.net</option>
+<option value="www.focusweb.org" >www.focusweb.org</option>
+<option value="www.fohridnetwork.org" >www.fohridnetwork.org</option>
+<option value="www.fohrid.org.np" >www.fohrid.org.np</option>
+<option value="www.forum-asia.org" >www.forum-asia.org</option>
+<option value="www.friendsoftibet.org" >www.friendsoftibet.org</option>
+<option value="www.frontlinedefenders.org" >www.frontlinedefenders.org</option>
+<option value="www.gaatw.org" >www.gaatw.org</option>
+<option value="www.gajop.org.br" >www.gajop.org.br</option>
+<option value="www.gal-soc.org" >www.gal-soc.org</option>
+<option value="www.globalwitness.org" >www.globalwitness.org</option>
+<option value="www.gov.mu" >www.gov.mu</option>
+<option value="www.greensborotrc.org" >www.greensborotrc.org</option>
+<option value="www.gtcrp.org" >www.gtcrp.org</option>
+<option value="www.hakielimu.org" >www.hakielimu.org</option>
+<option value="www.hambastegi.org" >www.hambastegi.org</option>
+<option value="www.hamoked.org" >www.hamoked.org</option>
+<option value="www.hcav.am" >www.hcav.am</option>
+<option value="www.heritiers.org" >www.heritiers.org</option>
+<option value="www.hmlc-egy.org" >www.hmlc-egy.org</option>
+<option value="www.hrca.org.au" >www.hrca.org.au</option>
+<option value="www.hrcbm.org" >www.hrcbm.org</option>
+<option value="www.hrc.co.nz" >www.hrc.co.nz</option>
+<option value="www.hrcm.org.mv" >www.hrcm.org.mv</option>
+<option value="www.hrc.org.zm" >www.hrc.org.zm</option>
+<option value="www.hrcp-web.org" >www.hrcp-web.org</option>
+<option value="www.hreib.com" >www.hreib.com</option>
+<option value="www.hrforumzim.com" >www.hrforumzim.com</option>
+<option value="www.hrln.org" >www.hrln.org</option>
+<option value="www.humanrights.asia" >www.humanrights.asia</option>
+<option value="www.humanrightsfirst.org" >www.humanrightsfirst.org</option>
+<option value="www.humanrights.ge" >www.humanrights.ge</option>
+<option value="www.humanrights.gov.au" >www.humanrights.gov.au</option>
+<option value="www.humanrights.mw" >www.humanrights.mw</option>
+<option value="www.humanrights.org.lv" >www.humanrights.org.lv</option>
+<option value="www.humanrights.or.tz" >www.humanrights.or.tz</option>
+<option value="www.ichr.ps" >www.ichr.ps</option>
+<option value="www.icj.org" >www.icj.org</option>
+<option value="www.ic-mp.org" >www.ic-mp.org</option>
+<option value="www.idasa.org.za" >www.idasa.org.za</option>
+<option value="www.ier.ma" >www.ier.ma</option>
+<option value="www.ifhhro.org" >www.ifhhro.org</option>
+<option value="www.iglhrc.org" >www.iglhrc.org</option>
+<option value="www.ihop.org.tr" >www.ihop.org.tr</option>
+<option value="www.ihrc.org.uk" >www.ihrc.org.uk</option>
+<option value="www.ihrv.org" >www.ihrv.org</option>
+<option value="www.i-indiaonline.com" >www.i-indiaonline.com</option>
+<option value="www.ijr.org.za" >www.ijr.org.za</option>
+<option value="www.ilhr.org" >www.ilhr.org</option>
+<option value="www.indesomujer.org.ar" >www.indesomujer.org.ar</option>
+<option value="www.indict.org.uk" >www.indict.org.uk</option>
+<option value="www.inredh.org" >www.inredh.org</option>
+<option value="www.institut-fuer-menschenrechte.de" >www.institut-fuer-menschenrechte.de</option>
+<option value="www.institutomemoria.org.ar" >www.institutomemoria.org.ar</option>
+<option value="www.ipcb.org" >www.ipcb.org</option>
+<option value="www.irag.org.uk" >www.irag.org.uk</option>
+<option value="www.iranhrdc.org" >www.iranhrdc.org</option>
+<option value="www.iraqfoundation.org" >www.iraqfoundation.org</option>
+<option value="www.ishr.ch" >www.ishr.ch</option>
+<option value="www.ishr.org" >www.ishr.org</option>
+<option value="www.iwant2gohome.org" >www.iwant2gohome.org</option>
+<option value="www.iwgia.org" >www.iwgia.org</option>
+<option value="www.jpnuk.org.uk" >www.jpnuk.org.uk</option>
+<option value="www.jrs.net" >www.jrs.net</option>
+<option value="www.jrsusa.org" >www.jrsusa.org</option>
+<option value="www.jsmp.minihub.org" >www.jsmp.minihub.org</option>
+<option value="www.justice.gov.za" >www.justice.gov.za</option>
+<option value="www.kchr.org" >www.kchr.org</option>
+<option value="www.khpg.org" >www.khpg.org</option>
+<option value="www.khrc.or.ke" >www.khrc.or.ke</option>
+<option value="www.khrp.org" >www.khrp.org</option>
+<option value="www.kisebbsegiombudsman.hu" >www.kisebbsegiombudsman.hu</option>
+<option value="www.knchr.org" >www.knchr.org</option>
+<option value="www.komnasham.go.id" >www.komnasham.go.id</option>
+<option value="www.kosovakosovo.com" >www.kosovakosovo.com</option>
+<option value="www.kuru.co.bw" >www.kuru.co.bw</option>
+<option value="www.kwrw.org" >www.kwrw.org</option>
+<option value="www.lawandsocietytrust.org" >www.lawandsocietytrust.org</option>
+<option value="www.lawcla.org" >www.lawcla.org</option>
+<option value="www.lchr-eg.org" >www.lchr-eg.org</option>
+<option value="www.licadho-cambodia.org" >www.licadho-cambodia.org</option>
+<option value="www.licadho.org" >www.licadho.org</option>
+<option value="www.ligue-iteka.africa-web.org" >www.ligue-iteka.africa-web.org</option>
+<option value="www.malao.org" >www.malao.org</option>
+<option value="www.malawihumanrightscommission.org" >www.malawihumanrightscommission.org</option>
+<option value="www.mapfoundationcm.org" >www.mapfoundationcm.org</option>
+<option value="www.mazlumder.org" >www.mazlumder.org</option>
+<option value="www.mediafound.org" >www.mediafound.org</option>
+<option value="www.mezan.org" >www.mezan.org</option>
+<option value="www.mhg.ru" >www.mhg.ru</option>
+<option value="www.minorityrights.org" >www.minorityrights.org</option>
+<option value="www.mn-nhrc.org" >www.mn-nhrc.org</option>
+<option value="www.mst.org.br" >www.mst.org.br</option>
+<option value="www.naya.org.ar" >www.naya.org.ar</option>
+<option value="www.ncdhr.org.in" >www.ncdhr.org.in</option>
+<option value="www.nchregypt.org" >www.nchregypt.org</option>
+<option value="www.nchr.gr" >www.nchr.gr</option>
+<option value="www.nchr.org.jo" >www.nchr.org.jo</option>
+<option value="www.nhrcnepal.org" >www.nhrcnepal.org</option>
+<option value="www.nhrc.nic.in" >www.nhrc.nic.in</option>
+<option value="www.nhrc.or.th" >www.nhrc.or.th</option>
+<option value="www.nigeriarights.gov.ng" >www.nigeriarights.gov.ng</option>
+<option value="www.nihrc.org" >www.nihrc.org</option>
+<option value="www.nknet.org" >www.nknet.org</option>
+<option value="www.nmjd.org" >www.nmjd.org</option>
+<option value="www.nshr.org.na" >www.nshr.org.na</option>
+<option value="www.nurc.gov.rw" >www.nurc.gov.rw</option>
+<option value="www.oajnu.org" >www.oajnu.org</option>
+<option value="www.ochrance.cz" >www.ochrance.cz</option>
+<option value="www.omal.info" >www.omal.info</option>
+<option value="www.ombudsman.bm" >www.ombudsman.bm</option>
+<option value="www.ombudsman.gov.tt" >www.ombudsman.gov.tt</option>
+<option value="www.ombudsman.hr" >www.ombudsman.hr</option>
+<option value="www.ombudsman.org.na" >www.ombudsman.org.na</option>
+<option value="www.ombudsmanpr.com" >www.ombudsmanpr.com</option>
+<option value="www.ombudsmen.rs.ba" >www.ombudsmen.rs.ba</option>
+<option value="www.omct.org" >www.omct.org</option>
+<option value="www.pazcondignidad.org" >www.pazcondignidad.org</option>
+<option value="www.pchrgaza.org" >www.pchrgaza.org</option>
+<option value="www.pdh.org.gt" >www.pdh.org.gt</option>
+<option value="www.peacebrigades.org" >www.peacebrigades.org</option>
+<option value="www.phrmg.org" >www.phrmg.org</option>
+<option value="www.pihro.org" >www.pihro.org</option>
+<option value="www.privacyinternational.org" >www.privacyinternational.org</option>
+<option value="www.procuraduriaddhh.gob.ni" >www.procuraduriaddhh.gob.ni</option>
+<option value="www.raddho.africa-web.org" >www.raddho.africa-web.org</option>
+<option value="www.raipon.info" >www.raipon.info</option>
+<option value="www.raipon.org" >www.raipon.org</option>
+<option value="www.rchrs.org" >www.rchrs.org</option>
+<option value="www.responsibilitytoprotect.org" >www.responsibilitytoprotect.org</option>
+<option value="www.rhr.org.il" >www.rhr.org.il</option>
+<option value="www.rjdh-niger.org" >www.rjdh-niger.org</option>
+<option value="www.rnddh.org" >www.rnddh.org</option>
+<option value="www.sahrc.org.za" >www.sahrc.org.za</option>
+<option value="www.satsentinel.org" >www.satsentinel.org</option>
+<option value="www.shanwomen.org" >www.shanwomen.org</option>
+<option value="www.shirkatgah.org" >www.shirkatgah.org</option>
+<option value="www.sigloxxi.org" >www.sigloxxi.org</option>
+<option value="www.sinfronteras.org.mx" >www.sinfronteras.org.mx</option>
+<option value="www.slcgg.org" >www.slcgg.org</option>
+<option value="www.sokwanele.com" >www.sokwanele.com</option>
+<option value="www.solidaritypeacetrust.org" >www.solidaritypeacetrust.org</option>
+<option value="www.srji.org" >www.srji.org</option>
+<option value="www.suaram.net" >www.suaram.net</option>
+<option value="www.suhakam.org.my" >www.suhakam.org.my</option>
+<option value="www.taghyeer.net" >www.taghyeer.net</option>
+<option value="www.tchrd.org" >www.tchrd.org</option>
+<option value="www.tgnp.org" >www.tgnp.org</option>
+<option value="www.theotherrussia.org" >www.theotherrussia.org</option>
+<option value="www.thinkcentre.org" >www.thinkcentre.org</option>
+<option value="www.tibetinfonet.net" >www.tibetinfonet.net</option>
+<option value="www.tihv.org.tr" >www.tihv.org.tr</option>
+<option value="www.tmgnigeria.org" >www.tmgnigeria.org</option>
+<option value="www.transparency.org" >www.transparency.org</option>
+<option value="www.ucicc.org" >www.ucicc.org</option>
+<option value="www.uhrc.ug" >www.uhrc.ug</option>
+<option value="www.unpo.org" >www.unpo.org</option>
+<option value="www.uthr.org" >www.uthr.org</option>
+<option value="www.vicariadelasolidaridad.cl" >www.vicariadelasolidaridad.cl</option>
+<option value="www.volksanw.gv.at" >www.volksanw.gv.at</option>
+<option value="www.vsv-rdc.com" >www.vsv-rdc.com</option>
+<option value="www.wa7damasrya.blogspot.com" >www.wa7damasrya.blogspot.com</option>
+<option value="www.we-change.org" >www.we-change.org</option>
+<option value="www.wluml.org" >www.wluml.org</option>
+<option value="www.womenforafghanwomen.org" >www.womenforafghanwomen.org</option>
+<option value="www.wwhr.org" >www.wwhr.org</option>
+<option value="www.yohr.org" >www.yohr.org</option>
+<option value="www.zlhr.org.zw" >www.zlhr.org.zw</option>
+<option value="yhrn.org" >yhrn.org</option>
+
+                                     </select>
+                               </td>
+                           </tr>
+
+                           <!-- MIME TYPE -->
+                           <tr>
+                               <td class="label">
+                                     <label>File type:</label>
+                               </td>
+                               <td>
+                                   <select name="lim_mimetype">
+                                    <option value="" selected></option>
+<option value="pdf" >pdf</option>
+<option value="text/html" >text/html</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <!-- LANGUAGE -->
+                           <tr>
+                               <td class="label">
+                                     <label>Website Language(s) <span class="label">(refers to website as a whole, not individual pages)</span>:</label>
+                               </td>
+                               <td>
+                                   <select name="lim_language">
+                                    <option value="" selected></option>
+<option value="Albanian" >Albanian</option>
+<option value="Arabic" >Arabic</option>
+<option value="Armenian" >Armenian</option>
+<option value="Azerbaijani" >Azerbaijani</option>
+<option value="Belarusian" >Belarusian</option>
+<option value="Bulgarian" >Bulgarian</option>
+<option value="Burmese" >Burmese</option>
+<option value="Chinese" >Chinese</option>
+<option value="Creoles and Pidgins, French-based (Other)" >Creoles and Pidgins, French-based (Other)</option>
+<option value="Croatian" >Croatian</option>
+<option value="Czech" >Czech</option>
+<option value="Danish" >Danish</option>
+<option value="Dutch" >Dutch</option>
+<option value="English" >English</option>
+<option value="Faroese" >Faroese</option>
+<option value="Finnish" >Finnish</option>
+<option value="French" >French</option>
+<option value="Georgian" >Georgian</option>
+<option value="German" >German</option>
+<option value="Greek, Modern (1453-)" >Greek, Modern (1453-)</option>
+<option value="Hebrew" >Hebrew</option>
+<option value="Hindi" >Hindi</option>
+<option value="Hungarian" >Hungarian</option>
+<option value="Icelandic" >Icelandic</option>
+<option value="Indonesian" >Indonesian</option>
+<option value="Italian" >Italian</option>
+<option value="Japanese" >Japanese</option>
+<option value="Korean" >Korean</option>
+<option value="Latvian" >Latvian</option>
+<option value="Malay" >Malay</option>
+<option value="Mongolian" >Mongolian</option>
+<option value="Nepali" >Nepali</option>
+<option value="Norwegian" >Norwegian</option>
+<option value="Nyanja" >Nyanja</option>
+<option value="Persian" >Persian</option>
+<option value="Polish" >Polish</option>
+<option value="Portuguese" >Portuguese</option>
+<option value="Pushto" >Pushto</option>
+<option value="Quechua" >Quechua</option>
+<option value="Romani" >Romani</option>
+<option value="Romanian" >Romanian</option>
+<option value="Russian" >Russian</option>
+<option value="Serbian" >Serbian</option>
+<option value="Slovak" >Slovak</option>
+<option value="Spanish" >Spanish</option>
+<option value="Swahili" >Swahili</option>
+<option value="Swedish" >Swedish</option>
+<option value="Tamil" >Tamil</option>
+<option value="Tetum" >Tetum</option>
+<option value="Thai" >Thai</option>
+<option value="Tibetan" >Tibetan</option>
+<option value="Tumbuka" >Tumbuka</option>
+<option value="Turkish" >Turkish</option>
+<option value="Ukrainian" >Ukrainian</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <!-- GEOGRAPHIC FOCUS -->
+                           <tr>
+                               <td class="label">
+                                     <label>Organization/Site Geographic Focus:</label>
+                               </td>
+                               <td>
+                                   <select name="lim_geographic_focus">
+                                    <option value="" selected></option>
+<option value="Afghanistan" >Afghanistan</option>
+<option value="Africa" >Africa</option>
+<option value="Africa, Eastern" >Africa, Eastern</option>
+<option value="Africa, North" >Africa, North</option>
+<option value="Africa, Southern" >Africa, Southern</option>
+<option value="Africa, West" >Africa, West</option>
+<option value="Albania" >Albania</option>
+<option value="Algeria" >Algeria</option>
+<option value="Arab countries" >Arab countries</option>
+<option value="Arabian Peninsula" >Arabian Peninsula</option>
+<option value="Argentina" >Argentina</option>
+<option value="Armenia (Republic)" >Armenia (Republic)</option>
+<option value="Asia" >Asia</option>
+<option value="Australia" >Australia</option>
+<option value="Austria" >Austria</option>
+<option value="Azerbaijan" >Azerbaijan</option>
+<option value="Bahrain" >Bahrain</option>
+<option value="Bangladesh" >Bangladesh</option>
+<option value="Belarus" >Belarus</option>
+<option value="Bermuda Islands" >Bermuda Islands</option>
+<option value="Bolivia" >Bolivia</option>
+<option value="Bosnia and Hercegovina" >Bosnia and Hercegovina</option>
+<option value="Botswana" >Botswana</option>
+<option value="Brazil" >Brazil</option>
+<option value="Bulgaria" >Bulgaria</option>
+<option value="Burma" >Burma</option>
+<option value="Burundi" >Burundi</option>
+<option value="Cambodia" >Cambodia</option>
+<option value="Caribbean Area; Caribbean Sea" >Caribbean Area; Caribbean Sea</option>
+<option value="Chile" >Chile</option>
+<option value="China" >China</option>
+<option value="Congo (Democratic Republic)" >Congo (Democratic Republic)</option>
+<option value="Costa Rica" >Costa Rica</option>
+<option value="Croatia" >Croatia</option>
+<option value="Cuba" >Cuba</option>
+<option value="Czech Republic" >Czech Republic</option>
+<option value="Denmark" >Denmark</option>
+<option value="Djibouti" >Djibouti</option>
+<option value="Dominican Republic" >Dominican Republic</option>
+<option value="East Timor" >East Timor</option>
+<option value="Ecuador" >Ecuador</option>
+<option value="Egypt" >Egypt</option>
+<option value="Eritrea" >Eritrea</option>
+<option value="Ethiopia" >Ethiopia</option>
+<option value="Europe" >Europe</option>
+<option value="Europe, Central" >Europe, Central</option>
+<option value="Europe, Eastern" >Europe, Eastern</option>
+<option value="Faroe Islands" >Faroe Islands</option>
+<option value="Finland" >Finland</option>
+<option value="France" >France</option>
+<option value="Gaza Strip" >Gaza Strip</option>
+<option value="Georgia (Republic)" >Georgia (Republic)</option>
+<option value="Germany" >Germany</option>
+<option value="Ghana" >Ghana</option>
+<option value="[Global focus]" >[Global focus]</option>
+<option value="Great Britain" >Great Britain</option>
+<option value="Greece" >Greece</option>
+<option value="Guatemala" >Guatemala</option>
+<option value="Haiti" >Haiti</option>
+<option value="Honduras" >Honduras</option>
+<option value="Hong Kong (China)" >Hong Kong (China)</option>
+<option value="Hungary" >Hungary</option>
+<option value="Iceland" >Iceland</option>
+<option value="India" >India</option>
+<option value="Indonesia" >Indonesia</option>
+<option value="Iran" >Iran</option>
+<option value="Iraq" >Iraq</option>
+<option value="Ireland" >Ireland</option>
+<option value="Israel" >Israel</option>
+<option value="Italy" >Italy</option>
+<option value="Japan" >Japan</option>
+<option value="Jordan" >Jordan</option>
+<option value="Kenya" >Kenya</option>
+<option value="Korea (North)" >Korea (North)</option>
+<option value="Korea (South)" >Korea (South)</option>
+<option value="Kosovo" >Kosovo</option>
+<option value="Kyrgyzstan" >Kyrgyzstan</option>
+<option value="Latin America" >Latin America</option>
+<option value="Latvia" >Latvia</option>
+<option value="Liberia" >Liberia</option>
+<option value="Luxembourg" >Luxembourg</option>
+<option value="Malawi" >Malawi</option>
+<option value="Malaysia" >Malaysia</option>
+<option value="Maldives" >Maldives</option>
+<option value="Mauritania" >Mauritania</option>
+<option value="Mauritius" >Mauritius</option>
+<option value="Mexico" >Mexico</option>
+<option value="Middle East" >Middle East</option>
+<option value="Moldova" >Moldova</option>
+<option value="Mongolia" >Mongolia</option>
+<option value="Morocco" >Morocco</option>
+<option value="Namibia" >Namibia</option>
+<option value="Nepal" >Nepal</option>
+<option value="Netherlands" >Netherlands</option>
+<option value="New Zealand" >New Zealand</option>
+<option value="Nicaragua" >Nicaragua</option>
+<option value="Niger" >Niger</option>
+<option value="Nigeria" >Nigeria</option>
+<option value="North Carolina" >North Carolina</option>
+<option value="Northern Ireland" >Northern Ireland</option>
+<option value="Norway" >Norway</option>
+<option value="Pacific Ocean" >Pacific Ocean</option>
+<option value="Pakistan" >Pakistan</option>
+<option value="Panama" >Panama</option>
+<option value="Paraguay" >Paraguay</option>
+<option value="Peru" >Peru</option>
+<option value="Philippines" >Philippines</option>
+<option value="Poland" >Poland</option>
+<option value="Portugal" >Portugal</option>
+<option value="Puerto Rico" >Puerto Rico</option>
+<option value="Russia (Federation)" >Russia (Federation)</option>
+<option value="Rwanda" >Rwanda</option>
+<option value="Saudi Arabia" >Saudi Arabia</option>
+<option value="Senegal" >Senegal</option>
+<option value="Serbia" >Serbia</option>
+<option value="Sierra Leone" >Sierra Leone</option>
+<option value="Singapore" >Singapore</option>
+<option value="Slovakia" >Slovakia</option>
+<option value="South Africa" >South Africa</option>
+<option value="Southeast Asia" >Southeast Asia</option>
+<option value="South Sudan" >South Sudan</option>
+<option value="Spain" >Spain</option>
+<option value="Sri Lanka" >Sri Lanka</option>
+<option value="Sudan" >Sudan</option>
+<option value="Sweden" >Sweden</option>
+<option value="Switzerland" >Switzerland</option>
+<option value="Tanzania" >Tanzania</option>
+<option value="Thailand" >Thailand</option>
+<option value="Tibet (China)" >Tibet (China)</option>
+<option value="Togo" >Togo</option>
+<option value="Trinidad and Tobago" >Trinidad and Tobago</option>
+<option value="Tunisia" >Tunisia</option>
+<option value="Turkey" >Turkey</option>
+<option value="Uganda" >Uganda</option>
+<option value="Ukraine" >Ukraine</option>
+<option value="United States" >United States</option>
+<option value="Uruguay" >Uruguay</option>
+<option value="West Bank" >West Bank</option>
+<option value="Western Sahara" >Western Sahara</option>
+<option value="Yemen (Republic)" >Yemen (Republic)</option>
+<option value="Zambia" >Zambia</option>
+<option value="Zimbabwe" >Zimbabwe</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+
+                           <!-- GEOGRAPHIC BASED-IN -->
+                           <tr>
+                               <td class="label">
+                                     <label>Organization/Site Based In:</label>
+                               </td>
+                               <td>
+                                   <select name="lim_organization_based_in">
+                                    <option value="" selected></option>
+<option value="Afghanistan" >Afghanistan</option>
+<option value="Albania" >Albania</option>
+<option value="Algeria" >Algeria</option>
+<option value="Argentina" >Argentina</option>
+<option value="Armenia (Republic)" >Armenia (Republic)</option>
+<option value="Australia" >Australia</option>
+<option value="Austria" >Austria</option>
+<option value="Azerbaijan" >Azerbaijan</option>
+<option value="Bahrain" >Bahrain</option>
+<option value="Bangladesh" >Bangladesh</option>
+<option value="Belarus" >Belarus</option>
+<option value="Belgium" >Belgium</option>
+<option value="Bermuda Islands" >Bermuda Islands</option>
+<option value="Bolivia" >Bolivia</option>
+<option value="Bosnia and Hercegovina" >Bosnia and Hercegovina</option>
+<option value="Botswana" >Botswana</option>
+<option value="Brazil" >Brazil</option>
+<option value="Bulgaria" >Bulgaria</option>
+<option value="Burundi" >Burundi</option>
+<option value="California" >California</option>
+<option value="Cambodia" >Cambodia</option>
+<option value="Canada" >Canada</option>
+<option value="Chile" >Chile</option>
+<option value="China" >China</option>
+<option value="Congo (Democratic Republic)" >Congo (Democratic Republic)</option>
+<option value="Costa Rica" >Costa Rica</option>
+<option value="Croatia" >Croatia</option>
+<option value="Cuba" >Cuba</option>
+<option value="Czech Republic" >Czech Republic</option>
+<option value="Denmark" >Denmark</option>
+<option value="District of Columbia" >District of Columbia</option>
+<option value="Djibouti" >Djibouti</option>
+<option value="Dominican Republic" >Dominican Republic</option>
+<option value="East Timor" >East Timor</option>
+<option value="Ecuador" >Ecuador</option>
+<option value="Egypt" >Egypt</option>
+<option value="England" >England</option>
+<option value="Eritrea" >Eritrea</option>
+<option value="Ethiopia" >Ethiopia</option>
+<option value="Faroe Islands" >Faroe Islands</option>
+<option value="Finland" >Finland</option>
+<option value="France" >France</option>
+<option value="Gambia" >Gambia</option>
+<option value="Gaza Strip" >Gaza Strip</option>
+<option value="Georgia (Republic)" >Georgia (Republic)</option>
+<option value="Germany" >Germany</option>
+<option value="Ghana" >Ghana</option>
+<option value="Greece" >Greece</option>
+<option value="Guatemala" >Guatemala</option>
+<option value="Haiti" >Haiti</option>
+<option value="Honduras" >Honduras</option>
+<option value="Hungary" >Hungary</option>
+<option value="Iceland" >Iceland</option>
+<option value="India" >India</option>
+<option value="Indonesia" >Indonesia</option>
+<option value="Iran" >Iran</option>
+<option value="Ireland" >Ireland</option>
+<option value="Israel" >Israel</option>
+<option value="Italy" >Italy</option>
+<option value="Japan" >Japan</option>
+<option value="Jordan" >Jordan</option>
+<option value="Kenya" >Kenya</option>
+<option value="Korea (South)" >Korea (South)</option>
+<option value="Kosovo" >Kosovo</option>
+<option value="Kyrgyzstan" >Kyrgyzstan</option>
+<option value="Latvia" >Latvia</option>
+<option value="Liberia" >Liberia</option>
+<option value="Luxembourg" >Luxembourg</option>
+<option value="Malawi" >Malawi</option>
+<option value="Malaysia" >Malaysia</option>
+<option value="Maldives" >Maldives</option>
+<option value="Massachusetts" >Massachusetts</option>
+<option value="Mauritania" >Mauritania</option>
+<option value="Mauritius" >Mauritius</option>
+<option value="Mexico" >Mexico</option>
+<option value="Moldova" >Moldova</option>
+<option value="Mongolia" >Mongolia</option>
+<option value="Morocco" >Morocco</option>
+<option value="Namibia" >Namibia</option>
+<option value="Nepal" >Nepal</option>
+<option value="Netherlands" >Netherlands</option>
+<option value="New York (State)" >New York (State)</option>
+<option value="New Zealand" >New Zealand</option>
+<option value="Nicaragua" >Nicaragua</option>
+<option value="Niger" >Niger</option>
+<option value="Nigeria" >Nigeria</option>
+<option value="No place, unknown, or undetermined" >No place, unknown, or undetermined</option>
+<option value="North Carolina" >North Carolina</option>
+<option value="Northern Ireland" >Northern Ireland</option>
+<option value="Norway" >Norway</option>
+<option value="Pakistan" >Pakistan</option>
+<option value="Panama" >Panama</option>
+<option value="Paraguay" >Paraguay</option>
+<option value="Peru" >Peru</option>
+<option value="Philippines" >Philippines</option>
+<option value="Poland" >Poland</option>
+<option value="Portugal" >Portugal</option>
+<option value="Puerto Rico" >Puerto Rico</option>
+<option value="Russia (Federation)" >Russia (Federation)</option>
+<option value="Rwanda" >Rwanda</option>
+<option value="Saudi Arabia" >Saudi Arabia</option>
+<option value="Senegal" >Senegal</option>
+<option value="Serbia" >Serbia</option>
+<option value="Sierra Leone" >Sierra Leone</option>
+<option value="Singapore" >Singapore</option>
+<option value="Slovakia" >Slovakia</option>
+<option value="South Africa" >South Africa</option>
+<option value="Spain" >Spain</option>
+<option value="Sri Lanka" >Sri Lanka</option>
+<option value="Sweden" >Sweden</option>
+<option value="Switzerland" >Switzerland</option>
+<option value="Tanzania" >Tanzania</option>
+<option value="Thailand" >Thailand</option>
+<option value="Togo" >Togo</option>
+<option value="Trinidad and Tobago" >Trinidad and Tobago</option>
+<option value="Tunisia" >Tunisia</option>
+<option value="Turkey" >Turkey</option>
+<option value="Uganda" >Uganda</option>
+<option value="Ukraine" >Ukraine</option>
+<option value="United Kingdom" >United Kingdom</option>
+<option value="United States" >United States</option>
+<option value="Uruguay" >Uruguay</option>
+<option value="Vatican City" >Vatican City</option>
+<option value="Western Sahara" >Western Sahara</option>
+<option value="Yemen" >Yemen</option>
+<option value="Zambia" >Zambia</option>
+<option value="Zimbabwe" >Zimbabwe</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+
+                           <!-- ORGANIZATION TYPE -->
+                           <tr>
+                               <td class="label">
+                                     <label>Organization Type</label>
+                               </td>
+                               <td>
+                                   <select name="lim_organization_type">
+                                    <option value="" selected></option>
+<option value="Individual site creators" >Individual site creators</option>
+<option value="National human rights institutions" >National human rights institutions</option>
+<option value="Non-governmental organizations" >Non-governmental organizations</option>
+<option value="Other organization types" >Other organization types</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <!-- CREATOR NAME -->
+                           <tr>
+                               <td class="label">
+                                     <label>Creator Name</label>
+                               </td>
+                               <td>
+                                   <select name="lim_creator_name">
+                                    <option value="" selected></option>
+<option value="880-01 5.18 KinyoÌm Chaedan (Korea)" >880-01 5.18 KinyoÌm Chaedan (Korea)</option>
+<option value="880-03 Markaz al-MisÃÂ£riÃÂ li-HÃÂ£uquÃÂq al-MarÃÂ¾ah" >880-03 Markaz al-MisÃÂ£riÃÂ li-HÃÂ£uquÃÂq al-MarÃÂ¾ah</option>
+<option value="Access to Justice (Organization : Nigeria)" >Access to Justice (Organization : Nigeria)</option>
+<option value="AcÃÂ§aÃÂo Brasileira pela NutricÃÂ§aÃÂo e Direitos Humanos" >AcÃÂ§aÃÂo Brasileira pela NutricÃÂ§aÃÂo e Direitos Humanos</option>
+<option value="Adalah (Organization)" >Adalah (Organization)</option>
+<option value="Africa Internally Displaced Persons Voice (Organization)" >Africa Internally Displaced Persons Voice (Organization)</option>
+<option value="African Centre for Democracy and Human Rights Studies" >African Centre for Democracy and Human Rights Studies</option>
+<option value="Agudah li-zekhuyot ezrahÌ£ be-YisÌraÊ¾el" >Agudah li-zekhuyot ezrahÌ£ be-YisÌraÊ¾el</option>
+<option value="Al-Dameer Association for Human Rights" >Al-Dameer Association for Human Rights</option>
+<option value="Algeria-Watch (Organization)" >Algeria-Watch (Organization)</option>
+<option value="Amigos de las Mujeres de Juarez" >Amigos de las Mujeres de Juarez</option>
+<option value="Amnesty International. Canadian Section-English-Speaking" >Amnesty International. Canadian Section-English-Speaking</option>
+<option value="Amnesty International Chile" >Amnesty International Chile</option>
+<option value="Amnesty International CÌR" >Amnesty International CÌR</option>
+<option value="Amnesty International Danmark" >Amnesty International Danmark</option>
+<option value="Amnesty International France" >Amnesty International France</option>
+<option value="Amnesty International. Føroya deild" >Amnesty International. Føroya deild</option>
+<option value="Amnesty International-Ghana" >Amnesty International-Ghana</option>
+<option value="Amnesty International. Greek Section" >Amnesty International. Greek Section</option>
+<option value="Amnesty International Hong Kong" >Amnesty International Hong Kong</option>
+<option value="Amnesty International Hrvatske" >Amnesty International Hrvatske</option>
+<option value="Amnesty International. IÃÂslandsdeild" >Amnesty International. IÃÂslandsdeild</option>
+<option value="Amnesty International. International Secretariat" >Amnesty International. International Secretariat</option>
+<option value="Amnesty International. Irish Section" >Amnesty International. Irish Section</option>
+<option value="Amnesty International Luxembourg" >Amnesty International Luxembourg</option>
+<option value="Amnesty International MagyarorszaÃÂg" >Amnesty International MagyarorszaÃÂg</option>
+<option value="Amnesty International. Mauritius Section" >Amnesty International. Mauritius Section</option>
+<option value="Amnesty International Moldova" >Amnesty International Moldova</option>
+<option value="Amnesty International Nepal" >Amnesty International Nepal</option>
+<option value="Amnesty International. Nihon Shibu" >Amnesty International. Nihon Shibu</option>
+<option value="Amnesty International Norge" >Amnesty International Norge</option>
+<option value="Amnesty International OÌsterreich" >Amnesty International OÌsterreich</option>
+<option value="Amnesty International Pilipinas" >Amnesty International Pilipinas</option>
+<option value="Amnesty International Polska" >Amnesty International Polska</option>
+<option value="Amnesty International. Schweizer Sektion" >Amnesty International. Schweizer Sektion</option>
+<option value="Amnesty International. SeccÌ§aÌo Portuguesa" >Amnesty International. SeccÌ§aÌo Portuguesa</option>
+<option value="Amnesty International. SeccioÌn Argentina" >Amnesty International. SeccioÌn Argentina</option>
+<option value="Amnesty International. SeccioÌn EspanoÌla" >Amnesty International. SeccioÌn EspanoÌla</option>
+<option value="Amnesty International. SeccioÌn Paraguaya" >Amnesty International. SeccioÌn Paraguaya</option>
+<option value="Amnesty International. SeccioÌn Peruana" >Amnesty International. SeccioÌn Peruana</option>
+<option value="Amnesty International. SeccioÌn Uruguay" >Amnesty International. SeccioÌn Uruguay</option>
+<option value="Amnesty International. Section Togo" >Amnesty International. Section Togo</option>
+<option value="Amnesty International Slovensko" >Amnesty International Slovensko</option>
+<option value="Amnesty International South Africa" >Amnesty International South Africa</option>
+<option value="Amnesty International. Svenska sektionen" >Amnesty International. Svenska sektionen</option>
+<option value="Amnesty International v UkraiÌni" >Amnesty International v UkraiÌni</option>
+<option value="Amnesty Suomessa" >Amnesty Suomessa</option>
+<option value="AmnistiÌa Internacional Bolivia" >AmnistiÌa Internacional Bolivia</option>
+<option value="AmnistiÌa Internacional Puerto Rico" >AmnistiÌa Internacional Puerto Rico</option>
+<option value="AmnistiÃÂa Internacional MeÃÂxico" >AmnistiÃÂa Internacional MeÃÂxico</option>
+<option value="Anti Caste Discrimination Alliance" >Anti Caste Discrimination Alliance</option>
+<option value="Arab Association for Human Rights (Israel)" >Arab Association for Human Rights (Israel)</option>
+<option value="Argentina. Defensor del Pueblo de la NacioÌn" >Argentina. Defensor del Pueblo de la NacioÌn</option>
+<option value="Asian Centre for Human Rights" >Asian Centre for Human Rights</option>
+<option value="Asian Federation Against Involuntary Disappearances (Philippines)" >Asian Federation Against Involuntary Disappearances (Philippines)</option>
+<option value="Asian Forum for Human Rights and Development" >Asian Forum for Human Rights and Development</option>
+<option value="Asian Human Rights Commission" >Asian Human Rights Commission</option>
+<option value="Asia Pacific Forum of National Human Rights Institutions" >Asia Pacific Forum of National Human Rights Institutions</option>
+<option value="AsociacioÃÂn Paz con Dignidad" >AsociacioÃÂn Paz con Dignidad</option>
+<option value="AsociacioÌn de Abuelas de Plaza de Mayo" >AsociacioÌn de Abuelas de Plaza de Mayo</option>
+<option value="AsociacioÌn de Familiares de Presos y Desaparecidos Saharauis" >AsociacioÌn de Familiares de Presos y Desaparecidos Saharauis</option>
+<option value="AsociacioÌn Paz con Dignidad" >AsociacioÌn Paz con Dignidad</option>
+<option value="AsociacioÌn por los Derechos Civiles (Buenos Aires, Argentina)" >AsociacioÌn por los Derechos Civiles (Buenos Aires, Argentina)</option>
+<option value="Assistance Association for Political Prisoners (Burma)" >Assistance Association for Political Prisoners (Burma)</option>
+<option value="Association for the Prevention of Torture" >Association for the Prevention of Torture</option>
+<option value="Association for Women's Rights in Development" >Association for Women's Rights in Development</option>
+<option value="Association of Women for Action and Research" >Association of Women for Action and Research</option>
+<option value="Association pour le respect des droits de l'homme aÃÂ Djibouti" >Association pour le respect des droits de l'homme aÃÂ Djibouti</option>
+<option value="Association sahraouie des victimes des violations graves des droits de l'homme commises par l'Etat du Maroc" >Association sahraouie des victimes des violations graves des droits de l'homme commises par l'Etat du Maroc</option>
+<option value="Associazione per la tutela dei diritti umani del popolo Eritreo" >Associazione per la tutela dei diritti umani del popolo Eritreo</option>
+<option value="Assotï¸ sï¸¡iatï¸ sï¸¡iiï¸ aï¸¡ korennykh malochislennykh narodov Severa, Sibiri i DalÊ¹nego Vostoka RossiiÌskoiÌ Federatï¸ sï¸¡ii" >Assotï¸ sï¸¡iatï¸ sï¸¡iiï¸ aï¸¡ korennykh malochislennykh narodov Severa, Sibiri i DalÊ¹nego Vostoka RossiiÌskoiÌ Federatï¸ sï¸¡ii</option>
+<option value="Australian Human Rights Commission" >Australian Human Rights Commission</option>
+<option value="Austria. Volksanwaltschaft" >Austria. Volksanwaltschaft</option>
+<option value="AzaÌrbaycan RespublikasÄ±nÄ±n IÌnsan HuÌquqlarÄ± UÌzraÌ MuÌvaÌkkÄ±lÄ±" >AzaÌrbaycan RespublikasÄ±nÄ±n IÌnsan HuÌquqlarÄ± UÌzraÌ MuÌvaÌkkÄ±lÄ±</option>
+<option value="Baheyya" >Baheyya</option>
+<option value="BAOBAB for Women's Human Rights" >BAOBAB for Women's Human Rights</option>
+<option value="BarnaÌmaj al-Ê»ArabiÌ li-NushatÌ£aÌÊ¾ HÌ£uquÌq al-InsaÌn" >BarnaÌmaj al-Ê»ArabiÌ li-NushatÌ£aÌÊ¾ HÌ£uquÌq al-InsaÌn</option>
+<option value="Belaruski khelÊ¹sinski kamiteÌt" >Belaruski khelÊ¹sinski kamiteÌt</option>
+<option value="Beogradski centar za ljudska prava" >Beogradski centar za ljudska prava</option>
+<option value="Bermuda Ombudsman" >Bermuda Ombudsman</option>
+<option value="Be-tselem (Organization : Jerusalem)" >Be-tselem (Organization : Jerusalem)</option>
+<option value="Bimkom (Organization : Jerusalem)" >Bimkom (Organization : Jerusalem)</option>
+<option value="Bod-kyi Ê¾Gro-ba MiÊ¾i-thob-thanÌ danÌ ManÌ-gtso-Ê¾phel-rgyas Lte-gnas-khanÌ (DharmsaÌla, India)" >Bod-kyi Ê¾Gro-ba MiÊ¾i-thob-thanÌ danÌ ManÌ-gtso-Ê¾phel-rgyas Lte-gnas-khanÌ (DharmsaÌla, India)</option>
+<option value="Breakthrough (Organization)" >Breakthrough (Organization)</option>
+<option value="Burma Campaign UK" >Burma Campaign UK</option>
+<option value="Burma Lawyers' Council" >Burma Lawyers' Council</option>
+<option value="Campaign for Good Governance" >Campaign for Good Governance</option>
+<option value="Canadian Friends of Burma" >Canadian Friends of Burma</option>
+<option value="Catholic Church. Archdiocese of Santiago (Chile). VicariÌa de la Solidaridad. FundacioÌn DocumentacioÌn y Archivo" >Catholic Church. Archdiocese of Santiago (Chile). VicariÌa de la Solidaridad. FundacioÌn DocumentacioÌn y Archivo</option>
+<option value="Center for Democracy &amp; Human Rights in Saudi Arabia" >Center for Democracy &amp; Human Rights in Saudi Arabia</option>
+<option value="Center for Democracy and Reconciliation in Southeast Europe" >Center for Democracy and Reconciliation in Southeast Europe</option>
+<option value="Center for Economic and Social Rights" >Center for Economic and Social Rights</option>
+<option value="Center for Justice and Accountability" >Center for Justice and Accountability</option>
+<option value="Center for Justice and International Law" >Center for Justice and International Law</option>
+<option value="Centre for Democratic Development, Research and Training" >Centre for Democratic Development, Research and Training</option>
+<option value="Centre for Human Rights &amp; Rehabilitation (Lilongwe, Malawi)" >Centre for Human Rights &amp; Rehabilitation (Lilongwe, Malawi)</option>
+<option value="Centre for the Study of Violence and Reconciliation" >Centre for the Study of Violence and Reconciliation</option>
+<option value="Centre for War Victims and Human Rights" >Centre for War Victims and Human Rights</option>
+<option value="Centro de Derechos Humanos Miguel AgustiÌn Pro JuaÌrez" >Centro de Derechos Humanos Miguel AgustiÌn Pro JuaÌrez</option>
+<option value="Centro de Derechos Humanos y Ambiente" >Centro de Derechos Humanos y Ambiente</option>
+<option value="Centro de Estudios Legales y Sociales (Argentina)" >Centro de Estudios Legales y Sociales (Argentina)</option>
+<option value="Centro de Estudios Sociales Padre Juan Montalvo, SJ" >Centro de Estudios Sociales Padre Juan Montalvo, SJ</option>
+<option value="Centro de Justicia para la Paz y el Desarrollo" >Centro de Justicia para la Paz y el Desarrollo</option>
+<option value="Centro para la AccioÌn Legal en Derechos Humanos" >Centro para la AccioÌn Legal en Derechos Humanos</option>
+<option value="Child Rights Information &amp; Documentation Centre" >Child Rights Information &amp; Documentation Centre</option>
+<option value="Chile Information Project" >Chile Information Project</option>
+<option value="Chinsil, Hwahae ruÌl wihan KwagoÌsa ChoÌngni WiwoÌnhoe" >Chinsil, Hwahae ruÌl wihan KwagoÌsa ChoÌngni WiwoÌnhoe</option>
+<option value="Citizenship Rights in Africa Initiative" >Citizenship Rights in Africa Initiative</option>
+<option value="Coalition for an Effective African Court on Human and Peoples' Rights" >Coalition for an Effective African Court on Human and Peoples' Rights</option>
+<option value="Collectif des associations contre l'impuniteÌ au Togo" >Collectif des associations contre l'impuniteÌ au Togo</option>
+<option value="ComisioÌn Mexicana de Defensa y PromocioÌn de los Derechos Humanos" >ComisioÌn Mexicana de Defensa y PromocioÌn de los Derechos Humanos</option>
+<option value="ComissaÌo de Acolhimento, Verdade, e ReconciliacÌ¦aÌo Timor Leste" >ComissaÌo de Acolhimento, Verdade, e ReconciliacÌ¦aÌo Timor Leste</option>
+<option value="ComiteÌ de Familiares de Detenidos-Desaparecidos en Honduras" >ComiteÌ de Familiares de Detenidos-Desaparecidos en Honduras</option>
+<option value="ComiteÌ de Familiares de Detenidos-Desaparecidos en Honduras" >ComiteÌ de Familiares de Detenidos-Desaparecidos en Honduras</option>
+<option value="ComiteÃÂ para la Defensa de los Derechos Humanos en Honduras" >ComiteÃÂ para la Defensa de los Derechos Humanos en Honduras</option>
+<option value="ComiteÌ pour le respect des liberteÌs et des droits de l'homme en Tunisie" >ComiteÌ pour le respect des liberteÌs et des droits de l'homme en Tunisie</option>
+<option value="ComiteÌ seÌneÌgalaise des droits de l'homme" >ComiteÌ seÌneÌgalaise des droits de l'homme</option>
+<option value="Commissie Gelijke Behandeling (Netherlands)" >Commissie Gelijke Behandeling (Netherlands)</option>
+<option value="Commission nationale des droits de l'homme (Togo)" >Commission nationale des droits de l'homme (Togo)</option>
+<option value="Committee to Protect Journalists" >Committee to Protect Journalists</option>
+<option value="Community Appraisal &amp; Motivation Program" >Community Appraisal &amp; Motivation Program</option>
+<option value="CONECTAS Direitos Humanos" >CONECTAS Direitos Humanos</option>
+<option value="Coordinadora de Derechos Humanos del Paraguay" >Coordinadora de Derechos Humanos del Paraguay</option>
+<option value="Coordinadora Nacional de Derechos Humanos (Peru)" >Coordinadora Nacional de Derechos Humanos (Peru)</option>
+<option value="CorporacioÌn de PromocioÌn y Defensa de los Derechos del Pueblo (Chile)" >CorporacioÌn de PromocioÌn y Defensa de los Derechos del Pueblo (Chile)</option>
+<option value="Costa Rica. DefensoriÌa de los Habitantes de la RepuÌblica" >Costa Rica. DefensoriÌa de los Habitantes de la RepuÌblica</option>
+<option value="Croatia. PucÌki pravobranitelj" >Croatia. PucÌki pravobranitelj</option>
+<option value="Cuban Committee for Human Rights" >Cuban Committee for Human Rights</option>
+<option value="Czech Republic. VerÌejnyÌ ochraÌnce praÌv" >Czech Republic. VerÌejnyÌ ochraÌnce praÌv</option>
+<option value="Da AfghaÌnistaÌn da Bashar da HÌ£uquÌqo da KhpalvaÌk KamiÌsiyuÌn" >Da AfghaÌnistaÌn da Bashar da HÌ£uquÌqo da KhpalvaÌk KamiÌsiyuÌn</option>
+<option value="Darfur Consortium" >Darfur Consortium</option>
+<option value="Defensor del Pueblo (Bolivia)" >Defensor del Pueblo (Bolivia)</option>
+<option value="DefensoriÌa del Pueblo de la RepuÌblica de PanamaÌ" >DefensoriÌa del Pueblo de la RepuÌblica de PanamaÌ</option>
+<option value="DefensoriÌa del Pueblo (Ecuador)" >DefensoriÌa del Pueblo (Ecuador)</option>
+<option value="DefensoriÌa del Pueblo (Peru)" >DefensoriÌa del Pueblo (Peru)</option>
+<option value="DefensoriÃÂa del Pueblo (Paraguay)" >DefensoriÃÂa del Pueblo (Paraguay)</option>
+<option value="Democracywatch (Organization : Dhaka, Bangladesh)" >Democracywatch (Organization : Dhaka, Bangladesh)</option>
+<option value="Deutsches Institut fuÌr Menschenrechte" >Deutsches Institut fuÌr Menschenrechte</option>
+<option value="Diskrimineringsombudsmannen (Sweden)" >Diskrimineringsombudsmannen (Sweden)</option>
+<option value="Ditshwanelo (Organization)" >Ditshwanelo (Organization)</option>
+<option value="Down to Earth (Organization)" >Down to Earth (Organization)</option>
+<option value="ECPAT International" >ECPAT International</option>
+<option value="EdÃÂ£bhokesiÃÂ Phorama (Kathmandu, Nepal)" >EdÃÂ£bhokesiÃÂ Phorama (Kathmandu, Nepal)</option>
+<option value="Electoral Institute of Southern Africa" >Electoral Institute of Southern Africa</option>
+<option value="Empowerment and Rights Institute (China)" >Empowerment and Rights Institute (China)</option>
+<option value="Eritrean Human Rights Electronic Archive" >Eritrean Human Rights Electronic Archive</option>
+<option value="European Roma Rights Center" >European Roma Rights Center</option>
+<option value="Focus on the Global South (Program)" >Focus on the Global South (Program)</option>
+<option value="Forces de libeÌration africaines de Mauritanie" >Forces de libeÌration africaines de Mauritanie</option>
+<option value="Forum for African Women Educationalists" >Forum for African Women Educationalists</option>
+<option value="Foundation for Human Rights Initiative" >Foundation for Human Rights Initiative</option>
+<option value="France. Commission nationale consultative des droits de l'homme" >France. Commission nationale consultative des droits de l'homme</option>
+<option value="Friends of Tibet, INDIA" >Friends of Tibet, INDIA</option>
+<option value="Front Line (Organization)" >Front Line (Organization)</option>
+<option value="FundacioÃÂn de Antropologia Forense de Guatemala" >FundacioÃÂn de Antropologia Forense de Guatemala</option>
+<option value="FundacioÌn de Ayuda Social de las Iglesias Cristianas" >FundacioÌn de Ayuda Social de las Iglesias Cristianas</option>
+<option value="FundacioÌn Regional de AsesoriÌa en Derechos Humanos" >FundacioÌn Regional de AsesoriÌa en Derechos Humanos</option>
+<option value="Gabinete de Assessoria JuriÌdica as OrganizacÌ§oes Populares" >Gabinete de Assessoria JuriÌdica as OrganizacÌ§oes Populares</option>
+<option value="Ghana Center for Democratic Development" >Ghana Center for Democratic Development</option>
+<option value="Global Alliance against Traffic in Women" >Global Alliance against Traffic in Women</option>
+<option value="Global Witness (Organization)" >Global Witness (Organization)</option>
+<option value="Great Britain. Equality and Human Rights Commission" >Great Britain. Equality and Human Rights Commission</option>
+<option value="Greece. EthnikeÌ EpitropeÌ gia ta DikaioÌmata tou AnthroÌpou" >Greece. EthnikeÌ EpitropeÌ gia ta DikaioÌmata tou AnthroÌpou</option>
+<option value="Greensboro Truth &amp; Community Reconciliation Project" >Greensboro Truth &amp; Community Reconciliation Project</option>
+<option value="Greensboro Truth &amp; Reconciliation Commission" >Greensboro Truth &amp; Reconciliation Commission</option>
+<option value="Guatemala. Procurador de los Derechos Humanos" >Guatemala. Procurador de los Derechos Humanos</option>
+<option value="HakiElimu (Tanzania)" >HakiElimu (Tanzania)</option>
+<option value="HayÊ¾ah al-Mustaqillah li-HÌ£uquÌq al-InsaÌn (West Bank)" >HayÊ¾ah al-Mustaqillah li-HÌ£uquÌq al-InsaÌn (West Bank)</option>
+<option value="Hayastani HanrapetutÊ»yan Mardu IravunkÊ»neri Pashtpan" >Hayastani HanrapetutÊ»yan Mardu IravunkÊ»neri Pashtpan</option>
+<option value="HayÃÂ¾ah al-FilastÃÂ£iÃÂniÃÂyah al-Mustaqillah li-HÃÂ£uquÃÂq al-MuwaÃÂtÃÂ£in" >HayÃÂ¾ah al-FilastÃÂ£iÃÂniÃÂyah al-Mustaqillah li-HÃÂ£uquÃÂq al-MuwaÃÂtÃÂ£in</option>
+<option value="Helsinki Citizens' Assembly. Vanadzor Office" >Helsinki Citizens' Assembly. Vanadzor Office</option>
+<option value="HeÌritiers de la justice (Organization)" >HeÌritiers de la justice (Organization)</option>
+<option value="Honduras. Comisionado Nacional de los Derechos Humanos" >Honduras. Comisionado Nacional de los Derechos Humanos</option>
+<option value="Human Rights Centre (TÊ»bilisi, Georgia)" >Human Rights Centre (TÊ»bilisi, Georgia)</option>
+<option value="Human Rights Commission of Pakistan" >Human Rights Commission of Pakistan</option>
+<option value="Human Rights Commission of the Maldives" >Human Rights Commission of the Maldives</option>
+<option value="Human Rights Concern Eritrea (Organization)" >Human Rights Concern Eritrea (Organization)</option>
+<option value="Human Rights Congress for Bangladesh Minorities" >Human Rights Congress for Bangladesh Minorities</option>
+<option value="Human Rights Council of Australia Inc" >Human Rights Council of Australia Inc</option>
+<option value="Human Rights Education Institute of Burma" >Human Rights Education Institute of Burma</option>
+<option value="Human Rights First (Organization)" >Human Rights First (Organization)</option>
+<option value="Human Rights First Society" >Human Rights First Society</option>
+<option value="Human Rights Law Network (New Delhi, India)" >Human Rights Law Network (New Delhi, India)</option>
+<option value="Hungary. Nemzeti eÌs Etnikai KisebbseÌgi Jogok OrszaÌggyuÌleÌsi Biztosa" >Hungary. Nemzeti eÌs Etnikai KisebbseÌgi Jogok OrszaÌggyuÌleÌsi Biztosa</option>
+<option value="I-India (Organization)" >I-India (Organization)</option>
+<option value="IÃÂnsan HaklarÃÂ± Ortak Platformu" >IÃÂnsan HaklarÃÂ± Ortak Platformu</option>
+<option value="India. National Human Rights Commission" >India. National Human Rights Commission</option>
+<option value="INDICT" >INDICT</option>
+<option value="Indigenous Peoples' Center for Documentation, Research and Information" >Indigenous Peoples' Center for Documentation, Research and Information</option>
+<option value="Indigenous Peoples Council on Biocolonialism" >Indigenous Peoples Council on Biocolonialism</option>
+<option value="Institute for Democracy in Africa" >Institute for Democracy in Africa</option>
+<option value="Institute for Justice and Reconciliation (South Africa)" >Institute for Justice and Reconciliation (South Africa)</option>
+<option value="Institut for menneskerettigheder (Denmark)" >Institut for menneskerettigheder (Denmark)</option>
+<option value="Instituto de Estudios Juridico Sociales de la Mujer" >Instituto de Estudios Juridico Sociales de la Mujer</option>
+<option value="Instituto Espacio para la Memoria (Argentina)" >Instituto Espacio para la Memoria (Argentina)</option>
+<option value="International Campaign for Tibet" >International Campaign for Tibet</option>
+<option value="International Coalition for the Responsibility to Protect" >International Coalition for the Responsibility to Protect</option>
+<option value="International Commission of Jurists (1952- )" >International Commission of Jurists (1952- )</option>
+<option value="International Commission on Missing Persons" >International Commission on Missing Persons</option>
+<option value="International Committee Against Stoning" >International Committee Against Stoning</option>
+<option value="International Committee for Democracy in Cuba" >International Committee for Democracy in Cuba</option>
+<option value="International Committee of Solidarity for Political Prisoners in Tunisia" >International Committee of Solidarity for Political Prisoners in Tunisia</option>
+<option value="International Crisis Group" >International Crisis Group</option>
+<option value="International Federation of Health and Human Rights Organisations" >International Federation of Health and Human Rights Organisations</option>
+<option value="International Federation of Iranian Refugees" >International Federation of Iranian Refugees</option>
+<option value="International Gay and Lesbian Human Rights Commission" >International Gay and Lesbian Human Rights Commission</option>
+<option value="International League for Human Rights" >International League for Human Rights</option>
+<option value="International Network for the Rights of Female Victims of Violence in Pakistan" >International Network for the Rights of Female Victims of Violence in Pakistan</option>
+<option value="International Service for Human Rights" >International Service for Human Rights</option>
+<option value="International Society for Human Rights" >International Society for Human Rights</option>
+<option value="International Work Group for Indigenous Affairs" >International Work Group for Indigenous Affairs</option>
+<option value="Iran Human Rights Documentation Center" >Iran Human Rights Documentation Center</option>
+<option value="Iraq Foundation" >Iraq Foundation</option>
+<option value="Iraqi Human Rights Group" >Iraqi Human Rights Group</option>
+<option value="Islamic Human Rights Commission (Great Britain)" >Islamic Human Rights Commission (Great Britain)</option>
+<option value="JamÃÂ»iÃÂyat ShabaÃÂb al-BahÃÂ£rayn li-HÃÂ£uquÃÂq al-InsaÃÂn" >JamÃÂ»iÃÂyat ShabaÃÂb al-BahÃÂ£rayn li-HÃÂ£uquÃÂq al-InsaÃÂn</option>
+<option value="JamÊ»iÌyah al-JaliÌl" >JamÊ»iÌyah al-JaliÌl</option>
+<option value="JamÊ»iÌyah al-MaghribiÌyah li-HÌ£uquÌq al-InsaÌn" >JamÊ»iÌyah al-MaghribiÌyah li-HÌ£uquÌq al-InsaÌn</option>
+<option value="JamÊ»iÌyah al-MisÌ£riÌyah lil-NuhuÌd bi-al-MushaÌrakah al-MujtamaÊ¾iÌyah" >JamÊ»iÌyah al-MisÌ£riÌyah lil-NuhuÌd bi-al-MushaÌrakah al-MujtamaÊ¾iÌyah</option>
+<option value="JamÊ»iÌyah al-WatÌ£aniÌyah lil-TaghyiÌr (Egypt)" >JamÊ»iÌyah al-WatÌ£aniÌyah lil-TaghyiÌr (Egypt)</option>
+<option value="Jesuit Refugee Service" >Jesuit Refugee Service</option>
+<option value="Jesuit Refugee Service/USA" >Jesuit Refugee Service/USA</option>
+<option value="Judicial System Monitoring Programme" >Judicial System Monitoring Programme</option>
+<option value="Jumma Peoples Network UK" >Jumma Peoples Network UK</option>
+<option value="KadÄ±nÄ±n IÌnsan HaklarÄ±--Yeni CoÌzuÌmler" >KadÄ±nÄ±n IÌnsan HaklarÄ±--Yeni CoÌzuÌmler</option>
+<option value="Kenya Human Rights Commission" >Kenya Human Rights Commission</option>
+<option value="Kenya National Commission on Human Rights" >Kenya National Commission on Human Rights</option>
+<option value="Khana KammakaÌn Sitthi Manutsayachon hÃ¦Ìng ChaÌt (Thailand)" >Khana KammakaÌn Sitthi Manutsayachon hÃ¦Ìng ChaÌt (Thailand)</option>
+<option value="KharkivsÊ¹ka pravozakhysna hrupa" >KharkivsÊ¹ka pravozakhysna hrupa</option>
+<option value="KhrÆ°ÌaikhaÌi Patibat NgaÌn PhÆ°Ìa SattriÌ ChaÌo Thai Yai" >KhrÆ°ÌaikhaÌi Patibat NgaÌn PhÆ°Ìa SattriÌ ChaÌo Thai Yai</option>
+<option value="KhuÌniiÌ EÌrkhiiÌn UÌndeÌsniiÌ Komiss (Mongolia)" >KhuÌniiÌ EÌrkhiiÌn UÌndeÌsniiÌ Komiss (Mongolia)</option>
+<option value="Kituo cha Sheria na Haki za Binadamu (Tanzania)" >Kituo cha Sheria na Haki za Binadamu (Tanzania)</option>
+<option value="Komnas HAM (Indonesia)" >Komnas HAM (Indonesia)</option>
+<option value="KosovaLive (Organization)" >KosovaLive (Organization)</option>
+<option value="Kurdish Human Rights Project" >Kurdish Human Rights Project</option>
+<option value="Kurdish Women's Rights Watch" >Kurdish Women's Rights Watch</option>
+<option value="Kuru Family of Organisations" >Kuru Family of Organisations</option>
+<option value="Kyrgyz Committee for Human Rights" >Kyrgyz Committee for Human Rights</option>
+<option value="Lajnat al-DifaÌÊ» Ê»an HÌ£uquÌq al-InsaÌn fiÌ Shibh al-JaziÌrah al-Ê»ArabiÌyah" >Lajnat al-DifaÌÊ» Ê»an HÌ£uquÌq al-InsaÌn fiÌ Shibh al-JaziÌrah al-Ê»ArabiÌyah</option>
+<option value="Land Center for Human Rights (Egypt)" >Land Center for Human Rights (Egypt)</option>
+<option value="Latin American and Caribbean Committee for the Defense of Women's Rights" >Latin American and Caribbean Committee for the Defense of Women's Rights</option>
+<option value="Latvian Centre for Human Rights" >Latvian Centre for Human Rights</option>
+<option value="Law and Society Trust (Sri Lanka)" >Law and Society Trust (Sri Lanka)</option>
+<option value="Law in the Service of Man (Organization : RaÌm AllaÌh)" >Law in the Service of Man (Organization : RaÌm AllaÌh)</option>
+<option value="Lawyers Centre for Legal Assistance (Sierra Leone)" >Lawyers Centre for Legal Assistance (Sierra Leone)</option>
+<option value="Lembaga Studi dan Advokasi Masyarakat (Jakarta, Indonesia)" >Lembaga Studi dan Advokasi Masyarakat (Jakarta, Indonesia)</option>
+<option value="Liberia. Truth and Reconciliation Commission" >Liberia. Truth and Reconciliation Commission</option>
+<option value="Ligue burundaise des droits de l'homme" >Ligue burundaise des droits de l'homme</option>
+<option value="Madre (Organization)" >Madre (Organization)</option>
+<option value="Majhamandal samÃÂ£rap QbhivadhnÃÂ SangamÃÂ£ (Phnom Penh, Cambodia)" >Majhamandal samÃÂ£rap QbhivadhnÃÂ SangamÃÂ£ (Phnom Penh, Cambodia)</option>
+<option value="Majlis al-IstishaÌriÌ li-HÌ£uquÌq al-InsaÌn (Morocco)" >Majlis al-IstishaÌriÌ li-HÌ£uquÌq al-InsaÌn (Morocco)</option>
+<option value="Majlis al-QawmiÌ li-HÌ£uquÌq al-InsaÌn (Egypt)" >Majlis al-QawmiÌ li-HÌ£uquÌq al-InsaÌn (Egypt)</option>
+<option value="Majlis al-WatÌ£aniÌ lil-HÌ£urriÌyaÌt bi-TuÌnis" >Majlis al-WatÌ£aniÌ lil-HÌ£urriÌyaÌt bi-TuÌnis</option>
+<option value="Malawi. Human Rights Commission" >Malawi. Human Rights Commission</option>
+<option value="Malawi Human Rights Resource Centre" >Malawi Human Rights Resource Centre</option>
+<option value="Malaysia. Suruhanjaya Hak Asasi Manusia Malaysia" >Malaysia. Suruhanjaya Hak Asasi Manusia Malaysia</option>
+<option value="MaÌnava AdhikaÌra tathaÌ PrajaÌtaÌntrika ManÌca (Kathmandu, Nepal)" >MaÌnava AdhikaÌra tathaÌ PrajaÌtaÌntrika ManÌca (Kathmandu, Nepal)</option>
+<option value="MaÌnava AdhikaÌra tathaÌ PrajaÌtaÌntrika ManÌca (Kathmandu, Nepal)" >MaÌnava AdhikaÌra tathaÌ PrajaÌtaÌntrika ManÌca (Kathmandu, Nepal)</option>
+<option value="Markaz al-FilastÌ£iÌniÌ li-HÌ£uquÌq al-InsaÌn" >Markaz al-FilastÌ£iÌniÌ li-HÌ£uquÌq al-InsaÌn</option>
+<option value="Markaz al-MiÌzaÌn li-HÌ£uquÌq al-InsaÌn (Gaza Strip)" >Markaz al-MiÌzaÌn li-HÌ£uquÌq al-InsaÌn (Gaza Strip)</option>
+<option value="Markaz al-QaÌhirah li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn" >Markaz al-QaÌhirah li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn</option>
+<option value="Markaz al-TawthiÌq wa-al-IÊ»laÌm wa-al-TakwiÌn fiÌ MajaÌl HÌ£uquÌq al-InsaÌn" >Markaz al-TawthiÌq wa-al-IÊ»laÌm wa-al-TakwiÌn fiÌ MajaÌl HÌ£uquÌq al-InsaÌn</option>
+<option value="Markaz al-WatÌ£aniÌ li-HÌ£uquÌq al-InsaÌn (Jordan)" >Markaz al-WatÌ£aniÌ li-HÌ£uquÌq al-InsaÌn (Jordan)</option>
+<option value="Markaz Ê»AmmaÌn li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn" >Markaz Ê»AmmaÌn li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn</option>
+<option value="Markaz Andalus li-DiraÃÂsaÃÂt al-TasaÃÂmuhÃÂ£ wa-MunaÃÂhadÃÂ£at al-ÃÂ»Unf" >Markaz Andalus li-DiraÃÂsaÃÂt al-TasaÃÂmuhÃÂ£ wa-MunaÃÂhadÃÂ£at al-ÃÂ»Unf</option>
+<option value="Markaz HishaÌm MubaÌrak lil-QaÌnuÌn" >Markaz HishaÌm MubaÌrak lil-QaÌnuÌn</option>
+<option value="Markaz RaÌm AllaÌh li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn" >Markaz RaÌm AllaÌh li-DiraÌsaÌt HÌ£uquÌq al-InsaÌn</option>
+<option value="MarsÌ£ad al-YamaniÌ li-HÌ£uquÌq al-InsaÌn" >MarsÌ£ad al-YamaniÌ li-HÌ£uquÌq al-InsaÌn</option>
+<option value="Mazlum-Der (Organization)" >Mazlum-Der (Organization)</option>
+<option value="Media Foundation for West Africa" >Media Foundation for West Africa</option>
+<option value="Medijski centar Beta" >Medijski centar Beta</option>
+<option value="Mexico. ComisioÌn Nacional de Derechos Humanos" >Mexico. ComisioÌn Nacional de Derechos Humanos</option>
+<option value="Minority Rights Group International" >Minority Rights Group International</option>
+<option value="MokÃÂ£ed la-haganat ha-peratÃÂ£ (Jerusalem)" >MokÃÂ£ed la-haganat ha-peratÃÂ£ (Jerusalem)</option>
+<option value="Morocco. HayÃÂ¾at al-InsÃÂ£aÃÂf wa-al-MusÃÂ£aÃÂlahÃÂ£ah" >Morocco. HayÃÂ¾at al-InsÃÂ£aÃÂf wa-al-MusÃÂ£aÃÂlahÃÂ£ah</option>
+<option value="Moskovskaiï¸ aï¸¡ khelÊ¹sinkskaiï¸ aï¸¡ gruppa" >Moskovskaiï¸ aï¸¡ khelÊ¹sinkskaiï¸ aï¸¡ gruppa</option>
+<option value="Mouvement contre les armes leÌgeÌres en Afrique de l'Ouest" >Mouvement contre les armes leÌgeÌres en Afrique de l'Ouest</option>
+<option value="Movimento dos Trabalhadores Rurais sem Terra (Brazil)" >Movimento dos Trabalhadores Rurais sem Terra (Brazil)</option>
+<option value="MuÊ¾assasat al-MarÊ¾ah al-JadiÌdah (Egypt)" >MuÊ¾assasat al-MarÊ¾ah al-JadiÌdah (Egypt)</option>
+<option value="MubaÌdarah al-Ê»ArabiÌyah li-Intirnit HÌ£urr" >MubaÌdarah al-Ê»ArabiÌyah li-Intirnit HÌ£urr</option>
+<option value="MunazÌ£zÌ£amah al-Ê»ArabiÌyah lil-IsÌ£laÌhÌ£ al-JinaÌÊ¾iÌ" >MunazÌ£zÌ£amah al-Ê»ArabiÌyah lil-IsÌ£laÌhÌ£ al-JinaÌÊ¾iÌ</option>
+<option value="MunazÌ£zÌ£amah al-MisÌ£riÌyah li-HÌ£uquÌq al-InsaÌn" >MunazÌ£zÌ£amah al-MisÌ£riÌyah li-HÌ£uquÌq al-InsaÌn</option>
+<option value="MunazÌ£zÌ£amat TaÌmaÌynuÌt" >MunazÌ£zÌ£amat TaÌmaÌynuÌt</option>
+<option value="MuÌnnithi phÆ°Ìa SukkhaphaÌp IÃ¦ KaÌnriÌanruÌ khoÌÌng RÃ¦ÌngngaÌn Klum ChaÌttiphan" >MuÌnnithi phÆ°Ìa SukkhaphaÌp IÃ¦ KaÌnriÌanruÌ khoÌÌng RÃ¦ÌngngaÌn Klum ChaÌttiphan</option>
+<option value="Namibia. Office of the Ombudsman" >Namibia. Office of the Ombudsman</option>
+<option value="NAMRIGHTS (Namibia)" >NAMRIGHTS (Namibia)</option>
+<option value="National Campaign on Dalit Human Rights (India)" >National Campaign on Dalit Human Rights (India)</option>
+<option value="National Human Rights Commission (Mauritius)" >National Human Rights Commission (Mauritius)</option>
+<option value="National Human Rights Commission (Nepal)" >National Human Rights Commission (Nepal)</option>
+<option value="National Protection Working Group (Nepal)" >National Protection Working Group (Nepal)</option>
+<option value="National Protection Working Group (Nepal)" >National Protection Working Group (Nepal)</option>
+<option value="National Society for Human Rights (Namibia)" >National Society for Human Rights (Namibia)</option>
+<option value="Network for North Korean Democracy and Human Rights" >Network for North Korean Democracy and Human Rights</option>
+<option value="Network Movement for Justice and Development" >Network Movement for Justice and Development</option>
+<option value="Network of Concerned Historians" >Network of Concerned Historians</option>
+<option value="New Zealand. Human Rights Commission" >New Zealand. Human Rights Commission</option>
+<option value="Nigeria. National Human Rights Commission" >Nigeria. National Human Rights Commission</option>
+<option value="Northern Ireland. Human Rights Commission" >Northern Ireland. Human Rights Commission</option>
+<option value="Office of the Ombudsman of Trinidad and Tobago" >Office of the Ombudsman of Trinidad and Tobago</option>
+<option value="Ombudsman Republike Srpske--zasÌtitnik ljudskih prava" >Ombudsman Republike Srpske--zasÌtitnik ljudskih prava</option>
+<option value="One Million Signatures Demanding Changes to Discriminatory Laws (Campaign)" >One Million Signatures Demanding Changes to Discriminatory Laws (Campaign)</option>
+<option value="OrganizacioÌn Argentina de JoÌvenes para las Naciones Unidas" >OrganizacioÌn Argentina de JoÌvenes para las Naciones Unidas</option>
+<option value="Organizatï¸ sï¸¡iiï¸ aï¸¡ Drom" >Organizatï¸ sï¸¡iiï¸ aï¸¡ Drom</option>
+<option value="Other Russia (Coalition)" >Other Russia (Coalition)</option>
+<option value="Pakistan International Human Rights Organization" >Pakistan International Human Rights Organization</option>
+<option value="Palestinian Human Rights Monitoring Group" >Palestinian Human Rights Monitoring Group</option>
+<option value="Peace Brigades International" >Peace Brigades International</option>
+<option value="Philippines. Commission on Human Rights" >Philippines. Commission on Human Rights</option>
+<option value="Physicians for Human Rights (U.S.)" >Physicians for Human Rights (U.S.)</option>
+<option value="PizhvaÌk-i HÌ£uquÌq-i Bashar dar IÌraÌn (Organization)" >PizhvaÌk-i HÌ£uquÌq-i Bashar dar IÌraÌn (Organization)</option>
+<option value="Point Pedro Institute of Development" >Point Pedro Institute of Development</option>
+<option value="Pravovaiï¸ aï¸¡ initï¸ sï¸¡iativa po Rossii" >Pravovaiï¸ aï¸¡ initï¸ sï¸¡iativa po Rossii</option>
+<option value="Privacy International (Organization)" >Privacy International (Organization)</option>
+<option value="ProcuraduriÌa para la Defensa de los Derechos Humanos (Nicaragua)" >ProcuraduriÌa para la Defensa de los Derechos Humanos (Nicaragua)</option>
+<option value="Puerto Rico. Oficina del Procurador del Ciudadano" >Puerto Rico. Oficina del Procurador del Ciudadano</option>
+<option value="Qendra Shqiptare peÌr teÌ Drejtat e Njeriut" >Qendra Shqiptare peÌr teÌ Drejtat e Njeriut</option>
+<option value="RADDHO (Organization)" >RADDHO (Organization)</option>
+<option value="RaÃÂbitÃÂ£ah al-JazaÃÂÃÂ¾iriÃÂyah lil-DifaÃÂÃÂ» ÃÂ»an HÃÂ£uquÃÂq al-InsaÃÂn" >RaÃÂbitÃÂ£ah al-JazaÃÂÃÂ¾iriÃÂyah lil-DifaÃÂÃÂ» ÃÂ»an HÃÂ£uquÃÂq al-InsaÃÂn</option>
+<option value="Raoof, Ramy" >Raoof, Ramy</option>
+<option value="ReÌseau des journalistes pour les droits de l'homme" >ReÌseau des journalistes pour les droits de l'homme</option>
+<option value="ReÌseau national de deÌfense des droits humains (Haiti)" >ReÌseau national de deÌfense des droits humains (Haiti)</option>
+<option value="Rights Exposure Project" >Rights Exposure Project</option>
+<option value="Rwanda. National Unity and Reconciliation Commission" >Rwanda. National Unity and Reconciliation Commission</option>
+<option value="SambaÌnth Khmaer JamÌ£ryÌan ninÌ KaÌrbaÌrsiddhi Manuss" >SambaÌnth Khmaer JamÌ£ryÌan ninÌ KaÌrbaÌrsiddhi Manuss</option>
+<option value="SaÌnchez, Yoani, 1975-" >SaÌnchez, Yoani, 1975-</option>
+<option value="Satellite Sentinel Project" >Satellite Sentinel Project</option>
+<option value="SdruzÌeniÌ DzÌeno" >SdruzÌeniÌ DzÌeno</option>
+<option value="Shabakah al-Ê»ArabiÌyah li-MaÊ»luÌmaÌt HÌ£uquÌq al-InsaÌn" >Shabakah al-Ê»ArabiÌyah li-MaÊ»luÌmaÌt HÌ£uquÌq al-InsaÌn</option>
+<option value="Shirkat Gah" >Shirkat Gah</option>
+<option value="Shomre mishpatÌ£ (Organization : Jerusalem)" >Shomre mishpatÌ£ (Organization : Jerusalem)</option>
+<option value="Sin Fronteras, I.A.P" >Sin Fronteras, I.A.P</option>
+<option value="Solidarity Peace Trust" >Solidarity Peace Trust</option>
+<option value="South African Human Rights Commission" >South African Human Rights Commission</option>
+<option value="South Africa. Truth and Reconciliation Commission" >South Africa. Truth and Reconciliation Commission</option>
+<option value="Sri Lanka. Human Rights Commission" >Sri Lanka. Human Rights Commission</option>
+<option value="Students for a Free Tibet" >Students for a Free Tibet</option>
+<option value="SUARAM (Organization)" >SUARAM (Organization)</option>
+<option value="Tanzania. Commission for Human Rights and Good Governance" >Tanzania. Commission for Human Rights and Good Governance</option>
+<option value="Tanzania Gender Networking Programme" >Tanzania Gender Networking Programme</option>
+<option value="Tapol (Organization)" >Tapol (Organization)</option>
+<option value="Terra de Direitos (Organization)" >Terra de Direitos (Organization)</option>
+<option value="Think Centre (Singapore)" >Think Centre (Singapore)</option>
+<option value="TibetInfoNet (Organization)" >TibetInfoNet (Organization)</option>
+<option value="Transition Monitoring Group (Nigeria)" >Transition Monitoring Group (Nigeria)</option>
+<option value="Transparency International" >Transparency International</option>
+<option value="Tï¸ Sï¸¡entr informatï¸ sï¸¡iiÌ ta dokumentatï¸ sï¸¡iiÌ krymsÊ¹kykh tatar" >Tï¸ Sï¸¡entr informatï¸ sï¸¡iiÌ ta dokumentatï¸ sï¸¡iiÌ krymsÊ¹kykh tatar</option>
+<option value="TuÌrkiye IÌnsan HaklarÄ± VakfÄ±" >TuÌrkiye IÌnsan HaklarÄ± VakfÄ±</option>
+<option value="Uganda Coalition on the International Criminal Court" >Uganda Coalition on the International Criminal Court</option>
+<option value="Uganda Human Rights Commission" >Uganda Human Rights Commission</option>
+<option value="UluslararasÃÂ± Af OÃÂrguÃÂtuÃÂ--TuÃÂrkiye" >UluslararasÃÂ± Af OÃÂrguÃÂtuÃÂ--TuÃÂrkiye</option>
+<option value="University Teachers for Human Rights (Jaffna)" >University Teachers for Human Rights (Jaffna)</option>
+<option value="[Unknown]" >[Unknown]</option>
+<option value="Unrepresented Nations and Peoples Organization" >Unrepresented Nations and Peoples Organization</option>
+<option value="Voix des sans-voix pour les droits de l'homme (Organization)" >Voix des sans-voix pour les droits de l'homme (Organization)</option>
+<option value="Wa7da Masrya" >Wa7da Masrya</option>
+<option value="Weise, 1966-" >Weise, 1966-</option>
+<option value="Women for Afghan Women (Organization)" >Women for Afghan Women (Organization)</option>
+<option value="Women Living Under Muslim Laws (Organization)" >Women Living Under Muslim Laws (Organization)</option>
+<option value="World Organisation Against Torture" >World Organisation Against Torture</option>
+<option value="YaÊ¾ItyopÌ£yaÌ sabÊ¾awi mabtocÌ gubaÌÊ»eÌ" >YaÊ¾ItyopÌ£yaÌ sabÊ¾awi mabtocÌ gubaÌÊ»eÌ</option>
+<option value="YaÌtanaÌpiÌdÌ£ita SarokaÌra Kendra (Kathmandu, Nepal)" >YaÌtanaÌpiÌdÌ£ita SarokaÌra Kendra (Kathmandu, Nepal)</option>
+<option value="Yemeni Human Rights Network" >Yemeni Human Rights Network</option>
+<option value="Zambia. Permanent Human Rights Commission" >Zambia. Permanent Human Rights Commission</option>
+<option value="Zimbabwe Civic Action Support Group" >Zimbabwe Civic Action Support Group</option>
+<option value="Zimbabwe Human Rights NGO Forum" >Zimbabwe Human Rights NGO Forum</option>
+<option value="Zimbabwe Lawyers for Human Rights" >Zimbabwe Lawyers for Human Rights</option>
+
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <!-- DATE OF CAPTURE -->
+                           <tr>
+                               <td class=label>
+                                    <label>Date of capture: </br>
+                                        <span class="label">(not original create date)</span>:</label>
+                               </td>
+                               <td>
+                                   <table cellspacing=0 cellpadding=0 width=50%>
+                                       <tr>
+                                           <td>
+                                                <div class=inputwrapper>
+                                                    <input id="crawl_start_date"
+                                                           class=box type=text
+                                                           style="width:100%"
+                                                           name="crawl_start_date"
+                                                           value="">
+                                                </div>
+                                           </td>
+                                           <td style="width:1.5em" align=center><span class=hint> to </span></td>
+                                           <td>
+                                                <div class=inputwrapper>
+                                                    <input id="crawl_end_date"
+                                                           class=box type=text
+                                                           style="width:100%"
+                                                           name="crawl_end_date"
+                                                           value="">
+                                                </div>
+                                           </td>
+                                       </tr>
+                                   </table>
+                               </td>
+                           </tr>
+                       </table>
+
+                       <h3 style="margin-top:1em">Display options</h3>
+
+                       <table cellspacing=0 cellpadding=2 width=100%>
+                                       <tr>
+                                           <td class="label"><label>Results per page:</label></td>
+                                           <td>
+                                           <select name="rows">
+                                            <option value="10" >10</option>
+<option value="20" >20</option>
+<option value="30" >30</option>
+<option value="50" >50</option>
+<option value="100" >100</option>
+
+                          </select>
+                                           </td>
+                                       </tr>
+                                       <tr>
+                                            <td class="label"><label>Sort:</label></td>
+                                            <td>
+                                            <select name="sort">
+                                            <option value="score desc" >relevance</option>
+<option value="contentTitle asc" >title ascending</option>
+<option value="contentTitle desc" >title descending</option>
+
+                                            </select>
+                                           </td>
+                                       </tr>
+                       </table>
+
+                       <h3 style="margin-top:1em">Development options - won't be in production interface</h3>
+
+                       <table cellspacing=0 cellpadding=2 width=100%>
+                                       <tr>
+                                            <td class="label"><label>Host:</label></td>
+                                            <td>
+                                            <select name="solr_host">
+                                            <option value="harding.cul.columbia.edu" >test</option>
+<option value="machete.cul.columbia.edu" >blade</option>
+<option value="carter.cul.columbia.edu" >dev</option>
+
+                                            </select>
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                            <td class="label"><label>Core:</label></td>
+                                            <td>
+                                            <select name="solr_core_path">
+                                            <option value="/solr-4/asf" >asf</option>
+<option value="/solr-4/asf-trial-21_schema-1.5" >asf-trial-21_schema-1.5</option>
+<option value="/solr-4/asf-benchmark" >asf-benchmark</option>
+<option value="/solr-4/asf-benchmark-da217" >asf-benchmark-da217</option>
+<option value="/solr-4/asf-1.5-subset-optimized-fsf" >asf-1.5-subset-optimized-fsf</option>
+
+                                            </select>
+                                           </td>
+                                       </tr>
+                       </table>
+
+                       <table cellspacing=0 cellpadding=0 style="margin-top:.5em" width=100%>
+                           <tr>
+                               <td style="text-align:right"><input id="submit_search" name="submit_search" type=submit value="Advanced Search"></td>
+                           </tr>
+                       </table>
+
+                   </div>
+                   </form>
+               </div>
+           </table>
+       </table>
+   </div>
+
+</body>
+</html>

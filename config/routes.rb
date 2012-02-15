@@ -8,13 +8,14 @@ Hrwa::Application.routes.draw do
   match '/browse'  => 'static#collection_browse'
   match '/contact' => 'static#contact'
   match '/faq'     => 'static#faq'
-  
+
   # Blacklight stuff
   match '/search'  => 'catalog#index'
-   
-  # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER 
-  match '/advanced_asf', :to => redirect( '/advanced_asf.html' ) 
-   
+
+  # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
+  match '/advanced_asf', :to => redirect( '/advanced_asf.html' )
+  match '/advanced_fsf', :to => redirect( '/advanced_fsf.html' )
+
   root :to => "static#index"
   devise_for :users
 
