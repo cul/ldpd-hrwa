@@ -7,6 +7,10 @@ class ArchiveSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
+          :defType          => "dismax",
+          :facet            => true,
+          :'facet.mincount' => 1,
+          :'q.alt'          => "*:*",
           :qf               => ["contentTitle^1",
                                 "contntBody^1",
                                 "contentMetaDescription^1",
@@ -18,11 +22,7 @@ class ArchiveSearchConfigurator
                                 "contentBodyHeading4^1",
                                 "contentBodyHeading5^1",
                                 "contentBodyHeading6^1"],
-          :rows             => 10,
-          :'q.alt'          => "*:*",
-          :facet            => true,
-          :'facet.mincount' => 1,
-          :defType          => "dismax"
+          :rows             => 10,          
         }
 
         config.unique_key = "recordIdentifier"

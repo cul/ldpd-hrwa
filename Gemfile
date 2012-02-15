@@ -18,7 +18,7 @@ gem 'jquery-rails', '1.0.19'
 gem 'json', '1.6.5'
 gem 'mysql2', '0.3.11'
 gem 'sass', '3.1.14'
-gem 'sass-rails', '~> 3.1.5.rc.2'
+gem 'sass-rails', '3.1.5'
 gem 'therubyracer', '0.9.9'
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -28,7 +28,7 @@ gem 'therubyracer', '0.9.9'
 group :assets do
   gem 'compass', '~> 0.12.alpha.2'
   gem 'coffee-rails', '3.1.1'
-  gem 'sass-rails',   '~> 3.1.5.rc.2'
+  gem 'sass-rails',   '3.1.5'
   gem 'uglifier', '1.0.3'
 end
 
@@ -51,9 +51,12 @@ group :test, :development do
   gem 'rspec-rails', '2.8.1'
   gem 'ruby_gntp', '0.3.4'
   gem 'ruby-prof', '0.10.8'
-  gem 'spork', '~>0.9.0.rc2'
+  gem 'spork', '0.9.0'
+  
   # To use debugger
-  # ruby-debug19 might not be compatible with ruby 1.9.3 yet:
-  # http://rubyforge.org/tracker/index.php?func=detail&aid=29505&group_id=8883&atid=34290
-  # gem 'ruby-debug19'
+  # ruby-debug19 is tricky to install.  Follow instructions from here:
+  # https://issues.cul.columbia.edu/browse/HRWA-320
+  gem 'linecache19', '0.5.13', :path => "~/.rvm/gems/ruby-1.9.3-p0/gems/linecache19-0.5.13/"
+  gem 'ruby-debug-base19', '0.11.26', :path => "~/.rvm/gems/ruby-1.9.3-p0/gems/ruby-debug-base19-0.11.26/"
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
