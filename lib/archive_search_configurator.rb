@@ -28,7 +28,7 @@ class ArchiveSearchConfigurator
         config.unique_key = 'recordIdentifier'
 
         # solr field configuration for search results/index views
-        config.index.show_link = 'contentTitle'
+        config.index.show_link           = 'contentTitle'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
@@ -97,7 +97,7 @@ class ArchiveSearchConfigurator
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
         config.add_index_field 'contentTitle', :label => 'Title:'
-        config.add_index_field 'contentBody', :label => 'Body:'
+        config.add_index_field 'contentBody',  :label => 'Body:'
 
         # solr fields to be displayed in the show (single result) view
         #   The ordering of the field names is the order of the display
