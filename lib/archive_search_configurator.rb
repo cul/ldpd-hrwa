@@ -7,25 +7,25 @@ class ArchiveSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :defType          => "dismax",
+          :defType          => 'dismax',
           :facet            => true,
           :'facet.mincount' => 1,
-          :'q.alt'          => "*:*",
-          :qf               => ["contentTitle^1",
-                                "contentBody^1",
-                                "contentMetaDescription^1",
-                                "contentMetaKeywords^1",
-                                "contentMetaLanguage^1",
-                                "contentBodyHeading1^1",
-                                "contentBodyHeading2^1",
-                                "contentBodyHeading3^1",
-                                "contentBodyHeading4^1",
-                                "contentBodyHeading5^1",
-                                "contentBodyHeading6^1"],
+          :'q.alt'          => '*:*',
+          :qf               => ['contentTitle^1',
+                                'contentBody^1',
+                                'contentMetaDescription^1',
+                                'contentMetaKeywords^1',
+                                'contentMetaLanguage^1',
+                                'contentBodyHeading1^1',
+                                'contentBodyHeading2^1',
+                                'contentBodyHeading3^1',
+                                'contentBodyHeading4^1',
+                                'contentBodyHeading5^1',
+                                'contentBodyHeading6^1'],
           :rows             => 10,          
         }
 
-        config.unique_key = "recordIdentifier"
+        config.unique_key = 'recordIdentifier'
 
         # solr field configuration for search results/index views
         config.index.show_link = 'contentTitle'
