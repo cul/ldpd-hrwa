@@ -9,7 +9,7 @@ describe 'ArchiveSearchConfigurator#config_proc' do
       @blacklight_config.configure &config_proc
     end
 
-    it 'sets default_solr_params correctly' do
+    it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
           :defType          => "dismax",
@@ -40,6 +40,22 @@ describe 'ArchiveSearchConfigurator#config_proc' do
                                 "contentBodyHeading6^1"],
           :rows             => 10,
         }  
+    end
+    
+    it 'sets Blacklight::Configuration.index_fields correctly' do
+      expected_index_fields = {
+        'contentTitle' => { :label => 'Title:', :field => 'contentTitle' },
+        'contentBody'  => { :label => 'Body:',  :field => 'contentBody'  },
+      }
+      
+      expected_index_fields.each { | name, expected |
+        @blacklight_config.index_fields[ name ].should_not be_nil
+        @blacklight_config.index_fields[ name ].label.should == expected[ :label ]
+        @blacklight_config.index_fields[ name ].field.should == expected[ :field ]
+      }
+            
+      
+      
     end
 end
 
