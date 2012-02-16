@@ -42,6 +42,10 @@ describe 'ArchiveSearchConfigurator#config_proc' do
         }  
     end
     
+    it 'sets Blacklight::Configuration.index.show_link correctly' do
+      @blacklight_config.index.show_link.should == 'contentTitle'
+    end
+    
     it 'sets Blacklight::Configuration.index_fields correctly' do
       expected_index_fields = {
         'contentTitle' => { :label => 'Title:', :field => 'contentTitle' },
@@ -68,6 +72,14 @@ describe 'ArchiveSearchConfigurator#config_proc' do
         @blacklight_config.show_fields[ name ].should_not be_nil
         @blacklight_config.show_fields[ name ].label.should == expected[ :label ]
       }
+    end
+       
+    it 'sets Blacklight::Configuration.spell_max correctly' do
+      @blacklight_config.spell_max.should == 5
+    end
+    
+    it 'sets Blacklight::Configuration.unique_key correctly' do
+      @blacklight_config.unique_key.should == 'recordIdentifier'
     end
 end
 
