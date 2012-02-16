@@ -185,5 +185,14 @@ class FindSiteSearchConfigurator
     def custom_get_search_results_method
       nil
     end
+    
+    def result_partial
+      return result_type
+    end
+
+    def result_type
+      return 'document'
+    end
+
 
 end

@@ -64,7 +64,9 @@ class CatalogController < ApplicationController
     # @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
     # @debug << "<pre>#{ @response.original_hash.pretty_inspect }</pre>".html_safe
 
-    d @response.pretty_inspect
+    # Select appropriate partials
+    @result_partial = @configurator.result_partial
+    @result_type    = @configurator.result_type
 
     respond_to do |format|
       format.html { save_current_search_params }

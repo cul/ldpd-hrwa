@@ -22,4 +22,12 @@ class Configurator
     return @configurator.custom_get_search_results_method
   end
 
+  def result_partial
+    return @configurator.result_partial
+  end
+
+  def result_type
+    return @configurator.result_type
+  end
+
 end

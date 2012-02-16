@@ -4,11 +4,21 @@ require 'find_site_search_configurator'
 
 describe 'FindSiteSearchConfigurator#config_proc' do
 
-    before( :all ) do
-      @blacklight_config = Blacklight::Configuration.new
-      config_proc = FindSiteSearchConfigurator.new.config_proc
+    before( :all ) do 
+      @blacklight_config = Blacklight::Configuration.new 
+      @configurator      = FindSiteSearchConfigurator.new
+      config_proc        = @configurator.config_proc
       @blacklight_config.configure &config_proc
     end
+    
+    it 'returns the correct partial name' do
+      @configurator.result_partial.should == 'document'
+    end
+    
+    it 'returns the correct result type' do
+      @configurator.result_type.should == 'document'
+    end
+    
 =begin
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==

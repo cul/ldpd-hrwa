@@ -178,5 +178,13 @@ class ArchiveSearchConfigurator
     def custom_get_search_results_method
       self.method( :get_search_results )
     end
+    
+    def result_partial
+      return result_type
+    end
+
+    def result_type
+      return 'group'
+    end
 
 end
