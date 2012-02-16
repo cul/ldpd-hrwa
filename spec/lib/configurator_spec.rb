@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'blacklight/configuration'
 require 'configurator'
 
 describe 'Configurator' do   
