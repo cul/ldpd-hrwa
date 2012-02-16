@@ -12,7 +12,7 @@ class ArchiveSearchConfigurator
           :'facet.mincount' => 1,
           :'q.alt'          => "*:*",
           :qf               => ["contentTitle^1",
-                                "contntBody^1",
+                                "contentBody^1",
                                 "contentMetaDescription^1",
                                 "contentMetaKeywords^1",
                                 "contentMetaLanguage^1",
