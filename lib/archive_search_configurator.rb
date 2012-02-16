@@ -61,7 +61,7 @@ class ArchiveSearchConfigurator
                                :limit => 10
 
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization/Site Based In', :limit => 20,
+                               :label => 'Organization/Site Based In',
                                :limit => 10
 
         config.add_facet_field 'organization_type__facet',
