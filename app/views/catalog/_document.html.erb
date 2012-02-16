@@ -11,9 +11,16 @@
         <div class="yui-u">
           <h3 class="index_title">
             <%= document_counter + 1 + @response.params[:start].to_i %>.
-
-            <%= link_to document.get("contentTitle"), document.get("archivedUrl") %>
-
+            <%
+            puts 'ABCDEFG'
+            %>
+            <%
+            if(@search_type == :find_site)
+              %><%= (link_to document.get("title"), '/site_detail/'+document.get("bib_key")) %><%
+            elsif(@search_type == :archive)
+              %><%= (link_to document.get("contentTitle"), document.get("archivedUrl")) %><%
+            end
+            %>
            </h3>
         </div>
       </div>
