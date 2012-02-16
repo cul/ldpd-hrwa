@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:cul/rsolr-ext.git
+  revision: 32778e1b7bb1d7a31be57c27ffff464fdf4fb52e
+  branch: grouping
+  specs:
+    rsolr-ext (1.0.3)
+      rsolr (>= 1.0.1)
+
 PATH
   remote: ~/.rvm/gems/ruby-1.9.3-p0/gems/linecache19-0.5.13/
   specs:
@@ -188,8 +196,6 @@ GEM
       json (~> 1.4)
     rsolr (1.0.7)
       builder (>= 2.1.2)
-    rsolr-ext (1.0.3)
-      rsolr (>= 1.0.2)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -274,6 +280,7 @@ DEPENDENCIES
   rails (= 3.1.2)
   rb-fsevent (= 0.9.0)
   rb-readline (= 0.4.2)
+  rsolr-ext!
   rspec-rails (= 2.8.1)
   ruby-debug-base19 (= 0.11.26)!
   ruby-debug19
