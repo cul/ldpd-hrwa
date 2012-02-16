@@ -53,9 +53,6 @@ describe 'ArchiveSearchConfigurator#config_proc' do
         @blacklight_config.index_fields[ name ].label.should == expected[ :label ]
         @blacklight_config.index_fields[ name ].field.should == expected[ :field ]
       }
-            
-      
-      
     end
 end
 
