@@ -5,8 +5,6 @@ gem 'rails', '3.1.2'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'blacklight', '3.2.2'
@@ -19,6 +17,7 @@ gem 'json', '1.6.5'
 gem 'mysql2', '0.3.11'
 gem 'sass', '3.1.14'
 gem 'sass-rails', '3.1.5'
+gem 'sqlite3'
 gem 'therubyracer', '0.9.9'
 # Use unicorn as the web server
 # gem 'unicorn'
