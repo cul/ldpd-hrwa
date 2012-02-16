@@ -55,6 +55,10 @@ describe 'ArchiveSearchConfigurator#config_proc' do
       }
     end
     
+    it 'sets Blacklight::Configuration.search_fields correctly' do
+      @blacklight_config.search_fields.should be_empty
+    end
+    
     it 'sets Blacklight::Configuration.show_fields correctly' do
       expected_show_fields = {
         'contentTitle' => { :label => 'Title:' },
