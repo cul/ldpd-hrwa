@@ -2,11 +2,13 @@ require File.expand_path(File.dirname(__FILE__) + '/rsolr-ext_spec_helper')
 
 describe 'RSolr::Ext' do
 
-  context 'Response for Result-Grouped query' do
+  context '::Response for Result-Grouped query' do
 
     def create_response
       raw_response = eval(mock_query_response_grouped)
-      RSolr::Ext::Response::Base.new(raw_response, 'select', raw_response['params'])
+      RSolr::Ext::Response::Base.new( raw_response,
+                                      'select',
+                                      raw_response[ :params ] )
     end
 
     it 'should have accurate total' do
@@ -21,7 +23,7 @@ describe 'RSolr::Ext' do
 
     it 'should have accurate start' do
       r = create_response
-      r.start.should == 0
+      r.start.should == 50
     end    
 
     it 'should create a valid response' do
@@ -151,7 +153,7 @@ describe 'RSolr::Ext' do
 
   end
 
-  context 'Response for non-Results-Grouped query' do
+  context '::Response for non-Results-Grouped query' do
 
     def create_response
       raw_response = eval(mock_query_response)
