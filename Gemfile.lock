@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:cul/rsolr-ext.git
-  revision: 32778e1b7bb1d7a31be57c27ffff464fdf4fb52e
+  revision: dc715ecf7fe7bec7ddb712b6bcaf53972efdf066
   branch: grouping
   specs:
     rsolr-ext (1.0.3)
