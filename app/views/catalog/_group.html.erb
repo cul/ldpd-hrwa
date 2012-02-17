@@ -1,23 +1,22 @@
-    <% # This is just a copy of the FSF partial.  Nothing in here is appropriate (yet!) %>
-    <% # container for a single doc -%>
-    <div class="document <%= render_document_class document %>">
+    <% # container for a single group -%>
+    <div class="document <%= render_document_class group %>">
 
-      <% # header bar for doc items in index view -%>
+      <% # header bar for group items in index view -%>
       <div class="documentHeader">
 
         <% # bookmark/folder functions for items/docs -%>
-        <%= render_index_doc_actions document %>
+        <%#= render_index_doc_actions group %>
 
-        <% # main title container for doc partial view -%>
+        <% # main title container for group partial view -%>
         <div class="yui-u">
           <h3 class="index_title">
-            <%= document_counter + 1 + @response.params[:start].to_i %>.
-            <%= (link_to document.get("title"), '/site_detail/'+document.get("bib_key")) %>
+            <%= group_counter + 1 + @response.params[:start].to_i %>.
            </h3>
+            <%= "<pre>#{ group.pretty_inspect }</pre>".html_safe %>
         </div>
       </div>
 
-      <% # main container for doc partial view -%>
-      <%= render_document_partial document, :index %>
+      <% # main container for group partial view -%>
+      <%#= render_document_partial group, :index %>
 
     </div>
