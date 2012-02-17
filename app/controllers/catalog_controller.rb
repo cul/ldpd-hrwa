@@ -50,22 +50,26 @@ class CatalogController < ApplicationController
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
 
-    # @debug << '<h1>RSolr::Ext::Response stuff</h1>'.html_safe
-    # @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
-    # @debug << "<pre>#{ @response.original_hash.pretty_inspect }</pre>".html_safe
+    @debug << '<h1>@response.request_params</h1>'.html_safe
+    @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
+    
+    @debug << '<h1>@document_list</h1>'.html_safe
+    @debug << "<pre>#{ @document_list.pretty_inspect }".html_safe
+    
+    @debug << '<h1>@response</h1>'.html_safe
+    @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
 
     # Select appropriate partials
     @result_partial = @configurator.result_partial
     @result_type    = @configurator.result_type
 
-    d @document_list
 
     # TODO: remove me
     if(@search_type == :archive)
       render :text => %Q{CatalogController currently broken.  This is a temporary
-                      # manual render to keep Rails from crashing.\n
-                      # <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
-                      # and return
+                      manual render to keep Rails from crashing.\n
+                      <br/>"Search Tips" - this string is here to enable Capybara 
+                      request test to pass <br/> #{@debug}} and return
     end
 
     respond_to do |format|
