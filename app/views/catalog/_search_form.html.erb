@@ -3,7 +3,7 @@
     <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
     <% q_text = params[ :q ] %>
     <% if params[ :search_mode ] == "advanced"
-       	 then q_text = "[Click + to refine search] #{q_text}"
+       	 then q_text = "[Click + to refine search]"
        end %>
     <%= text_field_tag :q, q_text, :class => "q" %>
     <% unless search_fields.empty? %>
