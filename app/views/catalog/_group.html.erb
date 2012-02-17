@@ -12,7 +12,9 @@
           <h3 class="index_title">
             <%= group_counter + 1 + @response.params[:start].to_i %>.
            </h3>
-            <%= "<pre>#{ group.pretty_inspect }</pre>".html_safe %>
+           <% # debugger %>
+           <!-- <%= "<pre>#{ group.pretty_inspect }</pre>".html_safe %> -->
+           <%= ( not group[ :contentTitle ].blank? ) ? group[ :contentTitle ] : '[Untitled]' %>
         </div>
       </div>
 
