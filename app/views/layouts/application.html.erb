@@ -15,13 +15,6 @@
   	<!-- NAVIGATION BAR -->
     <br/>
 
-	<!-- TODO: TAKE THIS OUT OF PROD -->
-  	<% if Rails.env == "development" %>
-  	<div id="debug" style="padding: 10px; border: 1px solid red; margin: 30px;">
-      <%= @debug %>
-    </div>
-    <% end %>
-
     <a href="/">Home</a> |
     <a href="/search?search_type=find_site">Find Site Search</a> |
     <a href="/search?search_type=archive">Archive Search</a> |
@@ -52,5 +45,13 @@
         <div id="footnotes_holder"></div>
       </div>
     </div>
+    
+    <!-- TODO: TAKE THIS OUT OF PROD -->
+    <% if Rails.env == "development" %>
+    <div id="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
+      <%= @debug %>
+    </div>
+    <% end %>
+    
   </body>
 </html>
