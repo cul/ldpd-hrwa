@@ -2,22 +2,26 @@ require 'spec_helper'
 require 'blacklight/configuration'
 require 'archive_search_configurator'
 
-describe 'ArchiveSearchConfigurator#config_proc' do   
+describe 'ArchiveSearchConfigurator' do
+  before ( :all ) do
+    @configurator = ArchiveSearchConfigurator.new
+  end
+     
+  it 'returns the correct partial name' do
+    @configurator.result_partial.should == 'group'
+  end
+  
+  it 'returns the correct result type' do
+    @configurator.result_type.should == 'group'
+  end
+
+  context '#config_proc' do
     before( :all ) do 
-      @blacklight_config = Blacklight::Configuration.new 
-      @configurator      = ArchiveSearchConfigurator.new
+      @blacklight_config = Blacklight::Configuration.new
       config_proc        = @configurator.config_proc
       @blacklight_config.configure &config_proc
     end
-    
-    it 'returns the correct partial name' do
-      @configurator.result_partial.should == 'group'
-    end
-    
-    it 'returns the correct result type' do
-      @configurator.result_type.should == 'group'
-    end
-
+        
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
@@ -123,5 +127,7 @@ describe 'ArchiveSearchConfigurator#config_proc' do
     it 'sets Blacklight::Configuration.unique_key correctly' do
       @blacklight_config.unique_key.should == 'recordIdentifier'
     end
+    
+  end
 end
 
