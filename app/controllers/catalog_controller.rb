@@ -34,7 +34,14 @@ class CatalogController < ApplicationController
                                                     extra_controller_params ||= {} )
 
     @filters = params[:f] || []
+    
+    # Select appropriate partials
+    @result_partial = @configurator.result_partial
+    @result_type    = @configurator.result_type
 
+    @debug << "<h1>@result_partial = #{@result_partial}</h1>".html_safe
+    @debug << "<h1>@result_type    = #{@result_type}</h1>".html_safe
+    
     @debug << "<h1>extra_controller_params</h3>".html_safe
     @debug << hash_pp( extra_controller_params )
 
@@ -51,24 +58,20 @@ class CatalogController < ApplicationController
 
     @debug << '<h1>@response.request_params</h1>'.html_safe
     @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
-    
+      
     @debug << '<h1>@result_list</h1>'.html_safe
     @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
     
     @debug << '<h1>@response</h1>'.html_safe
     @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
 
-    # Select appropriate partials
-    @result_partial = @configurator.result_partial
-    @result_type    = @configurator.result_type
-
     # TODO: remove me
-    if(@search_type == :archive)
-      render :text => %Q{CatalogController currently broken.  This is a temporary
-                      manual render to keep Rails from crashing.\n
-                      <br/>"Search Tips" - this string is here to enable Capybara 
-                      request test to pass <br/> #{@debug}} and return
-    end
+    # if(@search_type == :archive)
+      # render :text => %Q{CatalogController currently broken.  This is a temporary
+                      # manual render to keep Rails from crashing.\n
+                      # <br/>"Search Tips" - this string is here to enable Capybara 
+                      # request test to pass <br/> #{@debug}} and return
+    # end
 
     respond_to do |format|
       format.html { save_current_search_params }
