@@ -31,18 +31,8 @@ class CatalogController < ApplicationController
       params[ :q ] = extra_controller_params[ :q ]
     end
 
-    # TODO: remove me
-    if(@search_type == :archive)
-      render :text => %Q{CatalogController currently broken.  This is a temporary
-                      manual render to keep Rails from crashing.\n
-                      <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
-                      and return
-    end
-
-    (@response, @document_list) = @get_search_results_method.call( params,
-                                                                  extra_controller_params ||= {} )
-
-    #render :text => "<pre>#{@response.pretty_inspect}</pre>" and return
+    (@response, @document_list) = get_search_results( params,
+                                                      extra_controller_params ||= {} )
 
     @filters = params[:f] || []
 
@@ -68,6 +58,16 @@ class CatalogController < ApplicationController
     @result_partial = @configurator.result_partial
     @result_type    = @configurator.result_type
 
+    d @document_list
+
+    # TODO: remove me
+    if(@search_type == :archive)
+      render :text => %Q{CatalogController currently broken.  This is a temporary
+                      # manual render to keep Rails from crashing.\n
+                      # <br/>"Search Tips" - this string is here to enable Capybara request test to pass} \
+                      # and return
+    end
+
     respond_to do |format|
       format.html { save_current_search_params }
       format.rss  { render :layout => false }
@@ -89,9 +89,6 @@ class CatalogController < ApplicationController
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
-
-    @get_search_results_method = @configurator.custom_get_search_results_method
-    @get_search_results_method ||= self.method( :get_search_results )
 
     _load_solr_index_based_on_search_type(@search_type)
 

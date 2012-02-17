@@ -179,12 +179,6 @@ class FindSiteSearchConfigurator
         config.spell_max = 5
       }
     end
-
-    # FSF has no custom get_search_results method, so we return nil and default
-    # to the catalog controller's get_search_results method
-    def custom_get_search_results_method
-      nil
-    end
     
     def result_partial
       return result_type

@@ -2,8 +2,6 @@
 class ArchiveSearchConfigurator
   unloadable
 
-  include FieldCollapsedSolrHelper
-
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -172,11 +170,6 @@ class ArchiveSearchConfigurator
         # mean") suggestion is offered.
         config.spell_max = 5
       }
-    end
-
-    # ASF searches use Field Collapsing, which Blacklight currently doesn't support
-    def custom_get_search_results_method
-      self.method( :get_search_results )
     end
     
     def result_partial

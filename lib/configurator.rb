@@ -18,10 +18,6 @@ class Configurator
     return @configurator.config_proc
   end
 
-  def custom_get_search_results_method
-    return @configurator.custom_get_search_results_method
-  end
-
   def result_partial
     return @configurator.result_partial
   end
