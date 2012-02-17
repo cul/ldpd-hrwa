@@ -188,5 +188,8 @@ class FindSiteSearchConfigurator
       return 'document'
     end
 
+    def solr_url
+      YAML.load_file("config/solr.yml")['development_fsf']['url']
+    end
 
 end

@@ -179,5 +179,9 @@ class ArchiveSearchConfigurator
     def result_type
       return 'group'
     end
+    
+    def solr_url
+      YAML.load_file("config/solr.yml")['development_asf']['url']
+    end
 
 end

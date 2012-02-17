@@ -26,4 +26,8 @@ class Configurator
     return @configurator.result_type
   end
 
+  def solr_url
+    return @configurator.solr_url
+  end
+
 end

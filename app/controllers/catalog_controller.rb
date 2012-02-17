@@ -90,21 +90,7 @@ class CatalogController < ApplicationController
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
 
-    _load_solr_index_based_on_search_type(@search_type)
-
-  end
-
-
-  # Loads an asf- or fsf-specific solr configuration,
-  # rather than whatever the default one is
-  def _load_solr_index_based_on_search_type (search_type)
-
-    if search_type == :archive
-      Blacklight.solr = RSolr::Ext.connect(:url => YAML.load_file("config/solr.yml")['development_asf']['url'])
-    elsif search_type == :find_site
-      Blacklight.solr = RSolr::Ext.connect(:url => YAML.load_file("config/solr.yml")['development_fsf']['url'])
-    end
-
+    Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url )
   end
 
 end
