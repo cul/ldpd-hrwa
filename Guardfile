@@ -1,12 +1,13 @@
 # Developers can customize their Guard setup using config/local_guardfile_customizations.yml
 # config/local_guardfile_customizations.yml should be in .gitignore
 
-# Default notification options
-gntp_opts = {
+# Default notification type and options
+notification_type = :gntp
+notification_opts = {
              :host   => 'localhost',
              :sticky => false,
             }
-            
+
 # Default rails options
 rails_opts = {
               :port     => 3020,
@@ -16,14 +17,24 @@ rails_opts = {
 config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.yml'
 if File.exists?(config_file)
   config = YAML.load_file(config_file)
-  
-  # Set notification options
-  if config["notification_gntp"]
-    gntp_opts[:host]     = config["notification_gntp"]["host"]     if config["notification_gntp"]["host"]
-    gntp_opts[:sticky]   = config["notification_gntp"]["sticky"]   if config["notification_gntp"]["sticky"]
-    gntp_opts[:password] = config["notification_gntp"]["password"] if config["notification_gntp"]["password"]
+
+  # Set notification type (more types may be added in the future)
+  if config["notification_type"] == 'growl'
+    notification_type = :growl
+  elsif config["notification_type"] == 'gntp'
+    notification_type = :gntp
   end
-  
+
+  # Set notification options (these are the same for growl and
+  # gntp, but not necessarily for all other notification types
+  if config["notification_type"] == 'gntp' || config["notification_type"] == 'growl'
+    notification_opts = {}
+    notification_opts[:host]     = config["notification_opts"]["host"]     if config["notification_opts"]["host"]
+    notification_opts[:sticky]   = config["notification_opts"]["sticky"]   if config["notification_opts"]["sticky"]
+    notification_opts[:password] = config["notification_opts"]["password"] if config["notification_opts"]["password"]
+  end
+
+
   # Set rails options
   if config["rails"]
     rails_opts[:debugger] = config["rails"]["debugger"] if config["rails"]["debugger"]
@@ -31,7 +42,7 @@ if File.exists?(config_file)
   end
 end
 
-notification :gntp, gntp_opts
+notification notification_type, notification_opts
 
 guard 'rails', rails_opts do
   watch('Gemfile.lock')
@@ -73,4 +84,3 @@ guard 'cucumber', :cli => '--no-profile --color --format pretty --strict' do
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
 end
-
