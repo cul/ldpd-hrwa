@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 require 'rsolr-ext'
 
 def mock_query_response_grouped
@@ -72,7 +71,7 @@ def mock_query_response_grouped
              "recordIdentifier"=>
               "20110606222047/http://www.hrw.org/he/keywords/women",
              "contentBody"=>
-              "Language xxx Copyright 2010, Human Rights Watch",
+              "This is a doc.",
              "length"=>13970,
              "filename"=>
               "ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110606220953-00002-crawling207.us.archive.org-6680.warc.gz",
@@ -91,7 +90,7 @@ def mock_query_response_grouped
              "contentBodyHeading5"=>[""],
              "contentBodyHeading4"=>[""],
              "contentBodyHeading3"=>[""],
-             "contentBodyHeading2"=>["×“×•×—×•×ª"],
+             "contentBodyHeading2"=>["This is a heading."],
              "contentBodyHeading1"=>[""],
              "geographic_focus"=>[" [043 CODE NOT FOUND IN MARC LIST]"],
              "creator_name__facet"=>["Human Rights Watch (Organization)"],
@@ -118,7 +117,7 @@ def mock_query_response_grouped
              "recordIdentifier"=>
               "20110606223240/http://www.hrw.org/es/keywords/women",
              "contentBody"=>
-              "Idioma xxx Copyright 2010, Human Rights Watch",
+              "This is a doc.",
              "length"=>17089,
              "filename"=>
               "ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110606220953-00002-crawling207.us.archive.org-6680.warc.gz",
@@ -164,7 +163,7 @@ def mock_query_response_grouped
              "recordIdentifier"=>
               "20110607054349/http://www.hrw.org/en/keywords/women",
              "contentBody"=>
-              "Language xxx Copyright 2010, Human Rights Watch",
+              "This is a doc.",
              "length"=>19954,
              "filename"=>
               "ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110607044225-00021-crawling207.us.archive.org-6680.warc.gz",
@@ -210,7 +209,7 @@ def mock_query_response_grouped
              "recordIdentifier"=>
               "20110607143029/http://www.hrw.org/fr/keywords/women",
              "contentBody"=>
-              "Langue xxx Copyright 2010, Human Rights Watch",
+              "This is a doc.",
              "length"=>14164,
              "filename"=>
               "ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110607131404-00033-crawling207.us.archive.org-6680.warc.gz",
@@ -262,17 +261,17 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153026/http://khpg.org/en/index.php?do=print&id=1272455398",
              "contentBody"=>
-              "Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group http://khpg.org.index.php?id=1272455398 xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T17:55:06.78Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["Women's rights"],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
              "contentBodyHeading2"=>[""],
              "contentBodyHeading1"=>
-              ["So what is positive in restricting womenï¿½s right to take part in government?"]}]}},
+              ["So what is positive in restricting women'sght to take part in government?"]}]}},
        {"groupValue"=>"http://khpg.org/en/index.php?do=print&id=1270822714",
         "doclist"=>
          {"numFound"=>1,
@@ -297,11 +296,11 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153107/http://khpg.org/en/index.php?do=print&id=1270822714",
              "contentBody"=>
-              "Human Rights in Ukraine. xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T17:55:10.461Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["This is a heading."],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
@@ -332,11 +331,11 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153148/http://khpg.org/en/index.php?do=print&id=1270551304",
              "contentBody"=>
-              "Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group http://khpg.org.index.php?id=1270551304 xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T17:55:14.853Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["This is a heading."],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
@@ -366,11 +365,11 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153228/http://khpg.org/en/index.php?do=print&id=1270203432",
              "contentBody"=>
-              "xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T17:55:22.715Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["This is a heading."],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
@@ -401,17 +400,17 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153309/http://khpg.org/en/index.php?do=print&id=1269350026",
              "contentBody"=>
-              "xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T17:55:26.097Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["This is a heading."],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
              "contentBodyHeading2"=>[""],
              "contentBodyHeading1"=>
-              ["Complaint to Human Rights Ombudsperson over Azarovï¿½s discriminatory comments"]}]}},
+              ["Complaint to Human Rights Ombudsperson over Azarov'iscriminatory comments"]}]}},
        {"groupValue"=>"http://khpg.org/en/index.php?do=print&id=1269043679",
         "doclist"=>
          {"numFound"=>1,
@@ -436,17 +435,17 @@ def mock_query_response_grouped
              "archivedUrl"=>
               "http://wayback.archive-it.org/1068/20100904153350/http://khpg.org/en/index.php?do=print&id=1269043679",
              "contentBody"=>
-              "xxx",
+              "This is a doc.",
              "contentTitle"=>"",
              "timestamp"=>"2011-09-30T19:48:27.485Z",
              "contentBodyHeading6"=>[""],
-             "contentBodyHeading5"=>["Womenï¿½s rights"],
+             "contentBodyHeading5"=>["This is a heading."],
              "contentBodyHeading4"=>
               ["Human Rights in Ukraine. Information website of the Kharkiv Human Rights Protection Group"],
              "contentBodyHeading3"=>[""],
              "contentBodyHeading2"=>[""],
              "contentBodyHeading1"=>
-              ["Azarov: Carrying out reform is not a womanï¿½s matter"]}]}}]}},
+              ["Azarov: Carrying out reform is not a woman'stter"]}]}}]}},
  "facet_counts"=>
   {"facet_queries"=>{},
    "facet_fields"=>
@@ -585,7 +584,7 @@ def mock_query_response_grouped
        14120,
        "Center for Democracy & Human Rights in Saudi Arabia",
        7457,
-       "Majlis al-QawmiÌ„ li-HÌ£uquÌ„q al-InsaÌ„n (Egypt)",
+       "Majlis al-Qawmi li-Hqu al-Insa (Egypt)",
        6579,
        "Amnesty International. International Secretariat",
        6101,
