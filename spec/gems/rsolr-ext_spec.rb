@@ -8,7 +8,7 @@ describe 'RSolr::Ext' do
       raw_response = eval(mock_query_response_grouped)
       RSolr::Ext::Response::Base.new( raw_response,
                                       'select',
-                                      raw_response[ :params ] )
+                                      raw_response[ 'responseHeader' ][ 'params' ] )
     end
 
     it 'should have accurate total' do
@@ -31,7 +31,7 @@ describe 'RSolr::Ext' do
       r.should respond_to(:header)
       r.ok?.should == true
     end
-
+    
     # it 'should create a valid response class' do
       # r = create_response
 # 
