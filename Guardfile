@@ -3,10 +3,7 @@
 
 # Default notification type and options
 notification_type = :gntp
-notification_opts = {
-             :host   => 'localhost',
-             :sticky => false,
-            }
+notification_opts = {}
 
 # Default rails options
 rails_opts = {
@@ -19,13 +16,13 @@ if File.exists?(config_file)
   config = YAML.load_file(config_file)
 
   notification_type = config[ 'notification_type' ].to_sym if config[ 'notification_type' ]
-  
-  if config[ 'notification_opts' ]  
+
+  if config[ 'notification_opts' ]
     notification_opts[:host]     = config['notification_opts']['host']     if config['notification_opts']['host']
     notification_opts[:sticky]   = config['notification_opts']['sticky']   if config['notification_opts']['sticky']
     notification_opts[:password] = config['notification_opts']['password'] if config['notification_opts']['password']
   end
-  
+
   # Set rails options
   if config["rails"]
     rails_opts[:debugger] = config["rails"]["debugger"] if config["rails"]["debugger"]
