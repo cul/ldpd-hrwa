@@ -7,7 +7,6 @@ class FindSiteSearchConfigurator
         config.default_solr_params = {
           :qf               => [
                                 "alternate_title^1",
-                                "creator_name^1",
                                 "geographic_focus^1",
                                 "language^1",
                                 "organization_based_in^1",
@@ -28,10 +27,11 @@ class FindSiteSearchConfigurator
         config.index.show_link = 'title'
         config.index.record_display_type = ''
 
+        # Our custom views make the config.show options useless
         # solr field configuration for document/show views
-        config.show.html_title   = 'title'
-        config.show.heading      = 'title'
-        config.show.display_type = ''
+        #config.show.html_title   = 'title'
+        #config.show.heading      = 'title'
+        #config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
         #   The ordering of the field names is the order of the display
@@ -54,16 +54,16 @@ class FindSiteSearchConfigurator
                                :label => 'Organization Type',
                                :limit => 10
 
-        config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Site Based In',
+        config.add_facet_field 'subject__facet',
+                               :label => 'Subject',
                                :limit => 10
 
         config.add_facet_field 'geographic_focus__facet',
                                :label => 'Geographic Focus',
                                :limit => 10
 
-        config.add_facet_field 'subject__facet',
-                               :label => 'Subject',
+        config.add_facet_field 'organization_based_in__facet',
+                               :label => 'Site Based In',
                                :limit => 10
 
         config.add_facet_field 'language__facet',
@@ -78,7 +78,6 @@ class FindSiteSearchConfigurator
 
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
-        config.add_index_field 'title', :label => 'Title:'
         config.add_index_field 'title', :label => 'Title:'
         config.add_index_field 'alternate_title', :label => 'Alternate Title:'
         config.add_index_field 'crawl_date_end', :label => 'Crawl Date End:'
@@ -179,7 +178,7 @@ class FindSiteSearchConfigurator
         config.spell_max = 5
       }
     end
-    
+
     def result_partial
       return result_type
     end
