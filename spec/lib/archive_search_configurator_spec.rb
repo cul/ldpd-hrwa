@@ -39,6 +39,28 @@ describe 'ArchiveSearchConfigurator' do
                                 'dateOfCaptureYYYY',
                                ],
           :'facet.mincount' => 1,
+          :group            => true,
+          :'group.field'    => 'originalUrl',
+          :'group.limit'    => 10, 
+          :hl               => true,
+          :'hl.fragsize'    => 1000,
+          :'hl.fl'          => [ 
+                               'originalUrl',
+                               'contentTitle',
+                               'contentBody',
+                               'contentMetaDescription',
+                               'contentMetaKeywords',
+                               'contentMetaLanguage',
+                               'contentBodyHeading1',
+                               'contentBodyHeading2',
+                               'contentBodyHeading3',
+                               'contentBodyHeading4',
+                               'contentBodyHeading5',
+                               'contentBodyHeading6',
+                               ],
+          :'hl.usePhraseHighlighter' => true,
+          :'hl.simple.pre'  => '',
+          :'hl.simple.post' => '',
           :'q.alt'          => "*:*",
           :qf               => ["contentTitle^1",
                                 "contentBody^1",
@@ -128,6 +150,7 @@ describe 'ArchiveSearchConfigurator' do
       @blacklight_config.unique_key.should == 'recordIdentifier'
     end
     
+    # TODO: add group and highlight specs
   end
 end
 
