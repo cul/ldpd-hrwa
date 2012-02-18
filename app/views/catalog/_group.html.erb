@@ -12,9 +12,58 @@
           <h3 class="index_title">
             <%= group_counter + 1 + @response.params[:start].to_i %>.
            </h3>
-           <% # debugger %>
-           <!-- <%= "<pre>#{ group.pretty_inspect }</pre>".html_safe %> -->
-           <%= ( not group[ :contentTitle ].blank? ) ? group[ :contentTitle ] : '[Untitled]' %>
+          
+           <!-- TITLE LINK -->
+           <a href="<%= group[ :archivedUrl ] %>">
+             <%= ( ! group[ :contentTitle ].blank? ) ?
+                 group[ :contentTitle ] :
+                 '[Untitled]' %>
+           </a>
+           
+           <br/>
+           
+           <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
+           <%= group[ :originalUrl ] %>
+           
+           <br/>
+           
+           <!-LINK TO SDF PAGE FOR PARENT WEBSITE -->
+           <a href="<%= "site_id=#{ group[ :bib_key ] }" %>">(Info)</a>
+            
+           <br/>
+           
+           <!-- HIGHLIGHTED SNIPPET -->
+           
+           <br/>
+           
+           <!-- MIMETYPE -->
+           <%= group[ :mimetype ] %>
+           
+           <br/>
+                      
+           <!-- SIZE -->
+           <%= group[ :length ] %>
+           
+           <br/>                
+           
+           <!-- CAPTURE DATE FOR THE PAGE -->
+           <%= group[ :dateOfCaptureYYYYMMDD ] %>
+           
+           <br/>
+                      
+           <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
+           
+           <br/>
+                      
+           <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
+           
+           <br/>
+                      
+           <!-- OTHER CAPTURE INSTANCES -->                
+           
+           <br/>
+                      
+           
         </div>
       </div>
 
