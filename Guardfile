@@ -18,23 +18,14 @@ config_file = File.dirname(__FILE__) + '/config/local_guardfile_customizations.y
 if File.exists?(config_file)
   config = YAML.load_file(config_file)
 
-  # Set notification type (more types may be added in the future)
-  if config["notification_type"] == 'growl'
-    notification_type = :growl
-  elsif config["notification_type"] == 'gntp'
-    notification_type = :gntp
+  notification_type = config[ 'notification_type' ].to_sym if config[ 'notification_type' ]
+  
+  if config[ 'notification_opts' ]  
+    notification_opts[:host]     = config['notification_opts']['host']     if config['notification_opts']['host']
+    notification_opts[:sticky]   = config['notification_opts']['sticky']   if config['notification_opts']['sticky']
+    notification_opts[:password] = config['notification_opts']['password'] if config['notification_opts']['password']
   end
-
-  # Set notification options (these are the same for growl and
-  # gntp, but not necessarily for all other notification types
-  if config["notification_type"] == 'gntp' || config["notification_type"] == 'growl'
-    notification_opts = {}
-    notification_opts[:host]     = config["notification_opts"]["host"]     if config["notification_opts"]["host"]
-    notification_opts[:sticky]   = config["notification_opts"]["sticky"]   if config["notification_opts"]["sticky"]
-    notification_opts[:password] = config["notification_opts"]["password"] if config["notification_opts"]["password"]
-  end
-
-
+  
   # Set rails options
   if config["rails"]
     rails_opts[:debugger] = config["rails"]["debugger"] if config["rails"]["debugger"]
