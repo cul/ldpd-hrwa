@@ -7,6 +7,7 @@ class FindSiteSearchConfigurator
         config.default_solr_params = {
           :qf               => [
                                 "alternate_title^1",
+                                "creator_name^1",
                                 "geographic_focus^1",
                                 "language^1",
                                 "organization_based_in^1",
@@ -63,13 +64,12 @@ class FindSiteSearchConfigurator
                                :limit => 10
 
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Site Based In',
+                               :label => 'Organization Based In',
                                :limit => 10
 
         config.add_facet_field 'language__facet',
                                :label => 'Language',
                                :limit => 10
-
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
@@ -81,7 +81,7 @@ class FindSiteSearchConfigurator
         config.add_index_field 'title', :label => 'Title:'
         config.add_index_field 'alternate_title', :label => 'Alternate Title:'
         config.add_index_field 'crawl_date_end', :label => 'Crawl Date End:'
-        config.add_index_field 'bib_key', :label => 'Bib Key:'
+        config.add_index_field 'summary', :label => 'Summary:'
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
         #config.add_index_field 'author_vern_display', :label => 'Author:'
