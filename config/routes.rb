@@ -11,6 +11,7 @@ Hrwa::Application.routes.draw do
 
   # Blacklight stuff
   match '/search'  => 'catalog#index'
+  match '/site_detail/:bib_key'  => 'catalog#site_detail'
 
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf', :to => redirect( '/advanced_asf.html' )

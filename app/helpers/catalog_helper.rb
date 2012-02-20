@@ -2,14 +2,14 @@ require 'Hrwa/catalog_helper_behavior'
 
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
-  
+
   # Contains local overrides of Blacklight::CatalogHelperBehavior methods
   include Hrwa::CatalogHelperBehavior
-  
+
   # Override
   def has_search_parameters?
-    if params[ :search_mode ] == 'advanced' 
-      return( ! params[ :q_and        ].blank? or 
+    if params[ :search_mode ] == 'advanced'
+      return( ! params[ :q_and        ].blank? or
               ! params[ :q_exclude    ].blank? or
               ! params[ :q_phrase     ].blank? or
               ! params[ :q_not        ].blank? or
@@ -18,5 +18,5 @@ module CatalogHelper
     else
       super
     end
-  end  
+  end
 end
