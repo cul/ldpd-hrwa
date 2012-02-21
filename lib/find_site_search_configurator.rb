@@ -5,6 +5,21 @@ class FindSiteSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
+          :hl               => true,
+          :'hl.fragsize'    => 1000,
+          :'hl.fl'          => [ 
+                                "alternate_title",
+                                "creator_name",
+                                "geographic_focus",
+                                "language",
+                                "organization_based_in",
+                                "original_urls",
+                                "summary",
+                                "title",
+                               ],
+          :'hl.usePhraseHighlighter' => true,
+          :'hl.simple.pre'  => '',
+          :'hl.simple.post' => '',
           :qf               => [
                                 "alternate_title^1",
                                 "creator_name^1",
