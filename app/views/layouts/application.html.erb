@@ -1,58 +1,91 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     <title><%= h(@page_title || application_name) %></title>
-    <link href="<%= opensearch_catalog_path(:format => 'xml', :only_path => false) %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
-    <%= favicon_link_tag asset_path('favicon.ico') %>
-    <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application" %>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <%= csrf_meta_tags %>
-    <%= raw(render_head_content) %>
+    <%= render 'layouts/head_tag_content' %>
   </head>
+
   <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
   <body onload="<%= onload_text %>" class="<%= render_body_class.html_safe %>">
-    <div id="page">
-  	<!-- NAVIGATION BAR -->
-    <br/>
 
-    <a href="/">Home</a> |
-    <a href="/search?search_type=find_site">Find Site Search</a> |
-    <a href="/search?search_type=archive">Archive Search</a> |
-    <a href="/about">About</a> |
-    <a href="/browse">Browse</a> |
-    <a href="/contact">Contact</a> |
-    <a href="/faq">FAQ</a> |
-    <a href="#debug">Debug</a>
+    <div class="topbar">
+      <div class="fill">
+	<div class="invisible" id="cul_top">
+	  <div id="cul_inner"><a href="http://columbia.edu" title="Columbia University - Home">CU</a> &gt; <a href="http://library.columbia.edu" title="Columbia University Libraries - Home">Libraries</a> &gt; <a href="http://library.columbia.edu/indiv/humanrights.html" title="Columbia University Libraries Center for Human Rights Documentation and Research">CHRDR</a><span id="cul_right">HUMAN RIGHTS WEB ARCHIVE at Columbia University</span></div>
+	</div>
+        <div class="container">
+	  <ul id="crowndown" class="nav">
+	    <li class="menu">
+              <% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
+              <%= link_to crown_img, "#", :title => "External Links @ Columbia", :class => "menu" %>
+              <ul class="menu-dropdown">
+                <li><a href="http://columbia.edu">Columbia University - Home</a></li>
+                <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
+                <li><a title="Columbia University Libraries - CHRDR" href="http://library.columbia.edu/indiv/humanrights.html">CUL Center for Human Rights Documentation and Research</a></li>
+              </ul>
+	    </li>
+	  </ul>
+          <h3 class='topbarlogo'><a href="<%= root_path %>" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
+          <form id="topsearchform" action="<%= search_path %>">
+            <div class="input-append">
+                    <input class="span6" type="text" value="" placeholder="Enter search terms..." size="16" id="q_t" name="q">
+                    <label class="add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site" <%= (params[:search_mode] != 'archive') ? 'checked="checked"' : ''; %>> FSF</label>
+                    <label class="add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive" <%= (params[:search_mode] == 'archive') ? 'checked="checked"' : ''; %>> ASF</label>
+                    <label class="add-on hidden"> <a href="#" class="submitss white">Submit</a></label>
+            </div>
+          </form>
+          <ul id="dropdown" class="nav secondary-nav">
+            <li class="menu">
+              <a href="#" class="menu">Menu</a>
+              <ul class="menu-dropdown">
+                <li <% if current_page?(root_path) %>class="active"<% end %>><a href="<%= root_path %>">HRWA Home</a></li>
+                <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About HRWA</a></li>
+                <li><a href="#help" class="donothing">Help &amp; Tips</a></li>
+                <li class="divider"></li>
+                <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>">Browse HRWA</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> <!-- //.topbar -->
 
-      <div id="hd">
-        <div id="logo">
-          <h1 class="site_title"><%= link_to application_name, "/" %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
-        </div>
-        <div id="user_util_links">
-          <%= render :partial=>'/user_util_links' %>
-        </div>
-      </div>
-      <div id="bd">
-        <div id="main">
-          <div id="main_container">
-            <%= render :partial=>'/flash_msg' %>
-            <%= yield %>
-          </div>
-        </div>
-        <div id="sidebar"><%= sidebar_items.join('').html_safe %></div>
-      </div>
-      <div id="ft">
-        <%= raw(@footer) %>
-        <div id="footnotes_holder"></div>
-      </div>
+    <%
+      # Start main content!
+    %>
+
+    <%= render :partial=>'/flash_msg' %>
+    <%= yield %>
+
+    <div id="ft">
+      <%= raw(@footer) %>
+      <div id="footnotes_holder"></div>
     </div>
-    
+
+    <%
+      # End main content!
+    %>
+
+    <div class="container">
+      <footer id="site_footer">
+        <p class="alignright"><a href="#">Submit bug report</a></p>
+	<p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2011</span><a href="http://columbia.edu">CU Home</a> &gt; <a href="http://library.columbia.edu">Libraries Home</a></p>
+      </footer>
+    </div> <!-- /container -->
+
     <!-- TODO: TAKE THIS OUT OF PROD -->
     <% if Rails.env == "development" %>
-    <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
-      <%= @debug %>
-    </div>
+      <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
+        <%= @debug %>
+      </div>
     <% end %>
-    
+
+    <%= render 'layouts/footer_scripts' %>
+
   </body>
 </html>

@@ -1,4 +1,9 @@
 
+<%
+  # TODO: Do something with the user_util_links
+%>
+<div id="user_util_links"><%= render :partial=>'/user_util_links' %></div>
+
 <% unless has_search_parameters? %>
 	<%# if there are no input/search related params, display the "home" partial -%>
 	<%= render :partial=>'search_form' %>
@@ -33,3 +38,8 @@
   <%= render 'results_pagination' %>
 
 <% end %>
+
+<%
+  # TODO: Do something with the sidebar items (automatically generated faceting menu).
+%>
+<div id="sidebar"><%= sidebar_items.join('').html_safe %></div>
