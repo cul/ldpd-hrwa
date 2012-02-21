@@ -4,10 +4,11 @@ Hrwa::Application.routes.draw do
   Blacklight.add_routes(self)
 
   # Static pages - no dynamic content at all
-  match '/about'   => 'static#about'
-  match '/browse'  => 'static#collection_browse'
-  match '/contact' => 'static#contact'
-  match '/faq'     => 'static#faq'
+  match '/about'       => 'static#about'
+  match '/browse'      => 'static#collection_browse'
+  match '/contact'     => 'static#contact'
+  match '/faq'         => 'static#faq'
+  match '/search_home' => 'static#search_home'
 
   # Blacklight stuff
   match '/search'  => 'catalog#index'

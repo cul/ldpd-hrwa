@@ -22,5 +22,9 @@ class StaticController < ApplicationController
   def index
     @content = "Hello Home Page!"
   end
+  
+  def search_home
+    @content = "Hello Search Home!"
+  end
 
 end 
