@@ -1,22 +1,48 @@
-    <% # container for a single doc -%>
-    <div class="document <%= render_document_class document %>">
+    <% item_count_id = document_counter + 1 + @response.params[:start].to_i %>
 
-      <% # header bar for doc items in index view -%>
-      <div class="documentHeader">
+    <% # container for a single doc -%>
+    <article id="a_<%= item_count_id %>" class="post">
 
         <% # bookmark/folder functions for items/docs -%>
         <%= render_index_doc_actions document %>
 
-        <% # main title container for doc partial view -%>
-        <div class="yui-u">
-          <h3 class="index_title">
-            <%= document_counter + 1 + @response.params[:start].to_i %>.
-            <%= (link_to document.get("title"), '/site_detail/'+document.get("bib_key")) %>
-           </h3>
-        </div>
-      </div>
+        <% # main container for doc partial view -%>
+        <%#= render_document_partial document, :index %>
 
-      <% # main container for doc partial view -%>
-      <%= render_document_partial document, :index %>
+        <dl>
+            <dt>
+                <%= item_count_id %>.
+                <%= (link_to document.get("title"), '/site_detail/'+document.get("bib_key")) %>
+            </dt>
 
-    </div>
+            <dd>
+               http://www.tihv.org.tr/
+            </dd>
+
+
+                <dd>
+                    <code>Human</code> Rights Foundation of Turkey &hellip; <code>Human</code> rights &hellip; <code>Human</code> Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non &hellip;
+                </dd>
+
+
+
+            <dd>
+               <a title='SDF permalink for: Türkiye İnsan Hakları Vakfı' href="sdf.php?q=human&in=fsf&amp;site_id=7038349">Site Detail</a> [<a title='SDF preview for: Türkiye İnsan Hakları Vakfı' class='quicklook' href="sdf.php?q=human&in=fsf&amp;site_id=7038349"><img class='preview_icon' alt='quicklook' src='img/search.png' /></a>] &bull; <a title='CCF permalink for: http://www.tihv.org.tr/' href="ccf.php?q=human&in=fsf&amp;site=http://www.tihv.org.tr/">Crawl Calendar</a> [<a title='CCF Preview for: http://www.tihv.org.tr/' class='ccf_quicklook' href="ccf.php?q=human&in=fsf&amp;site=http://www.tihv.org.tr/"><img class='preview_icon' alt='quicklook' src='img/search.png' /></a>]
+                    <!--([crawl_date_start]&mdash;[crawl_date_end])-->
+            </dd>
+
+            <dd>
+               <a href='#' class='btn small toggle_section moreless'>Show More+</a>
+               <div class='toggler'>
+
+                    <strong>Alt. Title(s):</strong> Human Rights Foundation of Turkey<br />
+
+                    <strong>Organization Type:</strong> <a id='facet_0--Non%5C-governmental+organizations' class='addfq' title='organization_type' href='%26amp%3Bfq%5B%5D%3DNon-governmental+organizations'>Non-governmental organizations</a> <br />
+                    <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
+                    <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
+                    <strong>Subjects:</strong> <a id='facet_3--Human+rights' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights'>Human rights</a>, <a id='facet_4--Torture' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DTorture'>Torture</a>, <a id='facet_5--Human+rights+advocacy' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights+advocacy'>Human rights advocacy</a>, <br />
+                    <strong>Summary:</strong> Human Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non-profit organization providing treatment and rehabilitation services for torture survivors and documenting human rights violations in Turkey.
+               </div>
+            </dd>
+        </dl>
+    </article>
