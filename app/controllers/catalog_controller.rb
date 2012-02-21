@@ -9,7 +9,8 @@ class CatalogController < ApplicationController
   include AdvancedSearch
   include Debug
 
-  #display the site detail for an fsf record, using bib_key as a unique identifier
+  # display the site detail for an fsf record, using bib_key as a unique identifier
+  # use the bib_key to get a single document from the solr index
   def site_detail
     @bib_key = params[:bib_key]
   end

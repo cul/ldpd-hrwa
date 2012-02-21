@@ -4,10 +4,22 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
-//= require jquery_ujs
+// = require jquery
+// = require jquery_ujs
 //
 // Required by Blacklight
-//= require jquery-ui
-//= require blacklight/blacklight
-//= require_tree .
+// = require jquery-ui
+// removed: = require blacklight/blacklight
+//
+// Using require_self below to make sure that the items below it are included in
+// the specified order (or at least that's what I think it does)
+// = require_self
+//
+// respond.min.js - https://github.com/scottjehl/Respond - Enables media queries in some unsupported browsers
+// = require respond.min
+// = require bootstrap-twipsy
+// = require bootstrap-dropdown
+// = jquery.tinysort.min.js
+//
+// load our custom script last
+// = require hrwa

@@ -1,4 +1,9 @@
 
+<%
+  # TODO: Do something with the user_util_links
+%>
+<div id="user_util_links"><%= render :partial=>'/user_util_links' %></div>
+
 <% unless has_search_parameters? %>
 	<%# if there are no input/search related params, display the "home" partial -%>
 	<%= render :partial=>'search_form' %>
@@ -20,15 +25,18 @@
     <%=link_to "start over", catalog_index_path, :id=>"startOverLink" %>
   </div>
 
-	<%= render 'sort_and_per_page' %>
+	<div id="primary" class="span12">
+	  <%#= render 'sort_and_per_page' %>
+	  <%#= render 'results_pagination' %>
+	  <%= render :partial => 'result_list' %>
+	</div>
 
-        <%= render 'results_pagination' %>
-
-	<%= render :partial => 'result_list' %>
-
-	<% sidebar_items << capture do %>
-	  <%= render :partial=>'facets' %>
-	<% end %>
+	<div id="secondary" class="span4">
+	  <% sidebar_items << capture do %>
+	    <%= render :partial=>'facets' %>
+	  <% end %>
+	  <%= sidebar_items.join('').html_safe %>
+	</div>
 
   <%= render 'results_pagination' %>
 
