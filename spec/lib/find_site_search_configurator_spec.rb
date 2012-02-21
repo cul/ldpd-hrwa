@@ -130,6 +130,20 @@ describe 'FindSiteSearchConfigurator' do
     end
     
   end
+   
+  # TODO: Eric, let me know when you get to these next three tests
+  it '#post_blacklight_processing_required? returns false' do
+    @configurator.post_blackight_processing_required?.should == false
+  end
+
+  it '#post_blacklight_processing! returns args unchanged' do
+    solr_response = solr_response_original = {}
+    results_list  = results_list_original  = []
+    @configurator.post_blacklight_processing!( solr_response, results_list )
+    solr_response.should == solr_response_original
+    solr_response.should == solr_response_original
+  end
+
 =end
 end
 
