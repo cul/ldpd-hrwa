@@ -37,7 +37,12 @@ class CatalogController < ApplicationController
     end
 
     (@response, @result_list) = get_search_results( params,
-                                                      extra_controller_params ||= {} )
+                                                    extra_controller_params ||= {} )
+                                                    
+    if @configurator.post_blacklight_processing_required?
+      @response, @result_list = @configurator.post_blacklight_processing( @response,
+                                                                          @result_list )
+    end
 
     @filters = params[:f] || []
 
@@ -72,12 +77,12 @@ class CatalogController < ApplicationController
     @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
 
     # TODO: remove me
-    # if(@search_type == :archive)
-      # render :text => %Q{CatalogController currently broken.  This is a temporary
-                      # manual render to keep Rails from crashing.\n
-                      # <br/>"Search Tips" - this string is here to enable Capybara
-                      # request test to pass <br/> #{@debug}} and return
-    # end
+    if(@search_type == :archive)
+      render :text => %Q{CatalogController currently broken.  This is a temporary
+                      manual render to keep Rails from crashing.\n
+                      <br/>"Search Tips" - this string is here to enable Capybara
+                      request test to pass <br/> #{@debug}} and return
+    end
 
     respond_to do |format|
       format.html { save_current_search_params }
