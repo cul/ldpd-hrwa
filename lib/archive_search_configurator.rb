@@ -194,6 +194,19 @@ class ArchiveSearchConfigurator
       }
     end
     
+    # Did Blacklight give us everything we need in SOLR response and
+    # results list objects?
+    def post_blackight_processing_required?
+      return true
+    end
+  
+    # Do more with the SOLR response and results list that Blacklight
+    # gives us.
+    def post_blacklight_processing( solr_response, result_list )
+      result_list = solr_response.groups
+      return solr_response, result_list
+    end
+    
     def result_partial
       return result_type
     end
