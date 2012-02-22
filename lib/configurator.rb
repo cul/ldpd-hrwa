@@ -26,7 +26,7 @@ class Configurator
   
   # Do more with the SOLR response and results list that Blacklight
   # gives us.
-  def post_blacklight_processing!( solr_response, results_list )
+  def post_blacklight_processing( solr_response, results_list )
     return @configurator.post_blacklight_processing!( solr_response, results_list )
   end
 
