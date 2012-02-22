@@ -20,7 +20,7 @@ class Configurator
   
   # Did Blacklight give us everything we need in SOLR response and
   # results list objects?
-  def post_blackight_processing_required?
+  def post_blacklight_processing_required?
     return @configurator.post_blacklight_processing_required?
   end
   

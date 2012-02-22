@@ -151,7 +151,7 @@ describe 'ArchiveSearchConfigurator' do
     end
     
     it '#post_blacklight_processing_required? returns true' do
-      @configurator.post_blackight_processing_required?.should == true
+      @configurator.post_blacklight_processing_required?.should == true
     end
     
     it '#post_blacklight_processing modifies result_list correctly' do
