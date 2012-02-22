@@ -41,7 +41,7 @@ class CatalogController < ApplicationController
                                                     
     if @configurator.post_blacklight_processing_required?
       @response, @result_list = @configurator.post_blacklight_processing( @response,
-                                                                          @result_list )
+                                                                         @result_list )
     end
 
     @filters = params[:f] || []
@@ -49,7 +49,29 @@ class CatalogController < ApplicationController
     # Select appropriate partials
     @result_partial = @configurator.result_partial
     @result_type    = @configurator.result_type
+    
+    if params.has_key?( :hrwa_debug )
+      _debug( extra_controller_params )
+    end
 
+        # TODO: remove me
+    if(@search_type == :archive)
+      render :text => %Q{CatalogController currently broken.  This is a temporary
+                      manual render to keep Rails from crashing.\n
+                      <br/>"Search Tips" - this string is here to enable Capybara
+                      request test to pass <br/> #{@debug}} and return
+    end
+
+    respond_to do |format|
+      format.html { save_current_search_params }
+      format.rss  { render :layout => false }
+      format.atom { render :layout => false }
+    end
+  end
+
+  private
+  
+  def _debug( extra_controller_params = {} )       
     @debug << "<h1>@result_partial = #{@result_partial}</h1>".html_safe
     @debug << "<h1>@result_type    = #{@result_type}</h1>".html_safe
 
@@ -75,23 +97,7 @@ class CatalogController < ApplicationController
 
     @debug << '<h1>@response</h1>'.html_safe
     @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
-
-    # TODO: remove me
-    if(@search_type == :archive)
-      render :text => %Q{CatalogController currently broken.  This is a temporary
-                      manual render to keep Rails from crashing.\n
-                      <br/>"Search Tips" - this string is here to enable Capybara
-                      request test to pass <br/> #{@debug}} and return
-    end
-
-    respond_to do |format|
-      format.html { save_current_search_params }
-      format.rss  { render :layout => false }
-      format.atom { render :layout => false }
-    end
   end
-
-  private
 
   def _configure_by_search_type
     @debug = ''.html_safe
