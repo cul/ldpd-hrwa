@@ -78,6 +78,13 @@
       </footer>
     </div> <!-- /container -->
 
+    <!-- TODO: TAKE THIS OUT OF PROD -->
+    <% if Rails.env == "development" %>
+      <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
+        <%= @debug %>
+      </div>
+    <% end %>
+
     <%= render 'layouts/footer_scripts' %>
 
   </body>
