@@ -7,7 +7,7 @@ class FindSiteSearchConfigurator
         config.default_solr_params = {
           :hl               => true,
           :'hl.fragsize'    => 1000,
-          :'hl.fl'          => [ 
+          :'hl.fl'          => [
                                 "alternate_title",
                                 "creator_name",
                                 "geographic_focus",
@@ -203,6 +203,12 @@ class FindSiteSearchConfigurator
 
     def solr_url
       YAML.load_file("config/solr.yml")['development_fsf']['url']
+    end
+
+    # Did Blacklight give us everything we need in SOLR response and
+    # results list objects?
+    def post_blacklight_processing_required?
+      return false
     end
 
 end
