@@ -150,6 +150,20 @@ describe 'ArchiveSearchConfigurator' do
       @blacklight_config.unique_key.should == 'recordIdentifier'
     end
     
+    it '#post_blacklight_processing_required? returns true' do
+      @configurator.post_blackight_processing_required?.should == true
+    end
+    
+    it '#post_blacklight_processing modifies result_list correctly' do
+      raw_response         = create_mock_raw_response
+      expected_result_list = raw_response[ 'grouped' ][ 'originalUrl' ][ 'groups' ]
+      
+      solr_response = create_mock_rsolr_ext_response
+      result_list   = [ "doesn't matter what's in here -- should never see this" ]
+      solr_response, result_list = @configurator.post_blacklight_processing( solr_response, result_list )
+      result_list.should == expected_result_list
+    end
+    
     # TODO: add group and highlight specs
   end
 end
