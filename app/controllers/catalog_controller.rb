@@ -51,10 +51,10 @@ class CatalogController < ApplicationController
     @result_type    = @configurator.result_type
     
     if params.has_key?( :hrwa_debug )
-      _debug( extra_controller_params )
+      _set_debug_display( extra_controller_params )
     end
 
-        # TODO: remove me
+    # TODO: remove me
     if(@search_type == :archive)
       render :text => %Q{CatalogController currently broken.  This is a temporary
                       manual render to keep Rails from crashing.\n
@@ -71,7 +71,7 @@ class CatalogController < ApplicationController
 
   private
   
-  def _debug( extra_controller_params = {} )       
+  def _set_debug_display( extra_controller_params = {} )       
     @debug << "<h1>@result_partial = #{@result_partial}</h1>".html_safe
     @debug << "<h1>@result_type    = #{@result_type}</h1>".html_safe
 
