@@ -43,6 +43,10 @@
            %>
            
            <em>Highlighted snippet, complete (all snippets):</em> <%= highlighted_snippet_full %>
+           
+           <br/>
+            
+           <em>Highlighted snippet, brief (three lines):</em> TODO 
                       
            <br/>
            
@@ -81,7 +85,7 @@
                 other_capture_instances << capture_instance                	
               }
            %>
-           <em>Other capture instances:</em> <%= ( not other_capture_instances.empty? ) ?
+
                                                  other_capture_instances.pretty_inspect :
                                                  'None' %>
            <br/>
