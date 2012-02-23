@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:cul/rsolr-ext.git
-  revision: 682c10cead23d9cc06afd261d303372901b74ad1
+  revision: 5af0c249514d0b5cc23fd94ecacef6f6074c3c1f
   branch: grouping
   specs:
     rsolr-ext (1.0.3)
@@ -278,6 +278,7 @@ DEPENDENCIES
   launchy (= 2.0.5)
   linecache19 (= 0.5.13)!
   mysql2 (= 0.3.11)
+  nokogiri (= 1.5.0)
   rails (= 3.1.2)
   rb-fsevent (= 0.9.0)
   rb-readline (= 0.4.2)

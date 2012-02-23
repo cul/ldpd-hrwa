@@ -9,59 +9,95 @@
 
         <% # main title container for group partial view -%>
         <div class="yui-u">
-          <h3 class="index_title">
-            <%= group_counter + 1 + @response.params[:start].to_i %>.
-           </h3>
-          
-           <!-- TITLE LINK -->
-           <a href="<%= group[ :archivedUrl ] %>">
-             <%= ( ! group[ :contentTitle ].blank? ) ?
-                 group[ :contentTitle ] :
-                 '[Untitled]' %>
-           </a>
+           <br/><br/>
            
-           <br/>
-           
-           <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
-           <%= group[ :originalUrl ] %>
-           
-           <br/>
-           
-           <!-LINK TO SDF PAGE FOR PARENT WEBSITE -->
-           <a href="<%= "site_id=#{ group[ :bib_key ] }" %>">(Info)</a>
-            
-           <br/>
-           
-           <!-- HIGHLIGHTED SNIPPET -->
-           
-           <br/>
-           
-           <!-- MIMETYPE -->
-           <%= group[ :mimetype ] %>
-           
-           <br/>
-                      
-           <!-- SIZE -->
-           <%= group[ :length ] %>
-           
-           <br/>                
-           
-           <!-- CAPTURE DATE FOR THE PAGE -->
-           <%= group[ :dateOfCaptureYYYYMMDD ] %>
-           
-           <br/>
-                      
-           <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
-           
-           <br/>
-                      
-           <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-           
-           <br/>
-                      
-           <!-- OTHER CAPTURE INSTANCES -->                
-           
-           <br/>
+           <div style="border: 2px solid; padding: 30px;">
+               <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
+              
+               <% # The top doc for the group will be displayed in full as a hit %>
+               <% doc = group[ :doclist ][ :docs ].shift %>
+               
+               <!-- TITLE LINK DATA -->
+               <h5>Title:</h5> <%= ( ! doc[ :contentTitle ].blank? ) ?
+                     doc[ :contentTitle ] :
+                     '[Untitled]' %><br/><br/>      
+               <h5>Title link URL:</h5> <%= doc[ :archivedUrl ] %>
+               
+               <br/><br/>
+               
+               <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
+               <h5>Original capture URL:</h5> <%= doc[ :originalUrl ] %>
+               
+               <br/><br/>
+               
+               <!-- SDF PAGE LINK DATA -->
+               <h5>Parent site bib_key:</h5> <%= doc[ :bib_key ] %>
+                
+               <br/><br/>
+               
+               <!-- HIGHLIGHTED SNIPPETS -->
+               <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
+                  full_snippets_string = ''
+                  snippets.each { | field, snippets_for_field |
+                    full_snippets_string << snippets_for_field.join( '...' ) << '...'                 
+                  }
+                  highlighted_snippet_full  = full_snippets_string.html_safe
+                  highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
+                                                             355,
+                                                             %q{...<a href="javascript: alert('Toggle between full and brief snippet')">+ More</a>} ).html_safe           
+               %>
+               
+               <h5>Highlighted snippet, complete (all snippets):</h5> <%= highlighted_snippet_full %>
+               
+               <br/><br/>
+                
+               <h5>Highlighted snippet, brief (approx. three lines):</h5> <%= highlighted_snippet_brief %> 
+                          
+               <br/><br/>
+               
+               <!-- MIMETYPE -->
+               <h5>File type:</h5> <%= doc[ :mimetype ] %>
+               
+               <br/><br/>
+                          
+               <!-- SIZE -->
+               <h5>Size:</h5> <%= number_to_human_size( doc[ :length ] ) %>
+               
+               <br/><br/>                
+               
+               <!-- CAPTURE DATE FOR THE PAGE -->
+               <h5>Instance date:</h5> <%= doc[ :recordDate ].to_time %>
+               
+               <br/><br/>
+                          
+               <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
+               <h5>"See all hits from www.hrw.org" link URL:</h5> TODO
+               
+               <br/><br/>
+                          
+               <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
+               <h5>"Exclude <%= doc[ :domain ] %> from hits" link URL:</h5> TODO
+               
+               <br/><br/>
+                          
+               <!-- OTHER CAPTURE INSTANCES -->                
+               <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+                  other_capture_instances = []
+                  remaining_docs_in_group.each { | doc |
+                    capture_instance = { :url           => doc[ :archivedUrl ],
+                                         :instance_date => doc[ :recordDate  ].to_time,
+                                         :size          => number_to_human_size( doc[ :length ] ) 
+                                       }
+                    other_capture_instances << capture_instance                 
+                  }
+               %>
+               <h5>Other capture instances:</h5> 
+               <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/>
+               <%= ( not other_capture_instances.empty? ) ?
+                                                     other_capture_instances.pretty_inspect :
+                                                     'None' %>
+               <br/><br/>
+           </div>                   
                       
            
         </div>
