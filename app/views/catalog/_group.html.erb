@@ -9,9 +9,6 @@
 
         <% # main title container for group partial view -%>
         <div class="yui-u">
-          <h3 class="index_title">
-            <%= group_counter + 1 + @response.params[:start].to_i %>.
-           </h3>
           
            <pre><%= group.pretty_inspect.html_safe if params.has_key?( :hrwa_debug ) %></pre><br/>
           
