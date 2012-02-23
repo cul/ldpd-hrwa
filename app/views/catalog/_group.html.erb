@@ -44,7 +44,7 @@
                   highlighted_snippet_full  = full_snippets_string.html_safe
                   highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
                                                              355,
-                                                             %q{...<a href="javascript: alert('Less/More')">+ More</a>} ).html_safe           
+                                                             %q{...<a href="javascript: alert('Toggle between full and brief snippet')">+ More</a>} ).html_safe           
                %>
                
                <h5>Highlighted snippet, complete (all snippets):</h5> <%= highlighted_snippet_full %>
@@ -84,13 +84,16 @@
                <% remaining_docs_in_group = group[ :doclist ][ :docs ]
                   other_capture_instances = []
                   remaining_docs_in_group.each { | doc |
-                    capture_instance = { :instance_date => doc[ :recordDate ].to_time,
+                    capture_instance = { :url           => doc[ :archivedUrl ],
+                                         :instance_date => doc[ :recordDate  ].to_time,
                                          :size          => number_to_human_size( doc[ :length ] ) 
                                        }
                     other_capture_instances << capture_instance                 
                   }
                %>
-               <h5>Other capture instances:</h5> <%= ( not other_capture_instances.empty? ) ?
+               <h5>Other capture instances:</h5> 
+               <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/>
+               <%= ( not other_capture_instances.empty? ) ?
                                                      other_capture_instances.pretty_inspect :
                                                      'None' %>
                <br/><br/>
