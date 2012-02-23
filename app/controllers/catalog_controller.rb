@@ -6,7 +6,7 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
   include HRWA::AdvancedSearch
-  include Debug
+  include HRWA::Debug
 
   # display the site detail for an fsf record, using bib_key as a unique identifier
   # use the bib_key to get a single document from the solr index
