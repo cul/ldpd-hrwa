@@ -1,4 +1,4 @@
-module Hrwa::FacetsHelperBehavior
+module HRWA::FacetsHelperBehavior
   include Blacklight::FacetsHelperBehavior
 
   # ! Override of default render_facet_value !
