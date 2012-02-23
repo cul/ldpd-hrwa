@@ -1,3 +1,3 @@
 module FacetsHelper
-  include Hrwa::FacetsHelperBehavior
+  include HRWA::FacetsHelperBehavior
 end
