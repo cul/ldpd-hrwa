@@ -55,12 +55,12 @@
            <br/>
                       
            <!-- SIZE -->
-           <em>Size:</em> <%= doc[ :length ] %>
+           <em>Size:</em> <%= number_to_human_size( doc[ :length ] ) %>
            
            <br/>                
            
            <!-- CAPTURE DATE FOR THE PAGE -->
-           <em>Instance date:</em><%= doc[ :timestamp ].to_time %>
+           <em>Instance date:</em><%= doc[ :recordDate ].to_time %>
            
            <br/>
                       
@@ -73,7 +73,7 @@
            <br/>
                       
            <!-- OTHER CAPTURE INSTANCES -->                
-           
+
            <br/>
                       
            
