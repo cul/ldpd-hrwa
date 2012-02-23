@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-# TODO: re-enable the three disabled tests below
-
 describe 'all searches' do
   it 'should not have "host" param in querystring' do
     visit '/advanced_asf'
