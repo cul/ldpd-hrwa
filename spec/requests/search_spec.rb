@@ -12,6 +12,11 @@ describe 'all searches' do
     params_hash = Rack::Utils.parse_nested_query( querystring ).deep_symbolize_keys
     params_hash[ :host ].should be_nil
   end
+  
+  it 'render the "search home page" if there are no params' do
+    visit '/search'
+    page.should have_content('Search Tips')
+  end
 end
 
 describe 'advanced_search_asf' do
@@ -27,13 +32,6 @@ describe 'advanced_search_asf' do
     fill_in 'q_and', :with => 'women'
     click_button 'submit_search'
     page.has_field?( 'q', :with => 'Click + to refine search' ).should == true
-  end
-  
-  # This should never really happen, but just in case...
-  it 'renders the search page if there are no q_* or limit by params (if they are present' +
-    ' that is a different use case)' do
-    visit '/search?search_type=archive'
-    page.should have_content('Search Tips')
   end
 
 end
