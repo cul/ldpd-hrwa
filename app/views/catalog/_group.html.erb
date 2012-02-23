@@ -10,85 +10,91 @@
         <% # main title container for group partial view -%>
         <div class="yui-u">
            <br/><br/>
-           <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
-          
-           <% # The top doc for the group will be displayed in full as a hit %>
-           <% doc = group[ :doclist ][ :docs ].shift %>
            
-           <!-- TITLE LINK DATA -->
-           <em>Title:</em> <%= ( ! doc[ :contentTitle ].blank? ) ?
-                 doc[ :contentTitle ] :
-                 '[Untitled]' %><br/>      
-           <em>Title link URL:</em> <%= doc[ :archivedUrl ] %>
-           
-           <br/>
-           
-           <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
-           <em>Original capture URL:</em> <%= doc[ :originalUrl ] %>
-           
-           <br/>
-           
-           <!-- SDF PAGE LINK DATA -->
-           <em>Parent site bib_key:</em> <%= doc[ :bib_key ] %>
-            
-           <br/>
-           
-           <!-- HIGHLIGHTED SNIPPETS -->
-           <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
-              full_snippets_string = ''
-              snippets.each { | field, snippets_for_field |
-                full_snippets_string << snippets_for_field.join( '...' ) << '...'                 
-              }
-              highlighted_snippet_full = full_snippets_string.html_safe           
-           %>
-           
-           <em>Highlighted snippet, complete (all snippets):</em> <%= highlighted_snippet_full %>
-           
-           <br/>
-            
-           <em>Highlighted snippet, brief (three lines):</em> TODO 
-                      
-           <br/>
-           
-           <!-- MIMETYPE -->
-           <em>File type:</em> <%= doc[ :mimetype ] %>
-           
-           <br/>
-                      
-           <!-- SIZE -->
-           <em>Size:</em> <%= number_to_human_size( doc[ :length ] ) %>
-           
-           <br/>                
-           
-           <!-- CAPTURE DATE FOR THE PAGE -->
-           <em>Instance date:</em> <%= doc[ :recordDate ].to_time %>
-           
-           <br/>
-                      
-           <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
-           <em>"See all hits from www.hrw.org" link URL:</em> TODO
-           
-           <br/>
-                      
-           <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-           <em>"Exclude <%= doc[ :domain ] %> from hits" link URL:</em> TODO
-           
-           <br/>
-                      
-           <!-- OTHER CAPTURE INSTANCES -->                
-           <% remaining_docs_in_group = group[ :doclist ][ :docs ]
-              other_capture_instances = []
-              remaining_docs_in_group.each { | doc |
-              	capture_instance = { :instance_date => doc[ :recordDate ].to_time,
-              		                   :size          => number_to_human_size( doc[ :length ] ) 
-              		                 }
-                other_capture_instances << capture_instance                	
-              }
-           %>
-           <em>Other capture instances:</em> <%= ( not other_capture_instances.empty? ) ?
-                                                 other_capture_instances.pretty_inspect :
-                                                 'None' %>
-           <br/>
+           <div style="border: 2px solid; padding: 30px;">
+               <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
+              
+               <% # The top doc for the group will be displayed in full as a hit %>
+               <% doc = group[ :doclist ][ :docs ].shift %>
+               
+               <!-- TITLE LINK DATA -->
+               <h5>Title:</h5> <%= ( ! doc[ :contentTitle ].blank? ) ?
+                     doc[ :contentTitle ] :
+                     '[Untitled]' %><br/><br/>      
+               <h5>Title link URL:</h5> <%= doc[ :archivedUrl ] %>
+               
+               <br/><br/>
+               
+               <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
+               <h5>Original capture URL:</h5> <%= doc[ :originalUrl ] %>
+               
+               <br/><br/>
+               
+               <!-- SDF PAGE LINK DATA -->
+               <h5>Parent site bib_key:</h5> <%= doc[ :bib_key ] %>
+                
+               <br/><br/>
+               
+               <!-- HIGHLIGHTED SNIPPETS -->
+               <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
+                  full_snippets_string = ''
+                  snippets.each { | field, snippets_for_field |
+                    full_snippets_string << snippets_for_field.join( '...' ) << '...'                 
+                  }
+                  highlighted_snippet_full  = full_snippets_string.html_safe
+                  highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
+                                                             355,
+                                                             %q{...<a href="javascript: alert('Less/More')">+ More</a>} ).html_safe           
+               %>
+               
+               <h5>Highlighted snippet, complete (all snippets):</h5> <%= highlighted_snippet_full %>
+               
+               <br/><br/>
+                
+               <h5>Highlighted snippet, brief (approx. three lines):</h5> <%= highlighted_snippet_brief %> 
+                          
+               <br/><br/>
+               
+               <!-- MIMETYPE -->
+               <h5>File type:</h5> <%= doc[ :mimetype ] %>
+               
+               <br/><br/>
+                          
+               <!-- SIZE -->
+               <h5>Size:</h5> <%= number_to_human_size( doc[ :length ] ) %>
+               
+               <br/><br/>                
+               
+               <!-- CAPTURE DATE FOR THE PAGE -->
+               <h5>Instance date:</h5> <%= doc[ :recordDate ].to_time %>
+               
+               <br/><br/>
+                          
+               <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
+               <h5>"See all hits from www.hrw.org" link URL:</h5> TODO
+               
+               <br/><br/>
+                          
+               <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
+               <h5>"Exclude <%= doc[ :domain ] %> from hits" link URL:</h5> TODO
+               
+               <br/><br/>
+                          
+               <!-- OTHER CAPTURE INSTANCES -->                
+               <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+                  other_capture_instances = []
+                  remaining_docs_in_group.each { | doc |
+                    capture_instance = { :instance_date => doc[ :recordDate ].to_time,
+                                         :size          => number_to_human_size( doc[ :length ] ) 
+                                       }
+                    other_capture_instances << capture_instance                 
+                  }
+               %>
+               <h5>Other capture instances:</h5> <%= ( not other_capture_instances.empty? ) ?
+                                                     other_capture_instances.pretty_inspect :
+                                                     'None' %>
+               <br/><br/>
+           </div>                   
                       
            
         </div>
