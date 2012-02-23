@@ -1,10 +1,8 @@
-require 'Hrwa/catalog_helper_behavior'
-
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
 
   # Contains local overrides of Blacklight::CatalogHelperBehavior methods
-  include Hrwa::CatalogHelperBehavior
+  include HRWA::CatalogHelperBehavior
 
   # Override
   def has_search_parameters?

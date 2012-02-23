@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module Hrwa::CatalogHelperBehavior
+module HRWA::CatalogHelperBehavior
   # Override
   def has_search_parameters?
     if params[:search_mode] == 'advanced' 
