@@ -73,7 +73,18 @@
            <br/>
                       
            <!-- OTHER CAPTURE INSTANCES -->                
-
+           <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+              other_capture_instances = []
+              remaining_docs_in_group.each { | doc |
+              	capture_instance = { :instance_date => doc[ :recordDate ].to_time,
+              		                 :size          => number_to_human_size( doc[ :length ] ) 
+              		               }
+                other_capture_instances << capture_instance                	
+              }
+           %>
+           <em>Other capture instances:</em> <%= ( not other_capture_instances.empty? ) ?
+                                                 other_capture_instances.pretty_inspect :
+                                                 'None' %>
            <br/>
                       
            
