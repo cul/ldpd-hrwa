@@ -24,7 +24,7 @@
            <br/>
            
            <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
-           <em>Original capture URL:</em><%= doc[ :originalUrl ] %>
+           <em>Original capture URL:</em> <%= doc[ :originalUrl ] %>
            
            <br/>
            
@@ -33,7 +33,7 @@
             
            <br/>
            
-           <!-- HIGHLIGHTED SNIPPET -->
+           <!-- HIGHLIGHTED SNIPPETS -->
            <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
               full_snippets_string = ''
               snippets.each { | field, snippets_for_field |
@@ -61,7 +61,7 @@
            <br/>                
            
            <!-- CAPTURE DATE FOR THE PAGE -->
-           <em>Instance date:</em><%= doc[ :recordDate ].to_time %>
+           <em>Instance date:</em> <%= doc[ :recordDate ].to_time %>
            
            <br/>
                       
@@ -80,12 +80,12 @@
               other_capture_instances = []
               remaining_docs_in_group.each { | doc |
               	capture_instance = { :instance_date => doc[ :recordDate ].to_time,
-              		                 :size          => number_to_human_size( doc[ :length ] ) 
-              		               }
+              		                   :size          => number_to_human_size( doc[ :length ] ) 
+              		                 }
                 other_capture_instances << capture_instance                	
               }
            %>
-
+           <em>Other capture instances:</em> <%= ( not other_capture_instances.empty? ) ?
                                                  other_capture_instances.pretty_inspect :
                                                  'None' %>
            <br/>
