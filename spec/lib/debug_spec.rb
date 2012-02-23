@@ -1,22 +1,21 @@
 require 'spec_helper'
-require 'debug'
 
 describe 'array_pp' do
-  include Debug
+  include HRWA::Debug
   it 'creates correct HTML given array of mixed types' do
     array_pp( array_to_test ).should eq array_pp_expected_html
   end
 end
 
 describe 'array_pp_sorted' do
-  include Debug
+  include HRWA::Debug
   it 'creates correct HTML given array of mixed types' do
     array_pp_sorted( array_to_test ).should eq array_pp_sorted_expected_html
   end
 end
 
 describe 'hash_pp' do
-  include Debug
+  include HRWA::Debug
   it 'creates correct HTML given hash' do
     hash_pp( params ).should eq params_list_expected_html
   end
@@ -24,7 +23,7 @@ end
 
 
 describe 'params_list' do
-  include Debug
+  include HRWA::Debug
   it 'creates correct HTML given list of params' do
     params_list.should eq params_list_expected_html
   end

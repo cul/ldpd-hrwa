@@ -1,5 +1,5 @@
 # Mix in advanced search processing
-module AdvancedSearch
+module HRWA::AdvancedSearch
 
   # solr_search_params_logic methods take two arguments
   # @param [Hash] solr_parameters a hash of parameters to be sent to Solr (via RSolr)

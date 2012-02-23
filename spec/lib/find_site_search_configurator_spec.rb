@@ -1,10 +1,9 @@
 require 'spec_helper'
 require 'blacklight/configuration'
-require 'find_site_search_configurator'
 
-describe 'FindSiteSearchConfigurator' do
+describe 'HRWA::FindSiteSearchConfigurator' do
   before ( :all ) do
-    @configurator = FindSiteSearchConfigurator.new
+    @configurator = HRWA::FindSiteSearchConfigurator.new
   end
      
   it 'returns the correct partial name' do

@@ -1,16 +1,16 @@
 # -*- encoding : utf-8 -*-
-require 'archive_search_configurator'
-require 'find_site_search_configurator'
+require 'hrwa/archive_search_configurator'
+require 'hrwa/find_site_search_configurator'
 
-class Configurator
+class HRWA::Configurator
   unloadable
 
   def initialize( search_request_type )
     case search_request_type
       when :archive
-        @configurator = ArchiveSearchConfigurator.new
+        @configurator = HRWA::ArchiveSearchConfigurator.new
       when :find_site
-        @configurator = FindSiteSearchConfigurator.new
+        @configurator = HRWA::FindSiteSearchConfigurator.new
     end
   end
 

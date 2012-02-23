@@ -1,4 +1,4 @@
-module Debug
+module HRWA::Debug
     
   def array_pp( array )
     return array.join( '<br/>' ).html_safe

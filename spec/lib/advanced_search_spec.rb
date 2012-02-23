@@ -1,8 +1,7 @@
 require 'spec_helper'
-require 'advanced_search'
 
 class MockCatalogController
-  include AdvancedSearch 
+  include HRWA::AdvancedSearch 
 end
 
 mock_catalog_controller = MockCatalogController.new

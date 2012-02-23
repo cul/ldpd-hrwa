@@ -1,53 +1,60 @@
 # -*- encoding : utf-8 -*-
-class FindSiteSearchConfigurator
+class HRWA::ArchiveSearchConfigurator
   unloadable
 
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
+          :defType          => 'dismax',
+          :facet            => true,
+          :'facet.mincount' => 1,
+          :group            => true,
+          :'group.field'    => 'originalUrl',
+          :'group.limit'    => 10,
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                                "alternate_title",
-                                "creator_name",
-                                "geographic_focus",
-                                "language",
-                                "organization_based_in",
-                                "original_urls",
-                                "summary",
-                                "title",
+                               'originalUrl',
+                               'contentTitle',
+                               'contentBody',
+                               'contentMetaDescription',
+                               'contentMetaKeywords',
+                               'contentMetaLanguage',
+                               'contentBodyHeading1',
+                               'contentBodyHeading2',
+                               'contentBodyHeading3',
+                               'contentBodyHeading4',
+                               'contentBodyHeading5',
+                               'contentBodyHeading6',
                                ],
           :'hl.usePhraseHighlighter' => true,
-          :'hl.simple.pre'  => '<code>',
-          :'hl.simple.post' => '</code>',
-          :qf               => [
-                                "alternate_title^1",
-                                "creator_name^1",
-                                "geographic_focus^1",
-                                "language^1",
-                                "organization_based_in^1",
-                                "original_urls^1",
-                                "summary^1",
-                                "title^1",
-                                ],
+          :'hl.simple.pre'  => '',
+          :'hl.simple.post' => '',
+          :'q.alt'          => '*:*',
+          :qf               => ['contentTitle^1',
+                                'contentBody^1',
+                                'contentMetaDescription^1',
+                                'contentMetaKeywords^1',
+                                'contentMetaLanguage^1',
+                                'contentBodyHeading1^1',
+                                'contentBodyHeading2^1',
+                                'contentBodyHeading3^1',
+                                'contentBodyHeading4^1',
+                                'contentBodyHeading5^1',
+                                'contentBodyHeading6^1'],
           :rows             => 10,
-          :'q.alt'          => "*:*",
-          :facet            => true,
-          :'facet.mincount' => 1,
-          :defType          => "dismax"
         }
 
-        config.unique_key = "bib_key"
+        config.unique_key = 'recordIdentifier'
 
         # solr field configuration for search results/index views
-        config.index.show_link = 'title'
+        config.index.show_link           = 'contentTitle'
         config.index.record_display_type = ''
 
-        # Our custom views make the config.show options useless
         # solr field configuration for document/show views
-        #config.show.html_title   = 'title'
-        #config.show.heading      = 'title'
-        #config.show.display_type = ''
+        config.show.html_title   = 'contentTitle'
+        config.show.heading      = 'contentTitle'
+        config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
         #   The ordering of the field names is the order of the display
@@ -65,26 +72,42 @@ class FindSiteSearchConfigurator
         # on the solr side in the request handler itself. Request handler defaults
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
+        config.add_facet_field 'domain',
+                               :label => 'Domain',
+                               :limit => 10
+
+        config.add_facet_field 'geographic_focus__facet',
+                               :label => 'Organization/Site Geographic Focus',
+                               :limit => 10
+
+        config.add_facet_field 'organization_based_in__facet',
+                               :label => 'Organization/Site Based In',
+                               :limit => 10
 
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
                                :limit => 10
 
-        config.add_facet_field 'subject__facet',
-                               :label => 'Subject',
-                               :limit => 10
-
-        config.add_facet_field 'geographic_focus__facet',
-                               :label => 'Geographic Focus',
-                               :limit => 10
-
-        config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization Based In',
-                               :limit => 10
-
         config.add_facet_field 'language__facet',
-                               :label => 'Language',
+                               :label => 'Website Language',
                                :limit => 10
+
+        config.add_facet_field 'contentMetaLanguage',
+                               :label => 'Language of page',
+                               :limit => 10
+
+        config.add_facet_field 'creator_name__facet',
+                               :label => 'Creator Name',
+                               :limit => 10
+
+        config.add_facet_field 'mimetype',
+                               :label => 'File Type',
+                               :limit => 10
+
+        config.add_facet_field 'dateOfCaptureYYYY',
+                               :label => 'Year of Capture',
+                               :limit => 10
+
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
@@ -93,39 +116,12 @@ class FindSiteSearchConfigurator
 
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
-        config.add_index_field 'title', :label => 'Title:'
-        config.add_index_field 'alternate_title', :label => 'Alternate Title:'
-        config.add_index_field 'summary', :label => 'Summary:'
-        config.add_index_field 'original_urls', :label => 'Original URLs:'
-        config.add_index_field 'archived_urls', :label => 'Archived URLs:'
-        config.add_index_field 'crawl_date_start', :label => 'Crawl Date Start:'
-        config.add_index_field 'crawl_date_end', :label => 'Crawl Date End:'
-
-        #config.add_index_field 'title_vern_display', :label => 'Title:'
-        #config.add_index_field 'author_display', :label => 'Author:'
-        #config.add_index_field 'author_vern_display', :label => 'Author:'
-        #config.add_index_field 'format', :label => 'Format:'
-        #config.add_index_field 'language_facet', :label => 'Language:'
-        #config.add_index_field 'published_display', :label => 'Published:'
-        #config.add_index_field 'published_vern_display', :label => 'Published:'
-        #config.add_index_field 'lc_callnum_display', :label => 'Call number:'
+        config.add_index_field 'contentTitle', :label => 'Title:'
+        config.add_index_field 'contentBody',  :label => 'Body:'
 
         # solr fields to be displayed in the show (single result) view
         #   The ordering of the field names is the order of the display
-        config.add_show_field 'title', :label => 'Title:'
-        #config.add_show_field 'title_vern_display', :label => 'Title:'
-        #config.add_show_field 'subtitle_display', :label => 'Subtitle:'
-        #config.add_show_field 'subtitle_vern_display', :label => 'Subtitle:'
-        #config.add_show_field 'author_display', :label => 'Author:'
-        #config.add_show_field 'author_vern_display', :label => 'Author:'
-        #config.add_show_field 'format', :label => 'Format:'
-        #config.add_show_field 'url_fulltext_display', :label => 'URL:'
-        #config.add_show_field 'url_suppl_display', :label => 'More Information:'
-        #config.add_show_field 'language_facet', :label => 'Language:'
-        #config.add_show_field 'published_display', :label => 'Published:'
-        #config.add_show_field 'published_vern_display', :label => 'Published:'
-        #config.add_show_field 'lc_callnum_display', :label => 'Call number:'
-        #config.add_show_field 'isbn_t', :label => 'ISBN:'
+        config.add_show_field 'contentTitle', :label => 'Title:'
 
         # "fielded" search configuration. Used by pulldown among other places.
         # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -145,7 +141,7 @@ class FindSiteSearchConfigurator
         # solr request handler? The one set in config[:default_solr_parameters][:qt],
         # since we aren't specifying it otherwise.
 
-        config.add_search_field 'all_fields', :label => 'All Fields'
+        # config.add_search_field 'all_fields', :label => 'All Fields'
 
 
         # Now we see how to over-ride Solr request handler defaults, in this
@@ -190,7 +186,7 @@ class FindSiteSearchConfigurator
         # label in pulldown is followed by the name of the SOLR field to sort by and
         # whether the sort is ascending or descending (it must be asc or desc
         # except in the relevancy case).
-        config.add_sort_field 'score desc', :label => 'relevance'
+        config.add_sort_field 'score desc, dateOfCaptureYYYYMMDD desc', :label => 'relevance'
 
         # If there are more than this many search results, no spelling ("did you
         # mean") suggestion is offered.
@@ -198,35 +194,46 @@ class FindSiteSearchConfigurator
       }
     end
 
+    # Did Blacklight give us everything we need in SOLR response and
+    # results list objects?
+    def post_blacklight_processing_required?
+      return true
+    end
+
+    # Do more with the SOLR response and results list that Blacklight
+    # gives us.
+    def post_blacklight_processing( solr_response, result_list )
+      result_list = solr_response.groups
+      return solr_response, result_list
+    end
+
     def result_partial
       return result_type
     end
 
     def result_type
-      return 'document'
+      return 'group'
     end
 
     def solr_url
-      YAML.load_file("config/solr.yml")['development_fsf']['url']
-    end
-
-    # Did Blacklight give us everything we need in SOLR response and
-    # results list objects?
-    def post_blacklight_processing_required?
-      return false
+      YAML.load_file("config/solr.yml")['development_asf']['url']
     end
 
     def prioritized_highlight_field_list
       return [
-              "alternate_title",
-              "creator_name",
-              "geographic_focus",
-              "language",
-              "organization_based_in",
-              "original_urls",
-              "summary",
-              "title",
-             ]
+              'originalUrl',
+              'contentTitle',
+              'contentBody',
+              'contentMetaDescription',
+              'contentMetaKeywords',
+              'contentMetaLanguage',
+              'contentBodyHeading1',
+              'contentBodyHeading2',
+              'contentBodyHeading3',
+              'contentBodyHeading4',
+              'contentBodyHeading5',
+              'contentBodyHeading6',
+              ]
     end
 
 end

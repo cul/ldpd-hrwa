@@ -1,12 +1,11 @@
 require 'blacklight/catalog'
-require 'configurator'
 require 'pp'
 
 class CatalogController < ApplicationController
   before_filter :_configure_by_search_type, :only => [ :index ]
 
   include Blacklight::Catalog
-  include AdvancedSearch
+  include HRWA::AdvancedSearch
   include Debug
 
   # display the site detail for an fsf record, using bib_key as a unique identifier
@@ -98,7 +97,7 @@ class CatalogController < ApplicationController
 
     @search_type = params[:search_type].to_sym
 
-    @configurator = Configurator.new( @search_type )
+    @configurator = HRWA::Configurator.new( @search_type )
 
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly

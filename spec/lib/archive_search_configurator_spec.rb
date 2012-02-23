@@ -1,10 +1,9 @@
 require 'spec_helper'
 require 'blacklight/configuration'
-require 'archive_search_configurator'
 
-describe 'ArchiveSearchConfigurator' do
+describe 'HRWA::ArchiveSearchConfigurator' do
   before ( :all ) do
-    @configurator = ArchiveSearchConfigurator.new
+    @configurator = HRWA::ArchiveSearchConfigurator.new
   end
      
   it 'returns the correct partial name' do
