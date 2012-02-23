@@ -2,40 +2,54 @@
 
 <dl class="defList">
     <dt>
-	<%= (link_to document.get("title"), '/site_detail/'+document.get("bib_key")) %>
+	<%= document.get("title") %>
     </dt>
 
     <dd>
-       http://www.tihv.org.tr/
+      <% #TODO: Find which url to show in the case of multiple urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
+       <%= document[:original_urls][0] %>
     </dd>
 
     <dd>
-	<code>Human</code> Rights Foundation of Turkey &hellip; <code>Human</code> rights &hellip; <code>Human</code> Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non &hellip;
+	<%
+	  all_highlighted_snippets_arr = [];
+	  document.solr_response[:highlighting][document[:bib_key]].each_pair do | key, arr_of_values |
+	    all_highlighted_snippets_arr << arr_of_values
+	  end
+	%>
+	<%= all_highlighted_snippets_arr.join('... ').html_safe %>
     </dd>
 
     <dd>
-       <a title='SDF permalink for: Türkiye İnsan Hakları Vakfı' href="sdf.php?q=human&in=fsf&amp;site_id=7038349">Site Detail</a> [<a title='SDF preview for: Türkiye İnsan Hakları Vakfı' class='quicklook' href="sdf.php?q=human&in=fsf&amp;site_id=7038349"><img class='preview_icon' alt='quicklook' src='<%= asset_path('search.png') %>' /></a>] &bull; <a title='CCF permalink for: http://www.tihv.org.tr/' href="ccf.php?q=human&in=fsf&amp;site=http://www.tihv.org.tr/">Crawl Calendar</a> [<a title='CCF Preview for: http://www.tihv.org.tr/' class='ccf_quicklook' href="ccf.php?q=human&in=fsf&amp;site=http://www.tihv.org.tr/"><img class='preview_icon' alt='quicklook' src='<%= asset_path('search.png') %>' /></a>]
-	    <!--([crawl_date_start]&mdash;[crawl_date_end])-->
+      <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+
+      <%= link_to 'Site Detail', '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title")%>
+      [<%= link_to preview_icon, '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
+
+      <%= link_to 'Crawl Calendar', document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title] %>
+      [<%= link_to preview_icon, document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title], :class => 'ccf_quicklook'%>]
+
+      <!--(<%= document.get("crawl_date_start") %> &mdash; <%= document.get("crawl_date_end") %>)-->
     </dd>
 
     <dd>
       <a href='#' class='btn small toggle_section moreless'>Show More+</a>
       <%
 	# TODO: Decide if we want to include blacklight bookmark ability (see lines below)
-
-	# bookmark/folder functions for items/docs
-	#<%#= render_index_doc_actions document %>
       %>
+      <% # bookmark/folder functions for items/docs %>
+      <%#= render_index_doc_actions document %>
 
+      <%#= '<br />'.html_safe + (do_magic) + '<br />'.html_safe %>
 
-       <div class='toggler'>
-	    <strong>Alt. Title(s):</strong> Human Rights Foundation of Turkey<br />
-	    <strong>Organization Type:</strong> <a id='facet_0--Non%5C-governmental+organizations' class='addfq' title='organization_type' href='%26amp%3Bfq%5B%5D%3DNon-governmental+organizations'>Non-governmental organizations</a> <br />
-	    <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
-	    <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
-	    <strong>Subjects:</strong> <a id='facet_3--Human+rights' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights'>Human rights</a>, <a id='facet_4--Torture' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DTorture'>Torture</a>, <a id='facet_5--Human+rights+advocacy' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights+advocacy'>Human rights advocacy</a>, <br />
-	    <strong>Summary:</strong> Human Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non-profit organization providing treatment and rehabilitation services for torture survivors and documenting human rights violations in Turkey.
-       </div>
+      <div class='toggler'>
+	   <strong>Alt. Title(s):</strong> <%= document[:alternate_title].join(', ') %><br />
+	   <strong>Organization Type:</strong> <%= link_to document[:organization_type], search_path(:search_type => "find_site", :q => '', :'f[organization_based_in__facet][]' => document[:organization_type__facet]), :class => 'addfq' %><br/>
+	   <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
+	   <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
+	   <strong>Subjects:</strong> <a id='facet_3--Human+rights' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights'>Human rights</a>, <a id='facet_4--Torture' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DTorture'>Torture</a>, <a id='facet_5--Human+rights+advocacy' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights+advocacy'>Human rights advocacy</a>, <br />
+	   <strong>Summary:</strong> Human Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non-profit organization providing treatment and rehabilitation services for torture survivors and documenting human rights violations in Turkey.
+      </div>
     </dd>
 </dl>
 
@@ -47,3 +61,5 @@
 	  <dd class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_value :document => document, :field => solr_fname %></dd>
   <% end -%>
 <% end -%>
+
+<%= "<pre>".html_safe + document.pretty_inspect + "</pre>".html_safe %>

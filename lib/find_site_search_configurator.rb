@@ -18,8 +18,8 @@ class FindSiteSearchConfigurator
                                 "title",
                                ],
           :'hl.usePhraseHighlighter' => true,
-          :'hl.simple.pre'  => '',
-          :'hl.simple.post' => '',
+          :'hl.simple.pre'  => '<code>',
+          :'hl.simple.post' => '</code>',
           :qf               => [
                                 "alternate_title^1",
                                 "creator_name^1",
@@ -96,6 +96,11 @@ class FindSiteSearchConfigurator
         config.add_index_field 'title', :label => 'Title:'
         config.add_index_field 'alternate_title', :label => 'Alternate Title:'
         config.add_index_field 'summary', :label => 'Summary:'
+        config.add_index_field 'original_urls', :label => 'Original URLs:'
+        config.add_index_field 'archived_urls', :label => 'Archived URLs:'
+        config.add_index_field 'crawl_date_start', :label => 'Crawl Date Start:'
+        config.add_index_field 'crawl_date_end', :label => 'Crawl Date End:'
+
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
         #config.add_index_field 'author_vern_display', :label => 'Author:'
