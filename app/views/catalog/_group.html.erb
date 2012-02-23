@@ -9,12 +9,12 @@
 
         <% # main title container for group partial view -%>
         <div class="yui-u">
-          
-           <pre><%= group.pretty_inspect.html_safe if params.has_key?( :hrwa_debug ) %></pre><br/>
+           <br/><br/>
+           <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
           
            <% # The top doc for the group will be displayed in full as a hit %>
            <% doc = group[ :doclist ][ :docs ].shift %>
-          
+           
            <!-- TITLE LINK DATA -->
            <em>Title:</em> <%= ( ! doc[ :contentTitle ].blank? ) ?
                  doc[ :contentTitle ] :
@@ -62,10 +62,12 @@
            <br/>
                       
            <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
+           <em>"See all hits from www.hrw.org" link URL:</em> TODO
            
            <br/>
                       
            <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
+           <em>"Exclude <%= doc[ :domain ] %> from hits" link URL:</em> TODO
            
            <br/>
                       
