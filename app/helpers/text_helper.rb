@@ -1,3 +1,5 @@
+# From http://blog.madebydna.com/all/code/2010/06/04/ruby-helper-to-cleanly-truncate-html.html
+
 require "nokogiri"
 
 module TextHelper
