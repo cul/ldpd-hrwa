@@ -8,12 +8,9 @@
   <% unless has_search_parameters? %>
     <%# if there are no input/search related params, display the "home" partial -%>
     <%= render :partial=>'search_form' %>
-    <%= render 'search_home' %>
   <% else %>
 
     <%# @page_title = application_name + " Search Results" %>
-
-    <% extra_head_content << render_opensearch_response_metadata.html_safe %>
 
     <%#= render :partial => 'search_form' %>
 
@@ -21,13 +18,11 @@
 
     <%#= render 'constraints', :localized_params=>params %>
 
-
-
     <div class="row">
       <div id="primary" class="span12">
 	<div class="pageEntriesInfo">
 	  <%#= render_pagination_info @response, :entry_name=>'result' %>
-	  <%#=link_to "start over", catalog_index_path, :id=>"startOverLink" %>
+	  <%#= link_to "start over", catalog_index_path, :id=>"startOverLink" %>
 	</div>
 	<%#= render 'sort_and_per_page' %>
 	<%#= render 'results_pagination' %>
@@ -42,7 +37,7 @@
       </div>
     </div>
 
-    <%= render 'results_pagination' %>
+    <%#= render 'results_pagination' %>
 
   <% end %>
 
