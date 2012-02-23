@@ -54,14 +54,6 @@ class CatalogController < ApplicationController
       _set_debug_display( extra_controller_params )
     end
 
-    # TODO: remove me when archive search rendering doesn't break
-    # if(@search_type == :archive)
-      # render :text => %Q{CatalogController currently broken.  This is a temporary
-                      # manual render to keep Rails from crashing.\n
-                      # <br/>"Search Tips" - this string is here to enable Capybara
-                      # request test to pass <br/> #{@debug}} and return
-    # end
-
     respond_to do |format|
       format.html { save_current_search_params }
       format.rss  { render :layout => false }
