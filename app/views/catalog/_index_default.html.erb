@@ -2,12 +2,15 @@
 
 <dl class="defList">
     <dt>
-	<%= document.get("title") %>
+	<%= document.get("title", {:sep => ','}) %>
     </dt>
+
+    <dd><%= document.get('alternate_title').nil? ? '' : 'Also known as: ' + document.get('alternate_title', {:sep => ','}) %></dd>
 
     <dd>
       <% #TODO: Find which url to show in the case of multiple urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
-       <%= document[:original_urls][0] %>
+      <% #For now, I'm assuming its the first one. %>
+      <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
     </dd>
 
     <dd>
@@ -17,7 +20,8 @@
 	    all_highlighted_snippets_arr << arr_of_values
 	  end
 	%>
-	<%= all_highlighted_snippets_arr.join('... ').html_safe %>
+	<%#= all_highlighted_snippets_arr.join('... ').html_safe %>
+	<%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
     <dd>
@@ -26,8 +30,8 @@
       <%= link_to 'Site Detail', '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title")%>
       [<%= link_to preview_icon, '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
 
-      <%= link_to 'Crawl Calendar', document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title] %>
-      [<%= link_to preview_icon, document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title], :class => 'ccf_quicklook'%>]
+      <%= link_to 'Crawl Calendar', document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
+      [<%= link_to preview_icon, document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
 
       <!--(<%= document.get("crawl_date_start") %> &mdash; <%= document.get("crawl_date_end") %>)-->
     </dd>
@@ -43,7 +47,6 @@
       <%#= '<br />'.html_safe + (do_magic) + '<br />'.html_safe %>
 
       <div class='toggler'>
-	   <strong>Alt. Title(s):</strong> <%#= document[:alternate_title].join(', ') %><br />
 	   <strong>Organization Type:</strong> <%= link_to document[:organization_type], search_path(:search_type => "find_site", :q => '', :'f[organization_based_in__facet][]' => document[:organization_type__facet]), :class => 'addfq' %><br/>
 	   <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
 	   <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />

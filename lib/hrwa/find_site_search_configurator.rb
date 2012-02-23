@@ -218,6 +218,7 @@ class HRWA::FindSiteSearchConfigurator
 
     def prioritized_highlight_field_list
       return [
+              "title",
               "alternate_title",
               "creator_name",
               "geographic_focus",
@@ -225,7 +226,6 @@ class HRWA::FindSiteSearchConfigurator
               "organization_based_in",
               "original_urls",
               "summary",
-              "title",
              ]
     end
 

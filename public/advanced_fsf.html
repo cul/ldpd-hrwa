@@ -75,13 +75,16 @@
     Original URL
     <input type="text" name="f[original_urls][]" value="http://www.cesr.org/" /><br />
 
+    <!--
     <h3>Date of Capture</h3>
     From <input type="text" value="" class="datepicker" name="month1" /> to
     <input type="text" value="" class="datepicker" name="month2" />
+    -->
 
     <br />
     <br />
-    <input type="submit" class="submit" name="commit" value="search" />
+    <input type="hidden" name="sort" value="score desc" />
+    <input type="submit" class="submit" name="commit" id="submit_search" value="search" />
 </form>
 
 </body>
