@@ -17,13 +17,13 @@ class Configurator
   def config_proc
     return @configurator.config_proc
   end
-  
+
   # Did Blacklight give us everything we need in SOLR response and
   # results list objects?
   def post_blacklight_processing_required?
     return @configurator.post_blacklight_processing_required?
   end
-  
+
   # Do more with the SOLR response and results list that Blacklight
   # gives us.
   def post_blacklight_processing( solr_response, results_list )
@@ -40,6 +40,10 @@ class Configurator
 
   def solr_url
     return @configurator.solr_url
+  end
+
+  def prioritized_highlight_field_list
+    return @configurator.prioritized_highlight_field_list
   end
 
 end

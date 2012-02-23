@@ -216,4 +216,17 @@ class FindSiteSearchConfigurator
       return false
     end
 
+    def prioritized_highlight_field_list
+      return [
+              "alternate_title",
+              "creator_name",
+              "geographic_focus",
+              "language",
+              "organization_based_in",
+              "original_urls",
+              "summary",
+              "title",
+             ]
+    end
+
 end

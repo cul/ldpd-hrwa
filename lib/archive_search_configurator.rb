@@ -10,10 +10,10 @@ class ArchiveSearchConfigurator
           :'facet.mincount' => 1,
           :group            => true,
           :'group.field'    => 'originalUrl',
-          :'group.limit'    => 10, 
+          :'group.limit'    => 10,
           :hl               => true,
           :'hl.fragsize'    => 1000,
-          :'hl.fl'          => [ 
+          :'hl.fl'          => [
                                'originalUrl',
                                'contentTitle',
                                'contentBody',
@@ -42,7 +42,7 @@ class ArchiveSearchConfigurator
                                 'contentBodyHeading4^1',
                                 'contentBodyHeading5^1',
                                 'contentBodyHeading6^1'],
-          :rows             => 10,          
+          :rows             => 10,
         }
 
         config.unique_key = 'recordIdentifier'
@@ -193,20 +193,20 @@ class ArchiveSearchConfigurator
         config.spell_max = 5
       }
     end
-    
+
     # Did Blacklight give us everything we need in SOLR response and
     # results list objects?
     def post_blacklight_processing_required?
       return true
     end
-  
+
     # Do more with the SOLR response and results list that Blacklight
     # gives us.
     def post_blacklight_processing( solr_response, result_list )
       result_list = solr_response.groups
       return solr_response, result_list
     end
-    
+
     def result_partial
       return result_type
     end
@@ -214,9 +214,26 @@ class ArchiveSearchConfigurator
     def result_type
       return 'group'
     end
-    
+
     def solr_url
       YAML.load_file("config/solr.yml")['development_asf']['url']
+    end
+
+    def prioritized_highlight_field_list
+      return [
+              'originalUrl',
+              'contentTitle',
+              'contentBody',
+              'contentMetaDescription',
+              'contentMetaKeywords',
+              'contentMetaLanguage',
+              'contentBodyHeading1',
+              'contentBodyHeading2',
+              'contentBodyHeading3',
+              'contentBodyHeading4',
+              'contentBodyHeading5',
+              'contentBodyHeading6',
+              ]
     end
 
 end

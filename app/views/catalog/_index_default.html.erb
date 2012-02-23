@@ -43,7 +43,7 @@
       <%#= '<br />'.html_safe + (do_magic) + '<br />'.html_safe %>
 
       <div class='toggler'>
-	   <strong>Alt. Title(s):</strong> <%= document[:alternate_title].join(', ') %><br />
+	   <strong>Alt. Title(s):</strong> <%#= document[:alternate_title].join(', ') %><br />
 	   <strong>Organization Type:</strong> <%= link_to document[:organization_type], search_path(:search_type => "find_site", :q => '', :'f[organization_based_in__facet][]' => document[:organization_type__facet]), :class => 'addfq' %><br/>
 	   <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
 	   <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
