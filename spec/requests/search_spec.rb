@@ -29,7 +29,7 @@ describe 'advanced_search_asf' do
     visit '/advanced_asf'
     fill_in 'q_and', :with => 'women'
     click_button 'submit_search'
-    page.has_field?( 'q', :with => 'Click + to refine search' ).should == true
+    page.has_field?( 'q', :with => '[Click + to refine search]' ).should == true
   end
 
 end
