@@ -37,11 +37,8 @@
                
                <!-- HIGHLIGHTED SNIPPETS -->
                <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
-                  full_snippets_string = ''
-                  snippets.each { | field, snippets_for_field |
-                    full_snippets_string << snippets_for_field.join( '...' ) << '...'                 
-                  }
-                  highlighted_snippet_full  = full_snippets_string.html_safe
+                  highlighted_snippet_full  = formatted_highlighted_snippet( snippets,
+                                                @configurator.prioritized_highlight_field_list ) 
                   highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
                                                              355,
                                                              %q{...<a href="javascript: alert('Toggle between full and brief snippet')">+ More</a>} ).html_safe           
