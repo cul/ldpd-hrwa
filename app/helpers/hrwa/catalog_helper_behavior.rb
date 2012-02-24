@@ -1,11 +1,32 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CatalogHelperBehavior
 
-  # Unfortunately link_to creates a link using 'catalog?' instead of 'search?'
+  def exclude_domain_from_hits_link( url_params = params, domain )
+    return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
+                                                  url_params,
+                                                  { :'excl_domain' => domain }, )
+  end
+
+  def see_all_hits_from_domain_link( url_params = params, domain )
+    return link_to_with_new_params_reverse_merge( %Q{See all hits from "#{ domain }"},
+                                    url_params,
+                                    { :'f[domain][]' => domain },
+                                  )
+  end
+
+  def link_to_with_new_params( body, url_params = params, new_params )
+    return link_to( body, search_path( url_params.merge( new_params ) ) )
+  end
+
+  def link_to_with_new_params_reverse_merge( body, url_params = params, new_params )
+    return link_to( body, search_path( url_params.reverse_merge( new_params ) ) )
+  end
+
+  # Unfortunately url_for creates a link using 'catalog?' instead of 'search?'
   # So we have to make our own helper method
   def rewritten_request_url_overwrite_params( new_params )
-    rewritten_request_url = '/search?'
-
+    rewritten_request_url = "#{ search_path }?"
+    
     params_for_rewritten_url = params.dup
     params_for_rewritten_url.merge!( new_params )
 
@@ -33,17 +54,4 @@ module HRWA::CatalogHelperBehavior
       super
     end
   end
-
-  def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
-    properly_ordered_snippet_array = Array.new
-
-    prioritized_highlight_field_list.each do | field |
-      if highlighted_snippets[field]
-        properly_ordered_snippet_array << highlighted_snippets[field]
-      end
-    end
-
-    return properly_ordered_snippet_array.join('...').html_safe
-  end
-
 end
