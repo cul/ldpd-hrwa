@@ -1,9 +1,19 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CatalogHelperBehavior
   
-  def see_all_hits_from_domain_link( url_params, domain )
-    return link_to( %Q{See all hits from "#{ domain }"},
-                    search_path( url_params.merge( :'f[domain][]' => domain ) ) )
+  def see_all_hits_from_domain_link( url_params = params, domain )
+    return link_to_with_new_params_reverse_merge( %Q{See all hits from "#{ domain }"},
+                                    url_params,
+                                    { :'f[domain][]' => domain },
+                                  )
+  end
+  
+  def link_to_with_new_params( body, url_params = params, new_params )
+    return link_to( body, search_path( url_params.merge( new_params ) ) )
+  end
+  
+  def link_to_with_new_params_reverse_merge( body, url_params = params, new_params )
+    return link_to( body, search_path( url_params.reverse_merge( new_params ) ) )
   end
   
   # Unfortunately url_for creates a link using 'catalog?' instead of 'search?'
