@@ -55,7 +55,9 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch( %r{^app/(.*)(\.erb|\.haml)$} )                { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
   
   # app/controllers/
-  watch( %r{^app/controllers/(.+)_(controller)\.rb$} ) { |m| ["spec/routing/#{m[1]}_routing_spec.rb", "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb", "spec/acceptance/#{m[1]}_spec.rb"] }
+  watch( %r{^app/controllers/(.+)_(controller)\.rb$} ) { |m| [ "spec/routing/#{m[1]}_routing_spec.rb",
+                                                               "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb",
+                                                               "spec/acceptance/#{m[1]}_spec.rb" ] }
   watch( 'app/controllers/application_controller.rb' ) { "spec/controllers" }
   watch( 'app/controllers/catalog_controller.rb'     ) { |m| "spec/requests/search_spec.rb" }
   
