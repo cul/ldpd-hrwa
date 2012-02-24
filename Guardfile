@@ -51,8 +51,8 @@ end
 
 guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_on_start => true, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch('spec/spec_helper.rb')  { "spec" }
+  watch(%r{^lib/hrwa/(.+)\.rb$})                      { |m| "spec/lib/hrwa/#{m[1]}_spec.rb" }
+  watch('spec/spec_helper.rb')                        { "spec" }
 
   # Rails example
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
@@ -61,9 +61,12 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
+  
   # Capybara request specs
+  watch('app/controllers/catalog_controller.rb')  { |m| "spec/requests/search_spec.rb" }
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
   watch(%r{^app/views/layouts/.*\.(erb|haml)$})       { |m| "spec/requests" }
+  #watch(%r{^lib/hrwa/.*configurator\.rb$})            { |m| "spec/requests/search_spec.rb" }
 end
 
 
