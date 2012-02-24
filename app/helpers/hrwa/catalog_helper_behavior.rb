@@ -1,6 +1,12 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CatalogHelperBehavior
   
+  def exclude_domain_from_hits_link( url_params = params, domain )
+    return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
+                                                  url_params,
+                                                  { :'excl_domain' => domain }, )
+  end 
+  
   def see_all_hits_from_domain_link( url_params = params, domain )
     return link_to_with_new_params_reverse_merge( %Q{See all hits from "#{ domain }"},
                                     url_params,
