@@ -6,7 +6,7 @@ class HRWA::FindSiteSearchConfigurator
       return Proc.new { |config|
         config.default_solr_params = {
           :hl               => true,
-          :'hl.fragsize'    => 1000,
+          :'hl.fragsize'    => 500,
           :'hl.fl'          => [
                                 "alternate_title",
                                 "creator_name",
