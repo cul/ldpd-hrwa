@@ -30,13 +30,73 @@ jQuery(function($) {
 	window.location = $(this).find('a').attr('href');
 	//return false;
   });
-  $('.toggler').hide(0);
+
+  /* Start -- Result item hiding/showing logic */
+
+  window.max_height_for_hl_snippets = '53px'; //53px seems to equal two lines worth of text at 100% line height for a 12px font.
+
+  $('.hl_snippet').each(function(){
+    $(this).attr('data-full-snippet-height', $(this).height());
+    $(this).css({'max-height' : window.max_height_for_hl_snippets});
+    $(this).removeClass('invisible');
+  });
+
+  $('.toggler').each(function(){
+    $(this).attr('data-full-toggle-height', $(this).height());
+    $(this).css({'height' : '0px', 'overflow' : 'hidden'});
+    $(this).removeClass('invisible');
+  });
+
+
   $(".toggle_section").bind('click', function (e) {
-	$(this).next('.toggler').slideToggle();
+
+	var animation_time = 250;
+
+	//Showing hidden items
+	if($(this).parent().parent().children('.hl_snippet').css('max-height') == window.max_height_for_hl_snippets)
+	{
+	  $(this).parent().parent().children('.hl_snippet').each(function(){
+	    $(this).css({'height' : $(this).height()});
+	    $(this).css({'max-height' : ''});
+	    $(this).animate({
+	      height: $(this).attr('data-full-snippet-height') + 'px'
+	      },
+	    250);
+	  });
+	  $(this).parent().children('.toggler').each(function(){
+	    $(this).animate({
+	      height: $(this).attr('data-full-toggle-height') + 'px'
+	      },
+	    250);
+	  });
+	}
+	//Hiding visible items
+	else
+	{
+	  $(this).parent().parent().children('.hl_snippet').each(function(){
+	    $(this).css({'height' : $(this).height()});
+	    $(this).animate({
+	      height: window.max_height_for_hl_snippets
+	    }, 250, function(){
+	      $(this).css({'max-height' : window.max_height_for_hl_snippets});
+	      $(this).css({'height' : ''});
+	    });
+	  })
+	  $(this).parent().children('.toggler').each(function(){
+	    $(this).animate({
+	      height: '0px'
+	      },
+	    250);
+	  });
+	}
+
     	$(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
 	$(this).blur();
 	return false;
   });
+
+  /* End -- Result item hiding/showing logic */
+
   $('#advanced_options').hide(0).append(
                 '<div id="gen-query" class="clearfix"></div>'+
                 '<h6>Find Pages/Sites that have&hellip;</h6>'+
@@ -171,10 +231,10 @@ $('a.ccf_quicklook').live('click', function() {
 		$(this).width($(this).contents().width()+20);
 	}
 	$('img.loader').hide();
-	$(this).contents().find('a').click(function() { 
-		alert('HRWA detected this click. We\'ll let you proceed :)'); 
+	$(this).contents().find('a').click(function() {
+		alert('HRWA detected this click. We\'ll let you proceed :)');
 		$('#avf-infoalert').remove();
-		return true; 
+		return true;
 	});
 	if ($('#avf-infoalert').css('visibility','visible')) {
 		$('#avf-infoalert').remove();
@@ -185,7 +245,7 @@ $('a.ccf_quicklook').live('click', function() {
 // sorting
 // toggle all menu stuff
   $('.results_control').show();
-  $('.toggle_all_btn').live('click', function() { 
+  $('.toggle_all_btn').live('click', function() {
         $('article.post .toggle_section').trigger('click');
         $(this).text(($(this).text() == 'Toggle-') ? 'Toggle+' : 'Toggle-');
         $(this).blur();
@@ -202,7 +262,7 @@ $('#primary .sort_z-a').live('click', function() { $('article.post').tinysort({o
 
 $('#secondary .results_control, #cbf .results_control').prepend('<a class="sort_default btn small" title="Sort by Count">#</a> <a class="sort_a-z btn small" title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" title="Sort by Z-A">Z-A</a>');
 $('#cbf .results_control:first .sort_default').hide();
-$('.sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); }); 
+$('.sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
 $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
@@ -217,21 +277,21 @@ $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
       listElements = items.filter(':gt(5)').hide();
 // Set the toggler link text to "... nn More Choices" where nn is equal to the number of hidden choices
     var linkText = listElements.size() + ' More Choices&hellip;';
-  
+
     // Insert the toggler link as the very last list element
     //$(this).parent().append(
     $(this).prepend(
-  
+
       // Create the toggler list elemenet and make it toggle
       $('<p class="widgetmore"><a class="lime" href="#">' + linkText + '</a></p>')
-  
+
       // Toggle the display list element text when the toggler is clicked.
         .toggle(
-          function() { 
+          function() {
             listElements.show();
             $("a", this).text('Fewer Choices').blur();
-          }, 
-          function() { 
+          },
+          function() {
             listElements.hide();
             $("a", this).text(linkText).blur();
           }

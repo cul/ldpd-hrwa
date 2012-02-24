@@ -5,45 +5,36 @@
 	<%= document.get("title", {:sep => ','}) %>
     </dt>
 
-    <%= document.get('alternate_title').nil? ? '' : '<dd class="italic"> Also known as: '.html_safe + document.get('alternate_title', {:sep => ','}) + '</dd>'.html_safe %>
+    <%= document.get('alternate_title').nil? ? '' : '<dd class="result_aka"> Also known as: '.html_safe + document.get('alternate_title', {:sep => ','}) + '</dd>'.html_safe %>
 
-    <dd>
+    <dd class="result_url">
       <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
       <% #For now, I'm assuming it's just the first one. %>
       <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
     </dd>
 
-    <dd>
-		<%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
+    <dd class="hl_snippet invisible">
+      <%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
     <dd>
-      <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
-
-      <%= link_to 'Site Detail', '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title")%>
-      [<%= link_to preview_icon, '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
-
-	  <% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
-      <%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
-      [<%= link_to preview_icon, archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
-    </dd>
-
-    <dd>
-      <a href='#' class='btn small toggle_section moreless'>Show More+</a>
-      <%
-	  # TODO: Decide if we want to include blacklight bookmark ability (see lines below)
-      %>
-      <% # bookmark/folder functions for items/docs %>
-      <%#= render_index_doc_actions document %>
-
-      <%#= '<br />'.html_safe + (do_magic) + '<br />'.html_safe %>
-
-      <div class='toggler'>
-       <strong>Summary:</strong> <%= document.get("summary") %>
-	   <strong>Organization Type:</strong> <%= link_to document[:organization_type], search_path(:search_type => "find_site", :q => '', :'f[organization_based_in__facet][]' => document[:organization_type__facet]), :class => 'addfq' %><br/>
-	   <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
-	   <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
-	   <strong>Subjects:</strong> <a id='facet_3--Human+rights' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights'>Human rights</a>, <a id='facet_4--Torture' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DTorture'>Torture</a>, <a id='facet_5--Human+rights+advocacy' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights+advocacy'>Human rights advocacy</a>, <br />
+      <div class='toggler invisible'>
+	<span class="inner_toggler_wrapper">
+	  <strong>Summary:</strong> <%= document.get("summary") %>
+	</span>
       </div>
+      <a href='#' class='btn small toggle_section moreless'>Show More+</a>
+
+      <span class="site_detail_and_crawl_calendar_link_container">
+	<% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+
+	<%= link_to 'Site Detail', '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title")%>
+	[<%= link_to preview_icon, '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
+
+	<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
+	<%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
+	[<%= link_to preview_icon, archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
+      </span>
     </dd>
+
 </dl>

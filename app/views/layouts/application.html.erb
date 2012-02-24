@@ -34,8 +34,8 @@
           <form id="topsearchform" action="<%= search_path %>">
             <div class="input-append">
                     <input class="span6" type="text" value="" placeholder="Enter search terms..." size="16" id="q_t" name="q">
-                    <label class="add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site" <%= (params[:search_type] != 'archive') ? 'checked="checked"' : ''; %>> FSF</label>
-                    <label class="add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive" <%= (params[:search_type] == 'archive') ? 'checked="checked"' : ''; %>> ASF</label>
+                    <label class="add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"' : ''; %>/> FSF</label>
+                    <label class="add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"' : ''; %>/> ASF</label>
                     <label class="add-on hidden"> <a href="#" class="submitss white">Submit</a></label>
             </div>
           </form>
