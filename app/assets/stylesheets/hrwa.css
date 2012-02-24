@@ -86,6 +86,7 @@ img.preview_icon:hover { opacity:1.0 }
 .blue { color:#0064cd!important; }
 .red { color:red; }
 .white { color:white!important; }
+.italic { font-style:italic;}
 .big { font-size:1.2em; }
 .invisible { display:none; }
 .hidden { visibility:hidden; }

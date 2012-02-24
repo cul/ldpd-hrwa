@@ -19,8 +19,11 @@
 	  <%= render_pagination_info @response, :entry_name=>'result' %>
 	  <%#= link_to "start over", catalog_index_path, :id=>"startOverLink" %>
 	</div>
-	<%#= render 'sort_and_per_page' %>
 	<%= render 'results_pagination' %>
+
+	<%#= render 'sort_and_per_page' %>
+	
+	<div class="clear"></div>
 	<%= render :partial => 'result_list' %>
       </div>
 

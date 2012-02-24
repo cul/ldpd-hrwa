@@ -2,22 +2,19 @@
 
 <dl class="defList">
     <dt>
-	<%= document.get("title") %>
+	<%= document.get("title", {:sep => ','}) %>
     </dt>
 
+    <%= document.get('alternate_title').nil? ? '' : '<dd class="italic"> Also known as: '.html_safe + document.get('alternate_title', {:sep => ','}) + '</dd>'.html_safe %>
+
     <dd>
-      <% #TODO: Find which url to show in the case of multiple urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
-       <%= document[:original_urls][0] %>
+      <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
+      <% #For now, I'm assuming it's just the first one. %>
+      <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
     </dd>
 
     <dd>
-	<%
-	  all_highlighted_snippets_arr = [];
-	  document.solr_response[:highlighting][document[:bib_key]].each_pair do | key, arr_of_values |
-	    all_highlighted_snippets_arr << arr_of_values
-	  end
-	%>
-	<%= all_highlighted_snippets_arr.join('... ').html_safe %>
+		<%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
     <dd>
@@ -26,16 +23,15 @@
       <%= link_to 'Site Detail', '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title")%>
       [<%= link_to preview_icon, '/site_detail'+'/'+document.get("bib_key"), :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
 
-      <%= link_to 'Crawl Calendar', document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title] %>
-      [<%= link_to preview_icon, document[:archived_urls][0], :title => 'Crawl calendar permalink for: ' +  document[:title], :class => 'ccf_quicklook'%>]
-
-      <!--(<%= document.get("crawl_date_start") %> &mdash; <%= document.get("crawl_date_end") %>)-->
+	  <% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
+      <%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
+      [<%= link_to preview_icon, archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
     </dd>
 
     <dd>
       <a href='#' class='btn small toggle_section moreless'>Show More+</a>
       <%
-	# TODO: Decide if we want to include blacklight bookmark ability (see lines below)
+	  # TODO: Decide if we want to include blacklight bookmark ability (see lines below)
       %>
       <% # bookmark/folder functions for items/docs %>
       <%#= render_index_doc_actions document %>
@@ -43,23 +39,11 @@
       <%#= '<br />'.html_safe + (do_magic) + '<br />'.html_safe %>
 
       <div class='toggler'>
-	   <strong>Alt. Title(s):</strong> <%#= document[:alternate_title].join(', ') %><br />
+       <strong>Summary:</strong> <%= document.get("summary") %>
 	   <strong>Organization Type:</strong> <%= link_to document[:organization_type], search_path(:search_type => "find_site", :q => '', :'f[organization_based_in__facet][]' => document[:organization_type__facet]), :class => 'addfq' %><br/>
 	   <strong>Languages:</strong> <a id='facet_0--Turkish' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DTurkish'>Turkish</a>, <a id='facet_1--English' class='addfq' title='language' href='%26amp%3Bfq%5B%5D%3DEnglish'>English</a>, <br />
 	   <strong>Geographic Focus:</strong> <a id='facet_2--Turkey' class='addfq' title='geographic_focus' href='%26amp%3Bfq%5B%5D%3DTurkey'>Turkey</a>, <br />
 	   <strong>Subjects:</strong> <a id='facet_3--Human+rights' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights'>Human rights</a>, <a id='facet_4--Torture' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DTorture'>Torture</a>, <a id='facet_5--Human+rights+advocacy' class='addfq' title='subject' href='%26amp%3Bfq%5B%5D%3DHuman+rights+advocacy'>Human rights advocacy</a>, <br />
-	   <strong>Summary:</strong> Human Rights Foundation of Turkey (HRFT), established in 1990, is a non governmental and non-profit organization providing treatment and rehabilitation services for torture survivors and documenting human rights violations in Turkey.
       </div>
     </dd>
 </dl>
-
-
-
-<% index_fields.each do |solr_fname, field| -%>
-  <% if document.has? solr_fname %>
-	  <dt class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_label :field => solr_fname %></dt>
-	  <dd class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_value :document => document, :field => solr_fname %></dd>
-  <% end -%>
-<% end -%>
-
-<%= "<pre>".html_safe + document.pretty_inspect + "</pre>".html_safe %>

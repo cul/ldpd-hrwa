@@ -98,8 +98,6 @@ class HRWA::FindSiteSearchConfigurator
         config.add_index_field 'summary', :label => 'Summary:'
         config.add_index_field 'original_urls', :label => 'Original URLs:'
         config.add_index_field 'archived_urls', :label => 'Archived URLs:'
-        config.add_index_field 'crawl_date_start', :label => 'Crawl Date Start:'
-        config.add_index_field 'crawl_date_end', :label => 'Crawl Date End:'
 
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
@@ -218,6 +216,7 @@ class HRWA::FindSiteSearchConfigurator
 
     def prioritized_highlight_field_list
       return [
+              "title",
               "alternate_title",
               "creator_name",
               "geographic_focus",
@@ -225,7 +224,6 @@ class HRWA::FindSiteSearchConfigurator
               "organization_based_in",
               "original_urls",
               "summary",
-              "title",
              ]
     end
 
