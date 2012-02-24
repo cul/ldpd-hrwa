@@ -71,12 +71,22 @@
                <br/><br/>
                           
                <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
-               <h5>"See all hits from www.hrw.org" link URL:</h5> TODO
+               <% domain = '[Unknown domain]'
+                  search_for_hits_from_this_domain_only_link = '[No link]'
+                  if doc[ :domain ]
+                    domain = doc[ :domain ][ 0 ]
+                    opts   = { :fq => "domain:#{domain}" }
+                    search_for_hits_from_this_domain_only_link = link_to( "See all hits from #{ domain }",
+                                                                           params.merge( opts )
+                                                                        )
+                  end
+               %>
+               <h5>"See all hits from <%= domain %>" link:</h5> <%= search_for_hits_from_this_domain_only_link %>
                
                <br/><br/>
                           
                <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-               <h5>"Exclude <%= doc[ :domain ] %> from hits" link URL:</h5> TODO
+               <h5>"Exclude <%= domain %> from hits" link:</h5> TODO
                
                <br/><br/>
                           
