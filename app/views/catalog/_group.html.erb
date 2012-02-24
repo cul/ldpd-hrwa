@@ -76,11 +76,8 @@
                
                <% 
                   if domain
-                    opts   = { :'f[domain][]' => domain }
                     search_for_hits_from_this_domain_only_link =
-                      %Q{ <a href='#{ rewritten_request_url_overwrite_params( opts ) }'>
-                          "See all hits from #{ domain } link"
-                          </a> }.html_safe
+                      see_all_hits_from_domain_link( domain )
                   else
                     search_for_hits_from_this_domain_only_link = '[No link]'
                   end
@@ -94,9 +91,7 @@
                  if domain
                     opts   = { :fq => "-domain:#{domain}" }
                     exclude_hits_from_this_domain_link =
-                      %Q{ <a href='#{ rewritten_request_url_overwrite_params( opts ) }'>
-                          "Exclude #{ domain } form hits link"
-                          </a> }.html_safe
+                      exclude_domain_from_hits_link( domain )
                   else
                     exclude_hits_from_this_domain_link = '[No link]'
                   end
