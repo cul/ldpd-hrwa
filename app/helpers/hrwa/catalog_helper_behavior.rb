@@ -26,7 +26,7 @@ module HRWA::CatalogHelperBehavior
   # So we have to make our own helper method
   def rewritten_request_url_overwrite_params( new_params )
     rewritten_request_url = "#{ search_path }?"
-    
+
     params_for_rewritten_url = params.dup
     params_for_rewritten_url.merge!( new_params )
 
@@ -35,6 +35,19 @@ module HRWA::CatalogHelperBehavior
     }
 
     return rewritten_request_url.chop!
+  end
+
+
+  def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
+    properly_ordered_snippet_array = Array.new
+
+    prioritized_highlight_field_list.each do | field |
+      if highlighted_snippets[field]
+        properly_ordered_snippet_array << highlighted_snippets[field]
+      end
+    end
+
+    return properly_ordered_snippet_array.join('...').html_safe
   end
 
 
