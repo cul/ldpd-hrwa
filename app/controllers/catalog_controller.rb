@@ -37,11 +37,12 @@ class CatalogController < ApplicationController
 
     begin
       (@response, @result_list) = get_search_results( params,
-                                                    extra_controller_params ||= {} )
-    rescue
-      @debug << e.html_safe
+                                                      extra_controller_params ||= {} )
+    rescue => ex
+      @errors = ex.to_s.html_safe
+      render :error and return
     end
-                                                    
+    
     if @configurator.post_blacklight_processing_required?
       @response, @result_list = @configurator.post_blacklight_processing( @response,
                                                                           @result_list )
