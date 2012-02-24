@@ -116,12 +116,12 @@ class HRWA::ArchiveSearchConfigurator
 
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
-        config.add_index_field 'contentTitle', :label => 'Title:'
-        config.add_index_field 'contentBody',  :label => 'Body:'
+        # config.add_index_field 'contentTitle', :label => 'Title:'
+        # config.add_index_field 'contentBody',  :label => 'Body:'
 
         # solr fields to be displayed in the show (single result) view
         #   The ordering of the field names is the order of the display
-        config.add_show_field 'contentTitle', :label => 'Title:'
+        # config.add_show_field 'contentTitle', :label => 'Title:'
 
         # "fielded" search configuration. Used by pulldown among other places.
         # For supported keys in hash, see rdoc for Blacklight::SearchFields

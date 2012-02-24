@@ -103,16 +103,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
     
     it 'sets Blacklight::Configuration.index_fields correctly' do
-      expected_index_fields = {
-        'contentTitle' => { :label => 'Title:', :field => 'contentTitle' },
-        'contentBody'  => { :label => 'Body:',  :field => 'contentBody'  },
-      }
-      
-      expected_index_fields.each { | name, expected |
-        @blacklight_config.index_fields[ name ].should_not be_nil
-        @blacklight_config.index_fields[ name ].label.should == expected[ :label ]
-        @blacklight_config.index_fields[ name ].field.should == expected[ :field ]
-      }
+        @blacklight_config.index_fields.should be_empty
     end
     
     it 'sets Blacklight::Configuration.search_fields correctly' do
@@ -120,14 +111,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
          
     it 'sets Blacklight::Configuration.show_fields correctly' do
-      expected_show_fields = {
-        'contentTitle' => { :label => 'Title:' },
-      }
-      
-      expected_show_fields.each { | name, expected |
-        @blacklight_config.show_fields[ name ].should_not be_nil
-        @blacklight_config.show_fields[ name ].label.should == expected[ :label ]
-      }
+        @blacklight_config.show_fields.should be_empty
     end
        
     it 'sets Blacklight::Configuration.sort_fields correctly' do
