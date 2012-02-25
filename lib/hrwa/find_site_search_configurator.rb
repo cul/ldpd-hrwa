@@ -1,6 +1,10 @@
 # -*- encoding : utf-8 -*-
 class HRWA::FindSiteSearchConfigurator
   unloadable
+  
+  def advanced_search_processing( solr_parameters, user_parameters )
+    return false
+  end
 
   def config_proc
       return Proc.new { |config|

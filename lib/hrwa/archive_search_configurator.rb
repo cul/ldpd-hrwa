@@ -2,6 +2,10 @@
 class HRWA::ArchiveSearchConfigurator
   unloadable
 
+  def advanced_search_processing( solr_parameters, user_parameters )
+    return false
+  end
+
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {

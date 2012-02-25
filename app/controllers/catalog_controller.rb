@@ -23,6 +23,8 @@ class CatalogController < ApplicationController
       render :error and return
     end
     
+    # Configurator might need to manipulate the @response and @result_list
+    # This is absolutely the case for an archive search 
     if @configurator.post_blacklight_processing_required?
       @response, @result_list = @configurator.post_blacklight_processing( @response,
                                                                           @result_list )
