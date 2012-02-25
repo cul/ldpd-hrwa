@@ -42,6 +42,10 @@ class HRWA::Configurator
     return @configurator.result_type
   end
 
+  def search_type_specific_processing( extra_controller_params, params )
+    @configurator.search_type_specific_processing( extra_controller_params, params )
+  end
+
   def solr_url
     return @configurator.solr_url
   end

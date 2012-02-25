@@ -10,14 +10,17 @@ class CatalogController < ApplicationController
 
   # get search results from the solr index
   def index
-    # Advanced search requires some extra params manipulation
-    if params[ :search_mode ] == "advanced"
-      _advanced_search_processing
-    end
+    # Params that fall outside of current standarad Blacklight processing
+    @extra_controller_params = {}
+    
+    # Advanced searches require some extra params manipulation
+    _advanced_search_processing if params[ :search_mode ] == "advanced"
 
+    @configurator.search_type_specific_processing( @extra_controller_params, params )
+    
     begin
       (@response, @result_list) = get_search_results( params,
-                                                      extra_controller_params ||= {} )
+                                                      @extra_controller_params )
     rescue => ex
       @errors = ex.to_s.html_safe
       render :error and return
@@ -59,9 +62,8 @@ class CatalogController < ApplicationController
   private
   
   def _advanced_search_processing
-    extra_controller_params = {}
-    _advanced_search_processing_q_fields( extra_controller_params, params )
-    @configurator.advanced_search_processing( extra_controller_params, params )
+    _advanced_search_processing_q_fields( @extra_controller_params, params )
+    @configurator.advanced_search_processing( @extra_controller_params, params )
   end
   
   def _advanced_search_processing_q_fields( extra_controller_params, params )

@@ -189,6 +189,10 @@ class HRWA::ArchiveSearchConfigurator
       return 'group'
     end
 
+    def search_type_specific_processing( extra_controller_params, params )
+      return false
+    end
+
     def solr_url
       YAML.load_file("config/solr.yml")['development_asf']['url']
     end
