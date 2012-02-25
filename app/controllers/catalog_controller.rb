@@ -33,7 +33,8 @@ class CatalogController < ApplicationController
     # Select appropriate partials
     @result_partial = @configurator.result_partial
     @result_type    = @configurator.result_type
-    
+
+    # TODO: remove this from production version
     if params.has_key?( :hrwa_debug )
       _set_debug_display( extra_controller_params )
     end
@@ -56,6 +57,10 @@ class CatalogController < ApplicationController
   private
   
   def _advanced_search_processing
+    _advanced_search_processing_q_fields
+  end
+  
+  def _advanced_search_processing_q_fields
     # Advanced search form doesn't have a "q" textbox.  If there's anything in
     # user param q it shouldn't be there
     params[ :q ] = nil
