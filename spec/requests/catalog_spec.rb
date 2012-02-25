@@ -32,6 +32,16 @@ describe 'advanced_search_asf' do
     page.has_field?( 'q', :with => '[Click + to refine search]' ).should == true
   end
 
+  it 'creates the correct HTTP querystring for simple "q_and" search' do
+    visit '/advanced_asf'
+    fill_in 'q_and', :with => 'women'
+    click_button 'submit_search'
+    
+    querystring = URI.parse( current_url ).query
+    
+    querystring.should == "search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
+  end
+
 end
 
 describe 'advanced_search_fsf' do
