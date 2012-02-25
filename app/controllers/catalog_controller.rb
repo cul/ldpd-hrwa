@@ -57,10 +57,12 @@ class CatalogController < ApplicationController
   private
   
   def _advanced_search_processing
-    _advanced_search_processing_q_fields
+    extra_controller_params = {}
+    _advanced_search_processing_q_fields( extra_controller_params, params )
+    @configurator.advanced_search_processing( extra_controller_params, params )
   end
   
-  def _advanced_search_processing_q_fields
+  def _advanced_search_processing_q_fields( extra_controller_params, params )
     # Advanced search form doesn't have a "q" textbox.  If there's anything in
     # user param q it shouldn't be there
     params[ :q ] = nil
@@ -68,7 +70,6 @@ class CatalogController < ApplicationController
     # Blacklight expects a 'q' SOLR param so we must build one from the q_* text params
     # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
     # hash that is merged into/overrides user_params
-    extra_controller_params = {}
     process_q_type_params extra_controller_params, params
 
     # Now use interpreted advanced search as user param q for echo purposes

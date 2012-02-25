@@ -14,6 +14,10 @@ class HRWA::Configurator
     end
   end
 
+  def advanced_search_processing( solr_parameters, user_parameters )
+    return false
+  end
+
   def config_proc
     return @configurator.config_proc
   end
