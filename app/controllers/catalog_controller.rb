@@ -8,18 +8,8 @@ class CatalogController < ApplicationController
   include HRWA::AdvancedSearch
   include HRWA::Debug
 
-  # display the site detail for an fsf record, using bib_key as a unique identifier
-  # use the bib_key to get a single document from the solr index
-  def site_detail
-    @bib_key = params[:bib_key]
-  end
-
   # get search results from the solr index
   def index
-
-    extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
-    extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
-
     if params[ :search_mode ] == "advanced"
       _advanced_search_processing
     end
@@ -53,6 +43,13 @@ class CatalogController < ApplicationController
       format.atom { render :layout => false }
     end
   end
+
+  # display the site detail for an fsf record, using bib_key as a unique identifier
+  # use the bib_key to get a single document from the solr index
+  def site_detail
+    @bib_key = params[:bib_key]
+  end
+
 
   private
   
