@@ -10,6 +10,7 @@ class CatalogController < ApplicationController
 
   # get search results from the solr index
   def index
+    # Advanced search requires some extra params manipulation
     if params[ :search_mode ] == "advanced"
       _advanced_search_processing
     end
@@ -43,6 +44,7 @@ class CatalogController < ApplicationController
       format.atom { render :layout => false }
     end
   end
+
 
   # display the site detail for an fsf record, using bib_key as a unique identifier
   # use the bib_key to get a single document from the solr index
