@@ -1,6 +1,14 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CatalogHelperBehavior
 
+  def debug_off_link( url_params = params )
+    link_to_delete_params( 'Debug off', url_params, [ :hrwa_debug ] )
+  end
+
+  def debug_on_link( url_params = params )
+    link_to_with_new_params_reverse_merge( 'Debug on', url_params, :hrwa_debug => true )
+  end
+
   def exclude_domain_from_hits_link( url_params = params, domain )
     return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
                                                   url_params,
@@ -21,22 +29,13 @@ module HRWA::CatalogHelperBehavior
   def link_to_with_new_params_reverse_merge( body, url_params = params, new_params )
     return link_to( body, search_path( url_params.reverse_merge( new_params ) ) )
   end
-
-  # Unfortunately url_for creates a link using 'catalog?' instead of 'search?'
-  # So we have to make our own helper method
-  def rewritten_request_url_overwrite_params( new_params )
-    rewritten_request_url = "#{ search_path }?"
-
-    params_for_rewritten_url = params.dup
-    params_for_rewritten_url.merge!( new_params )
-
-    params_for_rewritten_url.each { | param_name, param_value |
-      rewritten_request_url << "#{ param_name }=#{ param_value }&"
+  
+  def link_to_delete_params( body, url_params = params, params_to_delete )
+    params_to_delete.each { | key |
+      url_params.delete( key )
     }
-
-    return rewritten_request_url.chop!
+    return link_to( body, search_path( url_params ) )
   end
-
 
   def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
     properly_ordered_snippet_array = Array.new
