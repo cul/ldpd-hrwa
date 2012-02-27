@@ -3,9 +3,9 @@ module HRWA::CatalogHelperBehavior
 
   def debug_link( url_params = params )
     if ( url_params.has_key?( :hrwa_debug ) )
-      return debug_off_link
+      return debug_off_link( url_params )
     else
-      return debug_on_link
+      return debug_on_link( url_params )
     end
   end
 
