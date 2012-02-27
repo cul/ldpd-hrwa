@@ -1,12 +1,11 @@
-    <% # container for a single group -%>
-    <div class="document <%= render_document_class group %>">
+<article class="post">
 
-      <% # header bar for group items in index view -%>
-      <div class="documentHeader">
+    <dl class="defList document <%= render_document_class group %>">
 
         <% # bookmark/folder functions for items/docs -%>
         <%#= render_index_doc_actions group %>
 
+<<<<<<< HEAD
         <% # main title container for group partial view -%>
         <div class="yui-u">
            <br/><br/>
@@ -17,71 +16,63 @@
               
                <% # The top doc for the group will be displayed in full as a hit %>
                <% doc = group[ :doclist ][ :docs ].shift %>
-               
+
                <!-- TITLE LINK DATA -->
-               <h5>Title:</h5> <%= ( ! doc[ :contentTitle ].blank? ) ?
+    <dt>
+               <%= ( ! doc[ :contentTitle ].blank? ) ?
                      doc[ :contentTitle ] :
-                     '[Untitled]' %><br/><br/>      
-               <h5>Title link URL:</h5> <%= doc[ :archivedUrl ] %>
-               
-               <br/><br/>
-               
-               <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
-               <h5>Original capture URL:</h5> <%= doc[ :originalUrl ] %>
-               
-               <br/><br/>
-               
-               <!-- SDF PAGE LINK DATA -->
-               <h5>Parent site bib_key:</h5> <%= doc[ :bib_key ] %>
-                
-               <br/><br/>
-               
+                     '[Untitled]' %>
+    </dt>
+
+        <% # main title container for group partial view -%>
+    <dd class="result_url">
+               <%= doc[ :archivedUrl ] %>
+    </dd>
+
+    <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
                <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
                   highlighted_snippet_full  = formatted_highlighted_snippet( snippets,
                                                 @configurator.prioritized_highlight_field_list ) 
                   highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
                                                              355,
-                                                             %q{...<a href="javascript: alert('Toggle between full and brief snippet')">+ More</a>} ).html_safe           
+                                                             %q{&hellip;} ).html_safe           
                %>
                
-               <h5>Highlighted snippet, complete (all snippets):</h5> <%= highlighted_snippet_full %>
+    </dd>
+
+    <dd class="hl_snippet invisible">
+               <%= highlighted_snippet_full %>
+    </dd>
+
+    <dd>
+      <div class='toggler invisible'>
+          <span class="inner_toggler_wrapper">
+
+               <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
+               <strong>Original capture URL:</strong> <%= doc[ :originalUrl ] %><br />
                
-               <br/><br/>
+               <!-- SDF PAGE LINK DATA -->
+               <strong>Parent site bib_key:</strong> <%= doc[ :bib_key ] %><br />
                 
-               <h5>Highlighted snippet, brief (approx. three lines):</h5> <%= highlighted_snippet_brief %> 
                           
-               <br/><br/>
-               
                <!-- MIMETYPE -->
-               <h5>File type:</h5> <%= doc[ :mimetype ] %>
+               <strong>File type:</strong> <%= doc[ :mimetype ] %><br />
                
-               <br/><br/>
-                          
                <!-- SIZE -->
-               <h5>Size:</h5> <%= number_to_human_size( doc[ :length ] ) %>
-               
-               <br/><br/>                
+               <strong>Size:</strong> <%= number_to_human_size( doc[ :length ] ) %><br />
                
                <!-- CAPTURE DATE FOR THE PAGE -->
-               <h5>Instance date:</h5> <%= doc[ :recordDate ].to_time %>
-               
-               <br/><br/>
+               <strong>Instance date:</strong> <%= doc[ :recordDate ].to_time %><br />
                
                <% domain = doc[ :domain ] ? doc[ :domain ][ 0 ] : nil %>
                           
                <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
-               <h5>"See all hits from '<%= domain ? domain : '[domain]' %>'" link:</h5>
-               <%= domain ? see_all_hits_from_domain_link( domain ) : '[No link]' %>
+               <%= domain ? see_all_hits_from_domain_link( domain ) : '[No link]' %> &bull;&bull;
                
-               <br/><br/>
-                          
                <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-               <h5>"Exclude '<%= domain ? domain : '[domain]' %>' from hits" link:</h5>
                <%= domain ? exclude_domain_from_hits_link( domain ) : '[No link]'%>
                
-               <br/><br/>
-                          
                <!-- OTHER CAPTURE INSTANCES -->                
                <% remaining_docs_in_group = group[ :doclist ][ :docs ]
                   other_capture_instances = []
@@ -92,29 +83,28 @@
                                        }
                     other_capture_instances << capture_instance                 
                   }
-               %>
-               <h5>Other capture instances:</h5> 
-               <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/><br/>
+               %><br />
+               <strong>Other capture instances:</strong> 
+               <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/>
+               <ul>
                <%
                   other_instance_date_hits_html = ''
                   if ! other_capture_instances.empty?
                     other_capture_instances.each { | instance |
                       other_instance_date_hits_html <<
-                        %Q{Instance date: <a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a>}
+                        %Q{<li>Instance date: <a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
                     }
                   else
                     other_instance_date_hits_html = 'None'
                   end 
                %>
                <%= other_instance_date_hits_html.html_safe %>
-               <br/><br/>
-           </div>                   
-                      
-           
-        </div>
+               </ul>
+          </span>
       </div>
+      <a href='#' class='btn small toggle_section moreless'>Show More+</a>
+    </dd>
+                      
+</dl>
 
-      <% # main container for group partial view -%>
-      <%#= render_document_partial group, :index %>
-
-    </div>
+</article>
