@@ -22,9 +22,9 @@
 	<label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"' : ''; %>> ASF</label>
 	<label id="advo" class="add-on hidden"><a href="#" title="Advanced Options Toggle" rel="twipsy" class="advtoggle moreless lime mono">+</a></label>
 
-	<label class="add-on hidden"><a href="#" class="submitss">Submit</a></label>
-
-	<%= submit_tag 'Submit', :class=>'submits' %>
+	<label class="add-on hidden">
+	  <a href="#" class="submitss">Submit</a>
+	</label>
 
       </div>
     <% end %>
