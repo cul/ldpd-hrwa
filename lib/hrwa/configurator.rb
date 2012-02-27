@@ -5,6 +5,8 @@ require 'hrwa/find_site_search_configurator'
 class HRWA::Configurator
   unloadable
 
+  include HRWA::AdvancedSearch
+
   def initialize( search_request_type )
     case search_request_type
       when :archive
