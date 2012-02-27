@@ -1,20 +1,21 @@
 <article class="post">
 
+    <% #debug stuff %>
+    <div style="background: #fee; display:inline-block; padding: 2px 6px; float:right;">
+          <%= debug_link %>
+          <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
+          <% # The top doc for the group will be displayed in full as a hit %>
+          <% doc = group[ :doclist ][ :docs ].shift %>
+    </div>
+    <div class="clearfix"></div>
+    <% #end debug stuff %>
+
     <dl class="defList document <%= render_document_class group %>">
 
         <% # bookmark/folder functions for items/docs -%>
         <%#= render_index_doc_actions group %>
 
         <% # main title container for group partial view -%>
-        <div class="yui-u">
-           <br/><br/>
-           <div style="border: 2px solid; padding: 30px;">
-               <%= debug_link %>
-
-               <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
-
-               <% # The top doc for the group will be displayed in full as a hit %>
-               <% doc = group[ :doclist ][ :docs ].shift %>
 
                <!-- TITLE LINK DATA -->
     <dt>
