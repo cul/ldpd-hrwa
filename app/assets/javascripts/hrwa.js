@@ -97,39 +97,20 @@ jQuery(function($) {
 
   /* End -- Result item hiding/showing logic */
 
-  $('#advanced_options').hide(0).append(
-                '<div id="gen-query" class="clearfix"></div>'+
-                '<h6>Find Pages/Sites that have&hellip;</h6>'+
-                '<div class="input-prepend">'+
-                '        <label class="add-on">all these words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="q_and" name="q_and" size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>'+
-                '</div>'+
-                '<div class="input-prepend">'+
-                '        <label class="add-on">this exact wording or phrase:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="q_phrase" name="q_phrase" size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>'+
-                '</div>'+
-                '<div class="input-prepend">'+
-                '        <label class="add-on">one or more of these words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="q_or" name="q_or" size="16" type="text">'+
-                '</div>'+
-                '<h6>But don\'t show results that have&hellip;</h6>'+
-                '<div class="input-prepend">'+
-                '        <label class="add-on">any of these unwanted words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="q_exclude" name="q_exclude" size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don\'t want." rel="twipsy" href="#">tip</a>'+
-                '</div>'+
-                '<p>'+
-
-		'<input type="hidden" name="sort" value="score desc" />'+
-
-		'<input type="hidden" name="search_mode" value="advanced" />'+
-
-                '<input id="advsubmit" type="submit" value="submit" class="btn small success nopad" /> '+
-                '<input id="advreset" type="reset" value="reset all" class="btn small nopad" />'+
-                '</p>');
+  $('#advanced_options').hide(0).removeClass('hidden');
   $('#advo').css('visibility','visible');
   $('.advtoggle').bind('click', function (e) {
-	$('#advanced_options').toggle();
-    	$(this).text(($(this).text() == '-') ? '+' : '-');
+	if($('#advanced_options').parent().attr('id') == 'advanced_options_outside_of_form')
+	{
+	  $('#advanced_options').appendTo('#advanced_options_inside_of_form').show();
+	  $(this).text('-');
+	}
+	else
+	{
+	  $('#advanced_options').hide().appendTo('#advanced_options_outside_of_form');
+	  $(this).text('+');
+	}
+
 	$(this).blur();
 	return false;
   });
