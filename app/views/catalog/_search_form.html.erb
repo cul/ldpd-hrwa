@@ -14,7 +14,7 @@
       %>
 
       <div class="input-append">
-	<%= text_field_tag :q, q_text, :class => "span12", :placeholder =>'Enter search terms...', :id => 'q', :name => 'q', :size => '16' %>
+	<%= text_field_tag :q, q_text, :disabled => (params[:search_mode] == 'advanced'), :class => "span12", :placeholder =>'Enter search terms...', :id => 'q', :name => 'q', :size => '16' %>
 
 	<%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
 
@@ -25,11 +25,11 @@
 	<label class="add-on hidden">
 	  <a href="#" class="submitss">Submit</a>
 	</label>
-
       </div>
-    <% end %>
 
-    <div id="advanced_options" class=""></div> <!-- //advanced_search -->
+      <div id="advanced_options" class=""></div> <!-- //advanced_search -->
+
+    <% end %>
 
   </div>
 

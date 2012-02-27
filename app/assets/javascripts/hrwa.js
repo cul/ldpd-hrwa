@@ -102,22 +102,27 @@ jQuery(function($) {
                 '<h6>Find Pages/Sites that have&hellip;</h6>'+
                 '<div class="input-prepend">'+
                 '        <label class="add-on">all these words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="as_q" name="as_q" size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>'+
+                '        <input class="span9" placeholder="Enter search terms..." id="q_and" name="q_and" size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>'+
                 '</div>'+
                 '<div class="input-prepend">'+
                 '        <label class="add-on">this exact wording or phrase:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="as_epq" name="as_epq" size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>'+
+                '        <input class="span9" placeholder="Enter search terms..." id="q_phrase" name="q_phrase" size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>'+
                 '</div>'+
                 '<div class="input-prepend">'+
                 '        <label class="add-on">one or more of these words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="as_oq0" name="as_oq0" size="16" type="text">'+
+                '        <input class="span9" placeholder="Enter search terms..." id="q_or" name="q_or" size="16" type="text">'+
                 '</div>'+
                 '<h6>But don\'t show results that have&hellip;</h6>'+
                 '<div class="input-prepend">'+
                 '        <label class="add-on">any of these unwanted words:</label>'+
-                '        <input class="span9" placeholder="Enter search terms..." id="as_eq" name="as_eq" size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don\'t want." rel="twipsy" href="#">tip</a>'+
+                '        <input class="span9" placeholder="Enter search terms..." id="q_exclude" name="q_exclude" size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don\'t want." rel="twipsy" href="#">tip</a>'+
                 '</div>'+
                 '<p>'+
+
+		'<input type="hidden" name="sort" value="score desc" />'+
+
+		'<input type="hidden" name="search_mode" value="advanced" />'+
+
                 '<input id="advsubmit" type="submit" value="submit" class="btn small success nopad" /> '+
                 '<input id="advreset" type="reset" value="reset all" class="btn small nopad" />'+
                 '</p>');
@@ -130,12 +135,12 @@ jQuery(function($) {
   });
 
   $('#advsubmit').live('click', function(e) {
-    if ($('#as_q').val() != '' || $('#as_epq').val() != '' || $('#as_oq0').val() != '' || $('#as_eq').val() != '') {
-        if ($('#as_q').val() != '') { var as_q = '+'+$('#as_q').val(); } else { var as_q = ''; }
-        if ($('#as_epq').val() != '') { var as_epq = ' "'+$('#as_epq').val()+'" '; } else { var as_epq = ' '; }
-        if ($('#as_oq0').val() != '') { var as_oq0 = $('#as_oq0').val()+' '; } else { var as_oq0 = ' '; }
-        if ($('#as_eq').val() != '') { var as_eq = '-'+$('#as_eq').val(); } else { var as_eq = ''; }
-        var newaq = as_q.replace(/ /g,' +')+as_epq+as_oq0+as_eq.replace(/ /g,' -');
+    if ($('#q_and').val() != '' || $('#q_phrase').val() != '' || $('#q_or').val() != '' || $('#q_exclude').val() != '') {
+        if ($('#q_and').val() != '') { var q_and = '+'+$('#q_and').val(); } else { var q_and = ''; }
+        if ($('#q_phrase').val() != '') { var q_phrase = ' "'+$('#q_phrase').val()+'" '; } else { var q_phrase = ' '; }
+        if ($('#q_or').val() != '') { var q_or = $('#q_or').val()+' '; } else { var q_or = ' '; }
+        if ($('#q_exclude').val() != '') { var q_exclude = '-'+$('#q_exclude').val(); } else { var q_exclude = ''; }
+        var newaq = q_and.replace(/ /g,' +')+q_phrase+q_or+q_exclude.replace(/ /g,' -');
         //$('#q').val(newaq.replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
         $('#q, #q_t').val(newaq);
         $('#searchform').submit();
@@ -143,6 +148,7 @@ jQuery(function($) {
     } else {
 	alert('Please enter your search before submitting.');
 	$(this).blur();
+	return false;
     }
   });
   $('#advreset').live('click', function(e) {
