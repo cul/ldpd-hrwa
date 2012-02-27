@@ -22,7 +22,7 @@
 	<%= render 'results_pagination' %>
 
 	<%#= render 'sort_and_per_page' %>
-
+	
 	<div class="clear"></div>
 	<%= render :partial => 'result_list' %>
       </div>
@@ -40,3 +40,10 @@
   <% end %>
 
 </div>
+
+<!-- TODO: TAKE THIS OUT OF PROD -->
+<% if Rails.env == "development" %>
+  <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
+    <%= @debug %>
+  </div>
+<% end %>
