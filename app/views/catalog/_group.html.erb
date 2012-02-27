@@ -10,8 +10,9 @@
         <% # main title container for group partial view -%>
         <div class="yui-u">
            <br/><br/>
-           
            <div style="border: 2px solid; padding: 30px;">
+               <%= debug_link %>
+               
                <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
               
                <% # The top doc for the group will be displayed in full as a hit %>
