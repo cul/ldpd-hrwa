@@ -72,14 +72,17 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch( 'config/routes.rb')                           { "spec/routing" }
 
   # lib/
-  watch( %r{^lib/hrwa/(.+)\.rb$}             )         { |m| "spec/lib/#{m[1]}_spec.rb"  }
-  watch( %r{^lib/hrwa/(.*configurator)\.rb$} )         { "spec/requests/catalog_spec.rb" }
+  watch( %r{^lib/hrwa/(.+)\.rb$}                )      { |m| "spec/lib/#{m[1]}_spec.rb"                   }
+  watch( %r{^lib/hrwa/(.*configurator)\.rb$}    )      { "spec/requests/catalog_spec.rb"                  }
+  watch( %r{^lib/hrwa/([^/]+)/(.+)\.rb}         )      { |m| "spec/lib/hrwa/#{ m[1] }/#{ m[2] }_spec.rb"  }
   
   # spec/
-  watch( %r{^spec/.+_spec\.rb$}         )              
-  watch( %r{^spec/[^/]+/(.+_spec\.rb)$} )              { |m| "#{ m[1] }" }
-  watch( 'spec/spec_helper.rb'          )              { "spec"          }
-  watch( %r{^spec/support/(.+)\.rb$}    )              { "spec"          }
+  watch( %r{^spec/.+_spec\.rb$}                   )
+  watch( %r{^spec/([^/]+)/(.+_spec)\.rb$}         )    { |m| "spec/lib/#{ m[1] }/#{ m[2] }.rb" }
+  watch( %r{^spec/([^/]+)/([^/]+)/(.+_spec)\.rb$} )    { |m| "spec/lib/#{ m[1] }/#{ m[2] }/#{ m[3] }.rb" }
+  
+  watch( 'spec/spec_helper.rb'            )            { "spec"          }
+  watch( %r{^spec/support/(.+)\.rb$}      )            { "spec"          }
 end
 
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 class MockCatalogController
-  include HRWA::AdvancedSearch 
+  include HRWA::AdvancedSearch::Query
 end
 
 mock_catalog_controller = MockCatalogController.new
@@ -19,7 +19,7 @@ describe 'process_q_and' do
   
   it 'gracefully exits if q_and is nil and leaves q param untouched' do
     user_parameters = { :q_and => nil }    
-    mock_catalog_controller.process_q_and @solr_parameters, user_parameters    
+    mock_catalog_controller.process_q_and @solr_parameters, user_parameters
     @solr_parameters[ :q ].should eq %q{ngo}
   end
   

@@ -4,7 +4,7 @@ require 'pp'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include HRWA::AdvancedSearch
+  include HRWA::AdvancedSearch::Query
   include HRWA::Debug
 
   # get search results from the solr index

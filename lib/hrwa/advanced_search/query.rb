@@ -1,11 +1,9 @@
 # Mix in advanced search processing
-module HRWA::AdvancedSearch
+module HRWA::AdvancedSearch::Query
   
   def advanced_search_processing( extra_controller_params, configurator )
     # For now the q_* fields are processed the same for all search_types
     advanced_search_processing_q_fields( extra_controller_params, configurator )
-    # Now for search-type-specific advanced search stuff
-    @configurator.advanced_search_processing( extra_controller_params, params )
   end
   
   def advanced_search_processing_q_fields( extra_controller_params, configurator )
@@ -25,7 +23,7 @@ module HRWA::AdvancedSearch
   # @param [Hash] solr_parameters a hash of parameters to be sent to Solr (via RSolr)
   # @param [Hash] user_parameters a hash of user-supplied parameters (often via `params`) 
    
-  def process_q_and( solr_parameters, user_parameters )    
+  def process_q_and( solr_parameters, user_parameters )
     process_q_prepend( solr_parameters, user_parameters, :q_and, '+' )
   end
   
