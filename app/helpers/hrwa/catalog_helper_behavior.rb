@@ -1,6 +1,14 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CatalogHelperBehavior
 
+  def debug_link( url_params = params )
+    if ( url_params.has_key?( :hrwa_debug ) )
+      return debug_off_link
+    else
+      return debug_on_link
+    end
+  end
+
   def debug_off_link( url_params = params )
     link_to_delete_params( 'Debug off', url_params, [ :hrwa_debug ] )
   end
