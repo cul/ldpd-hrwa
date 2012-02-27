@@ -32,6 +32,7 @@ body { padding-top:60px; color:#808080; }
 #topsearchform input#q_t, .hero-unit input#q { background-image: url(./search.png); background-repeat: no-repeat; background-position:center right; }
 #topsearchform input#q_t:focus, .hero-unit input#q:focus { background-image: none; }
 .hero-unit {  padding: 40px 1em; background:#fcfcfc url(./map-dark.png) no-repeat center center;}
+.hero-unit input#q[disabled="disabled"] {color:#5C5C5C;}
 /*.no-hero { margin-top:60px; }*/
 .hero-border { border:1px solid #dde; padding-right:-1px; padding-left:-1px; }
 .blobble { background-color: #f1f1f1; max-width: 700px; padding: 60px 1em; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
