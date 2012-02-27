@@ -5,15 +5,14 @@
         <% # bookmark/folder functions for items/docs -%>
         <%#= render_index_doc_actions group %>
 
-<<<<<<< HEAD
         <% # main title container for group partial view -%>
         <div class="yui-u">
            <br/><br/>
            <div style="border: 2px solid; padding: 30px;">
                <%= debug_link %>
-               
+
                <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
-              
+
                <% # The top doc for the group will be displayed in full as a hit %>
                <% doc = group[ :doclist ][ :docs ].shift %>
 
@@ -31,14 +30,14 @@
 
     <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
-               <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ] 
+               <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ]
                   highlighted_snippet_full  = formatted_highlighted_snippet( snippets,
-                                                @configurator.prioritized_highlight_field_list ) 
+                                                @configurator.prioritized_highlight_field_list )
                   highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
                                                              355,
-                                                             %q{&hellip;} ).html_safe           
+                                                             %q{&hellip;} ).html_safe
                %>
-               
+
     </dd>
 
     <dd class="hl_snippet invisible">
@@ -51,40 +50,40 @@
 
                <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
                <strong>Original capture URL:</strong> <%= doc[ :originalUrl ] %><br />
-               
+
                <!-- SDF PAGE LINK DATA -->
                <strong>Parent site bib_key:</strong> <%= doc[ :bib_key ] %><br />
-                
-                          
+
+
                <!-- MIMETYPE -->
                <strong>File type:</strong> <%= doc[ :mimetype ] %><br />
-               
+
                <!-- SIZE -->
                <strong>Size:</strong> <%= number_to_human_size( doc[ :length ] ) %><br />
-               
+
                <!-- CAPTURE DATE FOR THE PAGE -->
                <strong>Instance date:</strong> <%= doc[ :recordDate ].to_time %><br />
-               
+
                <% domain = doc[ :domain ] ? doc[ :domain ][ 0 ] : nil %>
-                          
+
                <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
                <%= domain ? see_all_hits_from_domain_link( domain ) : '[No link]' %> &bull;&bull;
-               
+
                <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
                <%= domain ? exclude_domain_from_hits_link( domain ) : '[No link]'%>
-               
-               <!-- OTHER CAPTURE INSTANCES -->                
+
+               <!-- OTHER CAPTURE INSTANCES -->
                <% remaining_docs_in_group = group[ :doclist ][ :docs ]
                   other_capture_instances = []
                   remaining_docs_in_group.each { | doc |
                     capture_instance = { :url           => doc[ :archivedUrl ],
                                          :instance_date => doc[ :recordDate  ].to_time,
-                                         :size          => number_to_human_size( doc[ :length ] ) 
+                                         :size          => number_to_human_size( doc[ :length ] )
                                        }
-                    other_capture_instances << capture_instance                 
+                    other_capture_instances << capture_instance
                   }
                %><br />
-               <strong>Other capture instances:</strong> 
+               <strong>Other capture instances:</strong>
                <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/>
                <ul>
                <%
@@ -96,7 +95,7 @@
                     }
                   else
                     other_instance_date_hits_html = 'None'
-                  end 
+                  end
                %>
                <%= other_instance_date_hits_html.html_safe %>
                </ul>
@@ -104,7 +103,7 @@
       </div>
       <a href='#' class='btn small toggle_section moreless'>Show More+</a>
     </dd>
-                      
+
 </dl>
 
 </article>
