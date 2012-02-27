@@ -81,15 +81,12 @@ describe 'advanced_search_fsf' do
 
 end
 
-=begin
-describe 'advanced_search_version_of_default_search_form' do
+describe 'advanced_search_version_of_default_search_form', :js => true do
 
   it 'returns search results for a known successful query' do
 
-    self.reset_session!
+    visit '/search'
 
-    visit '/search?search_type=find_site'
-    Rails.logger.debug(page.html)
     click_link 'advo_link'
     fill_in 'q_and', :with => 'water'
     fill_in 'q_phrase', :with => 'Provides information'
@@ -100,4 +97,3 @@ describe 'advanced_search_version_of_default_search_form' do
   end
 
 end
-=end
