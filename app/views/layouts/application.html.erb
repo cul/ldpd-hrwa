@@ -31,14 +31,14 @@
 	    </li>
 	  </ul>
           <h3 class='topbarlogo'><a href="<%= root_path %>" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
-          <%= form_tag search_path, :method => :get, :id => 'topsearchform' do %>
+          <form id="topsearchform" action="<%= search_path %>">
             <div class="input-append">
                     <input class="span6" type="text" value="" placeholder="Enter search terms..." size="16" id="q_t" name="q">
                     <label class="add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"' : ''; %>/> FSF</label>
                     <label class="add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"' : ''; %>/> ASF</label>
                     <label class="add-on hidden"> <a href="#" class="submitss white">Submit</a></label>
             </div>
-          <% end %>
+          </form>
           <ul id="dropdown" class="nav secondary-nav">
             <li class="menu">
               <a href="#" class="menu">Menu</a>
@@ -77,13 +77,6 @@
 	<p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2011</span><a href="http://columbia.edu">CU Home</a> &gt; <a href="http://library.columbia.edu">Libraries Home</a></p>
       </footer>
     </div> <!-- /container -->
-
-    <!-- TODO: TAKE THIS OUT OF PROD -->
-    <% if Rails.env == "development" %>
-      <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
-        <%= @debug %>
-      </div>
-    <% end %>
 
     <%= render 'layouts/footer_scripts' %>
 
