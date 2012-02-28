@@ -2,10 +2,6 @@
 class HRWA::FindSiteSearchConfigurator
   unloadable
 
-  def advanced_search_processing( solr_parameters, user_parameters )
-    return false
-  end
-
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -243,6 +239,10 @@ class HRWA::FindSiteSearchConfigurator
               "original_urls",
               "summary",
              ]
+    end
+    
+    def process_search_request( extra_controller_params, params )
+      @configurator.process_search_request( extra_controller_params, params )
     end
 
 end

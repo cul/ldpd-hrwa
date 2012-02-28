@@ -16,10 +16,6 @@ class HRWA::Configurator
     end
   end
 
-  def advanced_search_processing( solr_parameters, user_parameters )
-    @configurator.advanced_search_processing( solr_parameters, user_parameters )
-  end
-
   def config_proc
     return @configurator.config_proc
   end
@@ -36,16 +32,16 @@ class HRWA::Configurator
     return @configurator.post_blacklight_processing( solr_response, results_list )
   end
 
+  def process_search_request( extra_controller_params, params )
+    @configurator.process_search_request( extra_controller_params, params )
+  end
+  
   def result_partial
     return @configurator.result_partial
   end
 
   def result_type
     return @configurator.result_type
-  end
-
-  def search_type_specific_processing( extra_controller_params, params )
-    @configurator.search_type_specific_processing( extra_controller_params, params )
   end
 
   def solr_url

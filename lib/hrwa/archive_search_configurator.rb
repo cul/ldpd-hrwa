@@ -2,10 +2,6 @@
 class HRWA::ArchiveSearchConfigurator
   unloadable
 
-  def advanced_search_processing( solr_parameters, user_parameters )
-    return false
-  end
-
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -179,6 +175,9 @@ class HRWA::ArchiveSearchConfigurator
     def post_blacklight_processing( solr_response, result_list )
       result_list = solr_response.groups
       return solr_response, result_list
+    end
+    
+    def process_search_request( extra_controller_params, params )
     end
 
     def result_partial

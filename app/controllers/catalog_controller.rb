@@ -19,7 +19,7 @@ class CatalogController < ApplicationController
       # Advanced searches require some extra params manipulation
       _advanced_search_processing if params[ :search_mode ] == "advanced"
 
-      @configurator.search_type_specific_processing( @extra_controller_params, params )
+      @configurator.process_search_request( @extra_controller_params, params )
 
       begin
         (@response, @result_list) = get_search_results( params,
