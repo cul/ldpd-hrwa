@@ -42,7 +42,8 @@
     </dd>
 
     <dd class="hl_snippet invisible">
-               <%= highlighted_snippet_full %>
+               <%#= highlighted_snippet_full %>
+               <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
     <dd>
