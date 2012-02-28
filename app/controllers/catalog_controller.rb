@@ -53,13 +53,6 @@ class CatalogController < ApplicationController
         format.atom { render :layout => false }
       end
 
-    Rails.logger.debug('-----------------------------------------------------------------'  +
-                       params.pretty_inspect +
-                       '-----------------------------------------------------------------' +
-                       @extra_controller_params.pretty_inspect +
-                       '-----------------------------------------------------------------' +
-                       @response.pretty_inspect)
-
     end
 
   end
