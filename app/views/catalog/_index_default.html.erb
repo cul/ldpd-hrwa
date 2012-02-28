@@ -21,10 +21,10 @@
       <div class='toggler invisible'>
 	<span class="inner_toggler_wrapper">
 	  <strong>Summary:</strong> <%= document.get("summary") %><br />
-	  <strong>Organization Type:</strong> <br />
-	  <strong>Languages:</strong> <br />
-	  <strong>Geographic Focus:</strong> <br />
-	  <strong>Domain:</strong> <br />
+	  <strong>Organization Type:</strong> <%= link_to_add_facet_to_current_search( document.get("organization_type") , 'organization_type__facet', document.get("organization_type__facet")  ) %><br />
+	  <strong>Languages:</strong> <%= link_to_add_facet_to_current_search(document.get( "language"), 'language__facet', document.get("language__facet") ) %><br />
+	  <strong>Geographic Focus:</strong> <%= link_to_add_facet_to_current_search(document.get( "geographic_focus"), 'geographic_focus__facet', document.get("geographic_focus__facet") )  %><br />
+	  <strong>Subjects:</strong> <%= link_to_add_facet_to_current_search(document.get( "subject"), 'subject__facet', document.get("subject__facet") ) %><br />
 
 	</span>
       </div>

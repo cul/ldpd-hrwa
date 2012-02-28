@@ -37,13 +37,16 @@ module HRWA::CatalogHelperBehavior
   def link_to_with_new_params_reverse_merge( body, url_params = params, new_params )
     return link_to( body, search_path( url_params.reverse_merge( new_params ) ) )
   end
-  
+
   def link_to_delete_params( body, url_params = params, params_to_delete )
     params_to_delete.each { | key |
       url_params.delete( key )
     }
     return link_to( body, search_path( url_params ) )
   end
+
+
+
 
   def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
     properly_ordered_snippet_array = Array.new
@@ -57,6 +60,12 @@ module HRWA::CatalogHelperBehavior
     return properly_ordered_snippet_array.join('...').html_safe
   end
 
+  # This method generates a single facet link if single_link_text_value_or_array
+  # and single_facet_value_or_array are Strings, but if single_link_text_value_or_array
+  # and single_facet_value_or_array are arrays, then it prints a comma-delimited list of links
+  def link_to_add_facet_to_current_search (single_link_text_value_or_array, facet_type, single_facet_value_or_array)
+    "Link goes here"
+  end
 
 
 
