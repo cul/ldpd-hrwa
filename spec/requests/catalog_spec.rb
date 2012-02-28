@@ -81,19 +81,26 @@ describe 'advanced_search_fsf' do
 
 end
 
-describe 'advanced_search_version_of_default_search_form', :js => true do
+# describe 'advanced_search_version_of_default_search_form', :js => true do
+# 
+  # it 'returns search results for a known successful query' do
+# 
+    # visit '/search'
+# 
+    # click_link 'advo_link'
+    # fill_in 'q_and', :with => 'water'
+    # fill_in 'q_phrase', :with => 'Provides information'
+    # fill_in 'q_or', :with => 'human rights'
+    # fill_in 'q_exclude', :with => 'zamboni'
+    # click_button 'advsubmit'
+    # page.should have_content('Center for Economic and Social Rights')
+  # end
+# 
+# end
 
-  it 'returns search results for a known successful query' do
-
-    visit '/search'
-
-    click_link 'advo_link'
-    fill_in 'q_and', :with => 'water'
-    fill_in 'q_phrase', :with => 'Provides information'
-    fill_in 'q_or', :with => 'human rights'
-    fill_in 'q_exclude', :with => 'zamboni'
-    click_button 'advsubmit'
-    page.should have_content('Center for Economic and Social Rights')
+describe 'archive search' do
+  it 'does not raise an error when paging through results' do
+    visit '/catalog?page=3&q=water&search_type=archive'
+    page.should_not have_content( %q{can't convert Fixnum into String} )
   end
-
 end
