@@ -71,8 +71,6 @@ class CatalogController < ApplicationController
   def _advanced_search_processing
     # For now the q_* fields are processed the same for all search_types
     _advanced_search_processing_q_fields
-    # Now for search-type-specific advanced search stuff
-    @configurator.advanced_search_processing( @extra_controller_params, params )
   end
 
   def _advanced_search_processing_q_fields
