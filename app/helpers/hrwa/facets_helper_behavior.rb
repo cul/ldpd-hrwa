@@ -13,6 +13,15 @@ module HRWA::FacetsHelperBehavior
     (link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"addfq") + " " + render_facet_count(item.hits)).html_safe
   end
 
+  # ! Override of default render_selected_facet_value ! We don't want selected facets to have the "selected label" class
+  #
+  # Standard display of a SELECTED facet value, no link, special span
+  # with class, and 'remove' button.
+  def render_selected_facet_value(facet_solr_field, item)
+    content_tag(:span, render_facet_value(facet_solr_field, item, :suppress_link => true)) +
+      link_to("[remove]", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove")
+  end
+
   def do_magic fields = facet_field_names, options = {}
 
    Rails.logger.debug ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n' + facet_field_names.pretty_inspect + '\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
