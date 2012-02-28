@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class HRWA::FindSiteSearchConfigurator
   unloadable
-  
+
   def advanced_search_processing( solr_parameters, user_parameters )
     return false
   end
@@ -98,10 +98,20 @@ class HRWA::FindSiteSearchConfigurator
         # solr fields to be displayed in the index (search results) view
         #   The ordering of the field names is the order of the display
         config.add_index_field 'title', :label => 'Title:'
-        config.add_index_field 'alternate_title', :label => 'Alternate Title:'
+        config.add_index_field 'alternate_title', :label => 'Alternate Title:'              #multivalued
         config.add_index_field 'summary', :label => 'Summary:'
-        config.add_index_field 'original_urls', :label => 'Original URLs:'
-        config.add_index_field 'archived_urls', :label => 'Archived URLs:'
+        config.add_index_field 'original_urls', :label => 'Original URLs:'                  #multivalued
+        config.add_index_field 'archived_urls', :label => 'Archived URLs:'                  #multivalued
+
+        config.add_index_field 'organization_type', :label => 'Organization Type:'
+        config.add_index_field 'organization_type__facet', :label => 'Organization Type:'
+        config.add_index_field 'language', :label => 'Language:'                            #multivalued
+        config.add_index_field 'language__facet', :label => 'Language:'                     #multivalued
+        config.add_index_field 'geographic_focus', :label => 'Geographic Focus:'            #multivalued
+        config.add_index_field 'geographic_focus__facet', :label => 'Geographic Focus:'     #multivalued
+        config.add_index_field 'subject', :label => 'Subject:'                              #multivalued
+        config.add_index_field 'subject__facet', :label => 'Subject:'                       #multivalued
+
 
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
@@ -207,7 +217,7 @@ class HRWA::FindSiteSearchConfigurator
     def result_type
       return 'document'
     end
-    
+
     def search_type_specific_processing( extra_controller_params, params )
       return false
     end
