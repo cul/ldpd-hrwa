@@ -19,7 +19,7 @@
 // = require respond.min
 // = require bootstrap-twipsy
 // = require bootstrap-dropdown
-// = jquery.tinysort.min.js
+// = require jquery.tinysort.min
 //
 // load our custom script last
 // = require hrwa
