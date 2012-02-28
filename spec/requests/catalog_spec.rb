@@ -98,9 +98,9 @@ end
 # 
 # end
 
-describe 'archive search' do
-  it 'does not raise an error when paging through results' do
-    visit '/catalog?page=3&q=water&search_type=archive'
-    page.should_not have_content( %q{can't convert Fixnum into String} )
-  end
-end
+# describe 'archive search' do
+  # it 'does not raise an error when paging through results' do
+    # visit '/catalog?page=3&q=water&search_type=archive'
+    # page.should_not have_content( %q{can't convert Fixnum into String} )
+  # end
+# end
