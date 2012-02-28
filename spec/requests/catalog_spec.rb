@@ -25,7 +25,7 @@ describe 'advanced_search_asf' do
     page.should have_content('No results found')
   end
 
-  describe 'q_and=women search' do
+  describe 'q_and=women search' do 
     before :each do
       visit '/advanced_asf'
       fill_in 'q_and', :with => 'women'

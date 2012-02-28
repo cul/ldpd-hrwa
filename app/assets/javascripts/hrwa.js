@@ -33,11 +33,12 @@ jQuery(function($) {
 
   /* Start -- Result item hiding/showing logic */
 
-  window.max_height_for_hl_snippets = '53px'; //53px seems to equal two lines worth of text at 100% line height for a 12px font.
+  window.max_height_for_hl_snippets = '53px'; //53px seems to equal two lines worth of text for a 12px font.
 
   $('.hl_snippet').each(function(){
     $(this).attr('data-full-snippet-height', $(this).height());
     $(this).css({'max-height' : window.max_height_for_hl_snippets});
+    $(this).attr('data-collapsed-snippet-height', $(this).height());
     $(this).removeClass('invisible');
   });
 
@@ -50,43 +51,47 @@ jQuery(function($) {
 
   $(".toggle_section").bind('click', function (e) {
 
-	var animation_time = 250;
+	var animation_time = 500;
 
 	//Showing hidden items
 	if($(this).parent().parent().children('.hl_snippet').css('max-height') == window.max_height_for_hl_snippets)
 	{
 	  $(this).parent().parent().children('.hl_snippet').each(function(){
-	    $(this).css({'height' : $(this).height()});
+	    $(this).css({'height' : $(this).height() + 'px'});
 	    $(this).css({'max-height' : ''});
 	    $(this).animate({
 	      height: $(this).attr('data-full-snippet-height') + 'px'
 	      },
-	    250);
+	    animation_time);
 	  });
 	  $(this).parent().children('.toggler').each(function(){
+
 	    $(this).animate({
 	      height: $(this).attr('data-full-toggle-height') + 'px'
 	      },
-	    250);
+	    animation_time);
+
 	  });
 	}
 	//Hiding visible items
 	else
 	{
 	  $(this).parent().parent().children('.hl_snippet').each(function(){
-	    $(this).css({'height' : $(this).height()});
+	    $(this).css({'height' : $(this).height() + 'px'});
 	    $(this).animate({
-	      height: window.max_height_for_hl_snippets
-	    }, 250, function(){
+	      height: $(this).attr('data-collapsed-snippet-height')
+	    }, animation_time, function(){
 	      $(this).css({'max-height' : window.max_height_for_hl_snippets});
 	      $(this).css({'height' : ''});
 	    });
-	  })
+	  });
 	  $(this).parent().children('.toggler').each(function(){
+
 	    $(this).animate({
 	      height: '0px'
 	      },
-	    250);
+	    animation_time);
+
 	  });
 	}
 
