@@ -57,7 +57,6 @@ class CatalogController < ApplicationController
 
   end
 
-
   # display the site detail for an fsf record, using bib_key as a unique identifier
   # use the bib_key to get a single document from the solr index
   def site_detail
