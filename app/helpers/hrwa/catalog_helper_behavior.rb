@@ -64,7 +64,11 @@ module HRWA::CatalogHelperBehavior
   # and single_facet_value_or_array are Strings, but if single_link_text_value_or_array
   # and single_facet_value_or_array are arrays, then it prints a comma-delimited list of links
   def link_to_add_facet_to_current_search (single_link_text_value_or_array, facet_type, single_facet_value_or_array)
-    "Link goes here"
+    if single_link_text_value_or_array.is_a?(Array)
+      "Array: " + single_link_text_value_or_array
+    else
+      "String: " + single_link_text_value_or_array
+    end
   end
 
 
