@@ -8,16 +8,18 @@
 -%>
 <%= paginator.render do -%>
   <nav class="pagination-container">
-    <%= prev_page_tag %>
-    <%= next_page_tag  %>
-    <div class="page_links">
+	<ul>
+    <li><%= prev_page_tag %></li>
     <% each_relevant_page do |page| -%>
-      <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
-        <%= page_tag page %>
+      <% if page.current? %>
+        <li class="active"><%= page_tag page %></li>
+      <% elsif page.left_outer? || page.right_outer? || page.inside_window? -%>
+        <li><%= page_tag page %></li>
       <% elsif !page.was_truncated? -%>
-        <%= gap_tag %>
+        <li><%= gap_tag %></li>
       <% end -%>
     <% end -%>
-  </div>
+    <li><%= next_page_tag  %></li>
+   </ul>
   </nav>
 <% end -%>
