@@ -242,7 +242,6 @@ class HRWA::FindSiteSearchConfigurator
     end
     
     def process_search_request( extra_controller_params, params )
-      @configurator.process_search_request( extra_controller_params, params )
     end
 
 end
