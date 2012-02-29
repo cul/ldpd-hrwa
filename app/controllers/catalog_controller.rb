@@ -76,7 +76,7 @@ class CatalogController < ApplicationController
   def _advanced_search_processing
     # For now the q_* fields are processed the same for all search_types
     advanced_search_processing_q_fields
-    add_limit_by_filter_queries_to_solr( @extra_controller_params, params )
+    add_limit_by_filter_queries_to_solr
   end
 
 
