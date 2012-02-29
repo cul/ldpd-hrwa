@@ -18,7 +18,7 @@ class CatalogController < ApplicationController
       _configure_by_search_type
 
       # Advanced searches require some extra params manipulation
-      advanced_search_processing if params[ :search_mode ] == "advanced"
+      _advanced_search_processing if params[ :search_mode ] == "advanced"
 
       @configurator.process_search_request( @extra_controller_params, params )
 
@@ -72,6 +72,13 @@ class CatalogController < ApplicationController
   end
 
   private
+  
+  def _advanced_search_processing
+    # For now the q_* fields are processed the same for all search_types
+    advanced_search_processing_q_fields
+    add_limit_by_filter_queries_to_solr( @extra_controller_params, params )
+  end
+
 
   def _set_debug_display( extra_controller_params = {} )
     @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe

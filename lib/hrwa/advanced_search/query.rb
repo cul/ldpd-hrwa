@@ -1,11 +1,6 @@
 # Mix in advanced search processing
 module HRWA::AdvancedSearch::Query
   
-  def advanced_search_processing
-    # For now the q_* fields are processed the same for all search_types
-    advanced_search_processing_q_fields
-  end
-
   def advanced_search_processing_q_fields
     # Advanced search form doesn't have a "q" textbox.  If there's anything in
     # user param q it shouldn't be there
