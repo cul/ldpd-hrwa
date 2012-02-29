@@ -1,7 +1,13 @@
 <div class="container">
 
-<h1>ERROR:</h1>
+<%= debug_link %>
 
-  <%= @errors %>
-  
+<h1>ERROR:</h1>
+<%= @errors %>
+
+<!-- TODO: TAKE THIS OUT OF PROD -->
+<div id="debug" name="debug" style="background-color: white; color: black; padding: 10px; border: 1px solid red; margin: 30px;">
+  <%= @debug %>
+</div>
+
 </div>

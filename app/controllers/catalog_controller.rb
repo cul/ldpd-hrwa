@@ -4,6 +4,7 @@ require 'pp'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
+  include HRWA::AdvancedSearch::LimitBy
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
 
@@ -26,6 +27,10 @@ class CatalogController < ApplicationController
                                                         @extra_controller_params )
       rescue => ex
         @errors = ex.to_s.html_safe
+        
+        # TODO: remove this from production version
+        _set_debug_display( @extra_controller_params )
+
         render :error and return
       end
 
@@ -86,14 +91,16 @@ class CatalogController < ApplicationController
       @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
     end
 
-    @debug << '<h1>@response.request_params</h1>'.html_safe
-    @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
+    if @response
+      @debug << '<h1>@response.request_params</h1>'.html_safe
+      @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
 
-    @debug << '<h1>@result_list</h1>'.html_safe
-    @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
+      @debug << '<h1>@result_list</h1>'.html_safe
+      @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
 
-    @debug << '<h1>@response</h1>'.html_safe
-    @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
+      @debug << '<h1>@response</h1>'.html_safe
+      @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
+    end
   end
 
   def _configure_by_search_type
