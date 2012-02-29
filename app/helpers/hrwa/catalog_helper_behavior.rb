@@ -30,6 +30,8 @@ module HRWA::CatalogHelperBehavior
                                   )
   end
 
+  #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
+
   def link_to_with_new_params( body, url_params = params, new_params )
     return link_to( body, search_path( url_params.merge( new_params ) ) )
   end
@@ -44,6 +46,13 @@ module HRWA::CatalogHelperBehavior
     }
     return link_to( body, search_path( url_params ) )
   end
+
+  def link_to_with_new_params( body, url_params = params, new_params )
+    return link_to( body, search_path( url_params.merge( new_params ) ) )
+  end
+
+
+
 
 
 
@@ -60,15 +69,17 @@ module HRWA::CatalogHelperBehavior
     return properly_ordered_snippet_array.join('...').html_safe
   end
 
-  # This method generates a single facet link if single_link_text_value_or_array
-  # and single_facet_value_or_array are Strings, but if single_link_text_value_or_array
-  # and single_facet_value_or_array are arrays, then it prints a comma-delimited list of links
-  def link_to_add_facet_to_current_search (single_link_text_value_or_array, facet_type, single_facet_value_or_array)
-    if single_link_text_value_or_array.is_a?(Array)
-      "Array: " + single_link_text_value_or_array
+  def link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(body, facet_type, facet_value, url_params = params, options ={})
+
+    # First, check if this facet_type => facet_value combo is already in the current url
+    # If so, return a non-clickable link
+    if params.include?(:f) && params[:f].include?(facet_type) && params[:f][facet_type].include?(facet_value)
+      return body
     else
-      "String: " + single_link_text_value_or_array
+      #otherwise return a link to add this facet to the current url
+      return (link_to body, add_facet_params_and_redirect(facet_type, facet_value), options).html_safe
     end
+
   end
 
 
