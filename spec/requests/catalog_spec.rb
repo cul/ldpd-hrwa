@@ -25,7 +25,7 @@ describe 'advanced_search_asf' do
     page.should have_content('No results found')
   end
 
-  describe 'q_and=women search' do 
+  describe 'q_and=women search' do
     before :each do
       visit '/advanced_asf'
       fill_in 'q_and', :with => 'women'
@@ -82,11 +82,11 @@ describe 'advanced_search_fsf' do
 end
 
 # describe 'advanced_search_version_of_default_search_form', :js => true do
-# 
+#
   # it 'returns search results for a known successful query' do
-# 
+#
     # visit '/search'
-# 
+#
     # click_link 'advo_link'
     # fill_in 'q_and', :with => 'water'
     # fill_in 'q_phrase', :with => 'Provides information'
@@ -95,7 +95,7 @@ end
     # click_button 'advsubmit'
     # page.should have_content('Center for Economic and Social Rights')
   # end
-# 
+#
 # end
 
 describe 'archive search' do
