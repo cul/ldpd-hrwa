@@ -36,69 +36,125 @@
 	<h6>Find Pages/Sites that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">all these words:</label>
-	        <input class="span9" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+	        <input class="span11" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">this exact wording or phrase:</label>
-	        <input class="span9" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+	        <input class="span11" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">one or more of these words:</label>
-	        <input class="span9" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
+	        <input class="span11" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
 	</div>
 	<h6>But don\'t show results that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">any of these unwanted words:</label>
-	        <input class="span9" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+	        <input class="span11" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
-<% if (params[:search_type] != 'archive') %>
+<% #if (params[:search_type] != 'archive') %>
+<div class="row">
+<div class="span14">
     <h6>Additional Options</h6>
-	<div class="input-prepend">
-        <label class="add-on">organization type</label>
-        <input class="span9" type="text" name="f[organization_type__facet][]" />
+<div class="span7 nomar">
+	<div class="control-group">
+        <label class="control-label">organization type</label>
+		<select name="f[organization_type__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">subject</label>
-        <input class="span9" type="text" name="f[subject__facet][]" />
+	<div class="control-group">
+        <label class="control-label">subject</label>
+		<select name="f[subject__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">geographic focus</label>
-        <input class="span9" type="text" name="f[geographic_focus__facet][]" />
+	<div class="control-group">
+        <label class="control-label">geographic focus</label>
+		<select name="f[geographic_focus__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">organization based in</label>
-        <input class="span9" type="text" name="f[organization_based_in__facet][]" />
+	<div class="control-group">
+        <label class="control-label">organization based in</label>
+		<select name="f[organization_based_in__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">language</label>
-        <input class="span9" type="text" name="f[language__facet][]" />
+</div>
+<div class="span7">
+	<div class="control-group">
+        <label class="control-label">language</label>
+		<select name="f[language__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
         <!--Non-displayed facets below here-->
     </div>
-	<div class="input-prepend">
-        <label class="add-on">title</label>
-        <input class="span9" type="text" name="f[title][]" />
+	<div class="control-group">
+        <label class="control-label">title</label>
+		<select name="f[title][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">creator name</label>
-        <input class="span9" type="text" name="f[creator_name__facet][]" />
+	<div class="control-group">
+        <label class="control-label">creator name</label>
+		<select name="f[creator_name__facet][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-	<div class="input-prepend">
-        <label class="add-on">original url</label>
-        <input class="span9" type="text" name="f[original_urls][]" />
+	<div class="control-group">
+        <label class="control-label">original url</label>
+		<select name="f[original_urls][]">
+                <option></option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select>
     </div>
-<% end %>
+</div>
+</div>
+</div>
+<% #end %>
 
-<% if (params[:search_type] == 'archive') %>
+<% #if (params[:search_type] == 'archive') %>
 <p>additional asf stuff will go here</p>
-<% end %>
+<% #end %>
 	<p>
 
 	<input type="hidden" name="sort" value="score desc" />
 
 	<input type="hidden" name="search_mode" value="advanced" />
 
-	<input id="advsubmit" type="submit" value="submit" class="btn small success nopad" />
-	<input id="advreset" type="reset" value="reset all" class="btn small nopad" />
+	<input id="advsubmit" type="submit" value="submit" class="btn small success" />
+	<input id="advreset" type="reset" value="reset all" class="btn small" />
 	</p>
       </div> <!-- //advanced_search -->
     </div>
