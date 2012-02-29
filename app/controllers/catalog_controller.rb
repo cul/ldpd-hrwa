@@ -26,7 +26,7 @@ class CatalogController < ApplicationController
                                                         @extra_controller_params )
       rescue => ex
         @errors = ex.to_s.html_safe
-        
+
         # TODO: remove this from production version
         _set_debug_display( @extra_controller_params )
 
@@ -71,7 +71,7 @@ class CatalogController < ApplicationController
   end
 
   private
-  
+
   def _advanced_search_processing
     # For now the q_* fields are processed the same for all search_types
     advanced_search_processing_q_fields
