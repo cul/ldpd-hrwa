@@ -30,7 +30,7 @@ describe 'HRWA::AdvancedSearch::LimitBy' do
   describe '#add_limit_by_filter_queries_to_solr' do
 
     it 'creates filter query correctly for domain limit-by' do
-      mock_catalog_controller.params[ :lim_domain ] = [ 'advocacyforum.org' ]
+      mock_catalog_controller.params[ :lim_domain ] = 'advocacyforum.org'
       mock_catalog_controller.add_limit_by_filter_queries_to_solr( @solr_parameters )
       @solr_parameters[ :fq ].should == [ 'domain:advocacyforum.org' ]
     end
