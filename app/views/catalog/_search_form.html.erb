@@ -51,6 +51,46 @@
 	        <label class="add-on">any of these unwanted words:</label>
 	        <input class="span9" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
+<% if (params[:search_type] != 'archive') %>
+    <h6>Additional Options</h6>
+	<div class="input-prepend">
+        <label class="add-on">organization type</label>
+        <input class="span9" type="text" name="f[organization_type__facet][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">subject</label>
+        <input class="span9" type="text" name="f[subject__facet][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">geographic focus</label>
+        <input class="span9" type="text" name="f[geographic_focus__facet][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">organization based in</label>
+        <input class="span9" type="text" name="f[organization_based_in__facet][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">language</label>
+        <input class="span9" type="text" name="f[language__facet][]" />
+        <!--Non-displayed facets below here-->
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">title</label>
+        <input class="span9" type="text" name="f[title][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">creator name</label>
+        <input class="span9" type="text" name="f[creator_name__facet][]" />
+    </div>
+	<div class="input-prepend">
+        <label class="add-on">original url</label>
+        <input class="span9" type="text" name="f[original_urls][]" />
+    </div>
+<% end %>
+
+<% if (params[:search_type] == 'archive') %>
+<p>additional asf stuff will go here</p>
+<% end %>
 	<p>
 
 	<input type="hidden" name="sort" value="score desc" />
