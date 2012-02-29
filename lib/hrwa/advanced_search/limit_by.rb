@@ -11,7 +11,7 @@ module HRWA::AdvancedSearch::LimitBy
       :lim_organization_based_in => 'organization_based_in',
       :lim_creator_name          => 'creator_name',
     }
-    return @limit_by_field_for_lim_param[ lim_param ]
+    return @limit_by_field_for_lim_param[ lim_param.to_sym ]
   end
   
   def limit_by_user_params( user_parameters = params )
@@ -19,12 +19,13 @@ module HRWA::AdvancedSearch::LimitBy
   end
   
   # Modeled after similar methods in Blacklight::SolrHelper
-  def add_limit_by_filter_queries_to_solr( solr_parameters, user_parameters = params )
+  def add_limit_by_filter_queries_to_solr( solr_parameters = @extra_controller_params,
+                                           user_parameters = params )
     # :fq, map from :lim_*.
     lim_params = limit_by_user_params 
     return if lim_params.empty?
     
-    solr_parameters[:fq] ||= []
+    solr_parameters[ :fq ] ||= []
     lim_params.each_pair { | lim_param, value_list |
       value_list ||= []
       value_list = [ value_list ] unless value_list.respond_to? :each
