@@ -20,7 +20,32 @@
     <dd>
       <div class='toggler invisible'>
 	<span class="inner_toggler_wrapper">
-	  
+	  <%
+	    # Note: We use document.get("name_of_facet_field", {:sep => nil}) when we want to get back the original array for a multivalued field
+	  %>
+
+	    <strong>Summary:</strong> <%= document.get("summary") %><br />
+	    <strong>Organization Type:</strong> <%= link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(document.get("organization_type"), 'organization_type__facet', document.get("organization_type__facet")) %><br />
+
+	    <strong>Languages:</strong>
+	    <% language_arr = document.get('language',{:sep => nil}); language__facet_arr = document.get('language__facet',{:sep => nil}); %>
+	    <% language_arr.each_index do |index| %>
+	      <%= link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(language_arr[index], 'language__facet', language__facet_arr[index]) %>
+	    <% end %><br />
+
+	    <strong>Geographic Focus:</strong>
+	    <% geographic_focus_arr = document.get('geographic_focus',{:sep => nil}); geographic_focus__facet_arr = document.get('geographic_focus__facet',{:sep => nil}); %>
+	    <% geographic_focus_arr.each_index do |index| %>
+	      <%= link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(geographic_focus_arr[index], 'geographic_focus__facet', geographic_focus__facet_arr[index]) %>
+	    <% end %><br />
+
+
+	    <strong>Subjects:</strong>
+	    <% subject_arr = document.get('subject',{:sep => nil}); subject__facet_arr = document.get('subject__facet',{:sep => nil}); %>
+	    <% subject_arr.each_index do |index| %>
+	      <%= link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(subject_arr[index], 'subject__facet', subject__facet_arr[index]) %>
+	    <% end %><br />
+
 	</span>
       </div>
       <a href='#' class='btn small toggle_section moreless'>Show More+</a>

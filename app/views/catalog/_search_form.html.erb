@@ -2,7 +2,7 @@
 
   <!-- Main hero unit for a primary marketing message or call to action -->
   <div id="hero-search" class="hero-unit hero-border ">
-    <h6>Human Rights Web Archive : search</h6>
+    <h4>Human Rights Web Archive : search</h4>
 
     <%= form_tag search_path, :method => :get, :id => 'searchform' do %>
 
@@ -36,22 +36,22 @@
 	<h6>Find Pages/Sites that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">all these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+	        <input class="span10" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">this exact wording or phrase:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+	        <input class="span10" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">one or more of these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
+	        <input class="span10" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
 	</div>
 	<h6>But don\'t show results that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">any of these unwanted words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+	        <input class="span10" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
-<% #if (params[:search_type] != 'archive') %>
+
 <div class="row">
 <div class="span14">
     <h6>Additional Options</h6>
@@ -96,8 +96,19 @@
                 <option>5</option>
         </select>
     </div>
+	<div class="control-group">
+        <label class="control-label">file type</label>
+        <select class="control-group" name="lim_mimetype">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
+	<div class="control-group">
+        <label class="control-label">date of capture</label>
+        <input id="crawl_start_date" class="span2" type="text" name="crawl_start_date" value="" /> - <input id="crawl_end_date" class="span2" type="text" name="crawl_end_date" value="" />
+    </div>
 </div>
-<div class="span7">
+<div class="span7 nomar">
 	<div class="control-group">
         <label class="control-label">language</label>
 		<select name="f[language__facet][]">
@@ -139,22 +150,70 @@
                 <option>5</option>
         </select>
     </div>
+	<div class="control-group">
+        <label class="control-label">domain</label>
+        <select class="control-group" name="lim_domain">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
 </div>
 </div>
 </div>
-<% #end %>
+<div class="row">
+<div class="span14">
+ <h6>display options</h6>
+ <div class="span7 nomar">
+	<div class="control-group">
+        <label class="control-label">results per page</label>
+        <select class="control-group" name="lim_rows">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
+ </div>
+ <div class="span7 nomar">
+	<div class="control-group">
+        <label class="control-label">sort</label>
+        <select class="control-group" name="lim_sort">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
+ </div>
+</div>
+</div>
+<div class="row">
+<div class="span14">
+ <h6>dev options (temporary)</h6>
+ <div class="span7 nomar">
+	<div class="control-group">
+        <label class="control-label">host</label>
+        <select class="control-group" name="lim_host">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
+ </div>
+ <div class="span7 nomar">
+	<div class="control-group">
+        <label class="control-label">core</label>
+        <select class="control-group" name="lim_core">
+		        <option></option>
+                <option>2</option>
+        </select>
+    </div>
+ </div>
+</div>
+</div>
 
-<% #if (params[:search_type] == 'archive') %>
-<p>additional asf stuff will go here</p>
-<% #end %>
 	<p>
-
 	<input type="hidden" name="sort" value="score desc" />
 
 	<input type="hidden" name="search_mode" value="advanced" />
 
-	<input id="advsubmit" type="submit" value="submit" class="btn small success" />
-	<input id="advreset" type="reset" value="reset all" class="btn small" />
+	<input id="advsubmit" type="submit" value="submit" class="btn success" />
+	<input id="advreset" type="reset" value="reset all" class="btn" />
 	</p>
       </div> <!-- //advanced_search -->
     </div>

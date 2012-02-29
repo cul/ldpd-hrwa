@@ -22,18 +22,4 @@ module HRWA::FacetsHelperBehavior
       link_to("[remove]", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove")
   end
 
-  def do_magic fields = facet_field_names, options = {}
-
-   Rails.logger.debug ('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n' + facet_field_names.pretty_inspect + '\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-
-     display_facet = facet_by_field_name('subject__facet')
-
-      render_facet_limit(facet_by_field_name('subject__facet'), options)
-
-
-
-
-
-  end
-
 end
