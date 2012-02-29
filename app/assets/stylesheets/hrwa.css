@@ -128,6 +128,9 @@ img.preview_icon:hover { opacity:1.0 }
 /* advanced search form */
 #advo a { font-weight:bold; text-decoration:none; }
 #advanced_options label.add-on { width:186px; text-align:right; color:#777; }
+#advanced_options .control-group { margin-bottom:3px; }
+#advanced_options label.control-label { color:#777; margin-right:3px; }
+input#crawl_start_date, input#crawl_end_date { width:89px; }
 #advanced_options { margin-bottom:1em; }
 #advanced_options a[rel=twipsy] { color:#aba; }
 

@@ -1,5 +1,25 @@
 # Mix in advanced search processing
 module HRWA::AdvancedSearch::Query
+  
+  def advanced_search_processing
+    # For now the q_* fields are processed the same for all search_types
+    advanced_search_processing_q_fields
+  end
+
+  def advanced_search_processing_q_fields
+    # Advanced search form doesn't have a "q" textbox.  If there's anything in
+    # user param q it shouldn't be there
+    params[ :q ] = nil
+
+    # Blacklight expects a 'q' SOLR param so we must build one from the q_* text params
+    # Blacklight::SolrHelper#get_search_results takes optional extra_controller_params
+    # hash that is merged into/overrides user_params
+    process_q_type_params @extra_controller_params, params
+
+    # Now use interpreted advanced search as user param q for echo purposes
+    params[ :q ] = @extra_controller_params[ :q ]
+  end
+  
   # solr_search_params_logic methods take two arguments
   # @param [Hash] solr_parameters a hash of parameters to be sent to Solr (via RSolr)
   # @param [Hash] user_parameters a hash of user-supplied parameters (often via `params`) 
