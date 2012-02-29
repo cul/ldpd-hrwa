@@ -112,7 +112,7 @@ class HRWA::ArchiveSearchConfigurator
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
         # handler defaults, or have no facets.
-        config.default_solr_params[:'facet.field'] = config.facet_fields.keys
+        #config.default_solr_params[:'facet.field'] = config.facet_fields.keys
 
         # Now we see how to over-ride Solr request handler defaults, in this
         # case for a BL "search field", which is really a dismax aggregate
@@ -176,7 +176,7 @@ class HRWA::ArchiveSearchConfigurator
       result_list = solr_response.groups
       return solr_response, result_list
     end
-    
+
     def process_search_request( extra_controller_params, params )
     end
 
