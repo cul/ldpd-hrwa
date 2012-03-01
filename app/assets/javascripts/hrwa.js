@@ -157,21 +157,6 @@ $('.moreless').live('click', function() {
     $(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
 });
 
-// faceting attempt
-// multiple facets broken for ff3.6...must fix
-$(".addfq").live('click',function(e) {
-	var facet_id = $(this).attr('id').replace(/^facet_[0-9]+\-\-/g,''); // this will need to be double-checked
-	var facet_cat = $(this).attr('title');
-        $('#searchform').append("<input type='hidden' name='fq[]' value='"+facet_cat+":"+facet_id+"' />"); //new attempt
-    	$('#searchform').submit();
-	return false;
-});
-$(".delfq").live('click',function(e) {
-        $(this).hide(0, function() { $(this).attr('name',''); $(this).find('input').attr('name',''); $(this).closest('form').submit(); }); //hacky but necessary
-    	////$('#searchform').submit();
-	return false;
-});
-
 // resubmit
 $('.submit_topsearch').live('click',function(e) {
 	$('#topsearchform').submit();
