@@ -53,160 +53,160 @@
 	        <input class="span10" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
 
-<div class="row">
-<div class="span14">
-    <h6>Additional Options</h6>
-<div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">organization type</label>
-		<select name="f[organization_type__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">subject</label>
-		<select name="f[subject__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">geographic focus</label>
-		<select name="f[geographic_focus__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">organization based in</label>
-		<select name="f[organization_based_in__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">file type</label>
-        <select class="control-group" name="lim_mimetype">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">date of capture</label>
-        <input id="crawl_start_date" class="span2" type="text" name="crawl_start_date" value="" /> - <input id="crawl_end_date" class="span2" type="text" name="crawl_end_date" value="" />
-    </div>
-</div>
-<div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">language</label>
-		<select name="f[language__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-        <!--Non-displayed facets below here-->
-    </div>
-	<div class="control-group">
-        <label class="control-label">title</label>
-		<select name="f[title][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">creator name</label>
-		<select name="f[creator_name__facet][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">original url</label>
-		<select name="f[original_urls][]">
-                <option></option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-        </select>
-    </div>
-	<div class="control-group">
-        <label class="control-label">domain</label>
-        <select class="control-group" name="lim_domain">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="span14">
- <h6>display options</h6>
- <div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">results per page</label>
-        <select class="control-group" name="lim_rows">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
- </div>
- <div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">sort</label>
-        <select class="control-group" name="lim_sort">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
- </div>
-</div>
-</div>
-<div class="row">
-<div class="span14">
- <h6>dev options (temporary)</h6>
- <div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">host</label>
-        <select class="control-group" name="lim_host">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
- </div>
- <div class="span7 nomar">
-	<div class="control-group">
-        <label class="control-label">core</label>
-        <select class="control-group" name="lim_core">
-		        <option></option>
-                <option>2</option>
-        </select>
-    </div>
- </div>
-</div>
-</div>
+	<div class="row">
+	<div class="span14">
+	    <h6>Additional Options</h6>
+	<div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">organization type</label>
+			<select name="f[organization_type__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">subject</label>
+			<select name="f[subject__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">geographic focus</label>
+			<select name="f[geographic_focus__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">organization based in</label>
+			<select name="f[organization_based_in__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">file type</label>
+		<select class="control-group" name="lim_mimetype">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">date of capture</label>
+		<input id="crawl_start_date" class="span2" type="text" name="crawl_start_date" value="" /> - <input id="crawl_end_date" class="span2" type="text" name="crawl_end_date" value="" />
+	    </div>
+	</div>
+	<div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">language</label>
+			<select name="f[language__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+		<!--Non-displayed facets below here-->
+	    </div>
+		<div class="control-group">
+		<label class="control-label">title</label>
+			<select name="f[title][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">creator name</label>
+			<select name="f[creator_name__facet][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">original url</label>
+			<select name="f[original_urls][]">
+			<option></option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+	    </div>
+		<div class="control-group">
+		<label class="control-label">domain</label>
+		<select class="control-group" name="lim_domain">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+	</div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="span14">
+	 <h6>display options</h6>
+	 <div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">results per page</label>
+		<select class="control-group" name="lim_rows">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+	 </div>
+	 <div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">sort</label>
+		<select class="control-group" name="lim_sort">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+	 </div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="span14">
+	 <h6>dev options (temporary)</h6>
+	 <div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">host</label>
+		<select class="control-group" name="lim_host">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+	 </div>
+	 <div class="span7 nomar">
+		<div class="control-group">
+		<label class="control-label">core</label>
+		<select class="control-group" name="lim_core">
+				<option></option>
+			<option>2</option>
+		</select>
+	    </div>
+	 </div>
+	</div>
+	</div>
 
 	<p>
 	<input type="hidden" name="sort" value="score desc" />
