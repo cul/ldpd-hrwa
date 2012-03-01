@@ -38,10 +38,8 @@ class HRWA::Configurator
 
   # See https://issues.cul.columbia.edu/browse/HRWA-324
   def reset_configuration( config )
-Rails.logger.debug( '&&&&&&&&&&&&&& here' )
     if not config.methods.select { | method_name |
          method_name =~ /^facet_fields|^index_fields|^search_fields|^show_fields|^sort_fields/ }.empty?
-Rails.logger.debug( 'resetting' )
       config.facet_fields  = {}
       config.index_fields  = {}
       config.search_fields = {}   
