@@ -117,6 +117,9 @@ class CatalogController < ApplicationController
 
     @configurator = HRWA::Configurator.new( @search_type )
 
+    # See https://issues.cul.columbia.edu/browse/HRWA-324
+    @configurator.reset_configuration( self.blacklight_config )
+
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )

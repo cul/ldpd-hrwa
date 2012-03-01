@@ -35,6 +35,20 @@ class HRWA::Configurator
   def process_search_request( extra_controller_params, params )
     @configurator.process_search_request( extra_controller_params, params )
   end
+
+  # See https://issues.cul.columbia.edu/browse/HRWA-324
+  def reset_configuration( config )
+Rails.logger.debug( '&&&&&&&&&&&&&& here' )
+    if not config.methods.select { | method_name |
+         method_name =~ /^facet_fields|^index_fields|^search_fields|^show_fields|^sort_fields/ }.empty?
+Rails.logger.debug( 'resetting' )
+      config.facet_fields  = {}
+      config.index_fields  = {}
+      config.search_fields = {}   
+      config.show_fields   = {}
+      config.sort_fields   = {}
+    end
+  end
   
   def result_partial
     return @configurator.result_partial
