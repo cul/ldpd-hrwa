@@ -18,8 +18,8 @@
 
 	<%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
 
-	<label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"' : ''; %>> FSF</label>
-	<label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"' : ''; %>> ASF</label>
+	<label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>> FSF</label>
+	<label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>> ASF</label>
 	<label id="advo" class="add-on hidden"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="twipsy" class="advtoggle moreless lime mono">+</a></label>
 
 	<label class="add-on hidden">
@@ -27,6 +27,7 @@
 	</label>
       </div>
 
+      <%= render 'constraints', :localized_params=>params %>
       <div id="advanced_options_inside_of_form"></div>
     <% end %>
 

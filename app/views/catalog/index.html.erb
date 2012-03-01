@@ -9,15 +9,11 @@
 
     <%= render :partial => 'search_form' %>
 
-    <%#= render :partial => 'did_you_mean' %>
-
-    <%#= render 'constraints', :localized_params=>params %>
-
     <div class="row">
       <div id="primary" class="span12">
 	<div class="pageEntriesInfo">
 	  <h3>Search Results</h3>
-	  <%= render_pagination_info @response, :entry_name=>'result' %>
+	  <%= render_pagination_info @response, :entry_name=>'result' %> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong>
 	</div>
 	<%= render 'results_pagination' %>
 
