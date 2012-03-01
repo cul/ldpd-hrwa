@@ -91,7 +91,7 @@ img.preview_icon:hover { opacity:1.0 }
 .inline { display:inline; }
 .lime { color:#88C34B!important; }
 .blue { color:#0064cd!important; }
-.red { color:red; }
+.red, a.remove { color:red; }
 .white { color:white!important; }
 .big { font-size:1.2em; }
 .invisible { display:none; }
