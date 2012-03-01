@@ -116,7 +116,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
     it 'sets Blacklight::Configuration.sort_fields correctly' do
       expected_sort_fields = {
-        'score desc, dateOfCaptureYYYYMMDD desc' => { :label => 'relevance' },
+        'score desc' => { :label => 'relevance' },
       }
 
       expected_sort_fields.each { | name, expected |

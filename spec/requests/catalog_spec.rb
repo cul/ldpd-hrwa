@@ -81,7 +81,29 @@ describe 'advanced_search_fsf' do
 
 end
 
-# describe 'advanced_search_version_of_default_search_form', :js => true do
+# CatalogController is re-used.  If config in *Configurator.config_proc is not
+# reset to blank state in each request, there the potential for a SOLR error to occur due
+# to old Blacklight::SolrField stuff (config.facet_fields, config.sort_fields, etc.)
+# defined in the previous request referencing SOLR fields that don't exist in the
+# SOLR index for the current search_type.
+#
+# Example: It used to be that archive search had sort='score desc, dateOfCaptureYYYYMMDD desc'
+# find_site had sort='score desc'.  If there was no sort param in the HTTP query string
+# then the FindSiteSearchConfigurator would attempt to set the sort field to 
+# 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
+#
+# TODO: change this to use form fill-in when JS seleniun is working on bronte
+describe 'the portal search' do
+  it 'can successfully run a find_site search immediately after an archive search' do
+    visit '/search?search_type=archive&q=women&search_mode=simple'
+    page.should have_content( 'Displaying results' ) 
+
+    visit '/search?search_type=find_site&women&search_mode=simple'
+    page.should_not have_content( 'RSolr::Error' )
+  end
+end
+
+# describe 'advanced_search_version_of_default_search_form' do
 #
   # it 'returns search results for a known successful query' do
 #
@@ -98,6 +120,7 @@ end
 #
 # end
 
+# TODO: change this for form fill-in
 describe 'archive search' do
   it 'does not raise an error when paging through results' do
     visit '/catalog?page=3&q=water&search_type=archive'
