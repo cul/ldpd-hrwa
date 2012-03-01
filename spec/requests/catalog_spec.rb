@@ -81,10 +81,11 @@ describe 'advanced_search_fsf' do
 
 end
 
-# CatalogController is re-used.  If config in *Configurator.config_proc is not
-# reset to blank state in each request, there the potential for a SOLR error to occur due
-# to old Blacklight::SolrField stuff (config.facet_fields, config.sort_fields, etc.)
-# defined in the previous request referencing SOLR fields that don't exist in the
+# JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
+# CatalogController is apparently re-used.  If blacklight_config of the CatalogController
+# is not reset to a blank state reset to blank state in each request, there is 
+# the potential for a SOLR error to occur due to old stuff such as config.facet_fields and
+# config.sort_fields defined in the previous request referencing SOLR fields that don't exist in the
 # SOLR index for the current search_type.
 #
 # Example: It used to be that archive search had sort='score desc, dateOfCaptureYYYYMMDD desc'
