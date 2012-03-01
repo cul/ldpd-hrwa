@@ -6,8 +6,18 @@ module HRWA::FilterOptions
     
     raise ArgumentError, "No such filter option as #{ option_name }" if option_list.nil?  
     
+    option_hash = option_list_to_hash( option_list )
+    
     # Early return of full set of options if no selected values are passed
-    return option_list if ( ! selected_values or selected_values.empty? )
+    return option_hash if ( ! selected_values or selected_values.empty? )
+  end
+  
+  def self.option_list_to_hash( option_list )
+    option_hash = {}
+    option_list.sort.each { | option |
+      option_hash[ option ] = false
+    }
+    return option_hash
   end
 
   def self.bib_id_options( selected_values = nil )
@@ -515,7 +525,6 @@ module HRWA::FilterOptions
     "Comisio´n Mexicana de Defensa y Promocio´n de los Derechos Humanos",
     "Comissa~o de Acolhimento, Verdade, e Reconciliac?a~o Timor Leste",
     "Comite´ de Familiares de Detenidos-Desaparecidos en Honduras",
-    "Comite´ de Familiares de Detenidos-Desaparecidos en Honduras",
     "ComiteÌ para la Defensa de los Derechos Humanos en Honduras",
     "Comite´ pour le respect des liberte´s et des droits de l'homme en Tunisie",
     "Comite´ se´ne´galaise des droits de l'homme",
@@ -659,7 +668,6 @@ module HRWA::FilterOptions
     "Malawi Human Rights Resource Centre",
     "Malaysia. Suruhanjaya Hak Asasi Manusia Malaysia",
     "Ma¯nava Adhika¯ra tatha¯ Praja¯ta¯ntrika Man~ca (Kathmandu, Nepal)",
-    "Ma¯nava Adhika¯ra tatha¯ Praja¯ta¯ntrika Man~ca (Kathmandu, Nepal)",
     "Markaz al-Filast?i¯ni¯ li-H?uqu¯q al-Insa¯n",
     "Markaz al-Mi¯za¯n li-H?uqu¯q al-Insa¯n (Gaza Strip)",
     "Markaz al-Qa¯hirah li-Dira¯sa¯t H?uqu¯q al-Insa¯n",
@@ -691,7 +699,6 @@ module HRWA::FilterOptions
     "National Campaign on Dalit Human Rights (India)",
     "National Human Rights Commission (Mauritius)",
     "National Human Rights Commission (Nepal)",
-    "National Protection Working Group (Nepal)",
     "National Protection Working Group (Nepal)",
     "National Society for Human Rights (Namibia)",
     "Network for North Korean Democracy and Human Rights",
@@ -925,8 +932,6 @@ module HRWA::FilterOptions
     "www.codehupy.org",
     "www.codepu.cl",
     "www.cofadeh.org",
-    "www.columbia.edu",
-    "www.columbia.edu",
     "www.columbia.edu",
     "www.conadeh.hn",
     "www.concernedhistorians.org",
