@@ -95,12 +95,52 @@ end
 #
 # TODO: change this to use form fill-in when JS seleniun is working on bronte
 describe 'the portal search' do
+  # it 'can successfully run a find_site search immediately after an archive search' do
+    # visit '/search'
+    # fill_in 'q', :with => 'women'
+    # choose 'asfsearch'
+    # click_link 'form_submit'
+    # page.should have_content( 'Displaying results' ) 
+# 
+    # visit '/search'
+    # fill_in 'q', :with => 'water'
+    # choose 'fsfsearch'
+    # click_link 'form_submit'
+    # page.should have_content( 'Displaying results' )
+    # page.should_not have_content( 'RSolr::Error' )
+  # end
+#   
+  # it 'can successfully run an archive search immediately after a find_site search' do
+    # visit '/search'
+    # fill_in 'q', :with => 'water'
+    # choose 'fsfsearch'
+    # click_link 'form_submit'
+    # page.should have_content( 'Displaying results' )
+# 
+    # visit '/search'
+    # fill_in 'q', :with => 'women'
+    # choose 'asfsearch'
+    # click_link 'form_submit'
+    # page.should have_content( 'Displaying results' ) 
+    # page.should_not have_content( 'RSolr::Error' )
+  # end
+  
   it 'can successfully run a find_site search immediately after an archive search' do
-    visit '/search?search_type=archive&q=women&search_mode=simple'
+    visit '/search?search_type=archive&q=women'
     page.should have_content( 'Displaying results' ) 
 
-    visit '/search?search_type=find_site&women&search_mode=simple'
+    visit '/search?search_type=find_site&q=women'
+    page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error' )
+  end
+  
+  it 'can successfully run an archive search immediately after a find_site search' do
+    visit '/search?search_type=find_site&q=women'
+    page.should have_content( 'Displaying results' )
+    
+    visit '/search?search_type=archive&q=women'
+    page.should have_content( 'Displaying results' )
+    page.should_not have_content( 'RSolr::Error') 
   end
 end
 
