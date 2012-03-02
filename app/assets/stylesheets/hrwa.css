@@ -141,6 +141,9 @@ input#crawl_start_date, input#crawl_end_date { width:89px; }
 #advanced_options { margin-bottom:1em; }
 #advanced_options a[rel=twipsy] { color:#aba; }
 
+/* result pagination */
+.pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
+
 /* jquery scrollbars */
 
 /* Other sized screens */
