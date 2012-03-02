@@ -64,7 +64,7 @@ module HRWA::CatalogHelperBehavior
     end
 
   end
-  
+
   def see_all_hits_from_domain_link( url_params = params, domain )
     return link_to_with_new_params_reverse_merge( %Q{See all hits from "#{ domain }"},
                                     url_params,
