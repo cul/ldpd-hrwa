@@ -3,7 +3,7 @@ require 'pp'
 
 class CatalogController < ApplicationController
 
-  include Blacklight::Catalog
+  include HRWA::Catalog
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
 
