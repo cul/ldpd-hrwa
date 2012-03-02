@@ -1,10 +1,11 @@
 <% if paginate_params(@response).num_pages > 1 %>
-    <div class="results_control floatright">
-     <a class="toggle_all_btn btn default" data-original-title="Toggle all results">Toggle+</a> 
-    </div>
-    <div class="pagination">
+<div class="row">
+    <div class="pagination span9">
       <%= paginate_rsolr_response @response, :outer_window => 2, :inner_window => 2, :theme => 'blacklight' %>
-      <%# render :partial => 'facet_pagination' %>
     </div>
-    <div class="clearfix"></div>
+    <div class="results_control span3">
+     <a class="toggle_all_btn btn success" data-original-title="Toggle all results">Toggle+</a> 
+    </div>
+</div>
+    <div class="clear"></div>
 <% end %>
