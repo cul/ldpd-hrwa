@@ -36,8 +36,9 @@ module HRWA::CatalogHelperBehavior
   end
 
   def link_to_delete_params( body, url_params = params, params_to_delete )
+    url_params_copy = url_params.dup
     params_to_delete.each { | key |
-      url_params.delete( key )
+      url_params_copy.delete( key )
     }
     return link_to( body, search_path( url_params ) )
   end

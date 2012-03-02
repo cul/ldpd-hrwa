@@ -177,7 +177,7 @@ class HRWA::ArchiveSearchConfigurator
       return solr_response, result_list
     end
 
-    def process_search_request( extra_controller_params, params )
+    def process_search_request( extra_controller_params, user_params = params )
     end
 
     def result_partial
