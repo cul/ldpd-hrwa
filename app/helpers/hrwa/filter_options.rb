@@ -1,11 +1,13 @@
 # -*- encoding : utf-8 -*-
 module HRWA::FilterOptions
 
-  def self.option_list( option_name, selected_values = nil )
-    option_list = self.instance_variable_get( '@' + option_name + '_filter_options' )
-    
-    raise ArgumentError, "No such filter option as #{ option_name }" if option_list.nil?  
-    
+  def option_list( option_name, selected_values = nil )
+    begin
+      option_list = self.send( option_name + '_filter_options' )
+    rescue NoMethodError
+      raise ArgumentError, "No such filter option as #{ option_name }"  
+    end
+
     option_hash = option_list_to_hash( option_list )
     
     # Early return of full set of unselected options if no selected values are passed
@@ -20,7 +22,7 @@ module HRWA::FilterOptions
     return option_hash
   end
   
-  def self.option_list_to_hash( option_list )
+  def option_list_to_hash( option_list )
     option_hash = {}
     option_list.sort.each { | option |
       option_hash[ option ] = false
@@ -28,35 +30,36 @@ module HRWA::FilterOptions
     return option_hash
   end
 
-  def self.bib_id_options( selected_values = nil )
+  def bib_id_options( selected_values = nil )
     return option_list( 'bib_id', selected_values )
   end
 
-  def self.creator_name_options( selected_values = nil )
+  def creator_name_options( selected_values = nil )
     return option_list( 'creator_name', selected_values )
   end
 
-  def self.domain_options( selected_values = nil )
+  def domain_options( selected_values = nil )
     return option_list( 'domain', selected_values )
   end
   
-  def self.geographic_focus_options( selected_values = nil )
+  def geographic_focus_options( selected_values = nil )
     return option_list( 'geographic_focus', selected_values )
   end
   
-  def self.language_options( selected_values = nil )
+  def language_options( selected_values = nil )
     return option_list( 'language', selected_values )
   end
   
-  def self.organization_based_in_options( selected_values = nil )
+  def organization_based_in_options( selected_values = nil )
     return option_list( 'organization_based_in', selected_values )
   end
   
-  def self.organization_type_options( selected_values = nil )
+  def organization_type_options( selected_values = nil )
     return option_list( 'organization_type', selected_values )
   end
 
-  @bib_id_filter_options = [
+  def bib_id_filter_options
+    return [
     "4191511",
     "4751601",
     "5316489",
@@ -418,8 +421,10 @@ module HRWA::FilterOptions
     "8775896",
     "8960390",
   ]
+  end
 
-  @creator_name_filter_options = [
+  def creator_name_filter_options
+    return [
     "880-01 5.18 Kinyo?m Chaedan (Korea)",
     "880-03 Markaz al-MisÌ£riÌ? li-HÌ£uquÌ?q al-MarÊ¾ah",
     "Access to Justice (Organization : Nigeria)",
@@ -784,9 +789,10 @@ module HRWA::FilterOptions
     "Zimbabwe Human Rights NGO Forum",
     "Zimbabwe Lawyers for Human Rights",
   ]
+  end  
   
-  
-  @domain_filter_options = [
+  def domain_filter_options
+    return [
     "advocacyforum.org",
     "amigosdemujeres.org",
     "amnesty.ca",
@@ -1159,8 +1165,10 @@ module HRWA::FilterOptions
     "www.zlhr.org.zw",
     "yhrn.org",
   ]
+  end
   
-  @geographic_focus_filter_options = [
+  def geographic_focus_filter_options
+    return [
     "Afghanistan",
     "Africa",
     "Africa, Eastern",
@@ -1304,8 +1312,10 @@ module HRWA::FilterOptions
     "Zambia",
     "Zimbabwe",
   ]
+  end
 
-  @language_filter_options = [
+  def language_filter_options
+    return [
     "Albanian",
     "Arabic",
     "Armenian",
@@ -1361,8 +1371,10 @@ module HRWA::FilterOptions
     "Turkish",
     "Ukrainian",
   ]
+  end
 
-  @organization_based_in_filter_options = [
+  def organization_based_in_filter_options
+    return [
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -1491,12 +1503,15 @@ module HRWA::FilterOptions
     "Zambia",
     "Zimbabwe",
   ]
+  end
 
-  @organization_type_filter_options = [
+  def organization_type_filter_options
+    return [
     "Individual site creators",
     "National human rights institutions",
     "Non-governmental organizations",
     "Other organization types",
   ]
+  end
 
 end

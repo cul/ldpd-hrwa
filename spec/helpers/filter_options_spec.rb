@@ -5,6 +5,8 @@ include HRWA::FilterOptions
 
 describe 'HRWA::FilterOptions' do
   
+  # TODO: Checking for min lengths is a weak test.  Probably adding a test for presence of one 
+  # known, stable value will be a big improvement.
   describe '#*_options methods' do
     filter_options = { 'bib_id'                => 360,
                        'creator_name'          => 363,
