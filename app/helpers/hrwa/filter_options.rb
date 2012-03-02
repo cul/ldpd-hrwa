@@ -8,8 +8,16 @@ module HRWA::FilterOptions
     
     option_hash = option_list_to_hash( option_list )
     
-    # Early return of full set of options if no selected values are passed
+    # Early return of full set of unselected options if no selected values are passed
     return option_hash if ( ! selected_values or selected_values.empty? )
+    
+    selected_values.each { | selected_value |
+      if option_hash.has_key?( selected_value )
+        option_hash[ selected_value ] = true
+      end  
+    }
+    
+    return option_hash
   end
   
   def self.option_list_to_hash( option_list )
