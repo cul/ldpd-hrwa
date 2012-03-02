@@ -67,6 +67,7 @@ iframe#x_container { width:100%; }
 #secondary ul, #cbf_widgets ul { background:#fafafe; margin-left:0; margin-bottom:0; list-style:none; border-style:dotted; font-size:95%; }
 #secondary h6, #cbf_widgets h6 { line-height:1.5em; }
 #secondary h6 { margin-top:1em; }
+#secondary #facets a.remove { margin-left:.2em; }
 #cbf_widgets h6 { color:#888; }
 #cbf_widgets ul li:nth-child(odd) { background-color:#fff; }
 #cbf_widgets li {line-height:1.1em;margin-bottom:0.5em; }
