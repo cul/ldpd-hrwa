@@ -129,13 +129,8 @@ jQuery(function($) {
         var newaq = q_and.replace(/ /g,' +')+q_phrase+q_or+q_exclude.replace(/ /g,' -');
         //$('#q').val(newaq.replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
         $('#q, #q_t').val(newaq);
-        $('#searchform').submit();
-        return false;
-    } else {
-	alert('Please enter your search before submitting.');
-	$(this).blur();
-	return false;
     }
+    $('#searchform').submit();
   });
   $('#advreset').live('click', function(e) {
 	$('#advanced_options input[type=text]').val('');
@@ -146,11 +141,8 @@ jQuery(function($) {
 	var cform = $(this).closest('form');
 	if ($('#q_t').val() != '' || $('#q').val()) {
 		cform.submit();
-	} else {
-		alert('Please enter your search before submitting.');
-		$(this).blur();
 	}
-	return false;
+	cform.submit();
   });
 
 $('.moreless').live('click', function() {

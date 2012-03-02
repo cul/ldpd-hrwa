@@ -1,11 +1,13 @@
-<% if paginate_params(@response).num_pages > 1 %>
 <div class="row">
     <div class="pagination span9">
+    <% if paginate_params(@response).num_pages > 1 %>
       <%= paginate_rsolr_response @response, :outer_window => 2, :inner_window => 2, :theme => 'blacklight' %>
+    <% elsif %>
+        &nbsp;
+    <% end %>
     </div>
     <div class="results_control span3">
-     <a class="toggle_all_btn btn success" data-original-title="Toggle all results">Toggle+</a> 
+     <a class="toggle_all_btn btn success" data-original-title="Toggle all results">Toggle+</a>
     </div>
 </div>
     <div class="clear"></div>
-<% end %>
