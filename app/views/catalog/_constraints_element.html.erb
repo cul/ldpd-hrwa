@@ -11,20 +11,21 @@
 
 <%
 
-  link_body = ''
+  # If the label isn't blank, then this is a facet.  We only want to show
+  # facets for now.  If the label IS blank, don't show it (because it's probably q).
+  
+  if ! label.blank?
 
-  unless options[:remove].blank?
-  link_body =
-	  if label.blank?
-	    "#{options[:escape_value] ? h(value) : value}".html_safe
-	  else
-	    "#{options[:escape_label] ? h(label) : label}: #{options[:escape_value] ? h(value) : value}".html_safe
-	  end
-  %>
-  <%= link_to(link_body,
-			options[:remove],
-			:alt=>'remove',
-			:class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])
-	      ) %>
+    link_body = ''
 
-<% end %>
+    unless options[:remove].blank?
+      link_body = "[x] #{options[:escape_label] ? h(label) : label}: #{options[:escape_value] ? h(value) : value}".html_safe
+      %>
+      <%= link_to(link_body,
+			  options[:remove],
+			  :alt=>'remove',
+			  :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])
+		) %><%
+    end
+  end
+%>
