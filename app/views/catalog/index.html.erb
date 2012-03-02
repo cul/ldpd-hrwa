@@ -14,15 +14,17 @@
 	    <div class="pageEntriesInfo">
     	  <h3>Search Results</h3>
     	  <%= render_pagination_info @response, :entry_name=>'result' %> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong>
+    	</div>
     	<%= render 'results_pagination' %>
     	<%#= render 'sort_and_per_page' %>
-    	</div>
 
         <div class="clear"></div>
 
         <%= render :partial => 'result_list' %>
 
-      </div>
+        <%= render 'results_pagination' %>
+
+      </div><!--/primary-->
 
       <div id="secondary" class="span4">
 	<% sidebar_items << capture do %>
@@ -32,7 +34,6 @@
       </div>
     </div>
 
-    <%= render 'results_pagination' %>
 
   <% end %>
 
