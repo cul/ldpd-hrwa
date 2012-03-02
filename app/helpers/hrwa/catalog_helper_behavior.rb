@@ -40,7 +40,7 @@ module HRWA::CatalogHelperBehavior
     params_to_delete.each { | key |
       url_params_copy.delete( key )
     }
-    return link_to( body, search_path( url_params ) )
+    return link_to( body, search_path( url_params_copy ) )
   end
 
   #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
