@@ -3,4 +3,6 @@ module CatalogHelper
 
   # Contains local overrides of Blacklight::CatalogHelperBehavior methods
   include HRWA::CatalogHelperBehavior
+  
+  include HRWA::FilterOptions
 end
