@@ -51,6 +51,7 @@ iframe#x_container { width:100%; }
 #fqs { margin-top:0.5em; }
 #topfqs { display:none; }
 #site_footer #culcul { padding-left:28px; background:#fff url(./crown-small-blue.png) no-repeat 0 2px; line-height:28px; font-size:11px; }
+#primary article {overflow:hidden;}
 #primary article:nth-child(odd) dl { background-color: #fafafe; }
 #primary article dl, #secondary ul, #cbf_widgets ul { padding:4px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; border:1px solid #dde; }
 #primary article dl dt { line-height:1.2; font-size:115%; }
@@ -58,7 +59,7 @@ iframe#x_container { width:100%; }
 #primary article dl dd { margin-left:13px; }
 #primary article dl dd .site_detail_and_crawl_calendar_link_container {position:relative;top:2px;}
 #primary article dl dd.hl_snippet {display:block;font-size:11px;overflow:hidden;margin-bottom:1px;}
-#primary article dl dd.result_url {font-size:12px;color:#009129;}
+#primary article dl dd.result_url {font-size:12px;color:#009129;word-break:break-word;}
 #primary article dl dd .toggler {display:block;margin:0.2em 0 0.1em 0; }
 #primary article dl dd.result_aka {margin-top:1px;font-size:12px;font-style:italic;}
 #primary div.pageEntriesInfo { margin-bottom:0.5em; }
@@ -139,6 +140,9 @@ img.preview_icon:hover { opacity:1.0 }
 input#crawl_start_date, input#crawl_end_date { width:89px; }
 #advanced_options { margin-bottom:1em; }
 #advanced_options a[rel=twipsy] { color:#aba; }
+
+/* result pagination */
+.pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
 
 /* jquery scrollbars */
 

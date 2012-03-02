@@ -237,7 +237,7 @@ $('#primary .sort_default').live('click', function() { $('article.post').tinysor
 $('#primary .sort_a-z').live('click', function() { $('article.post').tinysort({order:"asc"}); sortState($(this)); });
 $('#primary .sort_z-a').live('click', function() { $('article.post').tinysort({order:"desc"}); sortState($(this)); });
 
-$('#secondary .results_control, #cbf .results_control').prepend('<a class="sort_default btn small" title="Sort by Count">#</a> <a class="sort_a-z btn small" title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" title="Sort by Z-A">Z-A</a>');
+$('/* #secondary .results_control,*/ #cbf .results_control').prepend('<a class="sort_default btn small" title="Sort by Count">#</a> <a class="sort_a-z btn small" title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" title="Sort by Z-A">Z-A</a>');
 $('#cbf .results_control:first .sort_default').hide();
 $('.sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
 $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
@@ -266,11 +266,11 @@ $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
         .toggle(
           function() {
             listElements.show();
-            $("a", this).text('Fewer Choices').blur();
+            $("a", this).html('Fewer Choices').blur();
           },
           function() {
             listElements.hide();
-            $("a", this).text(linkText).blur();
+            $("a", this).html(linkText).blur();
           }
         )
     );
