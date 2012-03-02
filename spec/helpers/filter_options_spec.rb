@@ -24,11 +24,14 @@ describe 'HRWA::FilterOptions' do
         end
       }
   end
-  
+
   describe '#option_list' do
     it 'raises an error when passed an unknown filter option' do
       expect{ HRWA::FilterOptions.option_list( 'xxx' ) }.to raise_error( ArgumentError )
     end
+  end
+  
+  describe '#*_options methods' do
     
     filter_options = { 'bib_id'                => [ '4751601', '7033265', '8602843' ],
                        'creator_name'          => [ %q{Assot?s?iat?s?ii?a? korennykh malochislennykh narodov Severa, Sibiri i Dal'nego Vostoka Rossii?skoi? Federat?s?ii},
@@ -43,9 +46,10 @@ describe 'HRWA::FilterOptions' do
                        'organization_type'     => [ 'Non-governmental organizations' ],
                      }
                      
-    filter_options.each { | option, selected_values | 
-      it "sets selection statuses correctly for #{ option } option" do
-        option_list_selected = HRWA::FilterOptions.option_list( option, selected_values )
+    filter_options.each { | option, selected_values |
+      method_name = "#{ option }_options"
+      it ": #{ method_name }( opts ) sets statuses correctly" do
+        option_list_selected = HRWA::FilterOptions.send( method_name, :selected => selected_values )
         selected_values.each { | value |
           option_list_selected[ value ].should == true
         }
@@ -54,5 +58,5 @@ describe 'HRWA::FilterOptions' do
       end
     }
   end
-  
+
 end

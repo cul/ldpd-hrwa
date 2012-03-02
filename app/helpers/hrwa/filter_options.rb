@@ -1,7 +1,8 @@
 # -*- encoding : utf-8 -*-
 module HRWA::FilterOptions
 
-  def option_list( option_name, selected_values = nil )
+  def option_list( option_name, opts = { :selected => nil } )
+    
     begin
       option_list = self.send( option_name + '_filter_options' )
     rescue NoMethodError
@@ -11,9 +12,9 @@ module HRWA::FilterOptions
     option_hash = option_list_to_hash( option_list )
     
     # Early return of full set of unselected options if no selected values are passed
-    return option_hash if ( ! selected_values or selected_values.empty? )
+    return option_hash if ( opts.nil? || opts[ :selected ].nil? )
     
-    selected_values.each { | selected_value |
+    opts[ :selected ].each { | selected_value |
       if option_hash.has_key?( selected_value )
         option_hash[ selected_value ] = true
       end  
@@ -30,32 +31,32 @@ module HRWA::FilterOptions
     return option_hash
   end
 
-  def bib_id_options( selected_values = nil )
-    return option_list( 'bib_id', selected_values )
+  def bib_id_options( opts = { :selected => nil } )
+    return option_list( 'bib_id', opts )
   end
 
-  def creator_name_options( selected_values = nil )
-    return option_list( 'creator_name', selected_values )
+  def creator_name_options( opts = { :selected => nil } )
+    return option_list( 'creator_name', opts )
   end
 
-  def domain_options( selected_values = nil )
-    return option_list( 'domain', selected_values )
+  def domain_options( opts = { :selected => nil } )
+    return option_list( 'domain', opts )
   end
   
-  def geographic_focus_options( selected_values = nil )
-    return option_list( 'geographic_focus', selected_values )
+  def geographic_focus_options( opts = { :selected => nil } )
+    return option_list( 'geographic_focus', opts )
   end
   
-  def language_options( selected_values = nil )
-    return option_list( 'language', selected_values )
+  def language_options( opts = { :selected => nil } )
+    return option_list( 'language', opts )
   end
   
-  def organization_based_in_options( selected_values = nil )
-    return option_list( 'organization_based_in', selected_values )
+  def organization_based_in_options( opts = { :selected => nil } )
+    return option_list( 'organization_based_in', opts )
   end
   
-  def organization_type_options( selected_values = nil )
-    return option_list( 'organization_type', selected_values )
+  def organization_type_options( opts = { :selected => nil } )
+    return option_list( 'organization_type', opts )
   end
 
   def bib_id_filter_options
