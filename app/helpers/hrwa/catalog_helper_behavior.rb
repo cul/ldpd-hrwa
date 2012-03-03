@@ -18,9 +18,38 @@ module HRWA::CatalogHelperBehavior
   end
 
   def exclude_domain_from_hits_link( url_params = params, domain )
-    return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
-                                                  url_params,
-                                                  { :'excl_domain' => domain }, )
+    # The '[]' may or may not have been appended to the param name
+    current_excluded_domains = url_params[ :'excl_domain' ]
+    current_excluded_domains ||= url_params[ :'excl_domain[]' ]
+    
+    if ! current_excluded_domains
+      # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
+      # helper that we will be using later will automatically append '[]' to the end,
+      # so we want to avoid doubling.
+      return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
+                                                    url_params,
+                                                    { :'excl_domain' => [ domain ] }, )
+    end
+    
+    if current_excluded_domains.class != Array
+      current_excluded_domains = [ current_excluded_domains ]
+    end
+
+    if current_excluded_domains.include?( domain )
+      excluded_domains = current_excluded_domains
+    else
+      excluded_domains = current_excluded_domains.push( domain )
+    end
+      
+    # We will be adding :'excl_domain', not :'excl_domain[]' which is the name of the 
+    # param after it has been processed by the link_to helper.  So to prevent the 
+    # merge from inadvertently doubling the domain exclusion we remove the current
+    # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
+    # after the merge and link_to call. 
+    url_params.delete( :'excl_domain[]' )
+    return link_to_with_new_params( %Q{Exclude "#{ domain }" from hits},
+                                    url_params,
+                                    { :'excl_domain' => excluded_domains }, )
   end
 
   def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
