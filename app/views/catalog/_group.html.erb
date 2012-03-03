@@ -7,7 +7,7 @@
           <% # The top doc for the group will be displayed in full as a hit %>
           <% doc = group[ :doclist ][ :docs ].shift %>
     </div>
-    <div class="clearfix"></div>
+    <div class="clearfix"></div> 
     <% #end debug stuff %>
 
     <dl class="defList document <%= render_document_class group %>">
@@ -23,6 +23,9 @@
                      doc[ :contentTitle ] :
                      '[Untitled]' %>
     </dt>
+
+<!-- "EXCLUDE DOMAIN FROM HITS" LINK -->
+<%= doc[ :domain ] ? exclude_domain_from_hits_link( doc[ :domain ][ 0 ] ) : '' %>
 
         <% # main title container for group partial view -%>
     <dd class="result_url">
