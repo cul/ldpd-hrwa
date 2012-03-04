@@ -12,7 +12,7 @@ class CatalogController < ApplicationController
     # Params that fall outside of current standarad Blacklight processing
     @extra_controller_params = {}
 
-    if params[:search_type]
+    if !params[:commit].blank?
 
       _configure_by_search_type
 

@@ -5,6 +5,7 @@
     <h4>Human Rights Web Archive : search</h4>
 
     <%= form_tag search_path, :method => :get, :id => 'searchform' do %>
+	  <input type="hidden" name="commit" value="search" />
 
       <% q_text = params[ :q ] %>
       <%

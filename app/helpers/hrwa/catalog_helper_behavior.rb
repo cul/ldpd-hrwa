@@ -21,7 +21,7 @@ module HRWA::CatalogHelperBehavior
     # The '[]' may or may not have been appended to the param name
     current_excluded_domains = url_params[ :'excl_domain' ]
     current_excluded_domains ||= url_params[ :'excl_domain[]' ]
-    
+
     if ! current_excluded_domains
       # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
       # helper that we will be using later will automatically append '[]' to the end,
@@ -30,7 +30,7 @@ module HRWA::CatalogHelperBehavior
                                                     url_params,
                                                     { :'excl_domain' => [ domain ] }, )
     end
-    
+
     if current_excluded_domains.class != Array
       current_excluded_domains = [ current_excluded_domains ]
     end
@@ -40,12 +40,12 @@ module HRWA::CatalogHelperBehavior
     else
       excluded_domains = current_excluded_domains.push( domain )
     end
-      
-    # We will be adding :'excl_domain', not :'excl_domain[]' which is the name of the 
-    # param after it has been processed by the link_to helper.  So to prevent the 
+
+    # We will be adding :'excl_domain', not :'excl_domain[]' which is the name of the
+    # param after it has been processed by the link_to helper.  So to prevent the
     # merge from inadvertently doubling the domain exclusion we remove the current
     # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
-    # after the merge and link_to call. 
+    # after the merge and link_to call.
     url_params.delete( :'excl_domain[]' )
     return link_to_with_new_params( %Q{Exclude "#{ domain }" from hits},
                                     url_params,
@@ -83,7 +83,7 @@ module HRWA::CatalogHelperBehavior
   end
 
   def link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(body, facet_type, facet_value, url_params = params, options ={})
-    
+
     # First, check if this facet_type => facet_value combo is already in the current url
     # If so, return a non-clickable link
     if params.include?(:f) && params[:f].include?(facet_type) && params[:f][facet_type].include?(facet_value)
@@ -108,7 +108,6 @@ module HRWA::CatalogHelperBehavior
 
 		final_list = [];
 
-
     facet_name_array.each_index do |index|
       if as_links
         final_list << link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(facet_name_array[index], facet_type, facet_value_array[index])
@@ -119,6 +118,11 @@ module HRWA::CatalogHelperBehavior
 
     return final_list.join(', ').html_safe;
 
+  end
+
+  # ! Override of has_search_parameters? !
+  def has_search_parameters?
+    !params[:commit].blank?
   end
 
   def see_all_hits_from_domain_link( url_params = params, domain )

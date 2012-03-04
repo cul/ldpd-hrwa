@@ -39,7 +39,7 @@ describe 'advanced_search_asf' do
 
     it 'creates the correct HTTP querystring for simple "q_and" search' do
       querystring = URI.parse( current_url ).query
-      querystring.should == "search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
+      querystring.should == "search_type=archive&search_mode=advanced&commit=search&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
     end
 
     # TODO: These are just some cheap, temporary tests for assistance during initial development.
@@ -83,14 +83,14 @@ end
 
 # JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
 # CatalogController is apparently re-used.  If blacklight_config of the CatalogController
-# is not reset to a blank state reset to blank state in each request, there is 
+# is not reset to a blank state reset to blank state in each request, there is
 # the potential for a SOLR error to occur due to old stuff such as config.facet_fields and
 # config.sort_fields defined in the previous request referencing SOLR fields that don't exist in the
 # SOLR index for the current search_type.
 #
 # Example: It used to be that archive search had sort='score desc, dateOfCaptureYYYYMMDD desc'
 # find_site had sort='score desc'.  If there was no sort param in the HTTP query string
-# then the FindSiteSearchConfigurator would attempt to set the sort field to 
+# then the FindSiteSearchConfigurator would attempt to set the sort field to
 # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
 #
 # TODO: change this to use form fill-in when JS seleniun is working on bronte
@@ -100,8 +100,8 @@ describe 'the portal search' do
     # fill_in 'q', :with => 'women'
     # choose 'asfsearch'
     # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' ) 
-# 
+    # page.should have_content( 'Displaying results' )
+#
     # visit '/search'
     # fill_in 'q', :with => 'water'
     # choose 'fsfsearch'
@@ -109,38 +109,38 @@ describe 'the portal search' do
     # page.should have_content( 'Displaying results' )
     # page.should_not have_content( 'RSolr::Error' )
   # end
-#   
+#
   # it 'can successfully run an archive search immediately after a find_site search' do
     # visit '/search'
     # fill_in 'q', :with => 'water'
     # choose 'fsfsearch'
     # click_link 'form_submit'
     # page.should have_content( 'Displaying results' )
-# 
+#
     # visit '/search'
     # fill_in 'q', :with => 'women'
     # choose 'asfsearch'
     # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' ) 
+    # page.should have_content( 'Displaying results' )
     # page.should_not have_content( 'RSolr::Error' )
   # end
-  
-  it 'can successfully run a find_site search immediately after an archive search' do
-    visit '/search?search_type=archive&q=women'
-    page.should have_content( 'Displaying results' ) 
 
-    visit '/search?search_type=find_site&q=women'
+  it 'can successfully run a find_site search immediately after an archive search' do
+    visit '/search?search_type=archive&commit=search&q=women'
+    page.should have_content( 'Displaying results' )
+
+    visit '/search?search_type=find_site&commit=search&q=women'
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error' )
   end
-  
+
   it 'can successfully run an archive search immediately after a find_site search' do
-    visit '/search?search_type=find_site&q=women'
+    visit '/search?search_type=find_site&commit=search&q=women'
     page.should have_content( 'Displaying results' )
-    
-    visit '/search?search_type=archive&q=women'
+
+    visit '/search?search_type=archive&commit=search&q=women'
     page.should have_content( 'Displaying results' )
-    page.should_not have_content( 'RSolr::Error') 
+    page.should_not have_content( 'RSolr::Error')
   end
 end
 
@@ -164,7 +164,7 @@ end
 # TODO: change this for form fill-in
 describe 'archive search' do
   it 'does not raise an error when paging through results' do
-    visit '/catalog?page=3&q=water&search_type=archive'
+    visit '/catalog?page=3&q=water&search_type=archive&commit=search'
     page.should_not have_content( %q{can't convert Fixnum into String} )
   end
 end
