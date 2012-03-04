@@ -90,8 +90,8 @@ class CatalogController < ApplicationController
     @debug << array_pp( self.solr_search_params_logic )
 
     @debug << "<h1>solr_search_params after get_search_results has run</h1>\n\n".html_safe
-    self.solr_search_params.each_pair do |key, value|
-      @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
+    self.solr_search_params.keys.map { | key | key.to_s }.sort.each do |key|
+      @debug << "<strong>#{key}</strong> = #{ solr_search_params[ key ] } <br/>".html_safe
     end
 
     if @response

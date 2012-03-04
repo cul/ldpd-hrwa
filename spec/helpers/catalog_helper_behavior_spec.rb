@@ -4,33 +4,63 @@ require 'cgi'
 include HRWA::CatalogHelperBehavior
 
 describe 'exclude_domain_from_hits_link' do
-  before :all do
-    @domain = 'www.hrw.org'
+  before :each do
+    @domain1 = 'www.hrw.org'
+    @domain2 = 'amnesty.org'
     @params_unsorted = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :crawl_start_date => '', :crawl_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
-    params_expected_in_url = @params_unsorted.merge( :'excl_domain' => @domain )
+    
+    @params_expected_in_url1 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1 ] )
+    @params_expected_in_url2 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1, @domain2 ] )
 
-    # The method being tested uses sorted params
-    @expected_link_tag = %Q{<a href="/search?}
-    params_expected_in_url.keys.sort.each { | key |
+    # NOTE: The method being tested uses sorted params
+    
+    # Link for one domain exclusion added
+    @expected_link_tag1 = %Q{<a href="/search?}
+    @params_expected_in_url1.keys.sort.each { | key |
       name  = CGI::escape( key.to_s )
-      value = CGI::escape( params_expected_in_url[ key ] )
-      @expected_link_tag << "#{ name }=#{ value }&amp;"
+      if @params_expected_in_url1[ key ].respond_to?( :each )
+        @params_expected_in_url1[ key ].each { | value |
+          @expected_link_tag1 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+        }
+      else 
+        value = CGI::escape( @params_expected_in_url1[ key ] )
+        @expected_link_tag1 << "#{ name }=#{ value }&amp;"
+      end
     }
-    @expected_link_tag.sub!( /&amp;$/, '' )
-    @expected_link_tag << %Q{">Exclude &quot;#{ @domain }&quot; from hits</a>}
+    @expected_link_tag1.sub!( /&amp;$/, '' )
+    @expected_link_tag1 << %Q{">Exclude &quot;#{ @domain1 }&quot; from hits</a>}
+    
+    
+    # Link for an additional domain exclusion added
+    @expected_link_tag2 = %Q{<a href="/search?}
+    @params_expected_in_url2.keys.sort.each { | key |
+      name  = CGI::escape( key.to_s )
+      if @params_expected_in_url2[ key ].respond_to?( :each )
+        @params_expected_in_url2[ key ].each { | value |
+          @expected_link_tag2 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+        }
+      else 
+        value = CGI::escape( @params_expected_in_url2[ key ] )
+        @expected_link_tag2 << "#{ name }=#{ value }&amp;"
+      end
+    }
+    @expected_link_tag2.sub!( /&amp;$/, '' )
+    @expected_link_tag2 << %Q{">Exclude &quot;#{ @domain2 }&quot; from hits</a>}
   end
 
-  it 'creates correct link' do
-    link_tag        = exclude_domain_from_hits_link( @params_unsorted, @domain )
-    link_tag.should == @expected_link_tag
+  it 'creates correct link if there are no domains already excluded' do
+    link_tag        = exclude_domain_from_hits_link( @params_unsorted, @domain1 )
+    link_tag.should == @expected_link_tag1
+  end
+  
+  it 'creates correct link if one domain is already excluded' do
+    link_tag        = exclude_domain_from_hits_link( @params_expected_in_url1, @domain2 )
+    link_tag.should == @expected_link_tag2
   end
 
-  it 'won\'t create redundant name/value pair in URL' do
-    params_with_domain_facet_pair_already_present =
-      @params_unsorted.merge( :'excl_domain' => @domain )
-    link_tag = exclude_domain_from_hits_link( params_with_domain_facet_pair_already_present,
-                                              @domain )
-    link_tag.should == @expected_link_tag
+  it 'returns the current URL when attempting to exclude a domain that is already being excluded' do
+    link_tag = exclude_domain_from_hits_link( @params_expected_in_url1, @domain1 )
+    link_tag = @expected_link_tag1
   end
 end
 
