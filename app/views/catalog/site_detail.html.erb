@@ -1,1 +1,71 @@
-Showing details for item <%= @bib_key %>
+<div class="container">
+
+  <div class="row">
+    <div id="primary" class="span16">
+      <p class='floatright'>
+        <a href='#'>Return to results</a>
+      </p>
+      <h3>Website Detail</h3>
+
+      <article id='sdf_view' class="post">
+        <table id='sdf_table' class='zebra-striped'>
+          <thead>
+            <tr>
+              <th class='sdf_snapshot'>[image?]</th>
+              <th><strong><%= @document.get('title') %></strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Alt. Title(s):</td>
+              <td><%= @document.get('alternate_title').nil? ? 'None' : @document.get('alternate_title', {:sep => ','}) %></td>
+            </tr>
+            <tr>
+              <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
+              <% #For now, I'm assuming that the original url is just the first one. %>
+              <% original_url = @document.get("original_urls").is_a?(Array) ? @document.get("original_urls")[0] : @document.get("original_urls") %>
+              <td>URL at Time of Capture:</td> <td><%= original_url %></td>
+            </tr>
+            <tr>
+              <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+              <% archived_url = @document.get('archived_urls').is_a?(Array) ? @document.get('archived_urls')[0] : @document.get('archived_urls') %>
+              <!--td>Crawl Calendar:</td> <td><a class="blue" href="ccf.php?site=http://www.cesr.org/">Crawls for http://www.cesr.org/</a></td-->
+              <td>Crawl Calendar:</td>
+              <td><%= link_to 'Crawl Calendar', archived_url, :title => 'CCF permalink for: ' + original_url.html_safe %> [<%=link_to preview_icon, archived_url, :title => 'CCF Preview for: ' + original_url, :class => 'ccf_quicklook' %>]</td>
+            </tr>
+            <!--
+            <tr>
+            <td>See Archive Site:</td> <td><a href="http://wayback.archive-it.org/1068/*/http://www.cesr.org/">http://wayback.archive-it.org/1068/*/http://www.cesr.org/</a></td>
+            </tr>
+            -->
+            <tr>
+              <td>Organization Type:</td>
+              <td><%= generate_comma_delimited_facet_list(@document.get("organization_type"), 'organization_type__facet', @document.get("organization_type__facet")) %></td>
+            </tr>
+            <tr>
+              <td>Languages:</td>
+              <td><%= generate_comma_delimited_facet_list(@document.get('language',{:sep => nil}), 'language__facet', @document.get('language__facet',{:sep => nil})) %></td>
+            </tr>
+            <tr>
+              <td>Geographic Focus:</td>
+              <td><%= generate_comma_delimited_facet_list(@document.get('geographic_focus',{:sep => nil}), 'geographic_focus__facet', @document.get('geographic_focus__facet',{:sep => nil})) %></td>
+            </tr>
+            <tr>
+              <td>Subjects:</td>
+              <td><%= generate_comma_delimited_facet_list(@document.get('subject',{:sep => nil}), 'subject__facet', @document.get('subject__facet',{:sep => nil})) %></td>
+            </tr>
+            <tr>
+              <td>Summary:</td>
+              <td><%= @document.get("summary") %></td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </div>
+
+  <hr>
+
+  <footer></footer>
+
+</div> <!-- /container -->

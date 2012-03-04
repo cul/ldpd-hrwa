@@ -65,9 +65,7 @@ class CatalogController < ApplicationController
   # use the bib_key to get a single document from the solr index
   def site_detail
     @bib_key = params[:bib_key]
-
-    #@response, @document = get_solr_response_for_doc_id
-
+    @response, @document = get_solr_response_for_doc_id(@bib_key)
   end
 
   private

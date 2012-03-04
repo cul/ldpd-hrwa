@@ -37,7 +37,7 @@ class HRWA::FindSiteSearchConfigurator
           :defType          => "dismax"
         }
 
-        config.unique_key = "bib_key"
+        config.unique_key = "id"
 
         # solr field configuration for search results/index views
         config.index.show_link = 'title'

@@ -53,7 +53,7 @@ module HRWA::CatalogHelperBehavior
   end
 
   def link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(body, facet_type, facet_value, url_params = params, options ={})
-
+    
     # First, check if this facet_type => facet_value combo is already in the current url
     # If so, return a non-clickable link
     if params.include?(:f) && params[:f].include?(facet_type) && params[:f][facet_type].include?(facet_value)
@@ -62,6 +62,32 @@ module HRWA::CatalogHelperBehavior
       #otherwise return a link to add this facet to the current url
       return (link_to body, add_facet_params_and_redirect(facet_type, facet_value), options).html_safe
     end
+
+  end
+
+  def generate_comma_delimited_facet_list(facet_name_array, facet_type, facet_value_array, as_links = false)
+
+    #If strings are supplied rather than arrays, turn the strings into one-element arrays
+    if facet_name_array.is_a?(String)
+      facet_name_array = [facet_name_array]
+    end
+
+    if facet_value_array.is_a?(String)
+      facet_value_array = [facet_value_array]
+    end
+
+		final_list = [];
+
+
+    facet_name_array.each_index do |index|
+      if as_links
+        final_list << link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(facet_name_array[index], facet_type, facet_value_array[index])
+      elsif
+        final_list << facet_name_array[index]
+      end
+    end
+
+    return final_list.join(', ').html_safe;
 
   end
 
