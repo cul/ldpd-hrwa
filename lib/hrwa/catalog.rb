@@ -4,6 +4,4 @@ module HRWA::Catalog
 
   include Blacklight::Catalog
 
-  include HRWA::SolrHelper
-
 end
