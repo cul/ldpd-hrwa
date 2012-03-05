@@ -78,7 +78,7 @@
                <%= domain ? see_all_hits_from_domain_link( domain ) : '[No link]' %> &bull;&bull;
 
                <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-               <%= domain ? exclude_domain_from_hits_link( domain ) : '[No link]'%>
+               <span class="exclude_url"><%= domain ? exclude_domain_from_hits_link( domain ) : '[No link]'%></span>
 
                <!-- OTHER CAPTURE INSTANCES -->
                <% remaining_docs_in_group = group[ :doclist ][ :docs ]
