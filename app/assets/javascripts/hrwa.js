@@ -241,18 +241,15 @@ if($('article.post').length > 0)
   $('.toggle_all_btn').attr('data-status', 'less-mode').live('click', function() {
     if($(this).attr('data-status') == 'less-mode')
     {
-      //$('article.post .toggle_section').each(function(){
+      $(this).attr('data-original-title', 'Show less detailed results');
       toggle_item_detail($('article.post .toggle_section'), 'show');
-      //});
       $(this).attr('data-status', 'more-mode');
       $(this).text('Show less detail -');
     }
     else
     {
-      $(this).attr('data-original-title', 'Show less detailed results');
-      //$('article.post .toggle_section').each(function(){
+      $(this).attr('data-original-title', 'Show more detailed results');
       toggle_item_detail($('article.post .toggle_section'), 'hide');
-      //});
       $(this).attr('data-status', 'less-mode');
       $(this).text('Show more detail +');
     }
