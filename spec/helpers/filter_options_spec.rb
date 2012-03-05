@@ -15,6 +15,7 @@ describe 'HRWA::FilterOptions' do
                        'language'              => 54,
                        'organization_based_in' => 127,
                        'organization_type'     => 4,
+                       'subject'               => 271,
                        'title'                 => 441,
                      }
       filter_options.each { | filter_option, min |
