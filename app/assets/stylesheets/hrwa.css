@@ -145,6 +145,10 @@ input#crawl_start_date, input#crawl_end_date { width:89px; }
 /* result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
 
+/* noscript */
+#js_warn { position:absolute; top:41px; z-index:9999; width:100%; text-align:center; }
+#js_warn div { width:auto; margin:0 auto; font-weight:bold; }
+
 /* jquery scrollbars */
 
 /* Other sized screens */
