@@ -1,6 +1,4 @@
 # -*- encoding : utf-8 -*-
-require 'hrwa/filter_options_source'
-
 module HRWA::FilterOptions
   include HRWA::OptionsSourceHardcoded
   
