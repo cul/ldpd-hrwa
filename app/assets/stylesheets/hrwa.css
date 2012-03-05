@@ -86,6 +86,8 @@ img.preview_icon:hover { opacity:1.0 }
 .results_control select { width:55px; padding:0!important; height:20px; }
 #primary .results_control { text-align:right; vertical-align:middle; line-height:26px; margin-bottom:1em; }
 #primary .results_control a { font-size:95%!important; padding:4px 2px!important; }
+#slideshow { overflow:hidden; }
+#slideshow img { max-width:100%; }
 #cbf .results_control, .results_control, .widgetmore { font-size:80%; text-align:left; margin-bottom:0; }
 .mono { font-family: monospace!important; }
 .sc { font-variant:small-caps!important; }
@@ -142,6 +144,8 @@ img.preview_icon:hover { opacity:1.0 }
 input#crawl_start_date, input#crawl_end_date { width:89px; }
 #advanced_options { margin-bottom:1em; }
 #advanced_options a[rel=twipsy] { color:#aba; }
+#advanced_options h6 { background:rgba(255,255,255,0.6); line-height:1.2em; margin:1em 0 0.4em 0; color:#777; display:inline-block; }
+
 
 /* result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
