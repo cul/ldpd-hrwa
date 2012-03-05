@@ -63,49 +63,42 @@
 	<div class="span7 nomar">
 		<div class="control-group">
 		<label class="control-label">organization type</label>
-			<select name="f[organization_type__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[organization_type__facet][]" multiple="multiple">
+		  <% organization_type_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">subject</label>
-			<select name="f[subject__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[subject__facet][]" multiple="multiple">
+		  <%# subject_options().each do | key, value | %>
+		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <%# end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">geographic focus</label>
-			<select name="f[geographic_focus__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
-		</select>
+		  <select name="f[geographic_focus__facet][]" multiple="multiple">
+		    <% geographic_focus_options().each do | key, value | %>
+		      <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		    <% end %>
+		  </select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">organization based in</label>
-			<select name="f[organization_based_in__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		  <select name="f[organization_based_in__facet][]" multiple="multiple">
+		    <% organization_based_in_options().each do | key, value | %>
+		      <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		    <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">file type</label>
-		<select class="control-group" name="lim_mimetype">
-				<option></option>
-			<option>2</option>
+		<select class="control-group" name="lim_mimetype" multiple="multiple">
+		  <%# file_type_options().each do | key, value | %>
+		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <%# end %>
 		</select>
 	    </div>
 		<div class="control-group">
@@ -116,50 +109,43 @@
 	<div class="span7 nomar">
 		<div class="control-group">
 		<label class="control-label">language</label>
-			<select name="f[language__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[language__facet][]" multiple="multiple">
+		  <% language_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 		<!--Non-displayed facets below here-->
 	    </div>
 		<div class="control-group">
 		<label class="control-label">title</label>
-			<select name="f[title][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[title][]" multiple="multiple">
+		  <% title_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">creator name</label>
-			<select name="f[creator_name__facet][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[creator_name__facet][]" multiple="multiple">
+		  <% creator_name_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">original url</label>
-			<select name="f[original_urls][]">
-			<option></option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+		<select name="f[original_urls][]" multiple="multiple">
+		  <%# original_urls_options().each do | key, value | %>
+		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <%# end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">domain</label>
-		<select class="control-group" name="lim_domain">
-				<option></option>
-			<option>2</option>
+		<select class="control-group" name="lim_domain" multiple="multiple">
+		  <% domain_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 	</div>
