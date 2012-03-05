@@ -15,6 +15,7 @@ describe 'HRWA::FilterOptions' do
                        'language'              => 54,
                        'organization_based_in' => 127,
                        'organization_type'     => 4,
+                       'original_urls'         => 457,
                        'subject'               => 271,
                        'title'                 => 441,
                      }
@@ -46,6 +47,8 @@ describe 'HRWA::FilterOptions' do
                        'language'              => [ 'Creoles and Pidgins, French-based (Other)', ],
                        'organization_based_in' => [ 'Eritrea', 'Kyrgyzstan', ],
                        'organization_type'     => [ 'Non-governmental organizations' ],
+                       'original_urls'         => [ 'http://hoodonline.org/'],
+                       'subject'               => [ 'Women in Islam', 'Civil rights' ],
                        'title'                 => [ 'CONECTAS Direitos Humanos', 'Amman Center for Human Rights Studies : Markaz ʻAmmān li-Dirāsāt Ḥuqūq al-Insān.']
                      }
                      
