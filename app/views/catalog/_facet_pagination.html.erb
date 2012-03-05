@@ -1,15 +1,15 @@
   <% if @pagination.has_previous? || @pagination.has_next? %>
     <div class="prev_next_links">
       <% if @pagination.has_previous? -%>
-        <%= link_to('« Previous', catalog_facet_path( @pagination.params_for_previous_url( params) ) , :class=>":prev_pag btn primary small")  %>
+        <%= link_to('« Previous', catalog_facet_path( @pagination.params_for_previous_url( params) ) , :class=>":prev_pag btn success small")  %>
       <% else -%>
-        <span class="disabled prev_page btn primary small">« Previous</span>
+        <span class="disabled prev_page btn success small">« Previous</span>
       <% end -%>
 
       <% if @pagination.has_next? -%>
-        <%= link_to('Next »', catalog_facet_path( @pagination.params_for_next_url(params)), :class =>:"next_page btn primary small" ) %>
+        <%= link_to('Next »', catalog_facet_path( @pagination.params_for_next_url(params)), :class =>:"next_page btn success small" ) %>
       <% else -%>
-        <span class="disabled next_page btn primary small">Next »</span>
+        <span class="disabled next_page btn success small">Next »</span>
       <% end -%>
 
   <div class="sort_options floatright">
