@@ -241,18 +241,15 @@ if($('article.post').length > 0)
   $('.toggle_all_btn').attr('data-status', 'less-mode').live('click', function() {
     if($(this).attr('data-status') == 'less-mode')
     {
-      //$('article.post .toggle_section').each(function(){
+      $(this).attr('data-original-title', 'Show less detailed results');
       toggle_item_detail($('article.post .toggle_section'), 'show');
-      //});
       $(this).attr('data-status', 'more-mode');
       $(this).text('Show less detail -');
     }
     else
     {
-      $(this).attr('data-original-title', 'Show less detailed results');
-      //$('article.post .toggle_section').each(function(){
+      $(this).attr('data-original-title', 'Show more detailed results');
       toggle_item_detail($('article.post .toggle_section'), 'hide');
-      //});
       $(this).attr('data-status', 'less-mode');
       $(this).text('Show more detail +');
     }
@@ -277,40 +274,9 @@ $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
 
-// results_controls and show more for sidebar and cbf
-  $('#secondary ul, #cbf_widgets ul').each(function() {
-// If there are less than 8 list items, don't do anything
-  if($(this).children('li').size() <= 8) return;
-  // Hide all list items after the 6th one
-  var self = this,
-      items = $('li',this),
-      listElements = items.filter(':gt(5)').hide();
-// Set the toggler link text to "... nn More Choices" where nn is equal to the number of hidden choices
-    var linkText = listElements.size() + ' More Choices&hellip;';
+$('a[rel=twipsy], .results_control a').twipsy({'placement': 'above'});
+$('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
 
-    // Insert the toggler link as the very last list element
-    //$(this).parent().append(
-    $(this).prepend(
-
-      // Create the toggler list elemenet and make it toggle
-      $('<p class="widgetmore"><a class="lime" href="#">' + linkText + '</a></p>')
-
-      // Toggle the display list element text when the toggler is clicked.
-        .toggle(
-          function() {
-            listElements.show();
-            $("a", this).html('Fewer Choices').blur();
-          },
-          function() {
-            listElements.hide();
-            $("a", this).html(linkText).blur();
-          }
-        )
-    );
-  });
-
-  $('a[rel=twipsy], .results_control a').twipsy({'placement': 'above'});
-  $('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
 // autocomplete
 /*
 	function log( message ) {

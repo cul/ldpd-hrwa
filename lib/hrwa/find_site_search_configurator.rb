@@ -68,23 +68,23 @@ class HRWA::FindSiteSearchConfigurator
 
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'subject__facet',
                                :label => 'Subject',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
                                :label => 'Geographic Focus',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'organization_based_in__facet',
                                :label => 'Organization Based In',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'language__facet',
                                :label => 'Language',
-                               :limit => 10
+                               :limit => 5
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request

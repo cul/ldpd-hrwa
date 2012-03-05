@@ -9,7 +9,7 @@
 //
 // Required by Blacklight
 // = require jquery-ui
-// removed: = require blacklight/blacklight
+// = require blacklight/blacklight
 //
 // Using require_self below to make sure that the items below it are included in
 // the specified order (or at least that's what I think it does)

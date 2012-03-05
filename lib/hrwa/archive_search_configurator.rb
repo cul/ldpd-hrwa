@@ -74,39 +74,39 @@ class HRWA::ArchiveSearchConfigurator
         # app code to actually have it echo'd back to see it.
         config.add_facet_field 'domain',
                                :label => 'Domain',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
                                :label => 'Organization/Site Geographic Focus',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'organization_based_in__facet',
                                :label => 'Organization/Site Based In',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'language__facet',
                                :label => 'Website Language',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'contentMetaLanguage',
                                :label => 'Language of page',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator Name',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'mimetype',
                                :label => 'File Type',
-                               :limit => 10
+                               :limit => 5
 
         config.add_facet_field 'dateOfCaptureYYYY',
                                :label => 'Year of Capture',
-                               :limit => 10
+                               :limit => 5
 
 
         # Have BL send all facet field names to Solr, which has been the default
@@ -184,22 +184,22 @@ class HRWA::ArchiveSearchConfigurator
     def add_exclude_fq_to_solr( extra_controller_params, user_params = params )
        # :fq, map from :excl_domain.
       if ( user_params[ :'excl_domain' ] )
-        exclude_domain_request_params = user_params[ :'excl_domain' ] 
-        
+        exclude_domain_request_params = user_params[ :'excl_domain' ]
+
         extra_controller_params[ :fq ] ||= []
         exclude_domain_request_params.each do | value_list |
           value_list ||= []
           value_list = [ value_list ] unless value_list.respond_to? :each
           value_list.each do | value |
             extra_controller_params[ :fq ] << exclude_value_to_fq_string( 'domain', value )
-          end              
-        end      
+          end
+        end
       end
     end
 
     ##
     # Convert a field/value pair into a solr fq parameter
-    def exclude_value_to_fq_string( exclude_field, value) 
+    def exclude_value_to_fq_string( exclude_field, value)
       case
         when (value.is_a?(Integer) or (value.to_i.to_s == value if value.respond_to? :to_i))
           "-#{exclude_field}:#{value}"
