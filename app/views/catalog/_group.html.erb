@@ -19,9 +19,11 @@
 
                <!-- TITLE LINK DATA -->
     <dt>
+               <a href="<%= doc[ :archivedUrl ] %>">
                <%= ( ! doc[ :contentTitle ].blank? ) ?
                      doc[ :contentTitle ] :
                      '[Untitled]' %>
+               </a>
     </dt>
 
         <% # main title container for group partial view -%>
@@ -49,9 +51,6 @@
     <dd>
       <div class='toggler invisible'>
           <span class="inner_toggler_wrapper">
-
-               <!-- ORIGINAL CAPTURE URL FOR THE PAGE -->
-               <strong>Original capture URL:</strong> <%= doc[ :originalUrl ] %><br />
 
                <!-- SDF PAGE LINK DATA -->
                <strong>Parent site bib_key:</strong> <%= doc[ :bib_key ] %><br />
@@ -86,7 +85,6 @@
                   }
                %><br />
                <strong>Other capture instances:</strong>
-               <em>(Note: these instances are already SOLR ordered by score/relevance)</em><br/>
                <ul>
                <%
                   other_instance_date_hits_html = ''
