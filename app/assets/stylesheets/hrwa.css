@@ -144,7 +144,7 @@ img.preview_icon:hover { opacity:1.0 }
 input#crawl_start_date, input#crawl_end_date { width:89px; }
 #advanced_options { margin-bottom:1em; }
 #advanced_options a[rel=twipsy] { color:#aba; }
-#advanced_options h6 { background:rgba(255,255,255,0.6); line-height:1.2em; margin:1em 0 0.4em 0; color:#777; display:inline-block; }
+#advanced_options h6 { color:#777; }
 
 
 /* result pagination */
