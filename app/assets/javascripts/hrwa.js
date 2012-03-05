@@ -51,54 +51,74 @@ jQuery(function($) {
 
   $(".toggle_section").bind('click', function (e) {
 
-	var animation_time = 500;
-
 	//Showing hidden items
 	if($(this).parent().parent().children('.hl_snippet').css('max-height') == window.max_height_for_hl_snippets)
 	{
-	  $(this).parent().parent().children('.hl_snippet').each(function(){
-	    $(this).css({'height' : $(this).height() + 'px'});
-	    $(this).css({'max-height' : ''});
-	    $(this).animate({
-	      height: $(this).attr('data-full-snippet-height') + 'px'
-	      },
-	    animation_time);
-	  });
-	  $(this).parent().children('.toggler').each(function(){
-
-	    $(this).animate({
-	      height: $(this).attr('data-full-toggle-height') + 'px'
-	      },
-	    animation_time);
-
-	  });
+	  toggle_item_detail($(this), 'show');
 	}
 	//Hiding visible items
 	else
 	{
-	  $(this).parent().parent().children('.hl_snippet').each(function(){
-	    $(this).css({'height' : $(this).height() + 'px'});
-	    $(this).animate({
-	      height: $(this).attr('data-collapsed-snippet-height')
-	    }, animation_time, function(){
-	      $(this).css({'max-height' : window.max_height_for_hl_snippets});
-	      $(this).css({'height' : ''});
-	    });
-	  });
-	  $(this).parent().children('.toggler').each(function(){
-
-	    $(this).animate({
-	      height: '0px'
-	      },
-	    animation_time);
-
-	  });
+	  toggle_item_detail($(this), 'hide');
 	}
 
-    	$(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
-	$(this).blur();
 	return false;
   });
+
+  function toggle_item_detail(jquery_element, show_or_hide)
+  {
+    var animation_time = 500;
+
+    if(show_or_hide == 'show')
+    {
+      jquery_element.parent().parent().children('.hl_snippet').each(function(){
+	$(this).css({'height' : $(this).height() + 'px'});
+	$(this).css({'max-height' : ''});
+	$(this).animate({
+	  height: $(this).attr('data-full-snippet-height') + 'px'
+	  },
+	animation_time);
+      });
+      jquery_element.parent().children('.toggler').each(function(){
+
+	$(this).animate({
+	  height: $(this).attr('data-full-toggle-height') + 'px'
+	  },
+	animation_time);
+
+      });
+
+      jquery_element.text('Show Less-');
+    }
+    else
+    {
+      jquery_element.parent().parent().children('.hl_snippet').each(function(){
+	$(this).css({'height' : $(this).height() + 'px'});
+	$(this).animate({
+	  height: $(this).attr('data-collapsed-snippet-height')
+	}, animation_time, function(){
+	  $(this).css({'max-height' : window.max_height_for_hl_snippets});
+	  $(this).css({'height' : ''});
+	});
+      });
+      jquery_element.parent().children('.toggler').each(function(){
+
+	$(this).animate({
+	  height: '0px'
+	  },
+	animation_time);
+
+      });
+
+      jquery_element.text('Show More+');
+    }
+
+    jquery_element.blur();
+
+  }
+
+
+
 
   /* End -- Result item hiding/showing logic */
 
@@ -213,13 +233,34 @@ $('a.ccf_quicklook').live('click', function() {
 
 // sorting
 // toggle all menu stuff
+
+//Only show toggle buttons if there's at least one search result
+if($('article.post').length > 0)
+{
   $('.results_control').show();
-  $('.toggle_all_btn').live('click', function() {
-        $('article.post .toggle_section').trigger('click');
-        $(this).text(($(this).text() == 'Toggle-') ? 'Toggle+' : 'Toggle-');
-        $(this).blur();
-        return false;
+  $('.toggle_all_btn').attr('data-status', 'less-mode').live('click', function() {
+    if($(this).attr('data-status') == 'less-mode')
+    {
+      //$('article.post .toggle_section').each(function(){
+      toggle_item_detail($('article.post .toggle_section'), 'show');
+      //});
+      $(this).attr('data-status', 'more-mode');
+      $(this).text('Show less detail -');
+    }
+    else
+    {
+      $(this).attr('data-original-title', 'Show less detailed results');
+      //$('article.post .toggle_section').each(function(){
+      toggle_item_detail($('article.post .toggle_section'), 'hide');
+      //});
+      $(this).attr('data-status', 'less-mode');
+      $(this).text('Show more detail +');
+    }
+
+    $(this).blur();
+    return false;
   });
+}
 
 function sortState(foo) {
 $('.results_control').find('a').removeClass('success');
