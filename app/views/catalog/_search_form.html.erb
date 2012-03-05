@@ -5,6 +5,7 @@
     <h4>Human Rights Web Archive : search</h4>
 
     <%= form_tag search_path, :method => :get, :id => 'searchform' do %>
+	  <input type="hidden" name="commit" value="search" />
 
       <% q_text = params[ :q ] %>
       <%
@@ -48,7 +49,7 @@
 	        <label class="add-on">one or more of these words:</label>
 	        <input class="span10" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
 	</div>
-	<h6>But don\'t show results that have&hellip;</h6>
+	<h6>But don't show results that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">any of these unwanted words:</label>
 	        <input class="span10" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>

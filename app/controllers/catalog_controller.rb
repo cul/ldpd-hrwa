@@ -12,7 +12,7 @@ class CatalogController < ApplicationController
     # Params that fall outside of current standarad Blacklight processing
     @extra_controller_params = {}
 
-    if params[:search_type]
+    if !params[:commit].blank?
 
       _configure_by_search_type
 
@@ -65,9 +65,7 @@ class CatalogController < ApplicationController
   # use the bib_key to get a single document from the solr index
   def site_detail
     @bib_key = params[:bib_key]
-
-    #@response, @document = get_solr_response_for_doc_id
-
+    @response, @document = get_solr_response_for_doc_id(@bib_key)
   end
 
   private
@@ -92,8 +90,8 @@ class CatalogController < ApplicationController
     @debug << array_pp( self.solr_search_params_logic )
 
     @debug << "<h1>solr_search_params after get_search_results has run</h1>\n\n".html_safe
-    self.solr_search_params.each_pair do |key, value|
-      @debug << "<strong>#{key}</strong> = #{value} <br/>".html_safe
+    self.solr_search_params.keys.map { | key | key.to_s }.sort.each do |key|
+      @debug << "<strong>#{key}</strong> = #{ solr_search_params[ key ] } <br/>".html_safe
     end
 
     if @response

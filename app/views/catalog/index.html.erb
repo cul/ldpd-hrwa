@@ -1,19 +1,24 @@
 <div class="container">
 
+  <%= render :partial=>'search_form' %>
+
   <% unless has_search_parameters? %>
     <%# if there are no input/search related params, display the "home" partial -%>
-    <%= render :partial=>'search_form' %>
+
+	<div class="row no-hero-mobile">
+      <div class="span16">
+        <h3>Search Tips</h3>
+        <p>This will be a very helpful search tips section probably pulled directly from our Help page (tc). We'll have things like syntax and how to use the advanced search fields (tc). This section is only here on this page because this page was reached directly without a search request. This section will not be shown when there are results.</p>
+	  </div>
+    </div>
+
   <% else %>
-
-    <%# @page_title = application_name + " Search Results" %>
-
-    <%= render :partial => 'search_form' %>
 
     <div class="row">
       <div id="primary" class="span12">
 	    <div class="pageEntriesInfo">
     	  <h3>Search Results</h3>
-    	  <%= render_pagination_info @response, :entry_name=>'result' %> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong>
+    	  <%= render_pagination_info @response, :entry_name=>'result' %><% if( !params[ :q ].blank? ) %> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong><% end %>
     	</div>
     	<%= render 'results_pagination' %>
     	<%#= render 'sort_and_per_page' %>
@@ -36,6 +41,9 @@
 
 
   <% end %>
+
+  <footer>
+  </footer>
 
 </div>
 

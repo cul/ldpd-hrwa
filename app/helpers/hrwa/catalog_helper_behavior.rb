@@ -18,9 +18,38 @@ module HRWA::CatalogHelperBehavior
   end
 
   def exclude_domain_from_hits_link( url_params = params, domain )
-    return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
-                                                  url_params,
-                                                  { :'excl_domain' => domain }, )
+    # The '[]' may or may not have been appended to the param name
+    current_excluded_domains = url_params[ :'excl_domain' ]
+    current_excluded_domains ||= url_params[ :'excl_domain[]' ]
+
+    if ! current_excluded_domains
+      # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
+      # helper that we will be using later will automatically append '[]' to the end,
+      # so we want to avoid doubling.
+      return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from hits},
+                                                    url_params,
+                                                    { :'excl_domain' => [ domain ] }, )
+    end
+
+    if current_excluded_domains.class != Array
+      current_excluded_domains = [ current_excluded_domains ]
+    end
+
+    if current_excluded_domains.include?( domain )
+      excluded_domains = current_excluded_domains
+    else
+      excluded_domains = current_excluded_domains.push( domain )
+    end
+
+    # We will be adding :'excl_domain', not :'excl_domain[]' which is the name of the
+    # param after it has been processed by the link_to helper.  So to prevent the
+    # merge from inadvertently doubling the domain exclusion we remove the current
+    # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
+    # after the merge and link_to call.
+    url_params.delete( :'excl_domain[]' )
+    return link_to_with_new_params( %Q{Exclude "#{ domain }" from hits},
+                                    url_params,
+                                    { :'excl_domain' => excluded_domains }, )
   end
 
   def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
@@ -36,10 +65,11 @@ module HRWA::CatalogHelperBehavior
   end
 
   def link_to_delete_params( body, url_params = params, params_to_delete )
+    url_params_copy = url_params.dup
     params_to_delete.each { | key |
-      url_params.delete( key )
+      url_params_copy.delete( key )
     }
-    return link_to( body, search_path( url_params ) )
+    return link_to( body, search_path( url_params_copy ) )
   end
 
   #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
@@ -63,6 +93,36 @@ module HRWA::CatalogHelperBehavior
       return (link_to body, add_facet_params_and_redirect(facet_type, facet_value), options).html_safe
     end
 
+  end
+
+  def generate_comma_delimited_facet_list(facet_name_array, facet_type, facet_value_array, as_links = false)
+
+    #If strings are supplied rather than arrays, turn the strings into one-element arrays
+    if facet_name_array.is_a?(String)
+      facet_name_array = [facet_name_array]
+    end
+
+    if facet_value_array.is_a?(String)
+      facet_value_array = [facet_value_array]
+    end
+
+		final_list = [];
+
+    facet_name_array.each_index do |index|
+      if as_links
+        final_list << link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(facet_name_array[index], facet_type, facet_value_array[index])
+      elsif
+        final_list << facet_name_array[index]
+      end
+    end
+
+    return final_list.join(', ').html_safe;
+
+  end
+
+  # ! Override of has_search_parameters? !
+  def has_search_parameters?
+    !params[:commit].blank?
   end
 
   def see_all_hits_from_domain_link( url_params = params, domain )
