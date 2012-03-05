@@ -15,6 +15,7 @@ describe 'HRWA::FilterOptions' do
                        'language'              => 54,
                        'organization_based_in' => 127,
                        'organization_type'     => 4,
+                       'title'                 => 441,
                      }
       filter_options.each { | filter_option, min |
         it "retrieves full list of #{ filter_option } unselected options when passed nil (no array of selected values)" do
@@ -44,6 +45,7 @@ describe 'HRWA::FilterOptions' do
                        'language'              => [ 'Creoles and Pidgins, French-based (Other)', ],
                        'organization_based_in' => [ 'Eritrea', 'Kyrgyzstan', ],
                        'organization_type'     => [ 'Non-governmental organizations' ],
+                       'title'                 => [ 'CONECTAS Direitos Humanos', 'Amman Center for Human Rights Studies : Markaz ʻAmmān li-Dirāsāt Ḥuqūq al-Insān.']
                      }
                      
     filter_options.each { | option, selected_values |
