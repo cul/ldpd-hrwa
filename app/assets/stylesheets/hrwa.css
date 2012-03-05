@@ -29,7 +29,7 @@ body { padding-top:60px; color:#808080; }
 #crowndown img { float:left; margin-top:-4px; margin-right:0; padding-right:0; }
 #crowndown .menu-dropdown { width:320px; }
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
-#topsearchform input#q_t, .hero-unit input#q { background-image: url(./search.png); background-repeat: no-repeat; background-position:center right; }
+#topsearchform input#q_t, .hero-unit input#q { background-image: url(./search.png); background-repeat: no-repeat; background-position:center right; padding-right:10px; }
 #topsearchform input#q_t:focus, .hero-unit input#q:focus { background-image: none; }
 .hero-unit {  padding: 40px 1em; background-color:#fcfcfc; background:#fcfcfc; background-image: url("./map-dark-150.png"); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
 .hero-unit h1 { font-size:50px; color:#000; text-shadow: 0 1px 0 #ffffff;}
