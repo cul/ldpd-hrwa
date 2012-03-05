@@ -31,6 +31,9 @@
                <%= doc[ :originalUrl ] %>
     </dd>
 
+    <!-- CAPTURE DATE FOR THE PAGE -->
+    <strong>Capture date:</strong> <%= doc[ :recordDate ].to_time %><br />
+
     <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
                <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ]
@@ -52,19 +55,14 @@
       <div class='toggler invisible'>
           <span class="inner_toggler_wrapper">
 
-               <!-- SDF PAGE LINK DATA -->
-               <strong>Parent site bib_key:</strong> <%= doc[ :bib_key ] %><br />
-
-
-               <!-- MIMETYPE -->
-               <strong>File type:</strong> <%= doc[ :mimetype ] %><br />
-
-               <!-- SIZE -->
-               <strong>Size:</strong> <%= number_to_human_size( doc[ :length ] ) %><br />
-
-               <!-- CAPTURE DATE FOR THE PAGE -->
-               <strong>Instance date:</strong> <%= doc[ :recordDate ].to_time %><br />
-
+               <div class="file_tech_info">
+                 <!-- SIZE -->
+                 <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
+                 <!-- MIMETYPE -->
+                 <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
+                  
+               </div>
+               
                <% domain = doc[ :domain ] ? doc[ :domain ][ 0 ] : nil %>
 
                <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
