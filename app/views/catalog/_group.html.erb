@@ -29,12 +29,6 @@
                <%= doc[ :originalUrl ] %>
     </dd>
 
-<!-- "EXCLUDE DOMAIN FROM HITS" LINK -->
-	<dd class="exclude_url">
-	<%= doc[ :domain ] ? exclude_domain_from_hits_link( doc[ :domain ][ 0 ] ) : '' %>
-	</dd>
-
-
     <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
                <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ]
