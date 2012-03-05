@@ -1,5 +1,4 @@
 Hrwa::Application.routes.draw do
-  resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
   Blacklight.add_routes(self)
 
@@ -16,6 +15,8 @@ Hrwa::Application.routes.draw do
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf', :to => redirect( '/advanced_asf.html' )
   match '/advanced_fsf', :to => redirect( '/advanced_fsf.html' )
+
+  resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
   root :to => "static#index"
   devise_for :users
