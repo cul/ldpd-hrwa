@@ -154,8 +154,8 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     before :each do
       @params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :crawl_start_date => '', :crawl_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
     end
-    
-    domains_to_exclude = [ 
+
+    domains_to_exclude = [
                            [ 'www.hrw.org', 'wayback.archive-it.org', 'amnesty.org' ],
                            [ 'advocacyforum.org' ],
                            [ ],
@@ -163,12 +163,12 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     domains_to_exclude.each { | domains |
       it "creates correct fq SOLR params for excl_domain[] = #{ domains }" do
         @params.merge!( { :'excl_domain' => domains } )
-        extra_controller_params = {}      
+        extra_controller_params = {}
         @configurator.process_search_request( extra_controller_params, @params )
         extra_controller_params[ :fq ].should == domains.map { | domain | "-domain:#{ domain }" }
       end
-    }    
-    
+    }
+
   end
 
 end
