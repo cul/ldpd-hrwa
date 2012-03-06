@@ -72,9 +72,9 @@
 		<div class="control-group">
 		<label class="control-label">subject</label>
 		<select name="f[subject__facet][]" multiple="multiple">
-		  <%# subject_options().each do | key, value | %>
-		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
-		  <%# end %>
+		  <% subject_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
@@ -135,9 +135,9 @@
 		<div class="control-group">
 		<label class="control-label">original url</label>
 		<select name="f[original_urls][]" multiple="multiple">
-		  <%# original_urls_options().each do | key, value | %>
-		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
-		  <%# end %>
+		  <% original_urls_options().each do | key, value | %>
+		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
