@@ -28,7 +28,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag1.sub!( /&amp;$/, '' )
-    @expected_link_tag1 << %Q{">Exclude &quot;#{ @domain1 }&quot; from results</a>}
+    @expected_link_tag1 << %Q{">Exclude this domain from results</a>}
 
 
     # Link for an additional domain exclusion added
@@ -45,7 +45,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag2.sub!( /&amp;$/, '' )
-    @expected_link_tag2 << %Q{">Exclude &quot;#{ @domain2 }&quot; from results</a>}
+    @expected_link_tag2 << %Q{">Exclude this domain from results</a>}
   end
 
   it 'creates correct link if there are no domains already excluded' do

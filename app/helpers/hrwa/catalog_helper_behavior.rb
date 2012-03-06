@@ -17,7 +17,7 @@ module HRWA::CatalogHelperBehavior
     link_to_with_new_params_reverse_merge( 'Turn debug on', url_params, :hrwa_debug => true )
   end
 
-  def exclude_domain_from_hits_link( url_params = params, domain )
+  def exclude_domain_from_hits_link( domain, url_params = params, html_options = {} )
     # The '[]' may or may not have been appended to the param name
     current_excluded_domains = url_params[ :'excl_domain' ]
     current_excluded_domains ||= url_params[ :'excl_domain[]' ]
@@ -26,9 +26,11 @@ module HRWA::CatalogHelperBehavior
       # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
       # helper that we will be using later will automatically append '[]' to the end,
       # so we want to avoid doubling.
-      return link_to_with_new_params_reverse_merge( %Q{Exclude "#{ domain }" from results},
+      return link_to_with_new_params_reverse_merge( 'Exclude this domain from results',
+                                                    { :'excl_domain' => [ domain ] },
                                                     url_params,
-                                                    { :'excl_domain' => [ domain ] }, )
+                                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
+                                                  )
     end
 
     if current_excluded_domains.class != Array
@@ -47,9 +49,11 @@ module HRWA::CatalogHelperBehavior
     # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
     # after the merge and link_to call.
     url_params.delete( :'excl_domain[]' )
-    return link_to_with_new_params( %Q{Exclude "#{ domain }" from results},
+    return link_to_with_new_params( 'Exclude this domain from results',
+                                    { :'excl_domain' => excluded_domains },
                                     url_params,
-                                    { :'excl_domain' => excluded_domains }, )
+                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
+                                  )
   end
 
   def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
@@ -74,12 +78,12 @@ module HRWA::CatalogHelperBehavior
 
   #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
 
-  def link_to_with_new_params( body, url_params = params, new_params )
-    return link_to( body, search_path( url_params.merge( new_params ) ) )
+  def link_to_with_new_params( body, new_params, url_params = params, html_options ={} )
+    return link_to( body, search_path( url_params.merge( new_params ) ), html_options )
   end
 
-  def link_to_with_new_params_reverse_merge( body, url_params = params, new_params )
-    return link_to( body, search_path( url_params.reverse_merge( new_params ) ) )
+  def link_to_with_new_params_reverse_merge( body, new_params, url_params = params, html_options = {} )
+    return link_to( body, search_path( url_params.reverse_merge( new_params ) ), html_options )
   end
 
   def link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(body, facet_type, facet_value, url_params = params, options ={})
@@ -125,10 +129,11 @@ module HRWA::CatalogHelperBehavior
     !params[:search].blank?
   end
 
-  def see_all_hits_from_domain_link( url_params = params, domain )
-    return link_to_with_new_params_reverse_merge( %Q{See all results from "#{ domain }"},
-                                    url_params,
+  def see_all_hits_from_domain_link( domain, url_params = params, html_options = {})
+    return link_to_with_new_params_reverse_merge( 'See all results from this domain',
                                     { :'f[domain][]' => domain },
+                                    url_params,
+                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{See all results from #{ domain }}})
                                   )
   end
 
