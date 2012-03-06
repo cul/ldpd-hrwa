@@ -3,15 +3,9 @@
   <%= render :partial=>'search_form' %>
 
   <% unless has_search_parameters? %>
-    <%# if there are no input/search related params, display the "home" partial -%>
-
-	<div class="row no-hero-mobile">
-      <div class="span16">
-        <h3>Search Tips</h3>
-        <p>This will be a very helpful search tips section probably pulled directly from our Help page (tc). We'll have things like syntax and how to use the advanced search fields (tc). This section is only here on this page because this page was reached directly without a search request. This section will not be shown when there are results.</p>
-	  </div>
-    </div>
-
+    <%# if there are no input/search related params, display the "search_home" partial -%>
+    <%= render :partial=>'search_home' %>
+    
   <% else %>
 
     <div class="row">

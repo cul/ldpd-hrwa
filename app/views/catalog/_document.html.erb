@@ -1,7 +1,7 @@
     <% item_count_id = document_counter + 1 + @response.params[:start].to_i %>
 
     <% # container for a single doc -%>
-    <article id="a_<%= item_count_id %>" class="post">
+    <article id="a_<%= item_count_id %>" class="fsf post">
 
         <% # main container for doc partial view -%>
         <%= render_document_partial document, :index %>
