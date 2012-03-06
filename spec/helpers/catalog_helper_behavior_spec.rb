@@ -70,7 +70,7 @@ describe 'debug_link' do
 
     link_tag = debug_link( debug_url_params )
 
-    link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Debug off</a>}
+    link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Turn debug off</a>}
   end
 
   it 'creates debug_on_link if debug is not already set' do
@@ -78,7 +78,7 @@ describe 'debug_link' do
 
    link_tag = debug_link( url_params )
 
-   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;hrwa_debug=true&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Debug on</a>}
+   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;hrwa_debug=true&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Turn debug on</a>}
   end
 end
 
@@ -88,7 +88,7 @@ describe 'debug_off_link' do
 
    link_tag = debug_off_link( @debug_url_params )
 
-   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Debug off</a>}
+   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Turn debug off</a>}
   end
 end
 
@@ -98,7 +98,7 @@ describe 'debug_on_link' do
 
    link_tag = debug_on_link( @url_params )
 
-   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;hrwa_debug=true&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Debug on</a>}
+   link_tag.should == %q{<a href="/search?crawl_end_date=&amp;crawl_start_date=&amp;hrwa_debug=true&amp;lim_creator_name=&amp;lim_domain=&amp;lim_geographic_focus=&amp;lim_language=&amp;lim_mimetype=&amp;lim_organization_based_in=&amp;lim_organization_type=&amp;q=women&amp;q_and=women&amp;q_exclude=&amp;q_or=&amp;q_phrase=&amp;rows=10&amp;search_mode=advanced&amp;search_type=archive&amp;solr_core_path=%252Fsolr-4%252Fasf&amp;solr_host=harding.cul.columbia.edu&amp;sort=score%2Bdesc&amp;submit_search=Advanced%2BSearch">Turn debug on</a>}
   end
 end
 

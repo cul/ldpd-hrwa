@@ -50,6 +50,7 @@
                 <li><a href="#help" class="donothing">Help &amp; Tips</a></li>
                 <li class="divider"></li>
                 <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>">Browse HRWA</a></li>
+                <li><%if current_page?(search_path) %><%= debug_link %><% end %></li>
               </ul>
             </li>
           </ul>
