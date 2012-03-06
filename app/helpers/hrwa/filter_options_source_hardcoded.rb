@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module HRWA::OptionsSourceHardcoded
+module HRWA::FilterOptionsSourceHardcoded
   def bib_id_filter_options
     return [
     "4191511",

@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module HRWA::FilterOptions
-  include HRWA::OptionsSourceHardcoded
+  include HRWA::FilterOptionsSourceHardcoded
   
   def option_list( option_name, opts = { :selected => nil } )
     
