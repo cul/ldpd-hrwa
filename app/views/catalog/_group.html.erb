@@ -32,13 +32,12 @@
     </dd>
 
     <!-- CAPTURE DATE FOR THE PAGE -->
-    <strong>Capture date:</strong> <%= doc[ :recordDate ].to_time %><br />
+    Captured date: <%= doc[ :recordDate ].to_time %><br />
 
     <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
                <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ]
-                  highlighted_snippet_full  = formatted_highlighted_snippet( snippets,
-                                                @configurator.prioritized_highlight_field_list )
+                  highlighted_snippet_full  = formatted_highlighted_snippet( snippets, @configurator.prioritized_highlight_field_list )
                   highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
                                                              355,
                                                              %q{&hellip;} ).html_safe
@@ -82,17 +81,16 @@
                     other_capture_instances << capture_instance
                   }
                %><br />
-               <strong>Other capture instances:</strong>
-               <ul>
+
                <%
-                  other_instance_date_hits_html = ''
                   if ! other_capture_instances.empty?
+                    other_instance_date_hits_html = '<strong>Other capture instances:</strong><ul>'
                     other_capture_instances.each { | instance |
                       other_instance_date_hits_html <<
                         %Q{<li>Instance date: <a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
                     }
                   else
-                    other_instance_date_hits_html = 'None'
+                    other_instance_date_hits_html = ''
                   end
                %>
                <%= other_instance_date_hits_html.html_safe %>
