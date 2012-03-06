@@ -117,9 +117,6 @@ jQuery(function($) {
 
   }
 
-
-
-
   /* End -- Result item hiding/showing logic */
 
   $('#advanced_options').hide(0).removeClass('hidden');
@@ -207,9 +204,11 @@ $('a.ccf_quicklook').live('click', function() {
     return false;
 });
 
+// advanced form dropdown multiselect
  $('#advanced_options select[multiple=multiple]').multiselect({
    selectedText: "# of # selected"
  });
+
 // avf stuff
 
   var hrwaxcoh = $('iframe#x_container').height();
