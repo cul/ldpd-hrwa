@@ -3,9 +3,10 @@
 <% # The top doc for the group will be displayed in full as a hit %>
 <% doc = group[ :doclist ][ :docs ].shift %>
 
-<!-- CAPTURE DATE FOR THE PAGE -->
-<span class="capture_date" style="background: #fee; display:inline-block; padding: 2px 6px; float:right;">Capture date: <%= doc[ :recordDate ].to_time %></span>
 <dl class="defList document <%= render_document_class group %>">
+
+    <!-- CAPTURE DATE FOR THE PAGE -->
+    <span class="capture_date">Capture date: <%= doc[ :recordDate ].to_time %></span>
 
     <% # bookmark/folder functions for items/docs -%>
     <%#= render_index_doc_actions group %>
@@ -20,6 +21,7 @@
                      '[Untitled]' %>
                </a>
     </dt>
+
 
     <% # main title container for group partial view -%>
     <dd class="result_url">
@@ -95,8 +97,5 @@
 </dl>
 
 <% #debug stuff %>
-<div style="background: #fee; display:inline-block; padding: 2px 6px; float:right;">
-      <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
-</div>
-<div class="clearfix"></div>
+<div style="background: #fee;"><%= "<pre style=\"padding:2px 6px;\"> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %></div>
 <% #end debug stuff %>

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-  module HRWA::CollectionBrowseListsSourceHardcoded
+module HRWA::CollectionBrowseListsSourceHardcoded
   def alternate_title_browse_list_items
     return {
               %q{HOOD :} => 2,
@@ -2270,4 +2270,4 @@
            }
   end
 
-  end
+end

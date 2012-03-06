@@ -3,7 +3,7 @@
   <div class="row">
     <div id="primary" class="span16">
       <p class='floatright'>
-        <a href='#'>Return to results</a>
+        <%= link_to 'Return to results', params[:return_to] unless params[:return_to].blank? %>
       </p>
       <h3>Website Detail</h3>
 
