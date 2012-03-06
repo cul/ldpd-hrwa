@@ -20,6 +20,7 @@
 // = require bootstrap-twipsy
 // = require bootstrap-dropdown
 // = require jquery.tinysort.min
+// = require jquery.multiselect.min.js
 //
 // load our custom script last
 // = require hrwa

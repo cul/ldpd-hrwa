@@ -207,6 +207,9 @@ $('a.ccf_quicklook').live('click', function() {
     return false;
 });
 
+ $('#advanced_options select[multiple=multiple]').multiselect({
+   selectedText: "# of # selected"
+ });
 // avf stuff
 
   var hrwaxcoh = $('iframe#x_container').height();
