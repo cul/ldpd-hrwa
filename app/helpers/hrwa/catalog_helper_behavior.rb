@@ -122,7 +122,7 @@ module HRWA::CatalogHelperBehavior
 
   # ! Override of has_search_parameters? !
   def has_search_parameters?
-    !params[:commit].blank?
+    !params[:search].blank?
   end
 
   def see_all_hits_from_domain_link( url_params = params, domain )

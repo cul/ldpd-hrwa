@@ -11,10 +11,10 @@ describe 'all searches' do
     params_hash[ :host ].should be_nil
   end
 
-  #it 'render the "search home page" if there are no params' do
-  #  visit '/search'
-  #  page.should have_content('Search Tips')
-  #end
+  it 'render the "search home page" if there are no params' do
+    visit '/search'
+    page.should have_content('Search Tips')
+  end
 end
 
 describe 'advanced_search_asf' do
@@ -39,7 +39,7 @@ describe 'advanced_search_asf' do
 
     it 'creates the correct HTTP querystring for simple "q_and" search' do
       querystring = URI.parse( current_url ).query
-      querystring.should == "search_type=archive&search_mode=advanced&commit=search&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
+      querystring.should == "search_type=archive&search_mode=advanced&search=true&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&crawl_start_date=&crawl_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
     end
 
     # TODO: These are just some cheap, temporary tests for assistance during initial development.
@@ -126,19 +126,19 @@ describe 'the portal search' do
   # end
 
   it 'can successfully run a find_site search immediately after an archive search' do
-    visit '/search?search_type=archive&commit=search&q=women'
+    visit '/search?search_type=archive&search=true&q=women'
     page.should have_content( 'Displaying results' )
 
-    visit '/search?search_type=find_site&commit=search&q=women'
+    visit '/search?search_type=find_site&search=true&q=women'
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error' )
   end
 
   it 'can successfully run an archive search immediately after a find_site search' do
-    visit '/search?search_type=find_site&commit=search&q=women'
+    visit '/search?search_type=find_site&search=true&q=women'
     page.should have_content( 'Displaying results' )
 
-    visit '/search?search_type=archive&commit=search&q=women'
+    visit '/search?search_type=archive&search=true&q=women'
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error')
   end
@@ -164,7 +164,7 @@ end
 # TODO: change this for form fill-in
 describe 'archive search' do
   it 'does not raise an error when paging through results' do
-    visit '/catalog?page=3&q=water&search_type=archive&commit=search'
+    visit '/catalog?page=3&q=water&search_type=archive&search=true'
     page.should_not have_content( %q{can't convert Fixnum into String} )
   end
 end
