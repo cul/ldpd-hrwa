@@ -10,11 +10,11 @@ module HRWA::CatalogHelperBehavior
   end
 
   def debug_off_link( url_params = params )
-    link_to_delete_params( 'Debug off', url_params, [ :hrwa_debug ] )
+    link_to_delete_params( 'Turn debug off', url_params, [ :hrwa_debug ] )
   end
 
   def debug_on_link( url_params = params )
-    link_to_with_new_params_reverse_merge( 'Debug on', url_params, :hrwa_debug => true )
+    link_to_with_new_params_reverse_merge( 'Turn debug on', url_params, :hrwa_debug => true )
   end
 
   def exclude_domain_from_hits_link( url_params = params, domain )
@@ -122,7 +122,7 @@ module HRWA::CatalogHelperBehavior
 
   # ! Override of has_search_parameters? !
   def has_search_parameters?
-    !params[:commit].blank?
+    !params[:search].blank?
   end
 
   def see_all_hits_from_domain_link( url_params = params, domain )

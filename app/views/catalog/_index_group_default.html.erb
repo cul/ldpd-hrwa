@@ -1,16 +1,12 @@
 <%# default partial to display solr document fields in catalog index view -%>
 
-<% #debug stuff %>
-    <div style="background: #fee; display:inline-block; padding: 2px 6px; float:right;">
-	  <%= debug_link %>
-	  <%= "<pre> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %>
-	  <% # The top doc for the group will be displayed in full as a hit %>
-	  <% doc = group[ :doclist ][ :docs ].shift %>
-    </div>
-    <div class="clearfix"></div>
-<% #end debug stuff %>
+<% # The top doc for the group will be displayed in full as a hit %>
+<% doc = group[ :doclist ][ :docs ].shift %>
 
 <dl class="defList document <%= render_document_class group %>">
+
+    <!-- CAPTURE DATE FOR THE PAGE -->
+    <span class="capture_date">Capture date: <%= doc[ :recordDate ].to_time %></span>
 
     <% # bookmark/folder functions for items/docs -%>
     <%#= render_index_doc_actions group %>
@@ -26,13 +22,11 @@
                </a>
     </dt>
 
+
     <% # main title container for group partial view -%>
     <dd class="result_url">
         <%= doc[ :originalUrl ] %>
     </dd>
-
-    <!-- CAPTURE DATE FOR THE PAGE -->
-    <span class="capture_date">Capture date: <%= doc[ :recordDate ].to_time %></span>
 
     <dd>
                <!-- HIGHLIGHTED SNIPPETS -->
@@ -101,3 +95,7 @@
     </dd>
 
 </dl>
+
+<% #debug stuff %>
+<div style="background: #fee;"><%= "<pre style=\"padding:2px 6px;\"> #{ group.pretty_inspect.html_safe } </pre>".html_safe if params.has_key?( :hrwa_debug ) %></div>
+<% #end debug stuff %>

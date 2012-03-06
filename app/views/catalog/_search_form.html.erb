@@ -6,7 +6,7 @@
 
     <div id="heross">
     <%= form_tag search_path, :method => :get, :id => 'searchform' do %>
-	  <input type="hidden" name="commit" value="search" />
+	  <input type="hidden" name="search" value="true" />
 
       <% q_text = params[ :q ] %>
       <%
