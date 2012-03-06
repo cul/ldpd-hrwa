@@ -32,10 +32,6 @@ module HRWA::FilterOptions
     return option_hash
   end
 
-  def bib_id_options( opts = { :selected => nil } )
-    return option_list( 'bib_id', opts )
-  end
-
   def creator_name_options( opts = { :selected => nil } )
     return option_list( 'creator_name', opts )
   end

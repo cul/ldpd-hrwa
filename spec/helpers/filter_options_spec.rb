@@ -8,7 +8,7 @@ describe 'HRWA::FilterOptions' do
   # TODO: Checking for min lengths is a weak test.  Probably adding a test for presence of one 
   # known, stable value will be a big improvement.
   describe '#*_options methods' do
-    filter_options = { 'bib_id'                => 360,
+    filter_options = {
                        'creator_name'          => 363,
                        'domain'                => 371,
                        'geographic_focus'      => 142,
@@ -36,7 +36,7 @@ describe 'HRWA::FilterOptions' do
   
   describe '#*_options methods' do
     
-    filter_options = { 'bib_id'                => [ '4751601', '7033265', '8602843' ],
+    filter_options = {
                        'creator_name'          => [ %q{Assot?s?iat?s?ii?a? korennykh malochislennykh narodov Severa, Sibiri i Dal'nego Vostoka Rossii?skoi? Federat?s?ii},
                                                     %q{Center for Economic and Social Rights},
                                                     %q{Defensori´a del Pueblo de la Repu´blica de Panama´},
