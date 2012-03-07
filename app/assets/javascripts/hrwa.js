@@ -207,6 +207,11 @@ $('a.ccf_quicklook').live('click', function() {
  $('#advanced_options select[multiple=multiple]').multiselect({
    selectedText: "# of # selected"
  });
+ $('#advanced_options select[multiple!=multiple]').multiselect({
+   multiple: false,
+   selectedList: 1,
+   height:'auto'
+ });
 
 // avf stuff
 
