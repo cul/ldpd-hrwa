@@ -1,7 +1,7 @@
   <% if @pagination.has_previous? || @pagination.has_next? %>
     <div class="prev_next_links">
       <% if @pagination.has_previous? -%>
-        <%= link_to('« Previous', catalog_facet_path( @pagination.params_for_previous_url( params) ) , :class=>":prev_pag btn success small")  %>
+        <%= link_to('« Previous', catalog_facet_path( @pagination.params_for_previous_url( params) ) , :class=>"prev_page btn success small")  %>
       <% else -%>
         <span class="disabled prev_page btn success small">« Previous</span>
       <% end -%>
@@ -15,7 +15,7 @@
   <div class="sort_options floatright">
     <% if @pagination.sort == 'index' -%>
       <span class="disabled az btn success small">A-Z</span> <%= link_to_unless(@pagination.sort == 'count', "0-9",
-        @pagination.params_for_resort_url('count', params), :class => "sort_change numeric btn success small") %> 
+        @pagination.params_for_resort_url('count', params), :class => "sort_change numeric btn success small") %>
     <% elsif @pagination.sort == 'count' -%>
       <%=  link_to("A-Z", @pagination.params_for_resort_url('index', params),
           :class => "sort_change az btn success small") %> <span class="disabled numeric btn success small">0-9</span>
@@ -24,4 +24,3 @@
   <div class="clear"></div>
     </div>
   <% end %>
-
