@@ -279,6 +279,7 @@ $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $
 $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
 
 $('a[rel=twipsy], .results_control a').twipsy({'placement': 'above'});
+$('article span[rel=twipsy]').css('cursor','pointer').twipsy({'placement': 'left'});
 $('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
 
 // autocomplete
