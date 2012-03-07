@@ -8,7 +8,7 @@
 <dl class="defList document <%= render_document_class group %>">
 
     <!-- CAPTURE DATE FOR THE PAGE -->
-    <span class="capture_date">Captured on <%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %></span>
+    <span class="capture_date" rel="twipsy" title="Captured on <%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %>"><%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %></span>
 
     <% # bookmark/folder functions for items/docs -%>
     <%#= render_index_doc_actions group %>
