@@ -205,6 +205,9 @@ class HRWA::FindSiteSearchConfigurator
         config.spell_max = 5
       }
     end
+    
+    def configure_facet_action( blacklight_config )
+    end
 
     def result_partial
       return result_type
