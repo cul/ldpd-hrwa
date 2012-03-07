@@ -29,9 +29,9 @@ describe 'archive search' do
     blacklight_config   = Blacklight::Configuration.new
     config_proc         = configurator.config_proc
     blacklight_config.configure &config_proc
- 
+
      blacklight_config.facet_fields.each { | facet_name, facet_field |
-      it "has working pagination for #{ facet_name } facet" do  
+      it "has working pagination for #{ facet_name } facet" do
         visit "/catalog/facet/#{ facet_name }?q=rights&search=true&search_type=archive&utf8=%E2%9C%93"
         page.should have_content( facet_field.label )
         page.status_code.should == 200
@@ -46,9 +46,9 @@ describe 'find site search' do
   blacklight_config   = Blacklight::Configuration.new
   config_proc         = configurator.config_proc
   blacklight_config.configure &config_proc
-     
+
   blacklight_config.facet_fields.each { | facet_name, facet_field |
-    it "has working pagination for #{ facet_name } facet" do  
+    it "has working pagination for #{ facet_name } facet" do
       visit "/catalog/facet/#{ facet_name }?q=rights&search=true&search_type=find_site&utf8=%E2%9C%93"
       page.should have_content( facet_field.label )
       page.status_code.should == 200
