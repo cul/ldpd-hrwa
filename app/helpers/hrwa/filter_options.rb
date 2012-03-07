@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module HRWA::FilterOptions
   include HRWA::FilterOptionsSourceHardcoded
-  
+  # TODO: make all options html_safe
   def option_list( option_name, opts = { :selected => nil } )
     
     begin
