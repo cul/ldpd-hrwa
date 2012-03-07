@@ -22,35 +22,37 @@
 		<h6>Site Creators</h6>
 		<div class="results_control"></div>
 		<ul>
-		<%= original_urls_browse_list_items %>
+		<% creator_name_browse_list.each do |item, hits| %>
+                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[creator_name__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                <% end %>
 		</ul>
 	</div>
 	  <div class="span3">
 		<h6>Languages</h6>
 		<div class="results_control"></div>
 		<ul>
-		<%= language__facet_browse_list_items %>
+		<%= language_browse_list %>
 		</ul>
 	  </div>
 	  <div class="span3">
 		<h6>Subjects</h6>
 		<div class="results_control"></div>
 		<ul>
-		<%= subject__facet_browse_list_items %>
+		<%= subject_browse_list %>
 		</ul>
 	  </div>
 	  <div class="span3">
 		<h6>Geographic Focus</h6>
 		<div class="results_control"></div>
 		<ul>
-		<%= geographic_focus__facet_browse_list_items %>
+		<%= geographic_focus_browse_list %>
 		</ul>
 	  </div>
 	  <div class="span3">
 		<h6>Organization Type</h6>
 		<div class="results_control"></div>
 		<ul>
-		<%= organization_type__facet_browse_list_items %>
+		<%= organization_type_browse_list %>
 		</ul>
 	  </div>
 	</div>
