@@ -61,7 +61,7 @@
       <!-- LINK FOR RE-RUNNING SEARCH AGAINST THIS SITE/DOMAIN ONLY -->
       <%= domain ? see_all_hits_from_domain_link( domain, params, {:class => 'btn small blue see_all_hits'}) : '[No link]' %>
       <!-- LINK FOR EXCLUDING DOMAIN OF THIS HIT FROM THE QUERY RESULTS -->
-      <span class="exclude_url"><%= domain ? exclude_domain_from_hits_link( domain, params, {:class => 'btn small red exclude_from_hits'}) : '[No link]'%></span>
+      <%= domain ? exclude_domain_from_hits_link( domain, params, {:class => 'btn small red exclude_from_hits'}) : '[No link]'%>
 
       <!-- OTHER CAPTURE INSTANCES -->
 	<% remaining_docs_in_group = group[ :doclist ][ :docs ]

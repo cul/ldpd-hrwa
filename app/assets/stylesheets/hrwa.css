@@ -65,12 +65,11 @@ iframe#x_container { width:100%; }
 #primary article dl dd.result_url {font-size:110%;color:#999/*#009129*/;word-break:break-word;}
 #primary article dl dd .toggler {display:block;margin:0.2em 0 0.1em 0; }
 #primary article dl dd.result_aka {margin-top:1px;font-size:12px;font-style:italic;}
-#primary article dl .exclude_url a { color:#c43c35; word-break:break-word; }
 #primary article .capture_date, #primary article .other_capture_instances { border:1px solid #DEDCEE;}
 #primary article .capture_date {display:inline-block;padding: 2px 6px; float:right; font-size:12px;background-color:#fff1f3;}
 #primary article .other_capture_instances {padding:3px;margin:6px 0px 4px;}
 #primary article .other_capture_instances ul {margin-bottom:0px;}
-#primary article .file_tech_info {font-size:12px;color:#333;font-style:italic;}
+#primary article .file_tech_info {font-size:11px;color:#707070;font-style:italic;}
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
