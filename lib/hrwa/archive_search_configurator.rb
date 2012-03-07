@@ -77,11 +77,11 @@ class HRWA::ArchiveSearchConfigurator
                                :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
-                               :label => 'Organization/Site Geographic Focus',
+                               :label => 'Geographic Focus',
                                :limit => 5
 
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization/Site Based In',
+                               :label => 'Organization Based in',
                                :limit => 5
 
         config.add_facet_field 'organization_type__facet',
@@ -97,7 +97,7 @@ class HRWA::ArchiveSearchConfigurator
                                :limit => 5
 
         config.add_facet_field 'creator_name__facet',
-                               :label => 'Creator Name',
+                               :label => 'Creator',
                                :limit => 5
 
         config.add_facet_field 'mimetype',

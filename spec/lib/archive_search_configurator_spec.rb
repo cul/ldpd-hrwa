@@ -79,13 +79,13 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     it 'sets Blacklight::Configuration.facet_fields.* stuff correctly' do
       expected_facet_fields = {
         'domain'                       => { :label => 'Domain',                     :limit => 5 },
-        'geographic_focus__facet'      => { :label => 'Organization/Site Geographic Focus',
+        'geographic_focus__facet'      => { :label => 'Geographic Focus',
                                                                                     :limit => 5 },
-        'organization_based_in__facet' => { :label => 'Organization/Site Based In', :limit => 5 },
+        'organization_based_in__facet' => { :label => 'Organization Based in', :limit => 5 },
         'organization_type__facet'     => { :label => 'Organization Type',          :limit => 5 },
         'language__facet'              => { :label => 'Website Language',           :limit => 5 },
         'contentMetaLanguage'          => { :label => 'Language of page',           :limit => 5 },
-        'creator_name__facet'          => { :label => 'Creator Name',               :limit => 5 },
+        'creator_name__facet'          => { :label => 'Creator',               :limit => 5 },
         'mimetype'                     => { :label => 'File Type',                  :limit => 5 },
         'dateOfCaptureYYYY'            => { :label => 'Year of Capture',            :limit => 5 },
       }
