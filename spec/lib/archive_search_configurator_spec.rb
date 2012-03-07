@@ -150,6 +150,20 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     # TODO: add group and highlight specs
   end
 
+  describe '#configure_facet_action' do
+    before :all do
+      @blacklight_config  = Blacklight::Configuration.new
+      config_proc        = @configurator.config_proc
+      @blacklight_config.configure &config_proc
+    end
+    
+    it 'removed the group params from the Blacklight configuration default_solr_params hash' do
+      @configurator.configure_facet_action( @blacklight_config )
+      @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
+        should be_empty
+    end    
+  end
+
   describe '#process_search_request' do
     before :each do
       @params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :crawl_start_date => '', :crawl_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }

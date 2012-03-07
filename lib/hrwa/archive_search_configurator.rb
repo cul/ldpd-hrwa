@@ -164,6 +164,12 @@ class HRWA::ArchiveSearchConfigurator
       }
     end
 
+    def configure_facet_action( blacklight_config )
+      # The SOLR group* params break Blacklight's faceting
+      blacklight_config.default_solr_params.delete_if { | key, value |
+        key.to_s.starts_with?( 'group' ) }
+    end
+
     # Did Blacklight give us everything we need in SOLR response and
     # results list objects?
     def post_blacklight_processing_required?

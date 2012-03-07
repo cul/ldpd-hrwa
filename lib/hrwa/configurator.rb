@@ -20,6 +20,10 @@ class HRWA::Configurator
     return @configurator.config_proc
   end
 
+  def configure_facet_action( blacklight_config )
+    @configurator.configure_facet_action( blacklight_config )
+  end
+
   # Did Blacklight give us everything we need in SOLR response and
   # results list objects?
   def post_blacklight_processing_required?

@@ -7,6 +7,13 @@ class CatalogController < ApplicationController
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
 
+  # displays values and pagination links for a single facet field
+  def facet
+    _configure_by_search_type
+    @configurator.configure_facet_action( self.blacklight_config )
+    @pagination = get_facet_pagination(params[:id], params)
+  end
+
   # get search results from the solr index
   def index
     # Params that fall outside of current standarad Blacklight processing

@@ -161,10 +161,41 @@ end
 #
 # end
 
-# TODO: change this for form fill-in
+# # TODO: change this to form fill-in
 describe 'archive search' do
   it 'does not raise an error when paging through results' do
     visit '/catalog?page=3&q=water&search_type=archive&search=true'
     page.should_not have_content( %q{can't convert Fixnum into String} )
   end
+
+  describe 'facets' do
+    configurator        = HRWA::ArchiveSearchConfigurator.new
+    blacklight_config   = Blacklight::Configuration.new
+    config_proc         = configurator.config_proc
+    blacklight_config.configure &config_proc
+ 
+     blacklight_config.facet_fields.each { | facet_name, facet_field |
+      it "has working pagination for #{ facet_name } facet" do  
+        visit "/catalog/facet/#{ facet_name }?q=rights&search=true&search_type=archive&utf8=%E2%9C%93"
+        page.should have_content( facet_field.label )
+        page.status_code.should == 200
+      end
+    }
+  end
+end
+
+# TODO: change this to form fill-in
+describe 'find site search' do
+  configurator        = HRWA::FindSiteSearchConfigurator.new
+  blacklight_config  = Blacklight::Configuration.new
+  config_proc         = configurator.config_proc
+  blacklight_config.configure &config_proc
+     
+  blacklight_config.facet_fields.each { | facet_name, facet_field |
+    it "has working pagination for #{ facet_name } facet" do  
+      visit "/catalog/facet/#{ facet_name }?q=rights&search=true&search_type=find_site&utf8=%E2%9C%93"
+      page.should have_content( facet_field.label )
+      page.status_code.should == 200
+    end
+  }
 end
