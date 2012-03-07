@@ -158,9 +158,6 @@ jQuery(function($) {
   $('.submitss').parent().css('visibility','visible');
   $('.submitss').live('click', function (e) {
 	var cform = $(this).closest('form');
-	if ($('#q_t').val() != '' || $('#q').val()) {
-		cform.submit();
-	}
 	cform.submit();
   });
 
