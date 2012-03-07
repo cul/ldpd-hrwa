@@ -28,7 +28,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag1.sub!( /&amp;$/, '' )
-    @expected_link_tag1 << %Q{">Exclude this domain from results</a>}
+    @expected_link_tag1 << %Q{" data-original-title=\"Exclude www.hrw.org from results\" rel=\"twipsy\">Exclude this domain from results</a>}
 
 
     # Link for an additional domain exclusion added
@@ -45,21 +45,21 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag2.sub!( /&amp;$/, '' )
-    @expected_link_tag2 << %Q{">Exclude this domain from results</a>}
+    @expected_link_tag2 << %Q{" data-original-title=\"Exclude amnesty.org from results\" rel=\"twipsy\">Exclude this domain from results</a>}
   end
 
   it 'creates correct link if there are no domains already excluded' do
-    link_tag        = exclude_domain_from_hits_link( @params_unsorted, @domain1 )
+    link_tag        = exclude_domain_from_hits_link( @domain1, @params_unsorted )
     link_tag.should == @expected_link_tag1
   end
 
   it 'creates correct link if one domain is already excluded' do
-    link_tag        = exclude_domain_from_hits_link( @params_expected_in_url1, @domain2 )
+    link_tag        = exclude_domain_from_hits_link( @domain2, @params_expected_in_url1 )
     link_tag.should == @expected_link_tag2
   end
 
   it 'returns the current URL when attempting to exclude a domain that is already being excluded' do
-    link_tag = exclude_domain_from_hits_link( @params_expected_in_url1, @domain1 )
+    link_tag = exclude_domain_from_hits_link( @domain1, @params_expected_in_url1 )
     link_tag = @expected_link_tag1
   end
 end
@@ -116,19 +116,19 @@ describe 'see_all_hits_from_domain_link' do
       @expected_link_tag << "#{ name }=#{ value }&amp;"
     }
     @expected_link_tag.sub!( /&amp;$/, '' )
-    @expected_link_tag << %Q{">See all results from &quot;#{ @domain }&quot;</a>}
+    @expected_link_tag << %Q{" data-original-title=\"See all results from www.hrw.org\" rel=\"twipsy\">See all results from this domain</a>}
   end
 
   it 'creates correct link' do
-    link_tag        = see_all_hits_from_domain_link( @params_unsorted, @domain )
+    link_tag        = see_all_hits_from_domain_link( @domain, @params_unsorted )
     link_tag.should == @expected_link_tag
   end
 
   it 'won\'t create redundant name/value in URL' do
     params_with_domain_facet_pair_already_present =
       @params_unsorted.merge( :'f[domain][]' => @domain )
-    link_tag = see_all_hits_from_domain_link( params_with_domain_facet_pair_already_present,
-                                              @domain )
+    link_tag = see_all_hits_from_domain_link( @domain,
+                                               params_with_domain_facet_pair_already_present )
     link_tag.should == @expected_link_tag
   end
 end

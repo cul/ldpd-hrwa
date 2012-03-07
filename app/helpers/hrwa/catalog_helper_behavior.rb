@@ -10,7 +10,7 @@ module HRWA::CatalogHelperBehavior
   end
 
   def debug_off_link( url_params = params )
-    link_to_delete_params( 'Turn debug off', url_params, [ :hrwa_debug ] )
+    link_to_delete_params( 'Turn debug off', [ :hrwa_debug ], url_params )
   end
 
   def debug_on_link( url_params = params )
@@ -68,12 +68,12 @@ module HRWA::CatalogHelperBehavior
     return properly_ordered_snippet_array.join('...').html_safe
   end
 
-  def link_to_delete_params( body, url_params = params, params_to_delete )
+  def link_to_delete_params( body, params_to_delete, url_params = params, html_options = {} )
     url_params_copy = url_params.dup
     params_to_delete.each { | key |
       url_params_copy.delete( key )
     }
-    return link_to( body, search_path( url_params_copy ) )
+    return link_to( body, search_path( url_params_copy ), html_options )
   end
 
   #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
