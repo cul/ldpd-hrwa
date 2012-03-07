@@ -3,10 +3,12 @@
 <% # The top doc for the group will be displayed in full as a hit %>
 <% doc = group[ :doclist ][ :docs ].shift %>
 
+<% custom_string_time_format = '%b %-d, %Y at %l:%M%p %Z' %>
+
 <dl class="defList document <%= render_document_class group %>">
 
     <!-- CAPTURE DATE FOR THE PAGE -->
-    <span class="capture_date">Capture date: <%= doc[ :recordDate ].to_time %></span>
+    <span class="capture_date">Captured on <%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %></span>
 
     <% # bookmark/folder functions for items/docs -%>
     <%#= render_index_doc_actions group %>
@@ -68,7 +70,7 @@
 	   other_capture_instances = []
 	   remaining_docs_in_group.each { | doc |
 	     capture_instance = { :url           => doc[ :archivedUrl ],
-				  :instance_date => doc[ :recordDate  ].to_time,
+				  :instance_date => doc[ :recordDate  ].to_time.strftime(custom_string_time_format),
 				  :size          => number_to_human_size( doc[ :length ] )
 				}
 	     other_capture_instances << capture_instance
