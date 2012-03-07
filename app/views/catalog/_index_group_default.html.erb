@@ -64,7 +64,6 @@
       <span class="exclude_url"><%= domain ? exclude_domain_from_hits_link( domain, params, {:class => 'btn small red exclude_from_hits'}) : '[No link]'%></span>
 
       <!-- OTHER CAPTURE INSTANCES -->
-    <div class="other_capture_instances">
 	<% remaining_docs_in_group = group[ :doclist ][ :docs ]
 	   other_capture_instances = []
 	   remaining_docs_in_group.each { | doc |
@@ -76,20 +75,20 @@
 	   }
 	%>
 
-	<%
-	   if ! other_capture_instances.empty?
-	     other_instance_date_hits_html = '<strong>Other capture instances (sorted by relevance):</strong><ul>'
-	     other_capture_instances.each { | instance |
-	       other_instance_date_hits_html <<
-		 %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
-	     }
-	     other_instance_date_hits_html << '</ul>'
-	   else
-	     other_instance_date_hits_html = ''
-	   end
-	%>
-	<%= other_instance_date_hits_html.html_safe %>
-    </div>
+	<% if ! other_capture_instances.empty? %>
+        <div class="other_capture_instances">
+        <%
+        other_instance_date_hits_html = '<strong>Other capture instances (sorted by relevance):</strong><ul>'
+        other_capture_instances.each { | instance |
+		  other_instance_date_hits_html <<
+		   %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
+        }
+        other_instance_date_hits_html << '</ul>'
+		%>
+		<%= other_instance_date_hits_html.html_safe %>
+		</div>
+    <% end %>
+
     </dd>
 
 </dl>
