@@ -19,8 +19,9 @@
 // = require respond.min
 // = require bootstrap-twipsy
 // = require bootstrap-dropdown
+// = require bootstrap-tabs
 // = require jquery.tinysort.min
-// = require jquery.multiselect.min.js
+// = require jquery.multiselect.min
 //
 // load our custom script last
 // = require hrwa

@@ -3,7 +3,7 @@
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit hero-border">
         <h1>Human Rights Web Archive</h1>
-	<h3>@ Columbia University</h3>
+	<h2>@ Columbia University</h2>
 	<p class="invisible"><strong>Portal Prototype 2011.12</strong></p>
       </div>
 
@@ -14,9 +14,9 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="span5">
-          <h2>Human Rights Archive</h2>
-	  <p>The Columbia University Human Rights Web Archive and Portal provides search access to snapshots of over 350 web sites in the area of human rights.</p>
-	  <p>There are currently over 7 million pages of Web content in 8 languages, and cover a broad range of human rights issues, such as women's rights, genocide, refugees, war crimes, reconciliation, AIDS, civil rights, democracy, gun control, human trafficking, and many others.</p>
+          <h4>About the Archive</h4>
+	  <p><strong>Columbia University Human Rights Web Archive</strong> provides search access to snapshots of over 350 web sites in the area of human rights.</p>
+	  <p>There are currently over 7 million pages of Web content in 8 languages, and cover a broad range of human rights issues, such as women's rights, genocide, refugees, war crimes, reconciliation, AIDS, civil rights, democracy, gun control, human trafficking, and many others. <a href="<%= about_path %>">Read more&hellip;</a></p>
 	<div class="alert-message alert-link info">
                 <%= link_to "&raquo;".html_safe, search_path(:search_type => "find_site"), :class => "goto" %>
 	<p><strong>Search:</strong> for Websites</a></p>
@@ -30,20 +30,8 @@
 		<p><strong>Browse:</strong> List of Websites</p>
 	</div>
         </div>
-        <div class="span6">
-          <h2>About the Project</h2>
-		<p>An initiative of CUL's Center for Human Rights Documentation and Research, the Human Rights Web Archive is an effort to preserve and ensure access to freely available human rights resources created mainly by non-governmental organizations, national human rights institutions, and individuals.</p>
-		<p>The project's objective is to develop best practices and standards for collecting and preserving freely available web resources and to integrate this activity into existing library collection development and technical services programs. </p>
-		<p>The proliferation of freely available Internet resources of high research value has far outpaced libraries' efforts to collect and preserve them, forcing our collection development models to evolve. With the benefit of continued support from the Andrew W. Mellon Foundation, Columbia University Libraries and Information Services (CUL) has in 2009 begun a three-year project on Web Resources Collection Program Development (following a 2008 pilot project).</p>
-          <p><%= link_to "Learn more  &raquo;".html_safe, about_path, :class => "btn small" %></p>
-       </div>
-        <div class="span5">
-          <h2>News &amp; Updates</h2>
-		<p>ARCOMEM, "Inside Work Package 8" (2011). New tools for web archiving.</p>
-		<p><a href="http://www.arcomem.eu/2011/09/inside-work-package-8/">http://www.arcomem.eu/2011/09/inside-work-package-8/</a></p>
-		<p>Ben Saad, Pehlivan, and Gancarski, "Coherence-oriented Crawling and Navigation using Patterns for Web Archives" (2011). Authors propose novel coherence-oriented approaches of crawling and browsing to improve archives quality and users navigation.</p>
-		<p><a href="http://www-poleia.lip6.fr/~gancarsk/papers/BPG_TPDL2011.pdf">http://www-poleia.lip6.fr/~gancarsk/papers/BPG_TPDL2011.pdf</a></p>
-          <p><%= link_to "Read more  &raquo;".html_safe, "#", :class => "btn small donothing" %></p>
+        <div class="span11">
+          <%= render :partial=>'cbf' %>
         </div>
       </div>
 

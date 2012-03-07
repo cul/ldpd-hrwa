@@ -14,6 +14,8 @@ jQuery(function($) {
 */
   $('.topbar').dropdown()
 
+  $('.tabs').tabs()
+
   $('.donothing').click(function (e) {
 		alert('this does nothing... yet.');
 		return false;

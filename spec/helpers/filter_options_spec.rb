@@ -8,7 +8,7 @@ describe 'HRWA::FilterOptions' do
   # TODO: Checking for min lengths is a weak test.  Probably adding a test for presence of one 
   # known, stable value will be a big improvement.
   describe '#*_options methods' do
-    filter_options = { 'bib_id'                => 360,
+    filter_options = {
                        'creator_name'          => 363,
                        'domain'                => 371,
                        'geographic_focus'      => 142,
@@ -36,10 +36,10 @@ describe 'HRWA::FilterOptions' do
   
   describe '#*_options methods' do
     
-    filter_options = { 'bib_id'                => [ '4751601', '7033265', '8602843' ],
-                       'creator_name'          => [ %q{Assot?s?iat?s?ii?a? korennykh malochislennykh narodov Severa, Sibiri i Dal'nego Vostoka Rossii?skoi? Federat?s?ii},
+    filter_options = {
+                       'creator_name'          => [ %q{Assot︠s︡iat︠s︡ii︠a︡ korennykh malochislennykh narodov Severa, Sibiri i Dalʹnego Vostoka Rossiĭskoĭ Federat︠s︡ii},
                                                     %q{Center for Economic and Social Rights},
-                                                    %q{Defensori´a del Pueblo de la Repu´blica de Panama´},
+                                                    %q{Defensoría del Pueblo de la República de Panamá},
                                                     %q{Empowerment and Rights Institute (China)},
                                                   ],
                        'domain'                => [ 'advocacyforum.org', 'drom-vidin.org' ],
@@ -51,7 +51,7 @@ describe 'HRWA::FilterOptions' do
                        'subject'               => [ 'Women in Islam', 'Civil rights' ],
                        'title'                 => [ 'CONECTAS Direitos Humanos', 'Amman Center for Human Rights Studies : Markaz ʻAmmān li-Dirāsāt Ḥuqūq al-Insān.']
                      }
-                     
+
     filter_options.each { | option, selected_values |
       method_name = "#{ option }_options"
       it ": #{ method_name }( opts ) sets statuses correctly" do
@@ -59,6 +59,7 @@ describe 'HRWA::FilterOptions' do
         selected_values.each { | value |
           option_list_selected[ value ].should == true
         }
+
         # Only selected values should be true in the option hash
         option_list_selected.values.count( true ).should == selected_values.length
       end
