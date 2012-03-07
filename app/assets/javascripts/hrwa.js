@@ -140,6 +140,8 @@ jQuery(function($) {
   });
 
   $('#advsubmit').live('click', function(e) {
+
+    /*
     if ($('#q_and').val() != '' || $('#q_phrase').val() != '' || $('#q_or').val() != '' || $('#q_exclude').val() != '') {
         if ($('#q_and').val() != '') { var q_and = '+'+$('#q_and').val(); } else { var q_and = ''; }
         if ($('#q_phrase').val() != '') { var q_phrase = ' "'+$('#q_phrase').val()+'" '; } else { var q_phrase = ' '; }
@@ -149,6 +151,7 @@ jQuery(function($) {
         //$('#q').val(newaq.replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
         $('#q, #q_t').val(newaq);
     }
+    */
     $('#searchform').submit();
   });
   $('#advreset').live('click', function(e) {
@@ -296,5 +299,11 @@ $('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
 		}
 	});
 */
+
+$( ".datepicker" ).datepicker({
+	changeMonth: true,
+	changeYear: true,
+	dateFormat: "yymm"
+});
 
 }); // ready
