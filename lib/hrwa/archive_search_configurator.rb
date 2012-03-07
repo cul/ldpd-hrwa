@@ -231,7 +231,7 @@ class HRWA::ArchiveSearchConfigurator
     end
 
     def solr_url
-      YAML.load_file("config/solr.yml")['development_asf']['url']
+      YAML.load_file("config/solr.yml")['hrwa_test_asf']['url']
     end
 
     def prioritized_highlight_field_list

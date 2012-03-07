@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CollectionBrowseLists
   include HRWA::CollectionBrowseListsSourceHardcoded
-  
+  # TODO: make all options html_safe
   def browse_list( browse_category_name )
     
     begin

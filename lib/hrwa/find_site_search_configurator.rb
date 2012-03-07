@@ -222,7 +222,7 @@ class HRWA::FindSiteSearchConfigurator
     end
 
     def solr_url
-      YAML.load_file("config/solr.yml")['development_fsf']['url']
+      YAML.load_file("config/solr.yml")['hrwa_test_fsf']['url']
     end
 
     # Did Blacklight give us everything we need in SOLR response and
