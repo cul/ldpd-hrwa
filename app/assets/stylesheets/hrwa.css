@@ -266,5 +266,6 @@ button.ui-multiselect span { color:#888; }
 	label.donothing { display:none; }
 
 	#primary { margin-top:80px; display:block; width:100%; padding:0; }
+    #home-tab-content { max-height:100%; overflow:visible; }
 
 }
