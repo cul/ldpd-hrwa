@@ -26,7 +26,7 @@ module HRWA::CatalogHelperBehavior
       # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
       # helper that we will be using later will automatically append '[]' to the end,
       # so we want to avoid doubling.
-      return link_to_with_new_params_reverse_merge( 'Exclude this domain from results',
+      return link_to_with_new_params_reverse_merge( 'Domain-',
                                                     { :'excl_domain' => [ domain ] },
                                                     url_params,
                                                     html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
@@ -49,7 +49,7 @@ module HRWA::CatalogHelperBehavior
     # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
     # after the merge and link_to call.
     url_params.delete( :'excl_domain[]' )
-    return link_to_with_new_params( 'Exclude this domain from results',
+    return link_to_with_new_params( 'Domain-',
                                     { :'excl_domain' => excluded_domains },
                                     url_params,
                                     html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
@@ -130,7 +130,8 @@ module HRWA::CatalogHelperBehavior
   end
 
   def see_all_hits_from_domain_link( domain, url_params = params, html_options = {})
-    return link_to_with_new_params_reverse_merge( 'See all results from this domain',
+
+    return link_to_with_new_params_reverse_merge( 'Domain+',
                                     { :'f[domain][]' => domain },
                                     url_params,
                                     html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{See all results from #{ domain }}})
