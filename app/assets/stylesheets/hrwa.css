@@ -59,15 +59,20 @@ iframe#x_container { width:100%; }
 #primary article dl, #secondary ul, #cbf_widgets ul { padding:4px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; border:1px solid #dde; }
 #primary article dl dt { line-height:1.2; font-size:118%; }
 #primary article dl dt span.dtcount { display:inline-block; line-height:1.5; color:rgba(0,0,0,0.3); font-weight:normal; float:left; margin-left:-28px; font-size:90%; }
-#primary article dl dd { margin-left:3px; }
+#primary article dl dd { margin-left:3px;margin-right:3px; }
 #primary article dl dd .site_detail_and_crawl_calendar_link_container {position:relative;top:2px;}
 #primary article dl dd.hl_snippet {display:block;font-size:11px;overflow:hidden;margin-bottom:1px;}
 #primary article dl dd.result_url {font-size:110%;color:#999/*#009129*/;word-break:break-word;}
 #primary article dl dd .toggler {display:block;margin:0.2em 0 0.1em 0; }
 #primary article dl dd.result_aka {margin-top:1px;font-size:12px;font-style:italic;}
 #primary article dl .exclude_url a { color:#c43c35; word-break:break-word; }
-#primary article .capture_date { border:1px solid #DEDCEE; display:inline-block;padding: 2px 6px; float:right; font-size:12px;}
+#primary article .capture_date, #primary article .other_capture_instances { border:1px solid #DEDCEE;}
+#primary article .capture_date {display:inline-block;padding: 2px 6px; float:right; font-size:12px;background-color:#fff1f3;}
+#primary article .other_capture_instances {padding:3px;margin:6px 0px 4px;}
+#primary article .other_capture_instances ul {margin-bottom:0px;}
+#primary article .file_tech_info {font-size:12px;color:#333;font-style:italic;}
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
+#primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
 #home-tab-content { max-height:460px; overflow:auto; border-bottom:1px solid #ccc; }
 ul.tabs { margin-bottom:5px; }
@@ -88,7 +93,7 @@ article.entry h3 { line-height:1.2; margin:8px 0; }
 #sb-container { z-index:20000; }
 img.preview_icon { vertical-align:middle; opacity:0.75; }
 img.preview_icon:hover { opacity:1.0 }
-.moreless.btn, .toggle_all_btn, .results_control a.btn, .results_control span { padding:2px 6px 3px!important; font-family:monospace; }
+.moreless.btn, .toggle_all_btn, .see_all_hits.btn, .exclude_from_hits.btn, .results_control a.btn, .results_control span { padding:2px 6px 3px!important; font-family:monospace; }
 .results_control span { padding-right:0!important; }
 .results_control { display:none; /*float:right;*/text-align:left; line-height:10px; margin-bottom:9px; }
 .results_control .btn, .results_control span, .results_control select { font-size:80%!important; }

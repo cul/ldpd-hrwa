@@ -1,7 +1,7 @@
 <div class="row">
     <% if paginate_params(@response).num_pages > 1 %>
     <div class="pagination span9">
-      <%= paginate_rsolr_response @response, :outer_window => 2, :inner_window => 2, :theme => 'blacklight' %>
+      <%= paginate_rsolr_response @response, :left => 2, :inner_window => 3, :theme => 'blacklight' %>
     </div>
     <div class="results_control span3">
     <% else %>
