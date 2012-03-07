@@ -230,6 +230,7 @@ class HRWA::ArchiveSearchConfigurator
       return false
     end
 
+# TODO: read Rails.env to set this appropriately
     def solr_url
       YAML.load_file("config/solr.yml")['hrwa_test_asf']['url']
     end
