@@ -1,15 +1,15 @@
 <ul data-tabs="tabs" class="tabs">
-            <li class="active"><a href="#t1">Site Creators</a></li>
+            <li class="active"><a href="#t1">Subjects</a></li>
             <li><a href="#t2">Languages</a></li>
-            <li><a href="#t3">Subjects</a></li>
+            <li><a href="#t3">Site Creators</a></li>
             <li><a href="#t4">Geographic Focus</a></li>
             <li><a href="#t5">Organization Type</a></li>
 </ul>
 <div id="home-tab-content" class="tab-content">
 	  <div id="t1" class="tab-pane active">
 		<ul>
-		<% creator_name_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[creator_name__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+		<% subject_browse_list.each do |item, hits| %>
+                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
@@ -22,8 +22,8 @@
 	  </div>
 	  <div id="t3" class="tab-pane">
 		<ul>
-		<% subject_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+		<% creator_name_browse_list.each do |item, hits| %>
+                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[creator_name__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
