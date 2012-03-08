@@ -1,5 +1,7 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
+# TODO: change static form fill-in to real form fill-in when selenium working on bronte
 describe 'all searches' do
   it 'should not have "host" param in querystring' do
     visit '/advanced_asf'
@@ -197,6 +199,12 @@ describe 'advanced_search_fsf' do
     fill_in 'q_exclude', :with => 'zamboni'
     click_button 'submit_search'
     page.should have_content('Center for Economic and Social Rights')
+  end
+
+  # TODO: change to form fill-in
+  it 'returns search results for q_and="human" and a title that contains the word "human"', :focus => true do
+     visit '/search?search=true&search_type=find_site&q_and=human&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&f%5Btitle__facet%5D%5B%5D=Afghanistan+Independent+Human+Rights+Commission&per_page=10&sort=score+desc&sort=score+desc&search_mode=advanced'
+     page.should_not have_content( 'No results found' )
   end
 
 end
