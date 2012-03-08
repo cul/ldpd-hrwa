@@ -125,8 +125,8 @@
 	    </div>
 		<div class="control-group">
 		<label class="control-label">title</label>
-		<select name="f[title][]" multiple="multiple">
-		  <% selected_items = params[:f].nil? ? nil : params[:f][:title] %>
+		<select name="f[title__facet][]" multiple="multiple">
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:title__facet] %>
 		  <% title_options(:selected => selected_items).each do | key, value | %>
 		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
