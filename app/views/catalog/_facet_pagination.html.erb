@@ -14,11 +14,11 @@
 
   <div class="sort_options floatright">
     <% if @pagination.sort == 'index' -%>
-      <span class="disabled az btn success small">A-Z</span> <%= link_to_unless(@pagination.sort == 'count', "0-9",
+      <span class="disabled az btn success small">Alphabetical</span> <%= link_to_unless(@pagination.sort == 'count', "Numerical",
         @pagination.params_for_resort_url('count', params), :class => "sort_change numeric btn success small") %>
     <% elsif @pagination.sort == 'count' -%>
-      <%=  link_to("A-Z", @pagination.params_for_resort_url('index', params),
-          :class => "sort_change az btn success small") %> <span class="disabled numeric btn success small">0-9</span>
+      <%=  link_to("Alphabetical", @pagination.params_for_resort_url('index', params),
+          :class => "sort_change az btn success small") %> <span class="disabled numeric btn success small">Numerical</span>
     <% end -%>
   </div>
   <div class="clear"></div>
