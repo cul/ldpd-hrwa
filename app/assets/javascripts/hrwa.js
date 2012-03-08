@@ -243,6 +243,8 @@ $('a.ccf_quicklook').live('click', function() {
 // sorting
 // toggle all menu stuff
 
+$('.tab-content .results_control').show();
+
 //Only show toggle buttons if there's at least one search result
 if($('article.post').length > 0)
 {
