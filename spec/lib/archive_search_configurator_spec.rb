@@ -164,9 +164,9 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end    
   end
 
-  describe '#process_search_request' do
+  describe '#process_search_request - domain exclusion' do
     before :each do
-      @params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :crawl_start_date => '', :crawl_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
+      @params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
     end
 
     domains_to_exclude = [
@@ -183,6 +183,10 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       end
     }
 
+  end
+  
+  describe '#process_search_request - capture date range stuff' do
+ 
   end
 
 end
