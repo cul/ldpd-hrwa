@@ -5,8 +5,6 @@ Hrwa::Application.routes.draw do
   # Static pages - no dynamic content at all
   match '/about'       => 'static#about'
   match '/browse'      => 'static#collection_browse'
-  match '/contact'     => 'static#contact'
-  match '/faq'         => 'static#faq'
 
   # Blacklight stuff
   match '/search'  => 'catalog#index'
