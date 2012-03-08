@@ -127,12 +127,12 @@ jQuery(function($) {
 	if($('#advanced_options').parent().attr('id') == 'advanced_options_outside_of_form')
 	{
 	  $('#advanced_options').appendTo('#advanced_options_inside_of_form').show();
-	  $(this).text('-');
+	  $(this).text('Adv-');
 	}
 	else
 	{
 	  $('#advanced_options').hide().appendTo('#advanced_options_outside_of_form');
-	  $(this).text('+');
+	  $(this).text('Adv+');
 	}
 
 	$(this).blur();
