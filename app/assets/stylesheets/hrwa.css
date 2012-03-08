@@ -71,6 +71,7 @@ iframe#x_container { width:100%; }
 #primary article .other_capture_instances {padding:3px;margin:6px 0px 4px;}
 #primary article .other_capture_instances ul {margin-bottom:0px;}
 #primary article .file_tech_info {font-size:11px;color:#707070;font-style:italic;}
+#primary .ui-datepicker-calendar {display:none;}
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
@@ -98,6 +99,7 @@ img.preview_icon:hover { opacity:1.0 }
 .results_control { display:none; /*float:right;*/text-align:left; line-height:10px; margin-bottom:9px; }
 .results_control .btn, .results_control span, .results_control select { font-size:80%!important; }
 .results_control select { width:55px; padding:0!important; height:20px; }
+.tab-content .results_control { padding-right:.5em; }
 #primary .results_control { text-align:right; vertical-align:middle; line-height:26px; margin-bottom:1em; }
 #primary .results_control a { font-size:95%!important; padding:4px 2px!important; }
 #slideshow { overflow:hidden; }
@@ -151,7 +153,7 @@ img.preview_icon:hover { opacity:1.0 }
 #hero-search {padding-bottom:24px}
 
 /* advanced search form */
-#advo a { font-weight:bold; text-decoration:none; }
+#advo a { text-decoration:none; }
 #advanced_options label.add-on { width:186px; text-align:right; color:#777; }
 #advanced_options .control-group { margin-bottom:4px; }
 #advanced_options label.control-label { color:#777; margin-right:3px; }
@@ -266,5 +268,6 @@ button.ui-multiselect span { color:#888; }
 	label.donothing { display:none; }
 
 	#primary { margin-top:80px; display:block; width:100%; padding:0; }
+    #home-tab-content { max-height:100%; overflow:visible; }
 
 }
