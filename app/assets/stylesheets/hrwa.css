@@ -79,6 +79,7 @@ iframe#x_container { width:100%; }
 ul.tabs { margin-bottom:5px; }
 #home-tab-content .tab-pane ul { -webkit-column-count:3;-moz-column-count:3;column-count:3; list-style:none; margin-left:0.2em; padding:10px 0; }
 #home-tab-content .tab-pane ul li { display:block; line-height:1em; margin-bottom:4px; padding-bottom:2px; padding-top:2px; }
+#home-tab-content .tab-pane ul li div { display:inline-block; }
 #home-tab-content .tab-pane ul li:nth-child(even) { background:#eef; }
 #secondary ul, #cbf_widgets ul { background:#fafafe; margin-left:0; margin-bottom:0; list-style:none; border-style:dotted; font-size:95%; }
 #secondary h6, #cbf_widgets h6 { line-height:1.5em; }
