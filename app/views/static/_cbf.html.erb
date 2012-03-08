@@ -10,7 +10,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% subject_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
@@ -18,7 +18,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% language_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
@@ -26,7 +26,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% creator_name_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[creator_name__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[creator_name__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
@@ -34,7 +34,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% geographic_focus_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[geographic_focus__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[geographic_focus__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
@@ -42,7 +42,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% organization_type_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[organization_type__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[organization_type__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
