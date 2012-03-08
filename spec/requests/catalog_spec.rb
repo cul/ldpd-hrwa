@@ -153,8 +153,8 @@ describe 'advanced_search_asf' do
       @result_page = page
     end
 
-    it 'informs user "Click on + to refine search" in simple search box if doing advanced search' do
-      @result_page.has_field?( 'q', :with => '[Click + to refine search]' ).should == true
+    it 'informs user "Click on Adv+ to refine search" in simple search box if doing advanced search' do
+      @result_page.has_field?( 'q', :with => '[Click Adv+ to refine search]' ).should == true
     end
 
     it 'creates the correct HTTP querystring for simple "q_and" search' do
@@ -182,11 +182,11 @@ describe 'advanced_search_fsf' do
     page.should have_content('No results found')
   end
 
-  it 'informs user "Click on + to refine search" in simple search box if doing advanced search' do
+  it 'informs user "Click on Adv+ to refine search" in simple search box if doing advanced search' do
     visit '/advanced_fsf'
     fill_in 'q_and', :with => 'water'
     click_button 'submit_search'
-    page.has_field?( 'q', :with => '[Click + to refine search]' ).should == true
+    page.has_field?( 'q', :with => '[Click Adv+ to refine search]' ).should == true
   end
 
   it 'returns search results for a known successful query' do
