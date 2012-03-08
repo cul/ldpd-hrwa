@@ -185,8 +185,54 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   end
   
-  describe '#process_search_request - capture date range stuff' do
- 
+  describe '#add_capture_date_range_fq_to_solr' do
+    before :each do
+      @extra_controller_params = {}
+      @extra_controller_params[ :fq ] = nil
+    end
+    
+    blank_inputs = [ nil, '' ]
+    
+    # Test all permutations of completely blank/nil input
+    blank_inputs.each { | start_date |
+      [ nil, '' ].each{ | end_date |
+        it "does not add :fq for start = #{ start_date.to_s } and end = #{ end_date.to_s }" do
+          @configurator.add_capture_date_range_fq_to_solr(
+            @extra_controller_params,
+            { :capture_start_date => start_date, :capture_end_date => end_date }
+          )
+          @extra_controller_params[ :fq ].should be_nil
+        end        
+      }
+    }
+
+    blank_inputs.each { | end_date |
+      it "adds closed-start, open-end :fq date range with non-blank start and end = #{ end_date.to_s }" do
+        @configurator.add_capture_date_range_fq_to_solr(
+          @extra_controller_params,
+          { :capture_start_date => '20080101', :capture_end_date => end_date }
+        )
+        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO * ]' ]
+      end
+    } 
+
+    blank_inputs.each { | start_date |
+      it "adds and open-start, closed-end date range with start = #{ start_date.to_s } and non-blank end" do
+        @configurator.add_capture_date_range_fq_to_solr(
+          @extra_controller_params,
+          { :capture_start_date => start_date, :capture_end_date => '20080101' }
+        )
+        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ * TO 20080101 ]' ]
+      end
+    }
+    
+    it 'adds a closed-start, closed-end :fq date range with non-blank start and end inputs' do
+      @configurator.add_capture_date_range_fq_to_solr(
+        @extra_controller_params,
+        { :capture_start_date => '20080101', :capture_end_date => '20120101' }
+      )
+      @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO 20120101 ]' ]
+    end
   end
 
 end

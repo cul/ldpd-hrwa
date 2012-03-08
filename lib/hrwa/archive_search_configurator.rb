@@ -184,7 +184,25 @@ class HRWA::ArchiveSearchConfigurator
     end
 
     def process_search_request( extra_controller_params, user_params = params )
+     add_capture_date_range_fq_to_solr( extra_controller_params, user_params )
      add_exclude_fq_to_solr( extra_controller_params, user_params )
+    end
+
+    def add_capture_date_range_fq_to_solr( extra_controller_params, user_params = params )
+      # We are going to assume that the capture date params are non-nil from this 
+      # point onward
+      # Get range endpoints, using * for open-ended wildcard
+      capture_start_date = ! ( user_params[ :capture_start_date ].nil? || user_params[ :capture_start_date ].empty? ) ?
+                           user_params[ :capture_start_date ] :
+                           '*'
+      capture_end_date   = ! ( user_params[ :capture_end_date ].nil? || user_params[ :capture_end_date ].empty? ) ?
+                           user_params[ :capture_end_date ] :
+                           '*'
+                           
+      return if ( capture_start_date == '*' && capture_end_date == '*' )
+      
+      extra_controller_params[ :fq ] ||= []
+      extra_controller_params[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
     def add_exclude_fq_to_solr( extra_controller_params, user_params = params )
