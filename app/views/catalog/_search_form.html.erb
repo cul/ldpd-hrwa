@@ -11,7 +11,7 @@
 	<% q_text = params[ :q ] %>
 	<%
 	  if params[ :search_mode ] == "advanced"
-	     then q_text = "[Click + to refine search]"
+	     then q_text = "[Click Adv+ to refine search]"
 	  end
 	%>
 
@@ -22,7 +22,7 @@
 
 	  <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>> FSF</label>
 	  <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>> ASF</label>
-	  <label id="advo" class="add-on hidden"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="twipsy" class="advtoggle moreless lime mono">+</a></label>
+	  <label id="advo" class="add-on hidden"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="twipsy" class="advtoggle moreless lime">Adv+</a></label>
 
 	  <label class="add-on hidden">
 	    <a href="#" id="form_submit" class="submitss">Submit</a>
@@ -65,54 +65,60 @@
 		<div class="control-group">
 		<label class="control-label">organization type</label>
 		<select name="f[organization_type__facet][]" multiple="multiple">
-		  <% organization_type_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
+		  <% organization_type_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">subject</label>
 		<select name="f[subject__facet][]" multiple="multiple">
-		  <% subject_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:subject__facet] %>
+		  <% subject_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">geographic focus</label>
 		  <select name="f[geographic_focus__facet][]" multiple="multiple">
-		    <% geographic_focus_options().each do | key, value | %>
-		      <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		    <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+		    <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
+		      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		    <% end %>
 		  </select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">organization based in</label>
 		  <select name="f[organization_based_in__facet][]" multiple="multiple">
-		    <% organization_based_in_options().each do | key, value | %>
-		      <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		    <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
+		    <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
+		      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		    <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">file type</label>
 		<select class="control-group" name="f[mimetype][]" multiple="multiple">
-		  <%# file_type_options().each do | key, value | %>
-		    <%#= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
+		  <%# file_type_options(:selected => selected_items).each do | key, value | %>
+		    <%#= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <%# end %>
 		</select>
 	    </div>
-		<div class="control-group">
+		<div id="search_date_range" class="control-group">
 		<label class="control-label">date of capture</label>
-		<input id="capture_start_date" class="span2" type="text" name="capture_start_date" value="" /> - <input id="capture_send_date" class="span2" type="text" name="capture_send_date" value="" />
+		<input id="capture_start_date" class="span2 datepicker" type="text" name="capture_start_date" value="" /> - <input id="capture_end_date" class="span2 datepicker" type="text" name="capture_end_date" value="" />
 	    </div>
 	</div>
 	<div class="span7 nomar">
 		<div class="control-group">
 		<label class="control-label">language</label>
 		<select name="f[language__facet][]" multiple="multiple">
-		  <% language_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
+		  <% language_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 		<!--Non-displayed facets below here-->
@@ -120,32 +126,36 @@
 		<div class="control-group">
 		<label class="control-label">title</label>
 		<select name="f[title][]" multiple="multiple">
-		  <% title_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:title] %>
+		  <% title_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">creator name</label>
 		<select name="f[creator_name__facet][]" multiple="multiple">
-		  <% creator_name_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
+		  <% creator_name_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">original url</label>
 		<select name="f[original_urls][]" multiple="multiple">
-		  <% original_urls_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:original_urls] %>
+		  <% original_urls_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
 		<div class="control-group">
 		<label class="control-label">domain</label>
 		<select class="control-group" name="f[domain][]" multiple="multiple">
-		  <% domain_options().each do | key, value | %>
-		    <%= %Q{<option value="#{key}">#{key}</option>}.html_safe %>
+		  <% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+		  <% domain_options(:selected => selected_items).each do | key, value | %>
+		    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
 		  <% end %>
 		</select>
 	    </div>
