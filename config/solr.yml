@@ -15,16 +15,12 @@ development: &development
     url: http://carter.cul.columbia.edu:8080/solr-4/asf
   fsf:
     url: http://carter.cul.columbia.edu:8080/solr-4/fsf
-  sdf:
-    url: http://carter.cul.columbia.edu:8080/solr-4/sdf
   
 test: &test
   asf:
     url: http://carter.cul.columbia.edu:8080/solr-4/asf
   fsf:
     url: http://carter.cul.columbia.edu:8080/solr-4/fsf
-  sdf:
-    url: http://carter.cul.columbia.edu:8080/solr-4/sdf
 
 hrwa_dev: *development
 
@@ -33,8 +29,6 @@ hrwa_test:
     url: http://harding.cul.columbia.edu:8080/solr-4/asf
   fsf:
     url: http://harding.cul.columbia.edu:8080/solr-4/fsf
-  sdf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/sdf
 
 cucumber:
   <<: *test
