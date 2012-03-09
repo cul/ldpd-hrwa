@@ -221,9 +221,9 @@ class HRWA::FindSiteSearchConfigurator
       return false
     end
 
-# TODO: read Rails.env to set this appropriately
-    def solr_url
-      YAML.load_file("config/solr.yml")['hrwa_test_fsf']['url']
+    # Takes optional environment arg for testability
+    def solr_url( environment = Rails.env )
+      YAML.load_file( 'config/solr.yml' )[ environment ][ 'fsf' ][ 'url' ]
     end
 
     # Did Blacklight give us everything we need in SOLR response and
