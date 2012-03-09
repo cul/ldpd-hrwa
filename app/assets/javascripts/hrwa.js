@@ -349,22 +349,28 @@ $( ".datepicker" ).datepicker({
 $('#search_type_selector').bind('change', function(){
   if($(this).val() == 'archive')
   {
-    $('#fsfsearch')[0].checked = false;
-    $('#asfsearch')[0].checked = true;
+	$('#fsfsearch')[0].checked = '';
+	$('#asfsearch')[0].checked = 'checked';
   }
   else
   {
-    $('#fsfsearch')[0].checked = true;
-    $('#asfsearch')[0].checked = false;
+	$('#fsfsearch')[0].checked = 'checked';
+	$('#asfsearch')[0].checked = '';
   }
 });
 
-$('#fsfsearch').bind('click', function(){
-  alert('clicked!');
-});
 
-$('#asfsearch').bind('click', function(){
-  alert('clicked!');
+$('input[name="search_type"]').bind('change', function(){
+  if($(this).val() == 'archive')
+  {
+    $('#search_type_selector').val('archive');
+    alert($('#search_type_selector').val());
+  }
+  else
+  {
+    $('#search_type_selector').val('find_site');
+    alert($('#search_type_selector').val());
+  }
 });
 
 
