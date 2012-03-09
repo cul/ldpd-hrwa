@@ -123,7 +123,7 @@ jQuery(function($) {
 
   /* Simple/advanced form logic */
 
-  var search_mode = $('#searchform').attr('data-searchmode-onload') == 'advanced' ? 'advanced' : 'simple';
+  var search_mode = 'simple'; //for now, always showing simple form on page load
   var search_type = $('#searchform').attr('data-searchtype-onload') == 'archive' ? 'archive' : 'find_site';
 
   if(search_mode == 'simple')
