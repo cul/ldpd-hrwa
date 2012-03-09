@@ -10,6 +10,9 @@ Hrwa::Application.routes.draw do
   match '/search'  => 'catalog#index'
   match '/site_detail/:bib_key'  => 'catalog#site_detail'
 
+  # Internal stuff
+  match '/internal/feedback' => 'internal#feedback'
+
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf', :to => redirect( '/advanced_asf.html' )
   match '/advanced_fsf', :to => redirect( '/advanced_fsf.html' )
@@ -18,7 +21,6 @@ Hrwa::Application.routes.draw do
 
   root :to => "static#index"
   devise_for :users
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
