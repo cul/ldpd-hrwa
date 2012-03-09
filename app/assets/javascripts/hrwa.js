@@ -123,42 +123,44 @@ jQuery(function($) {
 
   /* Simple/advanced form logic */
 
-  var search_mode = 'simple'; //for now, always showing simple form on page load
-  var search_type = $('#searchform').attr('data-searchtype-onload') == 'archive' ? 'archive' : 'find_site';
+  window.search_type = $('#searchform').attr('data-searchtype-onload') == 'archive' ? 'archive' : 'find_site';
+  showSimpleSearch(); //immediately when the page loads
 
-  if(search_mode == 'simple')
+  function showSimpleSearch()
   {
-	showSimpleSearch(search_type);
-  }
-  else
-  {
-	showAdvancedSearch(search_type);
-  }
+    $('.advanced_options').appendTo('#outside_of_form');
 
-  function showSimpleSearch(search_type)
-  {
-	if($('#simple_options').parent().attr('id') == 'outside_of_form')
-	{
-	  $('#simple_options').appendTo('#inside_of_form');
-	  $('#advanced_options').appendTo('#outside_of_form');
-	  $('#advo_link').text('Adv+');
-	}
+    $('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
+    $('#simple_options').appendTo('#inside_of_form');
+
+    $('#advo_link').text('Adv+');
   }
 
-  function showAdvancedSearch(search_type)
+  function showAdvancedSearch(s_type)
   {
-	if($('#advanced_options').parent().attr('id') == 'outside_of_form')
-	{
-	  $('#advanced_options').appendTo('#inside_of_form');
-	  $('#simple_options').appendTo('#outside_of_form');
-	  $('#advo_link').text('Adv-');
-	}
+    $('#simple_options').appendTo('#outside_of_form');
+    $('.advanced_options').appendTo('#outside_of_form'); //This is necessary for switching straight from advanced_asf mode to advanced_fsf mode.
+
+    if(s_type == 'archive')
+    {
+      $('#s_type_selector_and_submit').appendTo('#advanced_options_asf .submit_button_container');
+      $('#advanced_options_asf').appendTo('#inside_of_form');
+    }
+    else
+    {
+      $('#s_type_selector_and_submit').appendTo('#advanced_options_fsf .submit_button_container');
+      $('#advanced_options_fsf').appendTo('#inside_of_form');
+    }
+
+    $('#advo_link').text('Adv-');
   }
 
   $('.advtoggle').bind('click', function (e) {
-	if($('#advanced_options').parent().attr('id') == 'outside_of_form')
+
+	if($('#simple_options').parent().attr('id') == 'inside_of_form')
 	{
-	  showAdvancedSearch();
+	  var current_search_type = $('#fsfsearch').attr('checked') == 'checked' ? 'find_site' : 'archive';
+	  showAdvancedSearch(current_search_type);
 	}
 	else
 	{
@@ -168,6 +170,23 @@ jQuery(function($) {
 	$(this).blur();
 	return false;
   });
+
+  $('#fsfsearch').click(function(){
+    if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'inside_of_form')
+    {
+      showAdvancedSearch('find_site');
+    }
+  });
+
+  $('#asfsearch').click(function(){
+    if($('#advanced_options_asf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_fsf').parent().attr('id') == 'inside_of_form')
+    {
+      showAdvancedSearch('archive');
+    }
+  });
+
+
+  //
 
   $('#advsubmit').live('click', function(e) {
 
@@ -185,7 +204,7 @@ jQuery(function($) {
     $('#searchform').submit();
   });
   $('#advreset').live('click', function(e) {
-	$('#advanced_options input[type=text]').val('');
+	$('.advanced_options input[type=text]').val('');
   });
 
   $('.submitss').parent().css('visibility','visible');
@@ -237,10 +256,10 @@ $('a.ccf_quicklook').live('click', function() {
 });
 
 // advanced form dropdown multiselect
- $('#advanced_options select[multiple=multiple]').multiselect({
+ $('.advanced_options select[multiple=multiple]').multiselect({
    selectedText: "# of # selected"
  });
- $('#advanced_options select[multiple!=multiple]').multiselect({
+ $('.advanced_options select[multiple!="multiple"][id!="search_type_selector"]').multiselect({
    multiple: false,
    selectedList: 1,
    height:'auto'
@@ -343,34 +362,6 @@ $( ".datepicker" ).datepicker({
 	changeMonth: true,
 	changeYear: true,
 	dateFormat: "yymm"
-});
-
-/* Used to keep the simple and advanced search forms in sync */
-$('#search_type_selector').bind('change', function(){
-  if($(this).val() == 'archive')
-  {
-	$('#fsfsearch')[0].checked = '';
-	$('#asfsearch')[0].checked = 'checked';
-  }
-  else
-  {
-	$('#fsfsearch')[0].checked = 'checked';
-	$('#asfsearch')[0].checked = '';
-  }
-});
-
-
-$('input[name="search_type"]').bind('change', function(){
-  if($(this).val() == 'archive')
-  {
-    $('#search_type_selector').val('archive');
-    alert($('#search_type_selector').val());
-  }
-  else
-  {
-    $('#search_type_selector').val('find_site');
-    alert($('#search_type_selector').val());
-  }
 });
 
 

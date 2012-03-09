@@ -8,9 +8,12 @@
     <div class="results_control offset9 span3">
     <% end %>
      <a class="toggle_all_btn btn success" data-original-title="Expand all results">Expand All +</a>
-     <a href="#eric-needs-to-fill-this-in" class="all_sort_default btn" data-original-title="Sort by Count">#</a> 
-     <a href="#eric-needs-to-fill-this-in" class="all_sort_a-z btn" data-original-title="Sort by A-Z">A-Z</a> 
-     <a href="#eric-needs-to-fill-this-in" class="all_sort_z-a btn" data-original-title="Sort by Z-A">Z-A</a>
+
+     <%= link_to '#', search_path(params.merge({:sort => 'score desc'})), {:class => 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
+
+     <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})), {:class => 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
+     <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})), {:class => 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
+
     </div>
 </div>
     <div class="clear"></div>
