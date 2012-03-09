@@ -121,18 +121,48 @@ jQuery(function($) {
 
   /* End -- Result item hiding/showing logic */
 
-  $('#advanced_options').hide(0).removeClass('hidden');
-  $('#advo').css('visibility','visible');
-  $('.advtoggle').bind('click', function (e) {
-	if($('#advanced_options').parent().attr('id') == 'advanced_options_outside_of_form')
+  /* Simple/advanced form logic */
+
+  var search_mode = $('#searchform').attr('data-searchmode-onload') == 'advanced' ? 'advanced' : 'simple';
+  var search_type = $('#searchform').attr('data-searchtype-onload') == 'archive' ? 'archive' : 'find_site';
+
+  if(search_mode == 'simple')
+  {
+	showSimpleSearch(search_type);
+  }
+  else
+  {
+	showAdvancedSearch(search_type);
+  }
+
+  function showSimpleSearch(search_type)
+  {
+	if($('#simple_options').parent().attr('id') == 'outside_of_form')
 	{
-	  $('#advanced_options').appendTo('#advanced_options_inside_of_form').show();
-	  $(this).text('Adv-');
+	  $('#simple_options').appendTo('#inside_of_form');
+	  $('#advanced_options').appendTo('#outside_of_form');
+	  $('#advo_link').text('Adv+');
+	}
+  }
+
+  function showAdvancedSearch(search_type)
+  {
+	if($('#advanced_options').parent().attr('id') == 'outside_of_form')
+	{
+	  $('#advanced_options').appendTo('#inside_of_form');
+	  $('#simple_options').appendTo('#outside_of_form');
+	  $('#advo_link').text('Adv-');
+	}
+  }
+
+  $('.advtoggle').bind('click', function (e) {
+	if($('#advanced_options').parent().attr('id') == 'outside_of_form')
+	{
+	  showAdvancedSearch();
 	}
 	else
 	{
-	  $('#advanced_options').hide().appendTo('#advanced_options_outside_of_form');
-	  $(this).text('Adv+');
+	  showSimpleSearch();
 	}
 
 	$(this).blur();
@@ -308,9 +338,34 @@ $('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
 */
 
 $( ".datepicker" ).datepicker({
+	minDate: new Date(2008, 1, 1),
+	gotoCurrent: true,
 	changeMonth: true,
 	changeYear: true,
 	dateFormat: "yymm"
 });
+
+/* Used to keep the simple and advanced search forms in sync */
+$('#search_type_selector').bind('change', function(){
+  if($(this).val() == 'archive')
+  {
+    $('#fsfsearch')[0].checked = false;
+    $('#asfsearch')[0].checked = true;
+  }
+  else
+  {
+    $('#fsfsearch')[0].checked = true;
+    $('#asfsearch')[0].checked = false;
+  }
+});
+
+$('#fsfsearch').bind('click', function(){
+  alert('clicked!');
+});
+
+$('#asfsearch').bind('click', function(){
+  alert('clicked!');
+});
+
 
 }); // ready

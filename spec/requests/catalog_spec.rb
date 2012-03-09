@@ -155,10 +155,6 @@ describe 'advanced_search_asf' do
       @result_page = page
     end
 
-    it 'informs user "Click on Adv+ to refine search" in simple search box if doing advanced search' do
-      @result_page.has_field?( 'q', :with => '[Click Adv+ to refine search]' ).should == true
-    end
-
     it 'creates the correct HTTP querystring for simple "q_and" search' do
       querystring = URI.parse( current_url ).query
       querystring.should == "search_type=archive&search_mode=advanced&search=true&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&capture_start_date=&capture_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
@@ -182,13 +178,6 @@ describe 'advanced_search_fsf' do
     fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
     click_button 'submit_search'
     page.should have_content('No results found')
-  end
-
-  it 'informs user "Click on Adv+ to refine search" in simple search box if doing advanced search' do
-    visit '/advanced_fsf'
-    fill_in 'q_and', :with => 'water'
-    click_button 'submit_search'
-    page.has_field?( 'q', :with => '[Click Adv+ to refine search]' ).should == true
   end
 
   it 'returns search results for a known successful query' do

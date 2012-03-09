@@ -152,6 +152,10 @@ img.preview_icon:hover { opacity:1.0 }
 #hero-search #searchform, #hero-search #appliedParams {margin-bottom:0px;}
 #hero-search {padding-bottom:24px}
 
+/* Simple search form */
+
+#advo_link {padding-left:5px;padding-right:5px;line-height:19px;}
+
 /* advanced search form */
 #advo a { text-decoration:none; }
 #advanced_options label.add-on { width:186px; text-align:right; color:#777; }

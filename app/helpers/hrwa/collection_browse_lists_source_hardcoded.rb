@@ -750,7 +750,6 @@ module HRWA::CollectionBrowseListsSourceHardcoded
               %q{Serbia} => 4,
               %q{Sudan} => 4,
               %q{Honduras} => 4,
-              %q{} => 4,
               %q{Iraq} => 4,
               %q{Middle East} => 4,
               %q{Philippines} => 4,
