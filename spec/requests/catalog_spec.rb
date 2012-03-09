@@ -191,7 +191,7 @@ describe 'advanced_search_fsf' do
   end
 
   # TODO: change to form fill-in
-  it 'returns search results for q_and="human" and a title that contains the word "human"', :focus => true do
+  it 'returns search results for q_and="human" and a title that contains the word "human"' => true do
      visit '/search?search=true&search_type=find_site&q_and=human&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&f%5Btitle__facet%5D%5B%5D=Afghanistan+Independent+Human+Rights+Commission&per_page=10&sort=score+desc&sort=score+desc&search_mode=advanced'
      page.should_not have_content( 'No results found' )
   end
