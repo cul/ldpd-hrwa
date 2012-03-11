@@ -9,6 +9,14 @@
 
     <a href="#" id="advo_link" title="Advanced Options Toggle" rel="twipsy" class="advtoggle btn mono floatright">Adv+</a>
 
+	<script type="text/javascript">
+	  HRWA.q = decodeURIComponent("<%= params[:q].blank? ? '' : CGI.escape(params[:q]).gsub('+','%20') %>");
+	  HRWA.q_and = decodeURIComponent("<%= params[:q_and].blank? ? '' : CGI.escape(params[:q_and]).gsub('+','%20') %>");
+	  HRWA.q_phrase = decodeURIComponent("<%= params[:q_phrase].blank? ? '' : CGI.escape(params[:q_phrase]).gsub('+','%20') %>");
+	  HRWA.q_or = decodeURIComponent("<%= params[:q_or].blank? ? '' : CGI.escape(params[:q_or]).gsub('+','%20') %>");
+	  HRWA.q_exclude = decodeURIComponent("<%= params[:q_exclude].blank? ? '' : CGI.escape(params[:q_exclude]).gsub('+','%20') %>");
+	</script>
+
     <%= form_tag search_path, :method => :get, :id => 'searchform',
     :'data-searchmode-onload' => (params[:search_mode] == 'advanced' ? 'advanced' : 'simple'),
 	:'data-searchtype-onload' => (params[:search_type] == 'archive' ? 'archive' : 'find_site') do %>
@@ -25,7 +33,7 @@
 	<div id="heross">
 
 	  <div class="input-append">
-		<%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :id => 'q', :name => 'q', :size => '16' %>
+		<%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %>
 
 		<%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
 		<span class="submit_button_container">
@@ -49,21 +57,21 @@
       <div id="advanced_options_fsf" class="advanced_options">
 	<h6>Find Pages/Sites that have&hellip;</h6>
 	<div class="input-prepend">
-	        <label class="add-on">all these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+	        <label class="add-on">all these wordszzz:</label>
+	        <input class="span11 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">this exact wording or phrase:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+	        <input class="span11 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">one or more of these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
+	        <input class="span11 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
 	</div>
 	<h6>But don't show results that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">any of these unwanted words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+	        <input class="span11 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
 
 	<div class="row">
@@ -217,20 +225,20 @@
 	<h6>Find Pages/Sites that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">all these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_and" name="q_and"<%= params[:q_and] ? " value='#{params[:q_and]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+	        <input class="span11 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">this exact wording or phrase:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_phrase" name="q_phrase"<%= params[:q_phrase] ? " value='#{params[:q_phrase]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+	        <input class="span11 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
 	</div>
 	<div class="input-prepend">
 	        <label class="add-on">one or more of these words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_or" name="q_or"<%= params[:q_or] ? " value='#{params[:q_or]}'" : '' %> size="16" type="text">
+	        <input class="span11 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
 	</div>
 	<h6>But don't show results that have&hellip;</h6>
 	<div class="input-prepend">
 	        <label class="add-on">any of these unwanted words:</label>
-	        <input class="span11" placeholder="Enter search terms..." id="q_exclude" name="q_exclude"<%= params[:q_exclude] ? " value='#{params[:q_exclude]}'" : '' %> size="16" type="text"> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+	        <input class="span11 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 	</div>
 
 	<div class="row">
