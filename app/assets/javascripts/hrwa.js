@@ -133,6 +133,7 @@ jQuery(function($) {
     $('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
     $('#simple_options').appendTo('#inside_of_form');
 
+    q_to_adv();
     $('#advo_link').text('Adv+');
   }
 
@@ -152,10 +153,11 @@ jQuery(function($) {
       $('#advanced_options_fsf').appendTo('#inside_of_form');
     }
 
+    adv_to_q();
     $('#advo_link').text('Adv-');
   }
 
-  $('.advtoggle').bind('click', function (e) {
+  $('#advo_link').bind('click', function (e) {
 
 	if($('#simple_options').parent().attr('id') == 'inside_of_form')
 	{
@@ -364,5 +366,34 @@ $( ".datepicker" ).datepicker({
 	dateFormat: "yymm"
 });
 
+// reverse parse q to advanced form inputs
+function q_to_adv() {
+ if ($('#q').val() == '') {
+  var erq_and = $('#q_and').val().replace(/^|\s(?=[^ ])/g, ' +');
+  var erq_exclude = $('#q_exclude').val().replace(/^|\s(?=[^ ])/g, ' -');
+  var erq_or = $('#q_or').val().replace(/^|\s/g, ' ');
+  var erq_phrase = '"'+$('#q_phrase').val()+'"';
+  $('#q').val(erq_and + ' ' + erq_exclude + ' ' + erq_phrase + ' ' + erq_or)
+ }
+}
+// reverse parse advanced form inputs to q
+function adv_to_q() {
+ if($('#q_phrase').val() == '') {
+  var erq_to_q_phrase = $('#q').val().match(/".*"/g).join('').replace(/"/g,'');
+  $('#q_phrase').val(erq_to_q_phrase);
+ }
+ if($('#q_and').val() == '') {
+  var erq_to_q_and = $('#q').val().match(/\+[A-Za-z0-9]+\s/g).join('').replace(/\+/g,'');
+  $('#q_and').val(erq_to_q_and);
+ }
+ if($('#q_exclude').val() == '') {
+  var erq_to_q_exclude = $('#q').val().match(/\-[A-Za-z0-9]+\s/g).join('').replace(/\-/g,'');
+  $('#q_exclude').val(erq_to_q_exclude);
+ }
+ if($('#q_or').val() == '') {
+  var erq_to_q_or = $('#q').val().match(/\s[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g).join('');
+  $('#q_or').val(erq_to_q_or);
+ }
+}
 
 }); // ready
