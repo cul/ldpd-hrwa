@@ -565,63 +565,37 @@ function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
  */
 function single_q_to_multi_q(q)
 {
+  var i = 0; //counter -- used later
+
   //If q is empty, just return four empty values
   if(q == "")
   {
 	return ['', '', '', ''];
   }
 
-  var q_and_arr = new Array();
-  var q_phrase_arr = new Array();
-  var q_or_value = new Array();
-  var q_exclude_arr = new Array();
+  var q_and_arr = null;
+  var q_phrase_arr = null;
+  var q_exclude_arr = null;
+
+  var parsed_q_and = '';
+  var parsed_q_phrase = '';
+  var q_or_value = '';
+  var parsed_q_exclude = '';
 
   //We'll be parsing from left to right, but we can't assume that combined q
   //presents and, phrase, or and exclude values in any particular order.
 
   //It would probably be easiest if we remove quoted q phrase values first
 
-  //Because JS doesn't support regex lookbehinds, I need to find groups
-  //of two chars, and then I'll only look at the index located at the two-char index + 1
-  var quote_1_position = -1;
-  var quote_2_position = -1;
-
-  //First, we look for the special case of a quote appearing at the beginning of q
-  //Otherwise we'll be looking for a quotation mark that doesn't come after a backslash
-  if(q.charAt(0) == '"')
+  var q_phrase_regex = /"([^"\\]*(\\.[^"\\]*)*)"/g;
+  var q_phrase_arr = q.match(q_phrase_regex);
+  if(q_phrase_arr != null)
   {
-	quote_1_position = 0;
-  }
-  else
-  {
-	quote_1_position = q.regexIndexOf(/[^\\]"/) + 1;
-	if(quote_1_position == 0) { quote_1_position = -1; } //correction step because regexIndexOf might return -1
-  }
-  quote_2_position = q.regexIndexOf(/[^\\]"/, quote_1_position) + 1;
-  if(quote_2_position == 0) { quote_2_position = -1; } //correction step because regexIndexOf might return -1
-
-  while(quote_1_position != -1 && quote_2_position != -1)
-  {
-	//clip this quoted text instance from q (ignoring the quotation marks)
-	q_phrase_arr.push(q.substring(quote_1_position+1, quote_2_position));
-
-	//remove this quoted text instance from q (also removing the quotation marks)
-	var q_portion_before_first_quotion_mark = q.substring(0, quote_1_position);
-	var q_portion_after_second_quotation_mark = (quote_2_position == q.length) ? '' : (q.substring(quote_2_position+1));
-
-	q = $.trim(q_portion_before_first_quotion_mark) + ' ' +  $.trim(q_portion_after_second_quotation_mark); //trim trailing whitespace
-
-	if(q.charAt(0) == '"')
-	{
-	  quote_1_position = 0;
-	}
-	else
-	{
-	  quote_1_position = q.regexIndexOf(/[^\\]"/) + 1;
-	}
-	if(quote_1_position == 0) { quote_1_position = -1; } //correction step because regexIndexOf might return -1
-	quote_2_position = q.regexIndexOf(/[^\\]"/, quote_1_position) + 1;
-	if(quote_2_position == 0) { quote_2_position = -1; } //correction step because regexIndexOf might return -1
+	//We're only remove leading and trailing quotation marks on the FIRST
+	//element in the array because all other elements will be going into
+	//q_or later on, so quotation marks need to be retained there.
+	q = q.replace(q_phrase_regex, ''); //update q, removing q_phrase occurrences
+	parsed_q_phrase = q_phrase_arr[0].substring(1, q_phrase_arr[0].length-1);
   }
 
   //TODO: Figure out what to do if a user types in multiple quotes strings.
@@ -636,85 +610,54 @@ function single_q_to_multi_q(q)
   //because quoted items in q_and should behave the same way as a single quoted
   //item in the q_phrase field.
 
-  var parsed_q_phrase = (q_phrase_arr.length == 0) ? '' : q_phrase_arr[0];
-
   //Now that we've removed the q_phrase items from q, the rest of the parsing should be easier
 
   //Let's remove any word in q that is preceeded by ' -' (space followed by a minus sign)
-  //Note: We can't just look for minus signs alone, since they can also act as hyphens
+  //We'll also be doing a removal if q starts with a minus followed immediately by text
 
-  /* Commented out for now
-
-  var minus_position = -1;
-  var subsequent_space_position = -1;
-
-  //First, we look for the special case of a minus sign appearing at the beginning of q
-  //Otherwise we'll be looking for a minus sign that comes after a space
-  if(q.charAt(0) == '-')
+  var q_exclude_regex = /aaa/g;
+  var q_exclude_arr = q.match(q_exclude_regex);
+  if(q_exclude_arr != null)
   {
-	minus_position = 0;
-  }
-  else
-  {
-	minus_position = q.regexIndexOf(/ -/) + 1;//minus at the beginning of a word
-	if(minus_position == 0) { minus_position = -1; } //correction step because regexIndexOf might return -1
-  }
-  subsequent_space_position = q.indexOf(' ', minus_position);//space at the end of a word
-  if(subsequent_space_position)
-  while(minus_position != -1 && subsequent_space_position != -1)
-  {
-	//clip this quoted text instance from q (ignoring the quotation marks)
-	q_phrase_arr.push(q.substring(minus_position+1, subsequent_space_position));
-
-	//remove this quoted text instance from q (also removing the quotation marks)
-	var q_portion_before_minus = q.substring(0, minus_position);
-	var q_portion_after_space = (subsequent_space_position == q.length) ? '' : (q.substring(quote_2_position+1));
-
-	q = $.trim(q_portion_before_first_quotion_mark) + ' ' +  $.trim(q_portion_after_second_quotation_mark); //trim trailing whitespace
-
-	if(q.charAt(0) == '-')
+	//Remove leading minus sign
+	for(i = 0; i < q_exclude_arr.length; i++)
 	{
-	  minus_position = 0;
+	  q_exclude_arr[i] = q_exclude_arr[i].substring(1, q_exclude_arr[i].length);
 	}
-	else
-	{
-	  minus_position = q.regexIndexOf(/ -/) + 1;//minus at the beginning of a word
-	  if(minus_position == 0) { minus_position = -1; } //correction step because regexIndexOf might return -1
-	}
-	subsequent_space_position = q.indexOf(' ', minus_position);//space at the end of a word
+	q = q.replace(q_exclude_regex, ''); //update q, removing q_exclude occurrences
+	parsed_q_exclude = q_exclude_arr.join(' ');
   }
-  */
 
-  var parsed_q_exclude = '';
+  //Let's remove any word in q that is preceeded by ' +' (space followed by a plus sign)
+  //We'll also be doing a removal if q starts with a plus followed immediately by text
 
-
-  var parsed_q_and = '';
-
-  //And finally, if q_phrase_arr has more than one element, place the > index 0
-  //elements in parsed_q_and.
-  if(q_phrase_arr.length > 1)
+  var q_and_regex = /aaa/g;
+  var q_and_arr = q.match(q_and_regex);
+  if(q_and_arr != null)
   {
-	for(var i = 1; i < q_phrase_arr.length; i++)
+	//Remove leading plus sign
+	for(i = 0; i < q_and_arr.length; i++)
 	{
-	  parsed_q_and += ' "' + q_phrase_arr[i] + '"';
+	  q_and_arr[i] = q_and_arr[i].substring(1, q_and_arr[i].length);
 	}
+	q = q.replace(q_and_regex, ''); //update q, removing q_exclude occurrences
+	parsed_q_and = q_and_arr.join(' ');
   }
+  //We'll also add any additional q_phrase_arr items to q_and so that they
+  //still apply to the search
+  if(q_phrase_arr != null && q_phrase_arr.length > 1)
+  {
+	for(i = 1; i < q_phrase_arr.length; i++)
+	parsed_q_and += ' ' + q_phrase_arr[i];
+  }
+  parsed_q_and = $.trim(parsed_q_and); //remove leading and trailing whitespace
 
-  //Whatever's left in the string can be place in q_or
-  var parsed_q_or = q; //this is whatever remains in q after everything else has been removed
+  //Whatever's left in the string can be placed in q_or.  But we'll need to
+  //compress multi-spaces into single spaces.  The extra spaces appear as a
+  //result of the earlier replace operations.
+  var parsed_q_or = $.trim(q).replace(/\s+/g, ' '); //this is whatever remains in q after everything else has been removed
 
   return new Array(parsed_q_and, parsed_q_phrase, parsed_q_or, parsed_q_exclude);
-}
-
-/**
- *	Extracts regex match occurrences from the given string,
- *	returning a two-element array:
- *	arr[0] == an array of all matches
- *	arr[1] == the supplied string with all regex matches removed
- */
-function extract_matches_from_string(regex, string)
-{
-  return null;
 }
 
 }); // ready
