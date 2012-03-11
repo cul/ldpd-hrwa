@@ -118,6 +118,7 @@ img.preview_icon:hover { opacity:1.0 }
 .blue { color:#0064cd!important; }
 .red, a.remove { color:red; }
 .white { color:white!important; }
+.strong { font-weight:bold; }
 .big { font-size:1.2em; }
 .invisible { display:none; }
 .hidden { visibility:hidden; }

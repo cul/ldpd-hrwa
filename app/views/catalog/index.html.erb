@@ -11,7 +11,7 @@
     <div class="row">
       <div id="primary" class="span12">
 	    <div class="pageEntriesInfo">
-    	  <%= render_pagination_info @response, :entry_name=>'result' %><% if( !params[ :q ].blank? ) %> <span id="qtime_ms">(<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong><% end %>
+    	  <%= render_pagination_info @response, :entry_name=>'result' %><% if( !params[ :q ].blank? ) %> <span id="qtime_ms">(<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <span id="q_echo" class="big lime strong"><%= q_text = params[ :q ] %></span><% end %>
     	</div>
     	<%= render 'results_pagination' %>
     	<%#= render 'sort_and_per_page' %>

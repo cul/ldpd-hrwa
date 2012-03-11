@@ -373,7 +373,9 @@ function adv_to_q() {
   var erq_exclude = ($('#q_exclude').val() != '') ? $('#q_exclude').val().replace(/^|\s(?=[^ ])/g, ' -') : '';
   var erq_or = ($('#q_or').val() != '') ? $('#q_or').val().replace(/^|\s/g, ' ') : '';
   var erq_phrase = ($('#q_phrase').val() != '') ? '"'+$('#q_phrase').val()+'"' : '';
-  $('#q').val(erq_and + ' ' + erq_exclude + ' ' + erq_phrase + ' ' + erq_or)
+  var ssval = erq_and + ' ' + erq_exclude + ' ' + erq_phrase + ' ' + erq_or;
+  $('#q').val(ssval);
+  $('#q_echo').html(ssval);
  }
 }
 // reverse parse q to advanced form inputs
