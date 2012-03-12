@@ -503,12 +503,13 @@ function sync_all_forms(form_to_mirror) {
 }
 
 //Add key event stuff
-//Commented out now because we probably don't need synching on key-up anymore
 
+//Currently not using simple key-up sync
 /*
 $('#simple_options #q').bind('keyup', function(){
   sync_all_forms('simple');
 });
+*/
 
 $('#advanced_options_fsf .q_and, ' +
   '#advanced_options_fsf .q_phrase, ' +
@@ -523,7 +524,6 @@ $('#advanced_options_asf .q_and, ' +
   '#advanced_options_asf .q_exclude').bind('keyup', function(){
   sync_all_forms('advanced_asf');
 });
-*/
 
 function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 {
