@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>   
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/external_assets/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+    <script type="text/javascript">
+        function debug( message ) {
+            document.getElementById( 'debugArea' ).innerHTML = message;
+        }      
+        
+        function compareObjectsByName( a, b ) {
+            if ( a.name < b.name ) {
+                return -1;
+            } else if ( a.name == b.name ) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+        
+        function convertMimeTypeArrayToJavascriptArray( mimeTypeArray ) {
+            var array = [];
+            for( var i = 0; i < mimeTypeArray.length; i++ ) {
+                array[i] = { name:        mimeTypeArray[i].type,
+                             description: mimeTypeArray[i].description
+                           };
+            }
+            return array;
+        }
+
+        function convertPluginArrayToJavascriptArray( pluginArray ) {
+            var array = [];
+            for( var i = 0; i < pluginArray.length; i++ ) {
+                array[i] = { name:        pluginArray[i].name,
+                             description: pluginArray[i].description,
+                             version:     pluginArray[i].version
+                };
+            }
+            return array;
+        }
+
+        function getMimeTypesList() {
+            var sortedMimeTypes = convertMimeTypeArrayToJavascriptArray(
+                                    navigator.mimeTypes 
+                                  );
+            sortedMimeTypes.sort( compareObjectsByName );
+            var countMimeTypes = sortedMimeTypes.length;
+            var mimeTypesListHtml = '';
+            for( var i = 0; i < countMimeTypes; i++ ) {
+                mimeTypesListHtml += sortedMimeTypes[i].name;
+                if ( sortedMimeTypes[i].description ) {
+                    mimeTypesListHtml += ' (' + sortedMimeTypes[i].description + ')';
+                }
+                mimeTypesListHtml += "\n\n";
+            }
+            return mimeTypesListHtml;
+        }
+    
+        function getPluginsList() {
+            var sortedPlugins = convertPluginArrayToJavascriptArray( navigator.plugins );
+            sortedPlugins.sort( compareObjectsByName  );
+            var countPlugins  = sortedPlugins.length;
+            var pluginsListHtml = '';
+            for ( var i = 0; i < countPlugins; i++ ) {
+                pluginsListHtml += sortedPlugins[i].name;
+                pluginsListHtml += ' -- '        + sortedPlugins[i].description;
+                pluginsListHtml += ', version: ' + sortedPlugins[i].version;
+                pluginsListHtml += ' (file: '    + sortedPlugins[i].filename + ')';        
+                pluginsListHtml += "\n\n";
+            }
+            return pluginsListHtml;
+        }
+                
+        function getTimestamp() {
+            // TODO: Consider a different format
+            return new Date();
+        }
+
+        function issueType_OnChange() {
+            if ( document.getElementById( 'issueType' ).value == 1 ) {
+                document.getElementById( 'useSameComputerWarning' ).style.display = 'block';
+            } else {
+                document.getElementById( 'useSameComputerWarning' ).style.display = 'none';
+            }
+        }  
+
+        function validate( form ) {
+            fail = validateSummary( form.summary.value );
+            fail += validateDescription( form.description.value );
+            fail += validateReporter( form.reporter.value );
+            if ( fail == "" ) {
+                return true;
+            } else {
+                alert( "Unable to submit issue due to the following:\n" + fail );
+                return false;
+            }
+        }
+        
+        function validateDescription( description ) {
+            if ( description == "" ) {
+                return "No description was entered.\n";
+            } else {
+                return "";
+            }
+        }
+        
+        function validateReporter( reporter ) {
+            if ( reporter == "" ) {
+                return "A reporter must be selected.\n";
+            } else {
+                return "";
+            }
+        }
+        
+        function validateSummary( summary ) {
+            if ( summary == "" ) {
+                return "No summary was entered.\n";
+            } else {
+                return "";
+            }
+        }
+    </script>
+    
+    <link media="screen" rel="stylesheet" type="text/css" href="/temporary/css/internal_feedback.css" >
+    
+    <title>HRWA Portal Internal Feedback Form</title>    
+</head>
+<body onload="fillInAutomaticFields();">
+
+<div id="debugArea"><pre></pre></div>
+
+<div id="content">
+
+<form id="jiraIssue" name="jiraIssue" method="post" action="/internal/feedback_submit">
+<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token.to_s %>" />
+
+<ul>
+    <li class="header">
+        <input type="submit" id="submit" name="submit" value="Submit" 
+            onClick="return validate( document.getElementById( 'jiraIssue' ) );" />
+    </li>
+        
+    <li>
+        <label for="summary">Summary</label>
+        <input id="summary" class="summary" type="text" value="" name="summary" maxlength="255" />
+    </li>
+    
+    <li id="useSameComputerWarning">
+        <label for="useSameComputerWarning" class="useSameComputerWarning">NOTE:</label>
+        <input class="useSameComputerWarning"
+        value="Make sure you fill out this form using the same computer and browser you used when you originally observed the bug."
+        />
+    </li>
+    
+    <li>
+        <label for="issueType">JIRA Issue Type</label>
+        <select id="issueType" class="issueType" name="issueType" onchange="issueType_OnChange();">
+            <option value="1">Bug</option>
+            <option value="4">Improvement</option>
+        </select>
+    </li>
+    
+    <li>
+        <label for="priority">Priority</label>
+        <select id="priority" class="select" name="priority">
+            <option value="1"> Blocker </option>
+            <option value="2"> Critical </option>
+            <option value="3" selected> Major </option>
+            <option value="4"> Minor </option>
+            <option value="5"> Trivial </option>
+        </select>
+    </li>
+
+    <li>    
+        <label for="reporter">Reporter</label>
+        <select id="reporter" class="select" name="reporter">
+            <option value="" selected>[Select reporter]</option>
+            <optgroup label="---------------">
+                <option value="culhrweb-curators">HR Web Curators (Alex, Tessa)</option>
+                <option value="at2186">Alexander C Thurman</option>
+                <option value="raw7">Bob Wolven</option>
+                <option value="da217">David Arjanik</option>
+                <option value="er2576">Erik Ryerson</option>
+                <option value="pmg16">Pamela Graham</option>
+                <option value="spd1">Stephen Davis</option>
+                <option value="taf2111">Tessa Fallon</option>
+            </optgroup>
+        </select>
+    </li>
+
+    <li>    
+        <label for="assignee">Assignee</label>
+        <select id="assignee" class="select" name="assignee">
+            <option value="" selected>Unassigned</option>
+            <optgroup label="---------------">
+                <option value="culhrweb-curators">HR Web Curators (Alex, Tessa)</option>
+                <option value="at2186">Alexander C Thurman</option>
+                <option value="da217">David Arjanik</option>
+                <option value="er2576">Erik Ryerson</option>
+                <option value="taf2111">Tessa Fallon</option>
+            </optgroup>
+        </select>
+    </li>
+    
+    <li>
+        <label for="components">Project components</label>
+        <select id="components" class="components" name="components">
+            <option value="10290" title="Archive Search Function - ASF provides full-text searching through our Archive-It (W)ARC archives."> Archive Search Function </option>
+            <option value="10291" title="Archive View Function - AVF is our HRWA Toolbar + iframed Archive-It website."> Archive View Function </option>
+            <option value="10292" title="Collection Browse Function - CBF allows browsing of our list of archived websites. There might be multiple CBF's: A-Z collapsible lists, geographic lists, clickable maps, timeline/slider views, etc. "> Collection Browse Function </option>
+            <option value="10293" title="Crawl Calendar Function - CCF is our customized alternative to the Archive-It calendar view. Will provide a calendar with links corresponding to captures/crawls for a specific URL. "> Crawl Calendar Function </option>
+            <option value="10294" title="Find Site Function - FSF provides full-text and fielded search of our site-level metadata. "> Find Site Function </option>
+            <option value="10310" title="Global Portal - Issues that affect the entire portal as a whole."> Global Portal </option>
+            <option value="10295" title="Site Detail Function - SDF displays all information about a single specific site or organization that has been archived in our collection. "> Site Detail Function </option>
+            <option value="10311" title="Themes and Styles - Issues related to aesthetic theme and style design."> Themes and Styles </option>
+        </select>
+    </li>
+
+    <li>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="15" cols="80"></textarea> 
+    </li>
+</ul>
+    
+<a class="btn small toggle_section moreless" href="#">Show More+</a>
+<div id="toggler" class="toggler" style="display: none;">
+    <ul>
+        <li>
+            <h3 id="notice">The information below was collected automatically and cannot be changed.</h3>
+        </li>
+        
+        <li>
+            <label for="timestamp">Timestamp</label>
+            <input id="timestamp_for_display_only" type="text" value="" class="for_display_only" readonly />
+            <input id="timestamp" name="timestamp" type="hidden" value="" />
+        </li>
+
+        <li>
+            <label for="userAgent">User-Agent</label>
+            <input id="userAgent_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="userAgent" name="userAgent" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="oscpu">Operating System</label>
+            <input id="oscpu_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="oscpu" name="oscpu" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="platform">Platform</label>
+            <input id="platform_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="platform" name="platform" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="javaEnabled">Java Enabled</label>
+            <input id="javaEnabled_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="javaEnabled" name="javaEnabled" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="cookieEnabled">Cookies Enabled</label>
+            <input id="cookieEnabled_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="cookieEnabled" name="cookieEnabled" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="plugins">Plugins</label>
+            <textarea id="plugins_for_display_only" cols=85 rows=20 class="for_display_only" readonly></textarea>
+            <input id="plugins" name="plugins" type="hidden" value="" />
+        </li>
+
+        <li>
+            <label for="appCodeName">Browser Code Name</label>
+            <input id="appCodeName_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="appCodeName" name="appCodeName" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="appName">Browser Name</label>
+            <input id="appName_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="appName" name="appName" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="appVersion">Browser Version</label>
+            <input id="appVersion_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="appVersion" name="appVersion" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="buildID">Browser Build ID</label>
+            <input id="buildID_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="buildID" name="buildID" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="language">Default Language of Browser</label>
+            <input id="language_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="language" name="language" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="mimeTypes">MIME Types Supported</label>
+            <textarea id="mimeTypes_for_display_only" cols=85 rows=20 class="for_display_only" readonly></textarea>
+            <input id="mimeTypes" name="mimeTypes" type="hidden" />
+        </li>
+
+        <li>
+            <label for="product">Browser Product Name</label>
+            <input id="product_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="product" name="product" type="hidden" 
+
+        <li>
+            <label for="productSub">Browser Build Number</label>
+            <input id="productSub_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="productSub" name="productSub" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="vendor">Browser Vendor</label>
+            <input id="vendor_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="vendor" name="vendor" type="hidden"  value="" />
+        </li>
+
+        <li>
+            <label for="vendorSub">Browser Vendor Version Number</label>
+            <input id="vendorSub_for_display_only" type="text"  value="" class="for_display_only" readonly />
+            <input id="vendorSub" name="vendorSub" type="hidden"  value="" />
+        </li>
+    </ul>
+</div>
+
+</form>
+
+</div>
+
+    <script type="text/javascript">
+        // Toggle hide/show of automatically filled fields that are not editable
+        $('.toggler').hide(0);
+        $(".toggle_section").bind('click', function (e) {
+            $(this).next('.toggler').toggle( 1 );
+            $(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
+            $(this).blur();
+            return false;
+        });
+        $('.moreless').live('click', function() {
+         $(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
+        });
+    
+        function fillInAutomaticFields() {
+            // From http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
+            var qs = (function(a) {
+                        if (a == "") return {};
+                        var b = {};
+                        for (var i = 0; i < a.length; ++i) {
+                            var p=a[i].split('=');
+                            if (p.length != 2) continue;
+                            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                        }
+                        return b;
+                    })(window.location.search.substr(1).split('&'));
+            
+            // Set component if known
+            document.getElementById( 'components' ).value = qs[ 'components' ];
+            
+            // Timestamp this issue
+            document.getElementById( 'timestamp' ).value = getTimestamp();
+                
+            // Get navigator object info of interest
+            document.getElementById( 'appCodeName'   ).value = navigator.appCodeName;
+            document.getElementById( 'appName'       ).value = navigator.appName;
+            document.getElementById( 'appVersion'    ).value = navigator.appVersion;
+            document.getElementById( 'buildID'       ).value = navigator.buildID;
+            document.getElementById( 'cookieEnabled' ).value = navigator.cookieEnabled;
+            document.getElementById( 'javaEnabled'   ).value = navigator.javaEnabled();
+            document.getElementById( 'language'      ).value = navigator.language;
+            document.getElementById( 'mimeTypes'     ).value = getMimeTypesList();
+            document.getElementById( 'oscpu'         ).value = navigator.oscpu;
+            document.getElementById( 'platform'      ).value = navigator.platform;
+            document.getElementById( 'plugins'       ).value = getPluginsList();
+            document.getElementById( 'product'       ).value = navigator.product;
+            document.getElementById( 'productSub'    ).value = navigator.productSub;;
+            document.getElementById( 'userAgent'     ).value = navigator.userAgent;
+            document.getElementById( 'vendor'        ).value = navigator.vendor;
+            document.getElementById( 'vendorSub'     ).value = navigator.vendorSub;
+
+            // Repeat for the readonly fields for user eyes
+            document.getElementById( 'timestamp_for_display_only'     ).value = getTimestamp();
+            document.getElementById( 'appCodeName_for_display_only'   ).value
+                = navigator.appCodeName;
+            document.getElementById( 'appName_for_display_only'       ).value
+                = navigator.appName;
+            document.getElementById( 'appVersion_for_display_only'    ).value
+                = navigator.appVersion;
+            document.getElementById( 'buildID_for_display_only'       ).value
+                = navigator.buildID;
+            document.getElementById( 'cookieEnabled_for_display_only' ).value
+                = navigator.cookieEnabled;
+            document.getElementById( 'javaEnabled_for_display_only'   ).value
+                = navigator.javaEnabled();
+            document.getElementById( 'language_for_display_only'      ).value
+                = navigator.language;
+            document.getElementById( 'mimeTypes_for_display_only'     ).value
+                = getMimeTypesList();
+            document.getElementById( 'oscpu_for_display_only'         ).value
+                = navigator.oscpu;
+            document.getElementById( 'platform_for_display_only'      ).value
+                = navigator.platform;
+            document.getElementById( 'plugins_for_display_only'       ).value
+                = getPluginsList();
+            document.getElementById( 'product_for_display_only'       ).value
+                = navigator.product;
+            document.getElementById( 'productSub_for_display_only'    ).value
+                = navigator.productSub;;
+            document.getElementById( 'userAgent_for_display_only'     ).value
+                = navigator.userAgent;
+            document.getElementById( 'vendor_for_display_only'        ).value
+                = navigator.vendor;
+            document.getElementById( 'vendorSub_for_display_only'     ).value
+                = navigator.vendorSub;
+        }
+    </script>
+    
+</body>
+</html>
+    
