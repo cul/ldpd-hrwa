@@ -52,11 +52,6 @@ namespace :deploy do
     run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean assets:precompile"
   end
 
-  desc "Write out version"
-  task :version_write do
-    run "cd #{release_path}/public; echo \"#{IO.read("VERSION").strip}\" > version.txt"
-  end
-
 end
 
 
