@@ -135,12 +135,27 @@ jQuery(function($) {
   window.search_type = $('#searchform').attr('data-searchtype-onload') == 'archive' ? 'archive' : 'find_site';
   showSimpleSearch(); //immediately when the page loads
 
+  function disableSimpleForm()
+  {
+    $("#q").attr("disabled", "disabled");
+    $("#appliedParams").hide(0);
+  }
+  function enableSimpleForm()
+  {
+    $("#q").removeAttr("disabled");
+    $("#appliedParams").show(0);
+  }
+
+
   function showSimpleSearch()
   {
     $('.advanced_options').appendTo('#outside_of_form');
 
-    $('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
-    $('#simple_options').appendTo('#inside_of_form');
+    //$('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
+
+    //Simple options always remains inside of the form now
+    //$('#simple_options').appendTo('#inside_of_form');
+    enableSimpleForm();
 
     //adv_to_q();
     $('#advo_link').text('Adv+');
@@ -148,18 +163,20 @@ jQuery(function($) {
 
   function showAdvancedSearch(s_type)
   {
-    $('#simple_options').appendTo('#outside_of_form');
+    //Simple options always remains inside of the form now
+    //$('#simple_options').appendTo('#outside_of_form');
+    disableSimpleForm();
 
     $('.advanced_options').appendTo('#outside_of_form'); //This is necessary for switching straight from advanced_asf mode to advanced_fsf mode.
 
     if(s_type == 'archive')
     {
-      $('#s_type_selector_and_submit').appendTo('#advanced_options_asf .submit_button_container');
+      //$('#s_type_selector_and_submit').appendTo('#advanced_options_asf .submit_button_container');
       $('#advanced_options_asf').appendTo('#inside_of_form');
     }
     else
     {
-      $('#s_type_selector_and_submit').appendTo('#advanced_options_fsf .submit_button_container');
+      //$('#s_type_selector_and_submit').appendTo('#advanced_options_fsf .submit_button_container');
       $('#advanced_options_fsf').appendTo('#inside_of_form');
     }
 
@@ -171,7 +188,7 @@ jQuery(function($) {
 
 	sync_all_forms(HRWA.currently_visible_form);
 
-	if($('#simple_options').parent().attr('id') == 'inside_of_form')
+	if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'outside_of_form')
 	{
 	  var current_search_type = $('#fsfsearch').attr('checked') == 'checked' ? 'find_site' : 'archive';
 	  showAdvancedSearch(current_search_type);
@@ -191,7 +208,7 @@ jQuery(function($) {
     if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'inside_of_form')
     {
 	  sync_all_forms(HRWA.currently_visible_form);
-      showAdvancedSearch('find_site');
+	  showAdvancedSearch('find_site');
 	  HRWA.currently_visible_form = 'advanced_fsf';
     }
   });
@@ -200,7 +217,7 @@ jQuery(function($) {
     if($('#advanced_options_asf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_fsf').parent().attr('id') == 'inside_of_form')
     {
 	  sync_all_forms(HRWA.currently_visible_form);
-      showAdvancedSearch('archive');
+	  showAdvancedSearch('archive');
 	  HRWA.currently_visible_form = 'advanced_asf';
     }
   });
@@ -502,11 +519,20 @@ function sync_all_forms(form_to_mirror) {
   }
 }
 
+//Onclick form stuff
+
+$('#simple_options #q_container').bind('click', function(){
+  if($(this).children('#q').attr('disabled') == 'disabled')
+  {
+    showSimpleSearch();
+  }
+});
+
 //Add key event stuff
 
 //Currently not using simple key-up sync
 /*
-$('#simple_options #q').bind('keyup', function(){
+$('#simple_options #q').bind('keyup blur', function(){
   sync_all_forms('simple');
 });
 */
@@ -514,16 +540,18 @@ $('#simple_options #q').bind('keyup', function(){
 $('#advanced_options_fsf .q_and, ' +
   '#advanced_options_fsf .q_phrase, ' +
   '#advanced_options_fsf .q_or, ' +
-  '#advanced_options_fsf .q_exclude').bind('keyup', function(){
+  '#advanced_options_fsf .q_exclude').bind('keyup blur', function(){
   sync_all_forms('advanced_fsf');
 });
 
 $('#advanced_options_asf .q_and, ' +
   '#advanced_options_asf .q_phrase, ' +
   '#advanced_options_asf .q_or, ' +
-  '#advanced_options_asf .q_exclude').bind('keyup', function(){
+  '#advanced_options_asf .q_exclude').bind('keyup blur', function(){
   sync_all_forms('advanced_asf');
 });
+
+
 
 function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 {
@@ -577,7 +605,7 @@ function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 	//no extra space after q_exclude because it's the last item in the concatenated string!
   }
 
-  return new_q_and_string + new_q_phrase_string + new_q_or_string + new_q_exclude_string;
+  return $.trim(new_q_and_string + new_q_phrase_string + new_q_or_string + new_q_exclude_string);
 }
 
 /**

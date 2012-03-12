@@ -28,7 +28,7 @@
 		  <div id="heross">
 
 			<div class="input-append">
-			  <%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %>
+			  <div id="q_container"><%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %></div>
 
 			  <%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
 			  <span class="submit_button_container">
