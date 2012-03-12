@@ -15,6 +15,7 @@
 	  HRWA.q_phrase = decodeURIComponent("<%= params[:q_phrase].blank? ? '' : CGI.escape(params[:q_phrase]).gsub('+','%20') %>");
 	  HRWA.q_or = decodeURIComponent("<%= params[:q_or].blank? ? '' : CGI.escape(params[:q_or]).gsub('+','%20') %>");
 	  HRWA.q_exclude = decodeURIComponent("<%= params[:q_exclude].blank? ? '' : CGI.escape(params[:q_exclude]).gsub('+','%20') %>");
+	  HRWA.currently_visible_form = 'simple';
 	</script>
 
     <%= form_tag search_path, :method => :get, :id => 'searchform',
@@ -72,7 +73,7 @@
 
 	<div class="row">
 	<div class="span14">
-	    <h6>Find Site Additional Options</h6>
+	    <h6>Additional Options</h6>
 	<div class="span7 nomar">
 		<div class="control-group">
 		<label class="control-label">organization type</label>
@@ -239,7 +240,7 @@
 
 	<div class="row">
 	<div class="span14">
-	    <h6>Archive Search Additional Options</h6>
+	    <h6>Additional Options</h6>
 	<div class="span7 nomar">
 		<div class="control-group">
 		<label class="control-label">organization type</label>

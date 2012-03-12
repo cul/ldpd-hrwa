@@ -149,6 +149,7 @@ jQuery(function($) {
   function showAdvancedSearch(s_type)
   {
     $('#simple_options').appendTo('#outside_of_form');
+
     $('.advanced_options').appendTo('#outside_of_form'); //This is necessary for switching straight from advanced_asf mode to advanced_fsf mode.
 
     if(s_type == 'archive')
@@ -168,14 +169,18 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
+	sync_all_forms(HRWA.currently_visible_form);
+
 	if($('#simple_options').parent().attr('id') == 'inside_of_form')
 	{
 	  var current_search_type = $('#fsfsearch').attr('checked') == 'checked' ? 'find_site' : 'archive';
 	  showAdvancedSearch(current_search_type);
+	  HRWA.currently_visible_form = (current_search_type == 'find_site') ? 'advanced_fsf' : 'advanced_asf';
 	}
 	else
 	{
 	  showSimpleSearch();
+	  HRWA.currently_visible_form = 'simple';
 	}
 
 	$(this).blur();
@@ -185,14 +190,18 @@ jQuery(function($) {
   $('#fsfsearch').click(function(){
     if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'inside_of_form')
     {
+	  sync_all_forms(HRWA.currently_visible_form);
       showAdvancedSearch('find_site');
+	  HRWA.currently_visible_form = 'advanced_fsf';
     }
   });
 
   $('#asfsearch').click(function(){
     if($('#advanced_options_asf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_fsf').parent().attr('id') == 'inside_of_form')
     {
+	  sync_all_forms(HRWA.currently_visible_form);
       showAdvancedSearch('archive');
+	  HRWA.currently_visible_form = 'advanced_asf';
     }
   });
 
@@ -494,7 +503,9 @@ function sync_all_forms(form_to_mirror) {
 }
 
 //Add key event stuff
+//Commented out now because we probably don't need synching on key-up anymore
 
+/*
 $('#simple_options #q').bind('keyup', function(){
   sync_all_forms('simple');
 });
@@ -512,6 +523,7 @@ $('#advanced_options_asf .q_and, ' +
   '#advanced_options_asf .q_exclude').bind('keyup', function(){
   sync_all_forms('advanced_asf');
 });
+*/
 
 function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 {
@@ -535,7 +547,7 @@ function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 	var q_and_quoted_items_arr = q_and.match(quoted_item_regex);
 	if(q_and_quoted_items_arr != null)
 	{
-	  q_and = q_and.replace(q_phrase_regex, ''); //update a_and, removing quoted_item occurrences
+	  q_and = q_and.replace(quoted_item_regex, ''); //update a_and, removing quoted_item occurrences
 	  quoted_q_and_to_append = ' +' + q_and_quoted_items_arr.join(' +');
 	}
 
