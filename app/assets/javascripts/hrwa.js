@@ -137,12 +137,12 @@ jQuery(function($) {
 
   function disableSimpleForm()
   {
-    $("#q").attr("disabled", "disabled");
+    $("#q").attr("disabled", "disabled").css('color','#bbbbcc');
     $("#appliedParams").hide(0);
   }
   function enableSimpleForm()
   {
-    $("#q").removeAttr("disabled");
+    $("#q").removeAttr("disabled").css('color','#808080');
     $("#appliedParams").show(0);
   }
 
