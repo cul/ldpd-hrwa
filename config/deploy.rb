@@ -56,5 +56,5 @@ end
 
 
 
-after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:version_write'
+after 'deploy:update_code', 'deploy:symlink_shared'
 before "deploy:symlink", "deploy:assets"
