@@ -615,14 +615,14 @@ function single_q_to_multi_q(q)
   //Let's remove any word in q that is preceeded by ' -' (space followed by a minus sign)
   //We'll also be doing a removal if q starts with a minus followed immediately by text
 
-  var q_exclude_regex = /aaa/g;
+  var q_exclude_regex = /(^-\w+)|(\s-)/g;
   var q_exclude_arr = q.match(q_exclude_regex);
   if(q_exclude_arr != null)
   {
 	//Remove leading minus sign
 	for(i = 0; i < q_exclude_arr.length; i++)
 	{
-	  q_exclude_arr[i] = q_exclude_arr[i].substring(1, q_exclude_arr[i].length);
+	  q_exclude_arr[i] = $.trim(q_exclude_arr[i]).substring(1, q_exclude_arr[i].length);
 	}
 	q = q.replace(q_exclude_regex, ''); //update q, removing q_exclude occurrences
 	parsed_q_exclude = q_exclude_arr.join(' ');
@@ -631,14 +631,14 @@ function single_q_to_multi_q(q)
   //Let's remove any word in q that is preceeded by ' +' (space followed by a plus sign)
   //We'll also be doing a removal if q starts with a plus followed immediately by text
 
-  var q_and_regex = /aaa/g;
+  var q_and_regex = /(^\+\w+)|(\s\+)/g;
   var q_and_arr = q.match(q_and_regex);
   if(q_and_arr != null)
   {
 	//Remove leading plus sign
 	for(i = 0; i < q_and_arr.length; i++)
 	{
-	  q_and_arr[i] = q_and_arr[i].substring(1, q_and_arr[i].length);
+	  q_and_arr[i] = $.trim(q_and_arr[i]).substring(1, q_and_arr[i].length);
 	}
 	q = q.replace(q_and_regex, ''); //update q, removing q_exclude occurrences
 	parsed_q_and = q_and_arr.join(' ');
