@@ -11,8 +11,10 @@ Hrwa::Application.routes.draw do
   match '/site_detail/:bib_key'  => 'catalog#site_detail'
 
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
-  match '/advanced_asf', :to => redirect( '/advanced_asf.html' )
-  match '/advanced_fsf', :to => redirect( '/advanced_fsf.html' )
+  match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
+  match '/advanced_fsf',      :to => redirect( '/advanced_fsf.html' )
+  match '/internal_feedback', :to => redirect( '/internal_feedback.html' )
+
 
   resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
