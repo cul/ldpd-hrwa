@@ -158,7 +158,7 @@ img.preview_icon:hover { opacity:1.0 }
 #start_new_search_link {margin-top: -25px;}
 
 /* Simple search form */
-#advo_link {padding-left:5px;padding-right:5px;line-height:19px;}
+#advo_link {padding:5px;line-height:20px; }
 
 /* advanced search form */
 #advo a { text-decoration:none; }
@@ -166,7 +166,7 @@ img.preview_icon:hover { opacity:1.0 }
 .advanced_options .control-group { margin-bottom:4px; }
 .advanced_options label.control-label { color:#777; margin-right:3px; }
 input#capture_start_date, input#capture_end_date { width:96px; }
-.advanced_options { margin-bottom:1em; }
+.advanced_options { margin-bottom:1em; clear:both; }
 .advanced_options a[rel=twipsy] { color:#aba; }
 .advanced_options h6 { color:#777; }
 .advanced_options .input-prepend { margin-bottom:3px; }
