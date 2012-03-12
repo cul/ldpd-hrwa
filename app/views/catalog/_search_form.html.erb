@@ -23,29 +23,29 @@
       <input type="hidden" name="search" value="true" />
 
       <div id="inside_of_form">
-      <div id="simple_options">
-	<div id="heross">
+		<div id="simple_options">
+		  <div id="heross">
 
-	  <div class="input-append">
-		<%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %>
+			<div class="input-append">
+			  <%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %>
 
-		<%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
-		<span class="submit_button_container">
-		  <span id="s_type_selector_and_submit">
-		    <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
-		    <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
-		    <label class="add-on hidden">
-		      <a href="#" id="form_submit" class="submitss">Submit</a>
-		    </label>
-		  </span>
-		</span>
-	  </div>
+			  <%#= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
+			  <span class="submit_button_container">
+				<span id="s_type_selector_and_submit">
+				  <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
+				  <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
+				  <label class="add-on hidden">
+					<a href="#" id="form_submit" class="submitss">Submit</a>
+				  </label>
+				</span>
+			  </span>
+			</div>
 
-	</div><!--/heross-->
-      </div>
+		  </div><!--/heross-->
+		  <%= render 'constraints', :localized_params=>params %>
+		</div><!--/simple_options-->
       </div> <!--/inside_of_form-->
 
-      <%= render 'constraints', :localized_params=>params %>
     <% end %>
 
     <div id="outside_of_form" class="invisible">
