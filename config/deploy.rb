@@ -52,9 +52,14 @@ namespace :deploy do
     run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean assets:precompile"
   end
 
+  desc "Write out version"
+  task :version_write do
+    run "cd #{release_path}/public; echo \"#{IO.read("VERSION").strip}\" > version.txt"
+  end
+
 end
 
 
 
-after 'deploy:update_code', 'deploy:symlink_shared'
+after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:version_write'
 before "deploy:symlink", "deploy:assets"
