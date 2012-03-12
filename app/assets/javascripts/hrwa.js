@@ -415,8 +415,9 @@ if(HRWA.q == "")
   //If q has a value, use that value for q.  Otherwise use the combined q_and, q_phrase, q_or and q_exclude
   HRWA.q = multi_q_to_single_q(HRWA.q_and, HRWA.q_phrase, HRWA.q_or, HRWA.q_exclude);
 }
-$('#simple_options #q').val(HRWA.q);
 
+$('#simple_options #q').val(HRWA.q);
+sync_all_forms('simple');
 
 function sync_all_forms(form_to_mirror) {
 
@@ -631,7 +632,7 @@ function single_q_to_multi_q(q)
   //Let's remove any word in q that is preceeded by ' -' (space followed by a minus sign)
   //We'll also be doing a removal if q starts with a minus followed immediately by text
 
-  var q_exclude_regex = /(^-\w+)|(\s-\w+)/g;
+  var q_exclude_regex = /(^-[^\s]+)|(\s-[^\s]+)/g;
   var q_exclude_arr = q.match(q_exclude_regex);
   if(q_exclude_arr != null)
   {
@@ -647,7 +648,7 @@ function single_q_to_multi_q(q)
   //Let's remove any word in q that is preceeded by ' +' (space followed by a plus sign)
   //We'll also be doing a removal if q starts with a plus followed immediately by text
 
-  var q_and_regex = /(^\+\w+)|(\s\+\w+)/g;
+  var q_and_regex = /(^\+[^\s]+)|(\s\+[^\s]+)/g;
   var q_and_arr = q.match(q_and_regex);
   if(q_and_arr != null)
   {
