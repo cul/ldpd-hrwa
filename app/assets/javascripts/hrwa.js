@@ -523,9 +523,24 @@ function multi_q_to_single_q(q_and, q_phrase, q_or, q_exclude)
 
   if(q_and.length > 0)
   {
-	var q_and_arr = $.trim(q_and).split(' ');
+	var quoted_q_and_to_append = '';
+
+	//q_and is a special case because I'm also allowing quotes to be used here
+	//This is an overflow area for multiple quoted items
+	//First we need to separate all quoted strings and
+	//then we'll add them at the end in the format "some string"
+	//This allows a user to have multi word q_and strings
+	var quoted_item_regex = /"([^"\\]*(\\.[^"\\]*)*)"/g;
+	var q_and_quoted_items_arr = q_and.match(quoted_item_regex);
+	if(q_and_quoted_items_arr != null)
+	{
+	  q_and = q_and.replace(q_phrase_regex, ''); //update a_and, removing quoted_item occurrences
+	  quoted_q_and_to_append = ' +' + q_and_quoted_items_arr.join(' +');
+	}
+
+	var q_and_arr = $.trim(q_and).replace(/\s+/g, ' ').split(' '); //trim, q_and, convert multi-spaces into single spaces, and split on single spaces
 	new_q_and_string = '+' + q_and_arr.join(' +');
-	new_q_and_string = new_q_and_string + ' '; //extra space after for formatting
+	new_q_and_string = new_q_and_string + quoted_q_and_to_append + ' '; //extra space after for formatting
   }
 
   if(q_phrase.length > 0)
