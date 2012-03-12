@@ -142,7 +142,7 @@ jQuery(function($) {
     $('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
     $('#simple_options').appendTo('#inside_of_form');
 
-    adv_to_q();
+    //adv_to_q();
     $('#advo_link').text('Adv+');
   }
 
@@ -162,7 +162,7 @@ jQuery(function($) {
       $('#advanced_options_fsf').appendTo('#inside_of_form');
     }
 
-    q_to_adv();
+    //q_to_adv();
     $('#advo_link').text('Adv-');
   }
 
