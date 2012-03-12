@@ -9,10 +9,11 @@
     <% end %>
      <a class="toggle_all_btn btn success" data-original-title="Expand all results">Expand All +</a>
 
-     <%= link_to '#', search_path(params.merge({:sort => 'score desc'})), {:class => 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
-
-     <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})), {:class => 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
-     <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})), {:class => 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
+    <%= link_to '#', search_path(params.merge({:sort => 'score desc'})), {:class => 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
+    <% if params[:search_type] == 'find_site' %>
+        <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})), {:class => 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
+        <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})), {:class => 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
+    <% end %>
 
     </div>
 </div>
