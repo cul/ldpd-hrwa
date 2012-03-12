@@ -700,6 +700,10 @@ function single_q_to_multi_q(q)
 	q = q.replace(q_and_regex, ''); //update q, removing q_exclude occurrences
 	parsed_q_and = q_and_arr.join(' ');
   }
+
+  /*
+  //TODO: Un-comment this out later
+
   //We'll also add any additional q_phrase_arr items to q_and so that they
   //still apply to the search
   if(q_phrase_arr != null && q_phrase_arr.length > 1)
@@ -708,6 +712,7 @@ function single_q_to_multi_q(q)
 	parsed_q_and += ' ' + q_phrase_arr[i];
   }
   parsed_q_and = $.trim(parsed_q_and); //remove leading and trailing whitespace
+  */
 
   //Whatever's left in the string can be placed in q_or.  But we'll need to
   //compress multi-spaces into single spaces.  The extra spaces appear as a
