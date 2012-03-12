@@ -170,6 +170,7 @@ input#capture_start_date, input#capture_end_date { width:96px; }
 .advanced_options a[rel=twipsy] { color:#aba; }
 .advanced_options h6 { color:#777; }
 .advanced_options .input-prepend { margin-bottom:3px; }
+.advanced_options .hidden_submit {visibility:hidden;height:0px;width:0px;padding:0;margin:0;border:none;}
 
 
 /* result pagination */
