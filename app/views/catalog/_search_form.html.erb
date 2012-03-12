@@ -22,13 +22,7 @@
 	:'data-searchtype-onload' => (params[:search_type] == 'archive' ? 'archive' : 'find_site') do %>
       <input type="hidden" name="search" value="true" />
 
-      <div id="inside_of_form"></div>
-
-      <%= render 'constraints', :localized_params=>params %>
-    <% end %>
-
-    <div id="outside_of_form" class="invisible">
-
+      <div id="inside_of_form">
       <div id="simple_options">
 	<div id="heross">
 
@@ -49,10 +43,12 @@
 
 	</div><!--/heross-->
       </div>
+      </div> <!--/inside_of_form-->
 
+      <%= render 'constraints', :localized_params=>params %>
+    <% end %>
 
-
-
+    <div id="outside_of_form" class="invisible">
 
       <div id="advanced_options_fsf" class="advanced_options">
 	<h6>Find Pages/Sites that have&hellip;</h6>
