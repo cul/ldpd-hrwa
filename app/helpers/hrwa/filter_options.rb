@@ -17,7 +17,6 @@ module HRWA::FilterOptions
 
     opts[ :selected ].each { | selected_value |
       if option_hash.has_key?( selected_value )
-        Rails.logger.debug(selected_value + ' is selected!!!!!!!!!!!!!!!!!!!!')
         option_hash[ selected_value ] = true
       end
     }

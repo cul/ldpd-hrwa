@@ -7,25 +7,20 @@
     options ||= {}
     options[:escape_label] = true unless options.has_key?(:escape_label)
     options[:escape_value] = true unless options.has_key?(:escape_value)
+
+    processed_label = options[:escape_label] ? h(label) : label
+    processed_value = options[:escape_value] ? h(value) : value
 -%>
 
-<%
-
-  # If the label isn't blank, then this is a facet.  We only want to show
-  # facets for now.  If the label IS blank, don't show it (because it's probably q).
-  
-  if ! label.blank?
-
-    link_body = ''
-
-    unless options[:remove].blank?
-      link_body = "[x] #{options[:escape_label] ? h(label) : label}: #{options[:escape_value] ? h(value) : value}".html_safe
+<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
+      <%
+      if ! label.blank? && ! options[:remove].blank?
+	removal_link_body = "#{processed_label}: #{processed_value}"
+	%>
+        <%= link_to(removal_link_body,
+		    options[:remove],
+		    :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])) %>
+	<%
+      end
       %>
-      <%= link_to(link_body,
-			  options[:remove],
-			  :alt=>'remove',
-			  :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])
-		) %><%
-    end
-  end
-%>
+</span>

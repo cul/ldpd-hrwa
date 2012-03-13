@@ -2,24 +2,12 @@ module HRWA::RenderConstraintsHelperBehavior
   include Blacklight::RenderConstraintsHelperBehavior
 
   # ! Override of default render_constraints !
+  # Removed query rendering as a facet pill: render_constraints_query(localized_params)
   #
   # Render actual constraints, not including header or footer
   # info.
   def render_constraints(localized_params = params)
-    (render_constraints_query(localized_params) + render_constraints_filters(localized_params) + render_exclude_filters(localized_params)).html_safe
-  end
-
-  # ! Override of default render_constraints_filters !
-  # Adding ability to display exclusion filters
-  #
-  def render_constraints_filters(localized_params = params)
-    return "".html_safe unless localized_params[:f]
-    content = []
-    localized_params[:f].each_pair do |facet,values|
-      content << render_filter_element(facet, values, localized_params)
-    end
-
-    return content.flatten.join("\n").html_safe
+    (render_constraints_filters(localized_params) + render_exclude_filters(localized_params)).html_safe
   end
 
   #TODO: Display exclusion filter as sub-search-bar "pills"
