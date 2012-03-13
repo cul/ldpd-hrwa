@@ -286,7 +286,7 @@ $('a.ccf_quicklook').live('click', function() {
     }
 
     // load remote content
-    dlog.load( url);
+    dlog.load(url);
     $('#ccf_dialog').dialog({zIndex:10001,title:'HRWA CCF Quicklook [<a class="blue" href="'+permalink+'">permalink</a>]',position:['center',60],width:940,modal:true, close: function(event, ui)
             { $(this).html('Loading Quicklook...'); }
         });
