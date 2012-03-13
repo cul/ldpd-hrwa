@@ -442,8 +442,12 @@ if(HRWA.q == "")
   HRWA.q = multi_q_to_single_q(HRWA.q_and, HRWA.q_phrase, HRWA.q_or, HRWA.q_exclude);
 }
 
-$('#simple_options #q').val(HRWA.q);
-sync_all_forms('simple');
+//Only run search query related code if we're on the search page!
+if($('#simple_options #q').length != 0)
+{
+  $('#simple_options #q').val(HRWA.q);
+  sync_all_forms('simple');
+}
 
 function sync_all_forms(form_to_mirror) {
 
@@ -721,5 +725,11 @@ function single_q_to_multi_q(q)
 
   return new Array(parsed_q_and, parsed_q_phrase, parsed_q_or, parsed_q_exclude);
 }
+
+// Warn users that the submit bug report link on the bottom doesn't currently work
+$('#submit_bug_report_link').bind('click', function(){
+  alert('Bug reporting by public users is not yet implemented.');
+  return false;
+});
 
 }); // ready
