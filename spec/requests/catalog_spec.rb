@@ -72,6 +72,8 @@ end
 #
 # TODO: change this to use form fill-in when JS seleniun is working on bronte
 describe 'the portal search' do
+  
+  
   # it 'can successfully run a find_site search immediately after an archive search' do
     # visit '/search'
     # fill_in 'q', :with => 'women'
@@ -119,24 +121,28 @@ describe 'the portal search' do
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error')
   end
+
+  describe 'advanced_search_version_of_default_search_form' do
+
+    it 'returns search results for a known successful query' do
+      visit '/search'
+  
+      click_link 'advo_link'
+      fill_in 'q_and',     :with => 'water'
+      fill_in 'q_phrase',  :with => 'Provides information'
+      fill_in 'q_or',      :with => 'human rights'
+      fill_in 'q_exclude', :with => 'zamboni'
+      click_link 'form_submit'
+      page.should have_content('Center for Economic and Social Rights')
+    end
+
+  end
+
 end
 
-# describe 'advanced_search_version_of_default_search_form' do
-#
-  # it 'returns search results for a known successful query' do
-#
-    # visit '/search'
-#
-    # click_link 'advo_link'
-    # fill_in 'q_and', :with => 'water'
-    # fill_in 'q_phrase', :with => 'Provides information'
-    # fill_in 'q_or', :with => 'human rights'
-    # fill_in 'q_exclude', :with => 'zamboni'
-    # click_button 'advsubmit'
-    # page.should have_content('Center for Economic and Social Rights')
-  # end
-#
-# end
+
+#################################################################################
+#################################################################################
 
 # TODO: convert these to production search form tests
 describe 'advanced_search_asf' do
