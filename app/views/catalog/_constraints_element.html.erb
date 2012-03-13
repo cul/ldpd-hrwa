@@ -15,7 +15,7 @@
 <span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
       <%
       if ! label.blank? && ! options[:remove].blank?
-	removal_link_body = "#{processed_label} > #{processed_value}"
+	removal_link_body = "#{processed_label}: #{processed_value}"
 	%>
         <%= link_to(removal_link_body,
 		    options[:remove],
