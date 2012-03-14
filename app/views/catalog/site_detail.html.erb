@@ -24,27 +24,27 @@
             </tr>
             <% end %>
             <tr>
-              <td>Creator:</td>
+              <td>Creator</td>
               <td><%= @document.get('creator_name') %></td>
             </tr>
             <tr>
-              <td>Organization Type:</td>
+              <td>Organization Type</td>
               <td><%= @document.get('organization_type') %></td>
             </tr>
             <tr>
-              <td>Organization Based In:</td>
+              <td>Organization Based In</td>
               <td><%= @document.get('organization_based_in') %></td>
             </tr>
             <tr>
-              <td>Geographic Focus:</td>
+              <td>Geographic Focus</td>
               <td><%= @document.get('geographic_focus',{:sep => nil}).join(', ') %></td>
             </tr>
             <tr>
               <td><%= ((@document.get('subject',{:sep => nil})).length == 1) ? 'Subject' : 'Subject'.pluralize %></td>
-              <td><%= @document.get('subject',{:sep => nil}).join(', ') %></td>
+              <td><%= @document.get('subject',{:sep => nil}).join('<br />').html_safe %></td>
             </tr>
             <tr>
-              <td>Summary:</td>
+              <td>Summary</td>
               <td><%= @document.get('summary') %></td>
             </tr>
             <tr>
