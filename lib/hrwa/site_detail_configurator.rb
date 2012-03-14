@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class HRWA::FindSiteSearchConfigurator
+class HRWA::SiteDetailConfigurator
   unloadable
 
   def config_proc
@@ -223,7 +223,7 @@ class HRWA::FindSiteSearchConfigurator
 
     # Takes optional environment arg for testability
     def solr_url( environment = Rails.env )
-      YAML.load_file( 'config/solr.yml' )[ environment ][ 'fsf' ][ 'url' ]
+      YAML.load_file( 'config/solr.yml' )[ environment ][ 'site_detail' ][ 'url' ]
     end
 
     # Did Blacklight give us everything we need in SOLR response and
@@ -249,7 +249,7 @@ class HRWA::FindSiteSearchConfigurator
     end
 
     def name
-      return 'find_site'
+      return 'site_detail'
     end
 
 end

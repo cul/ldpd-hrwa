@@ -15,11 +15,15 @@ development: &development
     url: http://carter.cul.columbia.edu:8080/solr-4/asf
   fsf:
     url: http://carter.cul.columbia.edu:8080/solr-4/fsf
+  site_detail:
+    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
   
 test: &test
   asf:
     url: http://carter.cul.columbia.edu:8080/solr-4/asf
   fsf:
+    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
+  site_detail:
     url: http://carter.cul.columbia.edu:8080/solr-4/fsf
 
 hrwa_dev: *development
@@ -28,6 +32,8 @@ hrwa_test:
   asf:
     url: http://harding.cul.columbia.edu:8080/solr-4/asf
   fsf:
+    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+  site_detail:
     url: http://harding.cul.columbia.edu:8080/solr-4/fsf
 
 cucumber:

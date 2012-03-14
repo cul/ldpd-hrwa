@@ -57,7 +57,6 @@
 
 	<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
 	<%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
-	[<%= link_to preview_icon, archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
       </span>
     </dd>
 

@@ -20,7 +20,7 @@
 
     <%= form_tag search_path, :method => :get, :id => 'searchform',
     :'data-searchmode-onload' => (params[:search_mode] == 'advanced' ? 'advanced' : 'simple'),
-	:'data-searchtype-onload' => (params[:search_type] == 'archive' ? 'archive' : 'find_site') do %>
+	:'data-searchtype-onload' => ( ! @configurator.nil? && @configurator.name == 'archive' ? 'archive' : 'find_site') do %>
       <input type="hidden" name="search" value="true" />
 
       <div id="inside_of_form">
@@ -37,8 +37,8 @@
 								     ]).html_safe %>
 			  <span class="submit_button_container">
 				<span id="s_type_selector_and_submit">
-				  <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
-				  <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
+				  <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
+				  <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
 				  <label class="add-on hidden">
 					<a href="#" id="form_submit" class="submitss">Submit</a>
 				  </label>
@@ -171,8 +171,8 @@
 		<label class="control-label">results per page</label>
 		<select class="control-group" name="per_page">
 			<option>10</option>
-			<option>20</option>
-			<option>30</option>
+			<option>25</option>
+			<option>50</option>
 		</select>
 	    </div>
 	 </div>
@@ -334,8 +334,8 @@
 		<label class="control-label">results per page</label>
 		<select class="control-group" name="per_page">
 			<option>10</option>
-			<option>20</option>
-			<option>30</option>
+			<option>25</option>
+			<option>50</option>
 		</select>
 	    </div>
 	 </div>

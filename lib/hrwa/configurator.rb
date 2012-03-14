@@ -13,6 +13,8 @@ class HRWA::Configurator
         @configurator = HRWA::ArchiveSearchConfigurator.new
       when :find_site
         @configurator = HRWA::FindSiteSearchConfigurator.new
+      when :site_detail
+        @configurator = HRWA::SiteDetailConfigurator.new
     end
   end
 
@@ -46,12 +48,12 @@ class HRWA::Configurator
          method_name =~ /^facet_fields|^index_fields|^search_fields|^show_fields|^sort_fields/ }.empty?
       config.facet_fields  = {}
       config.index_fields  = {}
-      config.search_fields = {}   
+      config.search_fields = {}
       config.show_fields   = {}
       config.sort_fields   = {}
     end
   end
-  
+
   def result_partial
     return @configurator.result_partial
   end
@@ -66,6 +68,10 @@ class HRWA::Configurator
 
   def prioritized_highlight_field_list
     return @configurator.prioritized_highlight_field_list
+  end
+
+  def name
+    return @configurator.name
   end
 
 end

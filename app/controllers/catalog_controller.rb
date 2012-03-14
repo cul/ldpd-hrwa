@@ -71,6 +71,7 @@ class CatalogController < ApplicationController
   # display the site detail for an fsf record, using bib_key as a unique identifier
   # use the bib_key to get a single document from the solr index
   def site_detail
+    _configure_by_search_type('site_detail')
     @bib_key = params[:bib_key]
     @response, @document = get_solr_response_for_doc_id(@bib_key)
   end
@@ -113,10 +114,10 @@ class CatalogController < ApplicationController
     end
   end
 
-  def _configure_by_search_type
+  def _configure_by_search_type(search_type = params[:search_type])
     @debug = ''.html_safe
 
-    @search_type = params[:search_type].to_sym
+    @search_type = search_type.to_sym
 
     @configurator = HRWA::Configurator.new( @search_type )
 
