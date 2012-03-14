@@ -15,7 +15,7 @@ describe 'all searches' do
 
   it 'render the "search home page" if there are no params' do
     visit '/search'
-    page.should have_content('Search Tips')
+    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS' )
   end
 end
 
@@ -77,7 +77,7 @@ describe 'the portal search' do
     # choose 'asfsearch_t'
     # click_link 'top_form_submit'
     visit '/search?search_type=archive&search=true&q=women'
-    page.should have_content( 'Displaying results' )
+    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
     
     # TODO: change this to use form fill-in when JS seleniun is working on bronte
     # visit '/search'
@@ -85,8 +85,8 @@ describe 'the portal search' do
     # choose 'fsfsearch_t'
     # click_link 'top_form_submit'
     visit '/search?search_type=find_site&search=true&q=women'
-    page.should have_content( 'Displaying results' )
-    page.should_not have_content( 'RSolr::Error' )
+    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
+    page.should_not have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS' )
   end
 
   it 'can successfully run an archive search immediately after a find_site search' do
@@ -97,7 +97,7 @@ describe 'the portal search' do
     # choose 'fsfsearch'
     # click_link 'form_submit'
     visit '/search?search_type=find_site&search=true&q=women'
-    page.should have_content( 'Displaying results' )
+    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
 
     # TODO: change this to use form fill-in when JS seleniun is working on bronte
     # visit '/search'
@@ -105,8 +105,8 @@ describe 'the portal search' do
     # choose 'asfsearch'
     # click_link 'form_submit'
     visit '/search?search_type=archive&search=true&q=women'
-    page.should have_content( 'Displaying results' )
-    page.should_not have_content( 'RSolr::Error')
+    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
+    page.should_not have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS')
   end
 
   describe 'advanced_search_version_of_default_search_form' do
