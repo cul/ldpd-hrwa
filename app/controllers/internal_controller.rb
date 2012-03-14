@@ -44,7 +44,7 @@ class InternalController < ApplicationController
         # Okay, move along
       else
         @submission_response << "This is not a valid feedback submission.  Please use the feedback form:</br>\n"
-        @submission_response << %Q{<a href="#{ FEEDBACK_FORM_URL }">#{ FEEDBACK_FORM_URL }"</a><br/>"
+        @submission_response << %Q{<a href="#{ FEEDBACK_FORM_URL }">#{ FEEDBACK_FORM_URL }"</a><br/>}
         exit
       end
     }
