@@ -52,25 +52,35 @@
               <td><%= @document.get('language',{:sep => nil}).join(', ') %></td>
             </tr>
             <tr>
-              <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
-              <% #For now, I'm assuming that the original url is just the first one. %>
-              <% original_url = @document.get("original_urls").is_a?(Array) ? @document.get("original_urls")[0] : @document.get("original_urls") %>
+              <% original_url_arr = @document.get('original_urls',{:sep => nil}) %>
+              <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+              <% archived_url_arr = @document.get('archived_urls', {:sep => nil}) %>
+
+              <% #For now, we're assuming that there's a one-to-one link between original_urls and archive_urls %>
+              <% # TODO: Vertify that the above assumption is correct %>
+              <% # I'm still doing a check to make sure that each original_url has a corresponding archive_url value %>
               <td><%= ((@document.get('original_urls',{:sep => nil})).length == 1) ? 'URL at Time of Capture' : 'URLs at Times of Capture' %></td>
-              <td><%= @document.get('original_urls',{:sep => nil}).join(', ') %></td>
+              <td>
+                <%
+                original_url_arr.each_index do |index|
+                  if(original_url_arr[index] && archived_url_arr[index])
+                    %><%= original_url_arr[index].html_safe + ' - '.html_safe + link_to('See Website Captures', archived_url_arr[index], :title => 'CCF permalink for: ' + original_url_arr[index]) %><%
+                  end
+                  if(original_url_arr[index+1] && archived_url_arr[index+1])
+                      %><br /><%
+                  end
+                end
+                %>
+              </td>
             </tr>
             <tr>
-              <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
-              <% archived_url = @document.get('archived_urls').is_a?(Array) ? @document.get('archived_urls')[0] : @document.get('archived_urls') %>
-              <!--td>Crawl Calendar:</td> <td><a class="blue" href="ccf.php?site=http://www.cesr.org/">Crawls for http://www.cesr.org/</a></td-->
-              <td>See Website Captures:</td>
-              <td><%= link_to 'Website Captures', archived_url, :title => 'CCF permalink for: ' + original_url.html_safe %> <!--[<%=link_to preview_icon, archived_url, :title => 'CCF Preview for: ' + original_url, :class => 'ccf_quicklook' %>]--> </td>
             </tr>
           </tbody>
         </table>
       </article>
-    </div>
-  </div>
+    </div><!-- /primary -->
+  </div><!-- /row -->
 
-  <hr>
+  <hr />
 
 </div> <!-- /container -->
