@@ -69,54 +69,41 @@ end
 # find_site had sort='score desc'.  If there was no sort param in the HTTP query string
 # then the FindSiteSearchConfigurator would attempt to set the sort field to
 # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
-#
-# TODO: change this to use form fill-in when JS seleniun is working on bronte
 describe 'the portal search' do
-  
-  
-  # it 'can successfully run a find_site search immediately after an archive search' do
-    # visit '/search'
-    # fill_in 'q', :with => 'women'
-    # choose 'asfsearch'
-    # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' )
-#
-    # visit '/search'
-    # fill_in 'q', :with => 'water'
-    # choose 'fsfsearch'
-    # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' )
-    # page.should_not have_content( 'RSolr::Error' )
-  # end
-#
-  # it 'can successfully run an archive search immediately after a find_site search' do
-    # visit '/search'
-    # fill_in 'q', :with => 'water'
-    # choose 'fsfsearch'
-    # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' )
-#
-    # visit '/search'
-    # fill_in 'q', :with => 'women'
-    # choose 'asfsearch'
-    # click_link 'form_submit'
-    # page.should have_content( 'Displaying results' )
-    # page.should_not have_content( 'RSolr::Error' )
-  # end
-
   it 'can successfully run a find_site search immediately after an archive search' do
+    # TODO: change this to use form fill-in when JS seleniun is working on bronte
+    # visit '/search'
+    # fill_in 'q', :with => 'women'
+    # choose 'asfsearch_t'
+    # click_link 'top_form_submit'
     visit '/search?search_type=archive&search=true&q=women'
     page.should have_content( 'Displaying results' )
-
+    
+    # TODO: change this to use form fill-in when JS seleniun is working on bronte
+    # visit '/search'
+    # fill_in 'q', :with => 'water'
+    # choose 'fsfsearch_t'
+    # click_link 'top_form_submit'
     visit '/search?search_type=find_site&search=true&q=women'
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error' )
   end
 
   it 'can successfully run an archive search immediately after a find_site search' do
+    # TODO: change this to use form fill-in when JS seleniun is working on bronte
+    # it 'can successfully run an archive search immediately after a find_site search' do
+    # visit '/search'
+    # fill_in 'q', :with => 'water'
+    # choose 'fsfsearch'
+    # click_link 'form_submit'
     visit '/search?search_type=find_site&search=true&q=women'
     page.should have_content( 'Displaying results' )
 
+    # TODO: change this to use form fill-in when JS seleniun is working on bronte
+    # visit '/search'
+    # fill_in 'q', :with => 'women'
+    # choose 'asfsearch'
+    # click_link 'form_submit'
     visit '/search?search_type=archive&search=true&q=women'
     page.should have_content( 'Displaying results' )
     page.should_not have_content( 'RSolr::Error')
