@@ -1,4 +1,5 @@
 require 'blacklight/catalog'
+require 'mail'
 require 'pp'
 
 class InternalController < ApplicationController
@@ -7,7 +8,11 @@ class InternalController < ApplicationController
   FEEDBACK_FORM_URL       = '/internal_feedback'
   SEPARATOR = '=========================================================='    
   
-  def feedback
+  def feedback_form
+    render 'feedback_form', :layout => false
+  end
+  
+  def feedback_submit
     @submission_response = ''
     jira_params = [
                    'appCodeName',
@@ -45,20 +50,18 @@ class InternalController < ApplicationController
       else
         @submission_response << "This is not a valid feedback submission.  Please use the feedback form:</br>\n"
         @submission_response << %Q{<a href="#{ FEEDBACK_FORM_URL }">#{ FEEDBACK_FORM_URL }"</a><br/>}
-        exit
       end
     }
     
-    # Get the text for the JIRA email
-    jira_email_content = get_jira_email_content( jira_params )
-    
     # Construct header
+    email_header              = {}
     email_header[ 'to' ]      = HRWA_JIRA_EMAIL_ADDRESS
     email_header[ 'cc' ]      = CC_EMAIL_ADDRESS
-    email_header[ 'subject' ] = "BUG: #{ params [ :summary ] }"
+    email_header[ 'subject' ] = "BUG: #{ params[ :summary ] }"
     # Send the email
     email_sent_successfully = send_jira_email( jira_email_content,
-                                               email_header )    
+                                               email_header )
+                                               
     # Report to user
     if email_sent_successfully
       @submission_response << "Feedback has been successfully sent to Jira Project HRWA Portal.\nInfo submitted:\n"
@@ -66,72 +69,75 @@ class InternalController < ApplicationController
     else
       @submission_response << 'Unable to submit feedback to Jira Project HRWA Portal.  ' <<
         'Please report this problem to da217@columbia.edu.'
-      exit
     end
   end
   
-  def get_environment_message
-    environment_mssage = ''
-    environment_message << "USER AGENT          : #{ params[ 'userAgent'     ] }\n"
-    environment_message << "PLATFORM            : #{ params[ 'platform'      ] }\n"
-    environment_message << "OPERATING SYSTEM    : #{ params[ 'oscpu'         ] }\n"
-    environment_message << "JAVA ENABLED        : #{ params[ 'javaEnabled'   ] }\n"
-    environment_message << "COOKIES ENABLED     : #{ params[ 'cookieEnabled' ] }\n"
-    environment_message << "PLUGINS INSTALLED   : \n"
-    environment_message << SEPARATOR + "\n"
-    environment_message << "#{ params[ :plugins ] }\n"
-    environment_message << SEPARATOR + "\n\n\n"
-    environment_message << "MIMETYPES SUPPORTED : \n"
-    environment_message << SEPARATOR + "\n"
-    environment_message << "params[ 'mimeTypes' ] }\n"
-    environment_message << SEPARATOR + "\n"
+  def environment_message
+    message = ''
+    message << "USER AGENT          : #{ params[ 'userAgent'     ] }\n"
+    message << "PLATFORM            : #{ params[ 'platform'      ] }\n"
+    message << "OPERATING SYSTEM    : #{ params[ 'oscpu'         ] }\n"
+    message << "JAVA ENABLED        : #{ params[ 'javaEnabled'   ] }\n"
+    message << "COOKIES ENABLED     : #{ params[ 'cookieEnabled' ] }\n"
+    message << "PLUGINS INSTALLED   : \n"
+    message << SEPARATOR + "\n"
+    message << "#{ params[ :plugins ] }\n"
+    message << SEPARATOR + "\n\n\n"
+    message << "MIMETYPES SUPPORTED : \n"
+    message << SEPARATOR + "\n"
+    message << "params[ 'mimeTypes' ] }\n"
+    message << SEPARATOR + "\n"
     
     # These are not that important.  Might not even need to send them.
-    environment_message << "BROWSER CODE NAME             : #{ params[ 'appCodeName' ] }\n"
-    environment_message << "BROWSER NAME                  : #{ params[ 'appName'     ] }\n"
-    environment_message << "BROWSER VERSION               : #{ params[ 'appVersion'  ] }\n"
-    environment_message << "BROWSER BUILD ID              : #{ params[ 'buildID'     ] }\n"
-    environment_message << "DEFAULT LANGUAGE OF BROWSER   : #{ params[ 'language'    ] }\n"
-    environment_message << "BROWSER PRODUCT NAME          : #{ params[ 'product'     ] }\n"
-    environment_message << "BROWSER BUILD NUMBER          : #{ params[ 'productSub'  ] }\n"
-    environment_message << "BROWSER VENDOR                : #{ params[ 'vendor'      ] }\n"
-    environment_message << "BROWSER VENDOR VERSION NUMBER : #{ params[ 'vendorSub'   ] }\n"
+    message << "BROWSER CODE NAME             : #{ params[ 'appCodeName' ] }\n"
+    message << "BROWSER NAME                  : #{ params[ 'appName'     ] }\n"
+    message << "BROWSER VERSION               : #{ params[ 'appVersion'  ] }\n"
+    message << "BROWSER BUILD ID              : #{ params[ 'buildID'     ] }\n"
+    message << "DEFAULT LANGUAGE OF BROWSER   : #{ params[ 'language'    ] }\n"
+    message << "BROWSER PRODUCT NAME          : #{ params[ 'product'     ] }\n"
+    message << "BROWSER BUILD NUMBER          : #{ params[ 'productSub'  ] }\n"
+    message << "BROWSER VENDOR                : #{ params[ 'vendor'      ] }\n"
+    message << "BROWSER VENDOR VERSION NUMBER : #{ params[ 'vendorSub'   ] }\n"
 
-    return environment_message
+    return message
   end
   
-  def get_labels_message( )
+  def labels_message( )
     # TODO
   end
   
-  def get_jira_directive( name, value )    
-    return "@name=value\n"
+  def jira_directive( name, value )    
+    return "#{ name } = #{ value }\n"
   end
   
-  def get_jira_email_content( jira_fields )
-    jira_email_content  = ''
+  def jira_email_content
+    content = ''
           
-    jira_email_content << get_jira_directive( 'summary'     , params[ 'summary'    ]      )
-    jira_email_content << get_jira_directive( 'environment' , get_environment_message( )  )
-    jira_email_content << get_jira_directive( 'issueType'   , params[ 'issueType'  ]      )
-    jira_email_content << get_jira_directive( 'priority'    , params[ 'priority'   ]      )
-    jira_email_content << get_jira_directive( 'components'  , params[ 'components' ]      )
-    jira_email_content << get_jira_directive( 'assignee'    , params[ 'assignee'   ]      )
-    jira_email_content << get_jira_directive( 'reporter'    , params[ 'reporter'   ]      )
+    content << jira_directive( 'summary'     , params[ 'summary'    ]      )
+    content << jira_directive( 'environment' , environment_message         )
+    content << jira_directive( 'issueType'   , params[ 'issueType'  ]      )
+    content << jira_directive( 'priority'    , params[ 'priority'   ]      )
+    content << jira_directive( 'components'  , params[ 'components' ]      )
+    content << jira_directive( 'assignee'    , params[ 'assignee'   ]      )
+    content << jira_directive( 'reporter'    , params[ 'reporter'   ]      )
     
-    jira_email_content << "\n\n#{ params[ 'description' ] }\n"
+    content << "\n\n#{ params[ 'description' ] }\n"
     
     # TODO
-    #jira_email_content << get_jira_directive( 'labels'     , get_labels_message( )      )
+    # content << get_jira_directive( 'labels'     , get_labels_message( )      )
     
-    return jira_email_content
+    return content
   end
 
   def send_jira_email( email_content, email_header )
-    email_sent_successfully = mail( email_header[ 'to' ],
-                                    email_header[ 'subject' ],
-                                    email_content,
-                                    'cc: ' . email_header[ 'cc' ] )
-    return email_sent_successfully        
+    mail = Mail.new {
+      from    'InternalController@columbia.edu'
+      to      email_header[ 'to'      ]
+      cc      email_header[ 'cc'      ]
+      subject email_header[ 'subject' ]
+      debugger
+      body    email_content
+    }
+    mail.deliver!
   end
 end
