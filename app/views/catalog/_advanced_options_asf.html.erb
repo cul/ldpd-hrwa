@@ -1,0 +1,152 @@
+<input type="hidden" name="search_mode" value="advanced" />
+
+<h6>Find Pages/Sites that have&hellip;</h6>
+<div class="input-prepend">
+        <label class="add-on">all these words:</label>
+        <input class="span11 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+</div>
+<div class="input-prepend">
+        <label class="add-on">this exact wording or phrase:</label>
+        <input class="span11 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+</div>
+<div class="input-prepend">
+        <label class="add-on">one or more of these words:</label>
+        <input class="span11 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
+</div>
+<h6>But don't show results that have&hellip;</h6>
+<div class="input-prepend">
+        <label class="add-on">any of these unwanted words:</label>
+        <input class="span11 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+</div>
+
+<div class="row">
+<div class="span14">
+    <h6>Additional Options</h6>
+<div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">organization type</label>
+        <select name="f[organization_type__facet][]" multiple="multiple">
+          <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
+          <% organization_type_options(:selected => selected_items).each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+    </div>
+    <div class="control-group">
+      <label class="control-label">geographic focus</label>
+      <select name="f[geographic_focus__facet][]" multiple="multiple">
+        <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+        <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+        <% end %>
+      </select>
+    </div>
+        <div class="control-group">
+        <label class="control-label">organization based in</label>
+          <select name="f[organization_based_in__facet][]" multiple="multiple">
+            <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
+            <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
+              <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+            <% end %>
+        </select>
+    </div>
+        <div class="control-group">
+        <label class="control-label">file type</label>
+        <select class="control-group" name="f[mimetype][]" multiple="multiple">
+          <%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
+          <%# file_type_options(:selected => selected_items).each do | key, value | %>
+            <%#= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <%# end %>
+        </select>
+    </div>
+</div>
+<div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">site language</label>
+        <select name="f[language__facet][]" multiple="multiple">
+          <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
+          <% language_options(:selected => selected_items).each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+        <!--Non-displayed facets below here-->
+    </div>
+
+        <div class="control-group">
+        <label class="control-label">creator name</label>
+        <select name="f[creator_name__facet][]" multiple="multiple">
+          <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
+          <% creator_name_options(:selected => selected_items).each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+    </div>
+    <div class="control-group">
+      <label class="control-label">domain</label>
+      <select class="control-group" name="f[domain][]" multiple="multiple">
+        <% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+        <% domain_options(:selected => selected_items).each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+        <% end %>
+      </select>
+    </div>
+    <div id="search_date_range" class="control-group">
+      <label class="control-label">date of capture</label>
+      <% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
+         capture_end_date_value   = params[ :capture_end_date ].nil?   ? '' : params[ :capture_end_date   ] %>
+      <input id="capture_start_date" class="span2 datepicker" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 datepicker" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
+    </div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="span14">
+ <h6>display options</h6>
+ <div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">results per page</label>
+        <select class="control-group" name="per_page">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+        </select>
+    </div>
+ </div>
+ <div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">sort</label>
+        <select class="control-group" name="sort">
+          <option value="score desc">Relevance</option>
+        </select>
+    </div>
+ </div>
+</div>
+</div>
+
+<div class="row">
+<div class="span14">
+ <h6>dev options (temporary)</h6>
+ <div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">host</label>
+        <select class="control-group">
+          <option></option>
+        </select>
+    </div>
+ </div>
+ <div class="span7 nomar">
+        <div class="control-group">
+        <label class="control-label">core</label>
+        <select class="control-group">
+          <option></option>
+        </select>
+    </div>
+ </div>
+</div>
+</div>
+
+<span>
+  <%# hidden Submit button goes here -- allows use of enter for submitting form %>
+  <input type="submit" value="submit" class="hidden_submit" />
+</span>

@@ -13,7 +13,7 @@
       <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
     </dd>
 
-    <dd class="hl_snippet invisible">
+    <dd class="fsf hl_snippet invisible">
       <%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
