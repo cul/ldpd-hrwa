@@ -217,10 +217,6 @@ class HRWA::SiteDetailConfigurator
       return 'document'
     end
 
-    def search_type_specific_processing( extra_controller_params, params )
-      return false
-    end
-
     # Takes optional environment arg for testability
     def solr_url( environment = Rails.env )
       YAML.load_file( 'config/solr.yml' )[ environment ][ 'site_detail' ][ 'url' ]
