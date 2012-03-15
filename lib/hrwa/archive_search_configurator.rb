@@ -77,10 +77,6 @@ class HRWA::ArchiveSearchConfigurator
                                :label => 'Website Language',
                                :limit => 5
 
-        config.add_facet_field 'contentMetaLanguage',
-                               :label => 'Language of page',
-                               :limit => 5
-
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator',
                                :limit => 5
