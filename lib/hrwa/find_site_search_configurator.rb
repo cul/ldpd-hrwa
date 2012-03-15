@@ -5,6 +5,9 @@ class HRWA::FindSiteSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
+          :defType          => "dismax",
+          :facet            => true,
+          :'facet.mincount' => 1,
           :hl               => true,
           :'hl.fragsize'    => 500,
           :'hl.fl'          => [
@@ -20,6 +23,7 @@ class HRWA::FindSiteSearchConfigurator
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
+          :'q.alt'          => "*:*",
           :qf               => [
                                 "alternate_title^1",
                                 "creator_name^1",
@@ -31,10 +35,6 @@ class HRWA::FindSiteSearchConfigurator
                                 "title^1",
                                 ],
           :rows             => 10,
-          :'q.alt'          => "*:*",
-          :facet            => true,
-          :'facet.mincount' => 1,
-          :defType          => "dismax"
         }
 
         config.unique_key = "id"
@@ -66,6 +66,18 @@ class HRWA::FindSiteSearchConfigurator
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
 
+        config.add_facet_field 'geographic_focus__facet',
+                               :label => 'Geographic Focus',
+                               :limit => 5
+
+        config.add_facet_field 'language__facet',
+                               :label => 'Language',
+                               :limit => 5
+
+        config.add_facet_field 'organization_based_in__facet',
+                               :label => 'Organization Based In',
+                               :limit => 5
+
         config.add_facet_field 'organization_type__facet',
                                :label => 'Organization Type',
                                :limit => 5
@@ -74,40 +86,28 @@ class HRWA::FindSiteSearchConfigurator
                                :label => 'Subject',
                                :limit => 5
 
-        config.add_facet_field 'geographic_focus__facet',
-                               :label => 'Geographic Focus',
-                               :limit => 5
-
-        config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization Based In',
-                               :limit => 5
-
-        config.add_facet_field 'language__facet',
-                               :label => 'Language',
-                               :limit => 5
-
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
         # handler defaults, or have no facets.
         config.default_solr_params[:'facet.field'] = config.facet_fields.keys
 
         # solr fields to be displayed in the index (search results) view
-        #   The ordering of the field names is the order of the display
-        config.add_index_field 'title', :label => 'Title:'
-        config.add_index_field 'alternate_title', :label => 'Alternate Title:'              #multivalued
-        config.add_index_field 'summary', :label => 'Summary:'
-        config.add_index_field 'original_urls', :label => 'Original URLs:'                  #multivalued
-        config.add_index_field 'archived_urls', :label => 'Archived URLs:'                  #multivalued
-
-        config.add_index_field 'organization_type', :label => 'Organization Type:'
-        config.add_index_field 'organization_type__facet', :label => 'Organization Type:'
-        config.add_index_field 'language', :label => 'Language:'                            #multivalued
-        config.add_index_field 'language__facet', :label => 'Language:'                     #multivalued
-        config.add_index_field 'geographic_focus', :label => 'Geographic Focus:'            #multivalued
-        config.add_index_field 'geographic_focus__facet', :label => 'Geographic Focus:'     #multivalued
-        config.add_index_field 'subject', :label => 'Subject:'                              #multivalued
-        config.add_index_field 'subject__facet', :label => 'Subject:'                       #multivalued
-
+        #   The ordering of the field names would normally be the order of the
+        #   display, but we have our own custom layout so that doesn't really
+        #   matter anymore.
+        #config.add_index_field 'alternate_title', :label => 'Alternate Title:'              #multivalued
+        #config.add_index_field 'archived_urls', :label => 'Archived URLs:'                  #multivalued
+        #config.add_index_field 'geographic_focus', :label => 'Geographic Focus:'            #multivalued
+        #config.add_index_field 'geographic_focus__facet', :label => 'Geographic Focus:'     #multivalued
+        #config.add_index_field 'language', :label => 'Language:'                            #multivalued
+        #config.add_index_field 'language__facet', :label => 'Language:'                     #multivalued
+        #config.add_index_field 'organization_type', :label => 'Organization Type:'
+        #config.add_index_field 'organization_type__facet', :label => 'Organization Type:'
+        #config.add_index_field 'original_urls', :label => 'Original URLs:'                  #multivalued
+        #config.add_index_field 'subject', :label => 'Subject:'                              #multivalued
+        #config.add_index_field 'subject__facet', :label => 'Subject:'                       #multivalued
+        #config.add_index_field 'summary', :label => 'Summary:'
+        #config.add_index_field 'title', :label => 'Title:'
 
         #config.add_index_field 'title_vern_display', :label => 'Title:'
         #config.add_index_field 'author_display', :label => 'Author:'
@@ -120,7 +120,7 @@ class HRWA::FindSiteSearchConfigurator
 
         # solr fields to be displayed in the show (single result) view
         #   The ordering of the field names is the order of the display
-        config.add_show_field 'title', :label => 'Title:'
+        # config.add_show_field 'title', :label => 'Title:'
         #config.add_show_field 'title_vern_display', :label => 'Title:'
         #config.add_show_field 'subtitle_display', :label => 'Subtitle:'
         #config.add_show_field 'subtitle_vern_display', :label => 'Subtitle:'
@@ -153,7 +153,7 @@ class HRWA::FindSiteSearchConfigurator
         # solr request handler? The one set in config[:default_solr_parameters][:qt],
         # since we aren't specifying it otherwise.
 
-        config.add_search_field 'all_fields', :label => 'All Fields'
+        # config.add_search_field 'all_fields', :label => 'All Fields'
 
 
         # Now we see how to over-ride Solr request handler defaults, in this

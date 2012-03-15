@@ -5,145 +5,147 @@ describe 'HRWA::FindSiteSearchConfigurator' do
   before ( :all ) do
     @configurator = HRWA::FindSiteSearchConfigurator.new
   end
-     
+
   it 'returns the correct partial name' do
     @configurator.result_partial.should == 'document'
   end
-  
+
   it 'returns the correct result type' do
     @configurator.result_type.should == 'document'
   end
 
-=begin
+  it 'returns the correct name' do
+    @configurator.name.should == 'find_site'
+  end
+
   context '#config_proc' do
-    before( :all ) do 
+    before( :all ) do
       @blacklight_config = Blacklight::Configuration.new
       config_proc        = @configurator.config_proc
       @blacklight_config.configure &config_proc
     end
-        
+
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
-          :defType          => "dismax",
-          :facet            => true,
-          :'facet.field'    => [
-                                'domain',
-                                'geographic_focus__facet',
-                                'organization_based_in__facet',
-                                'organization_type__facet',
-                                'language__facet',
-                                'contentMetaLanguage',
-                                'creator_name__facet',
-                                'mimetype',
-                                'dateOfCaptureYYYY',
-                               ],
-          :'facet.mincount' => 1,
-          :'q.alt'          => "*:*",
-          :qf               => ["contentTitle^1",
-                                "contentBody^1",
-                                "contentMetaDescription^1",
-                                "contentMetaKeywords^1",
-                                "contentMetaLanguage^1",
-                                "contentBodyHeading1^1",
-                                "contentBodyHeading2^1",
-                                "contentBodyHeading3^1",
-                                "contentBodyHeading4^1",
-                                "contentBodyHeading5^1",
-                                "contentBodyHeading6^1"],
-          :rows             => 10,
-        }  
+            :defType          => "dismax",
+            :facet            => true,
+            :'facet.mincount' => 1,
+            :hl               => true,
+            :'hl.fragsize'    => 500,
+            :'hl.fl'          => [
+                                  "alternate_title",
+                                  "creator_name",
+                                  "geographic_focus",
+                                  "language",
+                                  "organization_based_in",
+                                  "original_urls",
+                                  "summary",
+                                  "title",
+                                 ],
+            :'hl.usePhraseHighlighter' => true,
+            :'hl.simple.pre'  => '<code>',
+            :'hl.simple.post' => '</code>',
+            :'q.alt'          => "*:*",
+            :qf               => [
+                                  "alternate_title^1",
+                                  "creator_name^1",
+                                  "geographic_focus^1",
+                                  "language^1",
+                                  "organization_based_in^1",
+                                  "original_urls^1",
+                                  "summary^1",
+                                  "title^1",
+                                  ],
+            :rows             => 10,
+            :'facet.field'    => [
+                                  "geographic_focus__facet",
+                                  "language__facet",
+                                  "organization_based_in__facet",
+                                  "organization_type__facet",
+                                  "subject__facet"
+                                 ],
+        }
     end
-    
+
     it 'sets Blacklight::Configuration.facet_fields.* stuff correctly' do
+
       expected_facet_fields = {
-        'domain'                       => { :label => 'Domain',                     :limit => 10 },
-        'geographic_focus__facet'      => { :label => 'Organization/Site Geographic Focus',
-                                                                                    :limit => 10 },
-        'organization_based_in__facet' => { :label => 'Organization/Site Based In', :limit => 10 },
-        'organization_type__facet'     => { :label => 'Organization Type',          :limit => 10 },
-        'language__facet'              => { :label => 'Website Language',           :limit => 10 },
-        'contentMetaLanguage'          => { :label => 'Language of page',           :limit => 10 },
-        'creator_name__facet'          => { :label => 'Creator Name',               :limit => 10 },
-        'mimetype'                     => { :label => 'File Type',                  :limit => 10 },
-        'dateOfCaptureYYYY'            => { :label => 'Year of Capture',            :limit => 10 },        
+
+        'organization_type__facet'      => { :label => 'Organization Type',     :limit => 5 },
+
+        'subject__facet'                => { :label => 'Subject',               :limit => 5 },
+
+        'geographic_focus__facet'       => { :label => 'Geographic Focus',      :limit => 5 },
+
+        'organization_based_in__facet'  => { :label => 'Organization Based In', :limit => 5 },
+
+        'language__facet'               => { :label => 'Language',              :limit => 5 },
       }
-      
+
       expected_facet_fields.each { | name, expected |
         @blacklight_config.facet_fields[ name ].should_not be_nil
         @blacklight_config.facet_fields[ name ].label.should == expected[ :label ]
         @blacklight_config.facet_fields[ name ].limit.should == expected[ :limit ]
       }
     end
-        
+
     it 'sets Blacklight::Configuration.index.* stuff correctly' do
-      @blacklight_config.index.show_link.should           == 'contentTitle'
+      @blacklight_config.index.show_link.should           == 'title'
       @blacklight_config.index.record_display_type.should == ''
     end
-    
+
     it 'sets Blacklight::Configuration.index_fields correctly' do
-      expected_index_fields = {
-        'contentTitle' => { :label => 'Title:', :field => 'contentTitle' },
-        'contentBody'  => { :label => 'Body:',  :field => 'contentBody'  },
-      }
-      
-      expected_index_fields.each { | name, expected |
-        @blacklight_config.index_fields[ name ].should_not be_nil
-        @blacklight_config.index_fields[ name ].label.should == expected[ :label ]
-        @blacklight_config.index_fields[ name ].field.should == expected[ :field ]
-      }
+        @blacklight_config.index_fields.should be_empty
     end
-    
+
     it 'sets Blacklight::Configuration.search_fields correctly' do
       @blacklight_config.search_fields.should be_empty
     end
-         
+
     it 'sets Blacklight::Configuration.show_fields correctly' do
-      expected_show_fields = {
-        'contentTitle' => { :label => 'Title:' },
-      }
-      
-      expected_show_fields.each { | name, expected |
-        @blacklight_config.show_fields[ name ].should_not be_nil
-        @blacklight_config.show_fields[ name ].label.should == expected[ :label ]
-      }
+        @blacklight_config.show_fields.should be_empty
     end
-       
+
     it 'sets Blacklight::Configuration.sort_fields correctly' do
       expected_sort_fields = {
-        'score desc, dateOfCaptureYYYYMMDD desc' => { :label => 'relevance' },
+        'score desc' => { :label => 'relevance' },
       }
-      
+
       expected_sort_fields.each { | name, expected |
         @blacklight_config.sort_fields[ name ].should_not be_nil
         @blacklight_config.sort_fields[ name ].label.should == expected[ :label ]
       }
-    end   
-       
+    end
+
     it 'sets Blacklight::Configuration.spell_max correctly' do
       @blacklight_config.spell_max.should == 5
     end
-    
+
     it 'sets Blacklight::Configuration.unique_key correctly' do
-      @blacklight_config.unique_key.should == 'recordIdentifier'
+      @blacklight_config.unique_key.should == 'id'
     end
-    
-  end
-   
-  # TODO: Eric, let me know when you get to these next three tests
-  it '#post_blacklight_processing_required? returns false' do
-    @configurator.post_blackight_processing_required?.should == false
+
+    it '#post_blacklight_processing_required? returns true' do
+      @configurator.post_blacklight_processing_required?.should == false
+    end
+
+    # TODO: add highlight specs
   end
 
-  it '#post_blacklight_processing! returns args unchanged' do
-    solr_response = solr_response_original = {}
-    results_list  = results_list_original  = []
-    @configurator.post_blacklight_processing!( solr_response, results_list )
-    solr_response.should == solr_response_original
-    solr_response.should == solr_response_original
-  end
+  describe '#configure_facet_action' do
+    before :all do
+      @blacklight_config  = Blacklight::Configuration.new
+      config_proc        = @configurator.config_proc
+      @blacklight_config.configure &config_proc
+    end
 
-=end
+    it 'removed the group params from the Blacklight configuration default_solr_params hash' do
+      @configurator.configure_facet_action( @blacklight_config )
+      @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
+        should be_empty
+    end
+  end
 
   describe '#solr_url' do
     it 'returns correct URL for environment "development"' do
@@ -165,4 +167,3 @@ describe 'HRWA::FindSiteSearchConfigurator' do
   end
 
 end
-
