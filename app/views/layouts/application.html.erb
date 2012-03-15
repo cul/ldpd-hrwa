@@ -13,7 +13,7 @@
   <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
   <body onload="<%= onload_text %>" class="<%= render_body_class.html_safe %>">
 
-    <div class="topbar">
+    <div class="navbar navbar-fixed-top">
       <div class="fill">
 	<div class="invisible" id="cul_top">
 	  <div id="cul_inner"><a href="http://columbia.edu" title="Columbia University - Home">CU</a> &gt; <a href="http://library.columbia.edu" title="Columbia University Libraries - Home">Libraries</a> &gt; <a href="http://library.columbia.edu/indiv/humanrights.html" title="Columbia University Libraries Center for Human Rights Documentation and Research">CHRDR</a><span id="cul_right">HUMAN RIGHTS WEB ARCHIVE at Columbia University</span></div>
@@ -56,7 +56,7 @@
           </ul>
         </div>
       </div>
-    </div> <!-- //.topbar -->
+    </div> <!-- //.navbar -->
 
     <%
       # Start main content!

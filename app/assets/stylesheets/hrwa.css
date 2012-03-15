@@ -1,6 +1,6 @@
 body { padding-top:60px; color:#808080; }
-.topbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
-.topbar .fill { border-bottom:1px solid #000;
+.navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
+.navbar .fill { border-bottom:1px solid #000;
   background-color:#174785;
   background-repeat: repeat-x;
   background-image: -khtml-gradient(linear, left top, left bottom, from(#285896), to(#174785));
@@ -11,13 +11,13 @@ body { padding-top:60px; color:#808080; }
   background-image: -o-linear-gradient(top, #285896, #174785);
   background-image: linear-gradient(top, #285896, #174785);
 }
-.topbar ul.menu-dropdown { background-color:#174785!important; }
-.topbar form .add-on { -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); background-color: rgba(255, 255, 255, 0.2); border: 1px solid #111111; border-left:0;color: rgba(255, 255, 255, 0.75); text-shadow:none; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12px; white-space:nowrap!important; }
+.navbar ul.menu-dropdown { background-color:#174785!important; }
+.navbar form .add-on { -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); background-color: rgba(255, 255, 255, 0.2); border: 1px solid #111111; border-left:0;color: rgba(255, 255, 255, 0.75); text-shadow:none; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12px; white-space:nowrap!important; }
 .add-on { white-space:nowrap; vertical-align:middle; }
-.topbar form input[type=radio], .topbar form label.donothing, .hero-unit form label.donothing { padding-left:0.5em; width:auto; }
+.navbar form input[type=radio], .navbar form label.donothing, .hero-unit form label.donothing { padding-left:0.5em; width:auto; }
 .add-on input[type=radio] { margin-right:3px; }
-.topbar input { background-color: rgba(255, 255, 255, 0.4); }
-.topbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; }
+.navbar input { background-color: rgba(255, 255, 255, 0.4); }
+.navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; }
 #cul_top { }
 #cul_inner { width:960px; margin-right:auto;margin-left:auto; background:transparent url('./crown-bts-24x24.png') no-repeat left top; color:#aaa; font-size:9px; padding:4px 5px 1px 28px; /*-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;*/ /*border:1px solid #555;*/ }
 #cul_right { float:right; color:#ccc; }
@@ -250,7 +250,7 @@ button.ui-multiselect span { color:#888; }
 	padding-left: 20px;
 	padding-right: 20px;
 	}
-	.topbar { position:relative!important; margin-bottom:20px; padding-bottom:0px!important; }
+	.navbar { position:relative!important; margin-bottom:20px; padding-bottom:0px!important; }
 	.hero-unit {  padding: 80px 2px; }
 	.hero-unit h1 { font-size:280%; }
 	.no-hero { margin-top:80px; }
@@ -260,16 +260,16 @@ button.ui-multiselect span { color:#888; }
 	#topsearchform { display:block; width:100%; margin-bottom:6px; border-top:2px solid #000; margin-top:0; padding-top:6px; }
 	#topfqs { display:block; }
 	#topfqs ul, #topfqs li, #topfqs ul li ul { width:100%; left:0; }
-	.topbar ul#dropdown li.menu { float:right; }
+	.navbar ul#dropdown li.menu { float:right; }
 	.menu-dropdown li { padding:6px 0!important; min-width:180px; }
 	.menu-dropdown li.divider { display:none; }
 	#hero-search { display:none!important; }
-	.topbar .topbarlogo { margin-left:13px; }
-	.topbar .topbarlogo a { text-transform:capitalize!important; }
-	.topbar h3 a { padding-right:2px; }
-	.topbar ul a { padding-right:2!important; padding-left:2px!important; }
-	.topbar input#q_t, .hero-unit input#q { width:46%; }
-	.topbar #dropdown { position:absolute; top:0; right:0; }
+	.navbar .topbarlogo { margin-left:13px; }
+	.navbar .topbarlogo a { text-transform:capitalize!important; }
+	.navbar h3 a { padding-right:2px; }
+	.navbar ul a { padding-right:2!important; padding-left:2px!important; }
+	.navbar input#q_t, .hero-unit input#q { width:46%; }
+	.navbar #dropdown { position:absolute; top:0; right:0; }
 	.hero-unit { padding-top:12px; padding-bottom:22px; }
 	.results_control { display:block; float:none; margin-bottom:12px; }
 	.results_control .btn, .results_control span { font-size:70%!important; }
