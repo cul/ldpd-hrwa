@@ -12,7 +12,7 @@ class HRWA::ArchiveSearchConfigurator
           :'group.field'    => 'originalUrl',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 1000,
+          :'hl.fragsize'    => 400,
           :'hl.fl'          => [
                                'originalUrl',
                                'contentTitle',

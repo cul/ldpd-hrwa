@@ -32,7 +32,7 @@ describe 'HRWA::SiteDetailConfigurator' do
             :facet            => true,
             :'facet.mincount' => 1,
             :hl               => true,
-            :'hl.fragsize'    => 500,
+            :'hl.fragsize'    => 400,
             :'hl.fl'          => [
                                   "alternate_title",
                                   "creator_name",
