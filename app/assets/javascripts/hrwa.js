@@ -47,7 +47,16 @@ jQuery(function($) {
   window.max_height_for_hl_snippets = '53px'; //53px seems to equal two lines worth of text for a 12px font.
 
   $('.hl_snippet').each(function(){
-    $(this).attr('data-full-snippet-height', $(this).height());
+
+    if($(this).hasClass('fsf'))
+    {
+      $(this).attr('data-show-more-snippet-height', 0);
+    }
+    else if($(this).hasClass('asf'))
+    {
+      $(this).attr('data-show-more-snippet-height', $(this).height());
+    }
+
     $(this).css({'max-height' : window.max_height_for_hl_snippets});
     $(this).attr('data-collapsed-snippet-height', $(this).height());
     $(this).removeClass('invisible');
@@ -60,17 +69,19 @@ jQuery(function($) {
   });
 
 
-  $(".toggle_section").bind('click', function (e) {
+  $(".toggle_section").attr('data-status', 'less-mode').bind('click', function (e) {
 
 	//Showing hidden items
-	if($(this).parent().parent().children('.hl_snippet').css('max-height') == window.max_height_for_hl_snippets)
+	if($(this).attr('data-status') == 'less-mode')
 	{
 	  toggle_item_detail($(this), 'show');
+	  $(this).attr('data-status', 'more-mode');
 	}
 	//Hiding visible items
 	else
 	{
 	  toggle_item_detail($(this), 'hide');
+	  $(this).attr('data-status', 'less-mode');
 	}
 
 	return false;
@@ -78,7 +89,7 @@ jQuery(function($) {
 
   function toggle_item_detail(jquery_element, show_or_hide)
   {
-    var animation_time = 500;
+    var animation_time = 350;
 
     if(show_or_hide == 'show')
     {
@@ -86,7 +97,7 @@ jQuery(function($) {
 	$(this).css({'height' : $(this).height() + 'px'});
 	$(this).css({'max-height' : ''});
 	$(this).animate({
-	  height: $(this).attr('data-full-snippet-height') + 'px'
+	  height: $(this).attr('data-show-more-snippet-height') + 'px'
 	  },
 	animation_time);
       });

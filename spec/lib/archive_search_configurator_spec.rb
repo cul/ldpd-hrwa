@@ -14,6 +14,10 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     @configurator.result_type.should == 'group'
   end
 
+  it 'returns the correct name' do
+    @configurator.name.should == 'archive'
+  end
+
   context '#config_proc' do
     before( :all ) do
       @blacklight_config = Blacklight::Configuration.new
@@ -141,12 +145,12 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       config_proc        = @configurator.config_proc
       @blacklight_config.configure &config_proc
     end
-    
+
     it 'removed the group params from the Blacklight configuration default_solr_params hash' do
       @configurator.configure_facet_action( @blacklight_config )
       @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
         should be_empty
-    end    
+    end
   end
 
   describe '#process_search_request - domain exclusion' do
@@ -169,15 +173,15 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     }
 
   end
-  
+
   describe '#add_capture_date_range_fq_to_solr' do
     before :each do
       @extra_controller_params = {}
       @extra_controller_params[ :fq ] = nil
     end
-    
+
     blank_inputs = [ nil, '' ]
-    
+
     # Test all permutations of completely blank/nil input
     blank_inputs.each { | start_date |
       [ nil, '' ].each{ | end_date |
@@ -187,7 +191,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
             { :capture_start_date => start_date, :capture_end_date => end_date }
           )
           @extra_controller_params[ :fq ].should be_nil
-        end        
+        end
       }
     }
 
@@ -199,7 +203,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
         )
         @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO * ]' ]
       end
-    } 
+    }
 
     blank_inputs.each { | start_date |
       it "adds and open-start, closed-end date range with start = #{ start_date.to_s } and non-blank end" do
@@ -210,7 +214,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
         @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ * TO 20080101 ]' ]
       end
     }
-    
+
     it 'adds a closed-start, closed-end :fq date range with non-blank start and end inputs' do
       @configurator.add_capture_date_range_fq_to_solr(
         @extra_controller_params,
