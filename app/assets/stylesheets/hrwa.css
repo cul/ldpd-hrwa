@@ -13,6 +13,7 @@ body { padding-top:60px; color:#808080; }
 }
 .navbar ul.menu-dropdown { background-color:#174785!important; }
 .navbar form .add-on { -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); background-color: rgba(255, 255, 255, 0.2); border: 1px solid #111111; border-left:0;color: rgba(255, 255, 255, 0.75); text-shadow:none; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12px; white-space:nowrap!important; }
+.navbar form .add-on.success { background-color:#468847; }
 .add-on { white-space:nowrap; vertical-align:middle; }
 .navbar form input[type=radio], .navbar form label.donothing, .hero-unit form label.donothing { padding-left:0.5em; width:auto; }
 .add-on input[type=radio] { margin-right:3px; }

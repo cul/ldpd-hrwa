@@ -16,10 +16,10 @@
     <div class="navbar navbar-fixed-top">
       <div class="fill">
         <div class="container">
-	  <ul id="crowndown" class="nav">
-	    <li class="menu">
+	  <ul id="crowndown" class="nav pull-left">
+	    <li class="dropdown menu">
               <% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
-              <%= link_to crown_img, "#", :"data-title" => "dropdown", :title => "External Links @ Columbia", :class => "dropdown menu" %> 
+              <%= link_to crown_img, "#", :"data-toggle" => "dropdown", :title => "External Links @ Columbia", :class => "dropdown-toggle menu" %> 
               <ul class="dropdown-menu menu-dropdown">
                 <li><a href="http://columbia.edu">Columbia University - Home</a></li>
                 <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
@@ -32,7 +32,7 @@
           <%= form_tag search_path, :method => :get, :id => 'topsearchform', :class => 'form-inline navbar-search pull-left' do %>
 			<input type="hidden" name="search" value="true" />
             <div class="input-append">
-                    <input class="span4 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><label class="pull-right add-on success hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label><label class="pull-right add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label><label class="pull-right add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
+                    <input class="span5 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><label class="pull-right add-on success hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label><label class="pull-right add-on"><input type="radio" name="search_type" id="fsfsearch_t" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label><label class="pull-right add-on"><input type="radio" name="search_type" id="asfsearch_t" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
             </div>
           <% end %>
           <ul id="dropdown" class="nav secondary-nav pull-right">
