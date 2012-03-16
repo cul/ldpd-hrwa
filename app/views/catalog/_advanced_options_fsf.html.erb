@@ -2,30 +2,30 @@
 
 <h6>Find Pages/Sites that have&hellip;</h6>
 <div class="input-prepend">
-	<label class="add-on">all these words:</label>
-	<input class="span8 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
+	<label class="pull-left add-on">all these words:</label>
+	<input class="pull-left span8 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="twipsy" href="#">tip</a>
 </div>
 <div class="input-prepend">
-	<label class="add-on">this exact wording or phrase:</label>
-	<input class="span8 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
+	<label class="pull-left add-on">this exact wording or phrase:</label>
+	<input class="pull-left span8 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="twipsy" href="#">tip</a>
 </div>
 <div class="input-prepend">
-	<label class="add-on">one or more of these words:</label>
-	<input class="span8 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
+	<label class="pull-left add-on">one or more of these words:</label>
+	<input class="pull-left span8 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
 </div>
 <h6>But don't show results that have&hellip;</h6>
 <div class="input-prepend">
-	<label class="add-on">any of these unwanted words:</label>
-	<input class="span8 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
+	<label class="pull-left add-on">any of these unwanted words:</label>
+	<input class="pull-left span8 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="twipsy" href="#">tip</a>
 </div>
 
 <div class="row">
-<div class="span14">
+<div class="span12">
     <h6>Additional Options</h6>
-<div class="span7 nomar">
+<div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">organization type</label>
-	<select name="f[organization_type__facet][]" multiple="multiple">
+	<select name="f[organization_type__facet][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
 	  <% organization_type_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -34,7 +34,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">subject</label>
-	<select name="f[subject__facet][]" multiple="multiple">
+	<select name="f[subject__facet][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:subject__facet] %>
 	  <% subject_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -43,7 +43,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">geographic focus</label>
-	  <select name="f[geographic_focus__facet][]" multiple="multiple">
+	  <select name="f[geographic_focus__facet][]" class="pull-left" multiple="multiple">
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
 	    <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
 	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -52,7 +52,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">organization based in</label>
-	  <select name="f[organization_based_in__facet][]" multiple="multiple">
+	  <select name="f[organization_based_in__facet][]" class="pull-left" multiple="multiple">
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
 	    <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
 	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -61,10 +61,10 @@
     </div>
 
 </div>
-<div class="span7 nomar">
+<div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">language</label>
-	<select name="f[language__facet][]" multiple="multiple">
+	<select name="f[language__facet][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
 	  <% language_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -74,7 +74,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">site title</label>
-	<select name="f[title__facet][]" multiple="multiple">
+	<select name="f[title__facet][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:title__facet] %>
 	  <% title_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -83,7 +83,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">creator name</label>
-	<select name="f[creator_name__facet][]" multiple="multiple">
+	<select name="f[creator_name__facet][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
 	  <% creator_name_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -92,7 +92,7 @@
     </div>
 	<div class="control-group">
 	<label class="control-label">original url</label>
-	<select name="f[original_urls][]" multiple="multiple">
+	<select name="f[original_urls][]" class="pull-left" multiple="multiple">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:original_urls] %>
 	  <% original_urls_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -105,9 +105,9 @@
 </div>
 
 <div class="row">
-<div class="span14">
+<div class="span12">
  <h6>display options</h6>
- <div class="span7 nomar">
+ <div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">results per page</label>
 	<select class="control-group" name="per_page">
@@ -117,7 +117,7 @@
 	</select>
     </div>
  </div>
- <div class="span7 nomar">
+ <div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">sort</label>
 	<select class="control-group" name="sort">
@@ -133,18 +133,18 @@
 <div class="row">
 <div class="span14">
  <h6>dev options (temporary)</h6>
- <div class="span7 nomar">
+ <div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">host</label>
-	<select class="control-group">
+	<select class="control-group pull-left">
 	  <option></option>
 	</select>
     </div>
  </div>
- <div class="span7 nomar">
+ <div class="span6 nomar">
 	<div class="control-group">
 	<label class="control-label">core</label>
-	<select class="control-group">
+	<select class="control-group pull-left">
 	  <option></option>
 	</select>
     </div>
