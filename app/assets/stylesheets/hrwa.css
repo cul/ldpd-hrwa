@@ -87,7 +87,7 @@ ul.tabs { margin-bottom:5px; }
 #secondary #facets a.remove { margin-left:.2em; }
 #cbf_widgets h6 { color:#888; }
 #cbf_widgets ul li:nth-child(odd) { background-color:#fff; }
-#cbf_widgets li {line-height:1.1em;margin-bottom:0.5em; }
+#cbf_widgets li {line-height:1.1em;margin-bottom:0.5em;word-wrap:break-word;overflow:hidden;}
 article.entry { border-bottom:1px solid #aaa; }
 article.entry h3 { line-height:1.2; margin:8px 0; }
 #sdf_view table { }
