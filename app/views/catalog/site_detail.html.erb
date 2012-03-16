@@ -20,7 +20,7 @@
             <% if ! @document.get('alternate_title').blank? %>
             <tr>
               <td><%= ((@document.get('alternate_title',{:sep => nil})).length == 1) ? 'Alternate Title' : 'Alternate Title'.pluralize %></td>
-              <td><%= @document.get('alternate_title', {:sep => ','}) %></td>
+              <td><%= @document.get('alternate_title', {:sep => nil}).join('<br />').html_safe %></td>
             </tr>
             <% end %>
             <tr>
@@ -37,11 +37,11 @@
             </tr>
             <tr>
               <td>Geographic Focus</td>
-              <td><%= @document.get('geographic_focus',{:sep => nil}).join(', ') %></td>
+              <td><%= @document.get('geographic_focus', {:sep => nil}).join('<br />').html_safe %></td>
             </tr>
             <tr>
               <td><%= ((@document.get('subject',{:sep => nil})).length == 1) ? 'Subject' : 'Subject'.pluralize %></td>
-              <td><%= @document.get('subject',{:sep => nil}).join('<br />').html_safe %></td>
+              <td><%= @document.get('subject', {:sep => nil}).join('<br />').html_safe %></td>
             </tr>
             <tr>
               <td>Summary</td>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
               <td><%= ((@document.get('language',{:sep => nil})).length == 1) ? 'Language' : 'Language'.pluralize %></td>
-              <td><%= @document.get('language',{:sep => nil}).join(', ') %></td>
+              <td><%= @document.get('language', {:sep => nil}).join('<br />').html_safe %></td>
             </tr>
             <tr>
               <% original_url_arr = @document.get('original_urls',{:sep => nil}) %>
@@ -59,7 +59,7 @@
               <% #For now, we're assuming that there's a one-to-one link between original_urls and archive_urls %>
               <% # TODO: Vertify that the above assumption is correct %>
               <% # I'm still doing a check to make sure that each original_url has a corresponding archive_url value %>
-              <td><%= ((@document.get('original_urls',{:sep => nil})).length == 1) ? 'URL at Time of Capture' : 'URLs at Times of Capture' %></td>
+              <td><%= ((@document.get('original_urls', {:sep => nil})).length == 1) ? 'URL at Time of Capture' : 'URLs at Times of Capture' %></td>
               <td>
                 <%
                 original_url_arr.each_index do |index|

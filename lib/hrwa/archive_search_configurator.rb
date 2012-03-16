@@ -14,34 +14,19 @@ class HRWA::ArchiveSearchConfigurator
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                               'originalUrl',
-                               'contentTitle',
                                'contentBody',
-                               'contentMetaDescription',
-                               'contentMetaKeywords',
-                               'contentMetaLanguage',
-                               'contentBodyHeading1',
-                               'contentBodyHeading2',
-                               'contentBodyHeading3',
-                               'contentBodyHeading4',
-                               'contentBodyHeading5',
-                               'contentBodyHeading6',
+                               'contentTitle',
+                               'originalUrl',
                                ],
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
-          :qf               => ['contentTitle^1',
+          :qf               => [
                                 'contentBody^1',
-                                'contentMetaDescription^1',
-                                'contentMetaKeywords^1',
-                                'contentMetaLanguage^1',
-                                'contentBodyHeading1^1',
-                                'contentBodyHeading2^1',
-                                'contentBodyHeading3^1',
-                                'contentBodyHeading4^1',
-                                'contentBodyHeading5^1',
-                                'contentBodyHeading6^1'],
+                                'contentTitle^1',
+                                'originalUrl^1',
+                               ],
           :rows             => 10,
         }
 
@@ -90,10 +75,6 @@ class HRWA::ArchiveSearchConfigurator
 
         config.add_facet_field 'language__facet',
                                :label => 'Website Language',
-                               :limit => 5
-
-        config.add_facet_field 'contentMetaLanguage',
-                               :label => 'Language of page',
                                :limit => 5
 
         config.add_facet_field 'creator_name__facet',
@@ -258,15 +239,6 @@ class HRWA::ArchiveSearchConfigurator
               'originalUrl',
               'contentTitle',
               'contentBody',
-              'contentMetaDescription',
-              'contentMetaKeywords',
-              'contentMetaLanguage',
-              'contentBodyHeading1',
-              'contentBodyHeading2',
-              'contentBodyHeading3',
-              'contentBodyHeading4',
-              'contentBodyHeading5',
-              'contentBodyHeading6',
               ]
     end
 

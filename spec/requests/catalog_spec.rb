@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
+
+
 # TODO: change static form fill-in to real form fill-in when selenium working on bronte
 describe 'all searches' do
   it 'should not have "host" param in querystring' do
@@ -156,8 +158,8 @@ describe 'advanced_search_asf' do
     # TODO: These are just some cheap, temporary tests for assistance during initial development.
     # SOLR index is stable but later will be incrementally updated so these tests are super-brittle.
     # Delete them when Rails Port milestone is reached.
-    it 'returns 3,262,426 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)' do
-      @result_page.should have_content( '3,262,426' )
+    it 'returns 3,199,634 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)' do
+      @result_page.should have_content( '3,199,634' )
     end
 
   end
