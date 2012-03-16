@@ -117,7 +117,7 @@
         <div class="control-group">
         <label class="control-label">sort</label>
         <select class="control-group" name="sort">
-          <option value="score desc">Relevance</option>
+          <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
         </select>
     </div>
  </div>
