@@ -1,4 +1,3 @@
-
 <ul data-tabs="tabs" class="nav nav-tabs tabs">
             <li class="active"><a data-toggle="tab" href="#t1">Site</a></li>
             <li><a data-toggle="tab" href="#t2">URL</a></li>
@@ -43,7 +42,7 @@
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
 		<% language_browse_list.each do |item, hits| %>
-                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[organization_type__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
+                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
