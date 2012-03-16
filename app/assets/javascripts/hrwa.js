@@ -378,24 +378,17 @@ $('/* #secondary .results_control,*/ #cbf .results_control').prepend('<a class="
 $('.sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
 $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
-$('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
 
 $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
 $('article span[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
 $('.navbar a[rel=tooltip]').tooltip({'placement': 'bottom'});
 
-// cbf home sorting
-$('.tab-content .results_control:first .sort_default').hide();
+// cbf home onload sorting and showing
 $('.tab-content .results_control .sort_a-z.btn').click();
-//And then re-click the first one so that it's the initially selected one, and then deselect it
-$('.tab-content .results_control .sort_a-z.btn').first().click().removeClass('success');
 $('.tab-content .results_control').show();
 
-// cbf browse page sorting
-$('#cbf .results_control:first .sort_default').hide();
+// cbf browse onload sorting and showing
 $('#cbf_widgets .results_control .sort_a-z.btn').click();
-//And then re-click the first one so that it's the initially selected one, and then deselect it
-$('#cbf_widgets .results_control .sort_a-z.btn').first().click().removeClass('success');
 $('#cbf_widgets .results_control').show();
 
 // autocomplete
