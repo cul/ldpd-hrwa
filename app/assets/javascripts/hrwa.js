@@ -383,9 +383,9 @@ $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
 
-$('a[rel=twipsy], .results_control a').tooltip({'placement': 'above'});
-$('article span[rel=twipsy]').css('cursor','pointer').tooltip({'placement': 'above'});
-$('.navbar a[rel=twipsy]').tooltip({'placement': 'right'});
+$('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
+$('article span[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
+$('.navbar a[rel=tooltip]').tooltip({'placement': 'bottom'});
 
 // autocomplete
 /*
