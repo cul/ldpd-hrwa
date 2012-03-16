@@ -236,6 +236,29 @@ class HRWA::ArchiveSearchConfigurator
   def result_type
     return 'group'
   end
+  
+  def set_solr_field_boost_levels( extra_controller_params, user_params )
+    return if ! user_params.has_key?( :'field[]' )
+    
+    valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
+    
+    qf = []
+    user_params[ :'field[]' ].each { | field_boost |
+      field, boost_level = field_boost.split( /\^/ )
+      
+      # Raise error if boost_level is not a positive number
+      if ! ( boost_level.match( /^\d+$/ ) && boost_level.to_f > 0.0 ) then
+        raise ArgumentError.new( "#{ boost_level } is not a valid boost level." )
+      end
+      
+      if valid_solr_fields.include?( field ) then
+        qf << "#{ field }^#{ boost_level }"
+      end
+    }
+    
+    # Overwrite existing qf
+    extra_controller_params[ :qf ] = qf
+  end
 
   # Takes optional environment arg for testability
   def solr_url( environment = Rails.env )

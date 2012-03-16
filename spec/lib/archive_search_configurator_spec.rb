@@ -194,7 +194,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   describe '#process_search_request - domain exclusion' do
     before :each do
-      @params = @advanced_search_q_and_women_params
+      @params = @advanced_search_q_and_women_params.dup
     end
 
     domains_to_exclude = [
@@ -226,26 +226,40 @@ describe 'HRWA::ArchiveSearchConfigurator' do
   end
 
   describe '#set_solr_field_boost_levels' do
+    before :all do
+      @default_qf   = [ 'contentTitle^1', 'contentBody^1', 'originalUrl^1' ]
+      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^1' ]
+      @bad_params   = [ 'title^5', 'body^3' ]
+    end
+
     before :each do
-      @params = @advanced_search_q_and_women_params
+      @params = @advanced_search_q_and_women_params.dup
     end
     
     it 'sets full field set boosts correctly' do
+      @params[ :'field[]' ] = @valid_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @valid_params }
     end
     
     it 'sets partial field set boosts correctly' do
+      @partial_params = @valid_params.slice( 0..@valid_params.length - 2 )
+      @params[ :'field[]' ] = @partial_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @partial_params }
     end
-    
-    it 'uses default field levels when no boosts are set' do
-    end
-    
+
     it 'does nothing and exits when no field[] params present' do
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @default_qf }
     end
     
     describe 'argument validation' do
-      @bad_boost_values = [ '-12', 'orange', '0' ]
-
-      @bad_boost_values.each { | value |
+      # Test bad boost values
+      [ '-12', 'orange', '0' ].each { | value |
         it "raises ArgumentError for bad boost value #{ value }" do
           expect{ 
             @configurator.set_solr_field_boost_levels(
@@ -258,10 +272,10 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
     
     it 'ignores invalid field arguments' do
-      extra_controller_params = {}
-      @params.merge!( :'field[]' => [ 'title^5', 'body^3' ] )
+      extra_controller_params = { :qf => @default_qf }
+      @params.merge!( :'field[]' => @valid_params | @bad_params )
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
-      extra_controller_params.should == {}
+      extra_controller_params.should == { :qf => @valid_params }
     end
   end
 
