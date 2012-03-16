@@ -223,6 +223,26 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
   end
 
+  describe '#set_solr_field_boost_levels' do
+    it 'sets full field set boosts correctly' do
+    end
+    
+    it 'sets partial field set boosts correctly' do
+    end
+    
+    it 'uses default field levels when no boosts are set' do
+    end
+    
+    it 'does nothing and exits when no field[] params present' do
+    end
+    
+    it 'raises an exception when invalid boost values are input' do
+    end
+    
+    it 'ignores invalid field arguments' do
+    end
+  end
+
   describe '#solr_url' do
     it 'returns correct URL for environment "development"' do
       @configurator.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf'
