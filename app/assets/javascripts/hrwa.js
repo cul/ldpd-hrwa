@@ -384,10 +384,12 @@ $('article span[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'to
 $('.navbar a[rel=tooltip]').tooltip({'placement': 'bottom'});
 
 // cbf home onload sorting and showing
-$('.tab-content .results_control .sort_a-z.btn').click();
+$('.tab-content .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
+$('.tab-content .results_control .sort_a-z.btn')
 $('.tab-content .results_control').show();
 
 // cbf browse onload sorting and showing
+$('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
 $('#cbf_widgets .results_control .sort_a-z.btn').click();
 $('#cbf_widgets .results_control').show();
 
