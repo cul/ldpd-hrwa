@@ -22,7 +22,7 @@
 	<h6>Site</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% title_browse_list.each do |item, hits| %>
+	<% title_browse_list.each_pair do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[title][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></li>}.html_safe %>
 			<% end %>
 	</ul>
@@ -31,7 +31,7 @@
 	<h6>URL</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% original_urls_browse_list.each do |item, hits| %>
+	<% original_urls_browse_list.each_pair do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[original_urls][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
 			<% end %>
 	</ul>
@@ -40,7 +40,7 @@
 	<h6>Subject</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% subject_browse_list.each do |item, hits| %>
+	<% subject_browse_list.each_pair do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
 			<% end %>
 	</ul>
@@ -49,7 +49,7 @@
 	<h6>Geographic Focus</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% geographic_focus_browse_list.each do |item, hits| %>
+	<% geographic_focus_browse_list.each_pair do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[geographic_focus__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
 			<% end %>
 	</ul>
@@ -58,7 +58,7 @@
 	<h6>Language</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% language_browse_list.each do |item, hits| %>
+	<% language_browse_list.each_pair do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
 			<% end %>
 	</ul>

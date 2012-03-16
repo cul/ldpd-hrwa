@@ -9,7 +9,7 @@
 	  <div id="t1" class="tab-pane active">
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
-		<% title_browse_list.each do |item, hits| %>
+		<% title_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[title][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
 		</ul>
@@ -17,7 +17,7 @@
 	  <div id="t2" class="tab-pane">
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
-		<% original_urls_browse_list.each do |item, hits| %>
+		<% original_urls_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[original_urls][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
@@ -25,7 +25,7 @@
 	  <div id="t3" class="tab-pane">
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
-		<% subject_browse_list.each do |item, hits| %>
+		<% subject_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
@@ -33,7 +33,7 @@
 	  <div id="t4" class="tab-pane">
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
-		<% geographic_focus_browse_list.each do |item, hits| %>
+		<% geographic_focus_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[geographic_focus__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
@@ -41,7 +41,7 @@
 	  <div id="t5" class="tab-pane">
         <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a></div>
 		<ul>
-		<% language_browse_list.each do |item, hits| %>
+		<% language_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
                 <% end %>
 		</ul>
