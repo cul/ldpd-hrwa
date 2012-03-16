@@ -21,9 +21,9 @@ jQuery(function($) {
     return false;
   });
 */
-  $('.navbar').dropdown()
+  $('.dropdown-toggle').dropdown()
 
-  $('.tabs').tabs()
+  $('.tabs').tab()
 
   $('.donothing').click(function (e) {
 		alert('this does nothing... yet.');
