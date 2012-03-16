@@ -28,7 +28,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag1.sub!( /&amp;$/, '' )
-    @expected_link_tag1 << %Q{" data-original-title=\"Exclude www.hrw.org from results\" rel=\"twipsy\">Domain-</a>}
+    @expected_link_tag1 << %Q{" data-original-title=\"Exclude www.hrw.org from results\" rel=\"tooltip\">Domain-</a>}
 
 
     # Link for an additional domain exclusion added
@@ -45,7 +45,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag2.sub!( /&amp;$/, '' )
-    @expected_link_tag2 << %Q{" data-original-title=\"Exclude amnesty.org from results\" rel=\"twipsy\">Domain-</a>}
+    @expected_link_tag2 << %Q{" data-original-title=\"Exclude amnesty.org from results\" rel=\"tooltip\">Domain-</a>}
   end
 
   it 'creates correct link if there are no domains already excluded' do
@@ -116,7 +116,7 @@ describe 'see_all_hits_from_domain_link' do
       @expected_link_tag << "#{ name }=#{ value }&amp;"
     }
     @expected_link_tag.sub!( /&amp;$/, '' )
-    @expected_link_tag << %Q{" data-original-title=\"See all results from www.hrw.org\" rel=\"twipsy\">Domain+</a>}
+    @expected_link_tag << %Q{" data-original-title=\"See all results from www.hrw.org\" rel=\"tooltip\">Domain+</a>}
   end
 
   it 'creates correct link' do

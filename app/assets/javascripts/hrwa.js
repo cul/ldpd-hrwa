@@ -21,9 +21,9 @@ jQuery(function($) {
     return false;
   });
 */
-  $('.topbar').dropdown()
+  $('.dropdown-toggle').dropdown()
 
-  $('.tabs').tabs()
+  $('.tabs').tab()
 
   $('.donothing').click(function (e) {
 		alert('this does nothing... yet.');
@@ -380,9 +380,9 @@ $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 $('#cbf .results_control:first').parent().find('.sort_a-z').trigger('click');
 
-$('a[rel=twipsy], .results_control a').twipsy({'placement': 'above'});
-$('article span[rel=twipsy]').css('cursor','pointer').twipsy({'placement': 'above'});
-$('.topbar a[rel=twipsy]').twipsy({'placement': 'right'});
+$('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
+$('article span[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
+$('.navbar a[rel=tooltip]').tooltip({'placement': 'bottom'});
 
 // cbf home sorting
 $('.tab-content .results_control:first .sort_default').hide();

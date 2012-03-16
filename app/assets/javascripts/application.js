@@ -17,9 +17,7 @@
 //
 // Info about respond.min.js: - https://github.com/scottjehl/Respond - Enables media queries in some unsupported browsers
 // = require respond.min
-// = require bootstrap-twipsy
-// = require bootstrap-dropdown
-// = require bootstrap-tabs
+// = require bootstrap.min
 // = require jquery.tinysort.min
 // = require jquery.multiselect.min
 //

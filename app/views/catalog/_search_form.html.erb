@@ -7,7 +7,7 @@
 	<% end %>
     <h3>Human Rights Web Archive</h3>
 
-    <a href="#" id="advo_link" title="Advanced Options Toggle" rel="twipsy" class="advtoggle btn mono floatright lime">Adv+</a>
+    <a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a>
 
 	<script type="text/javascript">
 	  HRWA.q = decodeURIComponent("<%= params[:q].blank? ? '' : CGI.escape(params[:q]).gsub('+','%20') %>");
@@ -18,7 +18,7 @@
 	  HRWA.currently_visible_form = 'simple';
 	</script>
 
-    <%= form_tag search_path, :method => :get, :id => 'searchform',
+    <%= form_tag search_path, :method => :get, :id => 'searchform', :class => 'form-inline',
     :'data-searchmode-onload' => (params[:search_mode] == 'advanced' ? 'advanced' : 'simple'),
 	:'data-searchtype-onload' => ( ! @configurator.nil? && @configurator.name == 'archive' ? 'archive' : 'find_site') do %>
       <input type="hidden" name="search" value="true" />
@@ -27,8 +27,8 @@
 		<div id="simple_options">
 		  <div id="heross">
 
-			<div class="input-append">
-			  <div id="q_container"><%= text_field_tag :q, params[:q], :class => "span12", :placeholder =>'Enter search terms...', :size => '16' %></div>
+			<div class="input-append pull-left">
+			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span8 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
 
 			  <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
 								      :q, :qt, :page,
@@ -37,9 +37,9 @@
 								     ]).html_safe %>
 			  <span class="submit_button_container">
 				<span id="s_type_selector_and_submit">
-				  <label class="add-on"><input type="radio" name="search_type" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
-				  <label class="add-on"><input type="radio" name="search_type" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
-				  <label class="add-on hidden">
+				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
+				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
+				  <label class="add-on hidden pull-left">
 					<a href="#" id="form_submit" class="submitss">Submit</a>
 				  </label>
 				</span>

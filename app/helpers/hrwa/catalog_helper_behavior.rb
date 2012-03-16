@@ -29,7 +29,7 @@ module HRWA::CatalogHelperBehavior
       return link_to_with_new_params_reverse_merge( 'Domain-',
                                                     { :'excl_domain' => [ domain ] },
                                                     url_params,
-                                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
+                                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{Exclude #{ domain } from results}})
                                                   )
     end
 
@@ -52,7 +52,7 @@ module HRWA::CatalogHelperBehavior
     return link_to_with_new_params( 'Domain-',
                                     { :'excl_domain' => excluded_domains },
                                     url_params,
-                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{Exclude #{ domain } from results}})
+                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{Exclude #{ domain } from results}})
                                   )
   end
 
@@ -134,7 +134,7 @@ module HRWA::CatalogHelperBehavior
     return link_to_with_new_params_reverse_merge( 'Domain+',
                                     { :'f[domain][]' => domain },
                                     url_params,
-                                    html_options.merge({:rel => 'twipsy', :'data-original-title' => %Q{See all results from #{ domain }}})
+                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{See all results from #{ domain }}})
                                   )
   end
 
