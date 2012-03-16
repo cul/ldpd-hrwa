@@ -226,6 +226,10 @@ describe 'HRWA::ArchiveSearchConfigurator' do
   end
 
   describe '#set_solr_field_boost_levels' do
+    before :each do
+      @params = @@advanced_search_q_and_women_params
+    end
+    
     it 'sets full field set boosts correctly' do
     end
     
@@ -238,10 +242,26 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     it 'does nothing and exits when no field[] params present' do
     end
     
-    it 'raises an exception when invalid boost values are input' do
+    describe 'argument validation' do
+      @bad_boost_values = [ '-12', 'orange', '0' ]
+
+      @bad_boost_values.each { | value |
+        it "raises ArgumentError for bad boost value #{ value }" do
+          expect{ 
+            @configurator.set_solr_field_boost_levels(
+              {},
+              { :'field[]' => [ "contentTitle^#{ value }" ] }
+            )
+          }.to raise_error( ArgumentError )
+        end
+      }
     end
     
     it 'ignores invalid field arguments' do
+      extra_controller_params = {}
+      @params.merge!( :'field[]' => [ 'title^5', 'body^3' ] )
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == {}
     end
   end
 
