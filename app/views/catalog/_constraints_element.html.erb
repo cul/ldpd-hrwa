@@ -19,7 +19,7 @@
 	%>
         <%= link_to(removal_link_body,
 		    options[:remove],
-		    :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])) %>
+		    :rel=>'tooltip', :title=>'Remove this filter', :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])) %>
 	<%
       end
       %>
