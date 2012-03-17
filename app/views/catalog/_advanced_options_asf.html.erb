@@ -24,7 +24,7 @@
     <h6>Additional Options</h6>
 <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">organization type</label>
+        <label class="span2 control-label">organization type</label>
         <select name="f[organization_type__facet][]" multiple="multiple">
           <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
           <% organization_type_options(:selected => selected_items).each do | key, value | %>
@@ -33,7 +33,7 @@
         </select>
     </div>
     <div class="control-group">
-      <label class="control-label">geographic focus</label>
+      <label class="span2 control-label">geographic focus</label>
       <select name="f[geographic_focus__facet][]" multiple="multiple">
         <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
         <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
@@ -42,7 +42,7 @@
       </select>
     </div>
         <div class="control-group">
-        <label class="control-label">organization based in</label>
+        <label class="span2 control-label">organization based in</label>
           <select name="f[organization_based_in__facet][]" multiple="multiple">
             <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
             <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
@@ -51,7 +51,7 @@
         </select>
     </div>
         <div class="control-group">
-        <label class="control-label">file type</label>
+        <label class="span2 control-label">file type</label>
         <select class="control-group" name="f[mimetype][]" multiple="multiple">
           <%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
           <%# file_type_options(:selected => selected_items).each do | key, value | %>
@@ -62,7 +62,7 @@
 </div>
 <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">site language</label>
+        <label class="span2 control-label">site language</label>
         <select name="f[language__facet][]" multiple="multiple">
           <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
           <% language_options(:selected => selected_items).each do | key, value | %>
@@ -73,7 +73,7 @@
     </div>
 
         <div class="control-group">
-        <label class="control-label">creator name</label>
+        <label class="span2 control-label">creator name</label>
         <select name="f[creator_name__facet][]" multiple="multiple">
           <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
           <% creator_name_options(:selected => selected_items).each do | key, value | %>
@@ -82,7 +82,7 @@
         </select>
     </div>
     <div class="control-group">
-      <label class="control-label">domain</label>
+      <label class="span2 control-label">domain</label>
       <select class="control-group" name="f[domain][]" multiple="multiple">
         <% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
         <% domain_options(:selected => selected_items).each do | key, value | %>
@@ -91,7 +91,7 @@
       </select>
     </div>
     <div id="search_date_range" class="control-group">
-      <label class="control-label">date of capture</label>
+      <label class="span2 control-label">date of capture</label>
       <% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
          capture_end_date_value   = params[ :capture_end_date ].nil?   ? '' : params[ :capture_end_date   ] %>
       <input id="capture_start_date" class="span2 datepicker" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 datepicker" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
@@ -105,7 +105,7 @@
  <h6>display options</h6>
  <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">results per page</label>
+        <label class="span2 control-label">results per page</label>
         <select class="control-group" name="per_page">
                 <option>10</option>
                 <option>25</option>
@@ -115,7 +115,7 @@
  </div>
  <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">sort</label>
+        <label class="span2 control-label">sort</label>
         <select class="control-group" name="sort">
           <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
         </select>
@@ -129,7 +129,7 @@
  <h6>dev options (temporary)</h6>
  <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">host</label>
+        <label class="span2 control-label">host</label>
         <select class="control-group pull-left">
           <option></option>
         </select>
@@ -137,7 +137,7 @@
  </div>
  <div class="span6 nomar">
         <div class="control-group">
-        <label class="control-label">core</label>
+        <label class="span2 control-label">core</label>
         <select class="control-group pull-left">
           <option></option>
         </select>
