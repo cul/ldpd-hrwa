@@ -31,7 +31,7 @@
 	<h6>URL</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% original_urls_browse_list.each_pair do |item, hits| %>
+	<% original_urls_browse_list_items.each do |item, hits| %>
 			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[original_urls][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</li>}.html_safe %>
 			<% end %>
 	</ul>
