@@ -379,9 +379,9 @@ $('.sort_default').live('click', function() { var c = $(this).parent().next('ul'
 $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
 $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 
+$('.navbar a[rel=tooltip], .navbar label[rel=tooltip]').tooltip({'placement': 'bottom'});
 $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
-$('article span[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
-$('.navbar a[rel=tooltip]').tooltip({'placement': 'bottom'});
+$('article span[rel=tooltip], .hero-unit label[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
 
 // cbf home onload sorting and showing
 $('.tab-content .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
