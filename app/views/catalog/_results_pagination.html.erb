@@ -7,7 +7,7 @@
     <% else %>
     <div class="results_control offset6 span3 pull-right">
     <% end %>
-     <a class="toggle_all_btn btn success" data-original-title="Expand all results">Expand All +</a>
+     <a class="toggle_all_btn btn btn-success" data-original-title="Expand all results">Expand All +</a>
 
     <%= link_to '#', search_path(params.merge({:sort => 'score desc'})), {:class => 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
     <% if @configurator.name == 'find_site' %>
