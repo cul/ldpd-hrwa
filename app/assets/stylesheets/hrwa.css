@@ -27,8 +27,8 @@ body { padding-top:60px; color:#808080; }
 #crowndown { float:left; margin-left:-20px; margin-right:20px; padding-left:0px; }
 #crowndown li.menu{ padding-right:0; padding-left:0; }
 #crowndown a.menu { padding-right:0; padding-left:10px; }
-#crowndown img { float:left; margin-top:-4px; margin-right:0; padding-right:0; }
-#crowndown .menu-dropdown { width:320px; }
+#crowndown img { /*float:left;*/ margin-top:-6px; margin-right:0; padding-right:0; }
+/*#crowndown .menu-dropdown { width:320px; }*/
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
 .navbar .dropdown-menu {  -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 .navbar .dropdown-menu li a { color:#ccc; }
@@ -214,6 +214,13 @@ button.ui-multiselect span { color:#888; }
 .ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none; }
 /* remove label borders in IE6 because IE6 does not support transparency */
 * html .ui-multiselect-checkboxes label { border:none; }
+
+/* bootstrap img override */
+/* must fix this to work */
+/*
+[class^="icon-"],[class*=" icon-"]{display:inline-block;width:14px;height:14px;line-height:14px;vertical-align:text-top;background-image:url("./glyphicons-halflings.png");background-position:14px 14px;background-repeat:no-repeat;*margin-right:.3em;}[class^="icon-"]:last-child,[class*=" icon-"]:last-child{*margin-left:0;}
+.icon-white{background-image:url("./glyphicons-halflings-white.png");}
+*/
 
 
 /* Other sized screens */
