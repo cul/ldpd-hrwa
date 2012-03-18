@@ -37,8 +37,8 @@
 								     ]).html_safe %>
 			  <span class="submit_button_container">
 				<span id="s_type_selector_and_submit">
-				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
-				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
+				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label>
+				  <label class="add-on pull-left"><input type="radio" name="search_type" class="pull-left" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label>
 				  <label class="add-on hidden pull-left">
 					<a href="#" id="form_submit" class="submitss">Submit</a>
 				  </label>
