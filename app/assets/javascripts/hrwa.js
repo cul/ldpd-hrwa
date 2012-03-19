@@ -148,12 +148,12 @@ jQuery(function($) {
 
   function disableSimpleForm()
   {
-    $("#q").attr("disabled", "disabled").css('color','#bbbbcc');
+    $("#q, #q_t").attr("disabled", "disabled").css('color','#bbbbcc');
     $("#appliedParams").hide(0);
   }
   function enableSimpleForm()
   {
-    $("#q").removeAttr("disabled").css('color','#808080');
+    $("#q, #q_t").removeAttr("disabled").css('color','#808080');
     $("#appliedParams").show(0);
   }
 
@@ -424,32 +424,32 @@ $( ".datepicker" ).datepicker({
 // reverse parse advanced form inputs to q
 function adv_to_q() {
   return;
- if ($('#q').val() == '') {
+ if ($('#q, #q_t').val() == '') {
   var erq_and = ($('#q_and').val() != '') ? $('#q_and').val().replace(/^|\s(?=[^ ])/g, ' +').trim() : '';
   var erq_exclude = ($('#q_exclude').val() != '') ? $('#q_exclude').val().replace(/^|\s(?=[^ ])/g, ' -').trim() : '';
   var erq_or = ($('#q_or').val() != '') ? $('#q_or').val().replace(/^|\s/g, ' ').trim() : '';
   var erq_phrase = ($('#q_phrase').val() != '') ? '"'+$('#q_phrase').val()+'"' : '';
   var ssval = erq_and + ' ' + erq_exclude + ' ' + erq_phrase + ' ' + erq_or;
-  $('#q').val(ssval);
+  $('#q, #q_t').val(ssval);
   //$('#q_echo').html(ssval);
  }
 }
 // reverse parse q to advanced form inputs
 function q_to_adv() {
  if($('#q_phrase').val() == '') {
-  var erq_to_q_phrase = ( $('#q').val().match(/".*"/g) ) ? $('#q').val().match(/".*"/g).join('').replace(/"/g,'').trim() : '';
+  var erq_to_q_phrase = ( $('#q, #q_t').val().match(/".*"/g) ) ? $('#q, #q_t').val().match(/".*"/g).join('').replace(/"/g,'').trim() : '';
   $('#q_phrase').val(erq_to_q_phrase);
  }
  if($('#q_and').val() == '') {
-  var erq_to_q_and = ( $('#q').val().match(/\+[A-Za-z0-9]+\s?/g) ) ? $('#q').val().match(/\+[A-Za-z0-9]+\s?/g).join('').replace(/\+/g,'').trim() : '';
+  var erq_to_q_and = ( $('#q, #q_t').val().match(/\+[A-Za-z0-9]+\s?/g) ) ? $('#q, #q_t').val().match(/\+[A-Za-z0-9]+\s?/g).join('').replace(/\+/g,'').trim() : '';
   $('#q_and').val(erq_to_q_and);
  }
  if($('#q_exclude').val() == '') {
-  var erq_to_q_exclude = ( $('#q').val().match(/\-[A-Za-z0-9]+\s?/g) ) ? $('#q').val().match(/\-[A-Za-z0-9]+\s?/g).join('').replace(/\-/g,'').trim() : '';
+  var erq_to_q_exclude = ( $('#q, #q_t').val().match(/\-[A-Za-z0-9]+\s?/g) ) ? $('#q, #q_t').val().match(/\-[A-Za-z0-9]+\s?/g).join('').replace(/\-/g,'').trim() : '';
   $('#q_exclude').val(erq_to_q_exclude);
  }
  if($('#q_or').val() == '') {
-  var erq_to_q_or = ( $('#q').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g) ) ? $('#q').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g).join('').trim() : '';
+  var erq_to_q_or = ( $('#q, #q_t').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g) ) ? $('#q, #q_t').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g).join('').trim() : '';
   $('#q_or').val(erq_to_q_or);
  }
 }
@@ -462,9 +462,9 @@ if(HRWA.q == "")
 }
 
 //Only run search query related code if we're on the search page!
-if($('#simple_options #q').length != 0)
+if($('#simple_options #q, #q_t').length != 0)
 {
-  $('#simple_options #q').val(HRWA.q);
+  $('#simple_options #q, #q_t').val(HRWA.q);
   sync_all_forms('simple');
 }
 
@@ -477,7 +477,7 @@ function sync_all_forms(form_to_mirror) {
   if(form_to_mirror == 'simple')
   {
 	//generate new q based on simple form content
-	HRWA.q = $('#simple_options #q').val();
+	HRWA.q = $('#simple_options #q, #q_t').val();
 	//generate new q_and, q_phrase, q_or, q_exclude based on q
 	var multi_q_arr = single_q_to_multi_q(HRWA.q);
 
@@ -522,7 +522,7 @@ function sync_all_forms(form_to_mirror) {
 
   if(sync_to_simple_form)
   {
-	$('#simple_options #q').val(HRWA.q);
+	$('#simple_options #q, #q_t').val(HRWA.q);
   }
 
   if(sync_to_advanced_fsf_form)
@@ -545,7 +545,7 @@ function sync_all_forms(form_to_mirror) {
 //Onclick form stuff
 
 $('#simple_options #q_container').bind('click', function(){
-  if($(this).children('#q').attr('disabled') == 'disabled')
+  if($(this).children('#q, #q_t').attr('disabled') == 'disabled')
   {
     showSimpleSearch();
   }
