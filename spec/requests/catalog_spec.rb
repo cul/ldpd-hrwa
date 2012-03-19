@@ -24,7 +24,8 @@ end
 describe 'archive search' do
   # TODO: For some reason this test fails using form fill-in when running full test suite, 
   # but not when running just this spec file.  Once this is debugged, convert this back into 
-  # a form fill-in test.  The page source has <noscript> in it.  That might be the problem.
+  # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
+  # :js => true is not doing its job.
     it 'does not raise an error when paging through results', :js => true do
     # visit '/search'
     # fill_in 'q', :with => 'water'
@@ -156,7 +157,8 @@ describe 'the portal search' do
 
   # TODO: For some reason this test fails using form fill-in when running full test suite, 
   # but not when running just this spec file.  Once this is debugged, convert this back into 
-  # a form fill-in test.  The page source has <noscript> in it.  That might be the problem.
+  # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
+  # :js => true is not doing its job.
   it 'can successfully run an archive search immediately after a find_site search', :js => true do
     # visit '/search'
     # fill_in 'q', :with => 'water'
