@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.default_wait_time = 5
+Capybara.default_wait_time = 10
 
 describe 'all searches' do
   it 'should not have "host" param in querystring', :js => true do
@@ -45,9 +45,43 @@ describe 'archive search' do
       end
     }
   end
+  
+  # TODO: change this to form fill-in when advanced form has field boost controls
+  describe 'SOLR field boost level overriding' do
+    it 'correctly sets new weights for contentBody, contentTitle, and originalUrl' do
+      visit '/search?utf8=%E2%9C%93&search=true&hrwa_debug=true&field%5B%5D=originalUrl%5E2&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&search_mode=advanced&q_phrase=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc&search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc'
+      page.should have_content( %q{:qf=>["originalUrl^2", "contentTitle^3", "contentBody^4"]} )
+    end
+    
+    it 'correctly sets new weights for contentBody, contentTitle, with originalUrl omitted' do
+      visit 'http://bronte.cul.columbia.edu:3020/search?utf8=%E2%9C%93&search=true&hrwa_debug=true&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&search_mode=advanced&q_phrase=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc&search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc'
+      page.should have_content( %q{:qf=>["contentTitle^3", "contentBody^4"]} )
+    end
+  end
+  
+  describe 'advanced mode' do
+    it 'informs user "No results found" if advanced search returns no hits', :js => true do
+      visit '/search'
+      click_link 'advo_link'
+      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
+      click_link 'form_submit'
+      page.should have_content('No results found')
+    end
+
+    # TODO: This is just a cheap, temporary test for assistance during initial development.
+    # SOLR index is stable but later will be incrementally updated so these tests are super-brittle.
+    # Delete them when Rails Port milestone is reached.
+    it 'returns 3,199,634 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)', :js => true do
+      visit '/search'
+      click_link 'advo_link'
+      fill_in 'q_and', :with => 'women'
+      click_link 'form_submit'
+      page.should have_content( '3,199,634' )
+    end
+    
+  end
 end
 
-# TODO: change this to form fill-in
 describe 'find site search' do
   configurator        = HRWA::FindSiteSearchConfigurator.new
   blacklight_config   = Blacklight::Configuration.new
@@ -61,6 +95,37 @@ describe 'find site search' do
       page.status_code.should == 200
     end
   }
+  
+  describe 'advanced mode' do
+    it 'informs user "No results found" if advanced search returns no hits', :js => true do
+      visit '/search'
+      click_link 'advo_link'
+      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
+      click_link 'form_submit'
+      page.should have_content('No results found')
+    end
+  
+    it 'returns search results for a known successful query', :js => true do
+      visit '/search'
+      click_link 'advo_link'
+      fill_in 'q_and', :with => 'water'
+      fill_in 'q_phrase', :with => 'Provides information'
+      fill_in 'q_or', :with => 'human rights'
+      fill_in 'q_exclude', :with => 'zamboni'
+      click_link 'form_submit'
+      page.should have_content('Center for Economic and Social Rights')
+    end
+  
+    it 'returns search results for q_and="human" and a title that contains the word "human"', :js => true do
+      visit '/search'
+      click_link 'advo_link'
+      fill_in 'q_and', :with => 'human'
+      click_link 'form_submit'
+      
+      page.should_not have_content( 'No results found' )
+    end
+  end
+
 end
 
 # JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
@@ -79,12 +144,14 @@ describe 'the portal search' do
 
   it 'can successfully run a find_site search immediately after an archive search', :js => true do
     visit '/search'
+    click_link 'advo_link'
     fill_in 'q', :with => 'women'
     choose 'asfsearch_t'
     click_link 'top_form_submit'
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
     
     visit '/search'
+    click_link 'advo_link'
     fill_in 'q', :with => 'water'
     choose 'fsfsearch_t'
     click_link 'top_form_submit'
@@ -94,12 +161,14 @@ describe 'the portal search' do
 
   it 'can successfully run an archive search immediately after a find_site search', :js => true do
     visit '/search'
+    click_link 'advo_link'
     fill_in 'q', :with => 'water'
     choose 'fsfsearch'
     click_link 'form_submit'
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
     visit '/search'
+    click_link 'advo_link'
     fill_in 'q', :with => 'women'
     choose 'asfsearch'
     click_link 'form_submit'
@@ -126,66 +195,3 @@ describe 'the portal search' do
 
 end
 
-
-#################################################################################
-#################################################################################
-
-# TODO: convert these to production search form tests
-describe 'advanced_search_asf' do
-  it 'informs user "No results found" if advanced search returns no hits' do
-    visit '/advanced_asf'
-    fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-    click_button 'submit_search'
-    page.should have_content('No results found')
-  end
-
-  describe 'q_and=women search' do
-    before :each do
-      visit '/advanced_asf'
-      fill_in 'q_and', :with => 'women'
-      click_button 'submit_search'
-      @result_page = page
-    end
-
-    it 'creates the correct HTTP querystring for simple "q_and" search' do
-      querystring = URI.parse( current_url ).query
-      querystring.should == "search_type=archive&search_mode=advanced&search=true&q_and=women&q_phrase=&q_or=&q_exclude=&lim_domain=&lim_mimetype=&lim_language=&lim_geographic_focus=&lim_organization_based_in=&lim_organization_type=&lim_creator_name=&capture_start_date=&capture_end_date=&rows=10&sort=score+desc&solr_host=harding.cul.columbia.edu&solr_core_path=%2Fsolr-4%2Fasf&submit_search=Advanced+Search"
-    end
-
-    # TODO: These are just some cheap, temporary tests for assistance during initial development.
-    # SOLR index is stable but later will be incrementally updated so these tests are super-brittle.
-    # Delete them when Rails Port milestone is reached.
-    it 'returns 3,199,634 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)' do
-      @result_page.should have_content( '3,199,634' )
-    end
-
-  end
-
-end
-
-describe 'advanced_search_fsf' do
-
-  it 'informs user "No results found" if advanced search returns no hits' do
-    visit '/advanced_fsf'
-    fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-    click_button 'submit_search'
-    page.should have_content('No results found')
-  end
-
-  it 'returns search results for a known successful query' do
-    visit '/advanced_fsf'
-    fill_in 'q_and', :with => 'water'
-    fill_in 'q_phrase', :with => 'Provides information'
-    fill_in 'q_or', :with => 'human rights'
-    fill_in 'q_exclude', :with => 'zamboni'
-    click_button 'submit_search'
-    page.should have_content('Center for Economic and Social Rights')
-  end
-
-  # TODO: change to form fill-in
-  it 'returns search results for q_and="human" and a title that contains the word "human"' => true do
-     visit '/search?search=true&search_type=find_site&q_and=human&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&f%5Btitle__facet%5D%5B%5D=Afghanistan+Independent+Human+Rights+Commission&per_page=10&sort=score+desc&sort=score+desc&search_mode=advanced'
-     page.should_not have_content( 'No results found' )
-  end
-
-end
