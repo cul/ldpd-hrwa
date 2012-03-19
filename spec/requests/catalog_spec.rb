@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-
+Capybara.javascript_driver = :webkit
 
 # TODO: change static form fill-in to real form fill-in when selenium working on bronte
 describe 'all searches' do
@@ -17,7 +17,7 @@ describe 'all searches' do
 
   it 'render the "search home page" if there are no params' do
     visit '/search'
-    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS' )
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS/ ).should_not be nil
   end
 end
 
@@ -72,43 +72,36 @@ end
 # then the FindSiteSearchConfigurator would attempt to set the sort field to
 # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
 describe 'the portal search' do
-  it 'can successfully run a find_site search immediately after an archive search' do
-    # TODO: change this to use form fill-in when JS seleniun is working on bronte
-    # visit '/search'
-    # fill_in 'q', :with => 'women'
-    # choose 'asfsearch_t'
-    # click_link 'top_form_submit'
-    visit '/search?search_type=archive&search=true&q=women'
-    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
+  it 'can successfully run a find_site search immediately after an archive search', :js => true do
+    # Use top form for first search and in-page form for second to exercise both
+    visit '/search'
+    fill_in 'q', :with => 'women'
+    choose 'asfsearch_t'
+    click_link 'top_form_submit'
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
     
-    # TODO: change this to use form fill-in when JS seleniun is working on bronte
-    # visit '/search'
-    # fill_in 'q', :with => 'water'
-    # choose 'fsfsearch_t'
-    # click_link 'top_form_submit'
-    visit '/search?search_type=find_site&search=true&q=women'
-    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
-    page.should_not have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS' )
+    visit '/search'
+    fill_in 'q', :with => 'water'
+    choose 'fsfsearch_t'
+    click_link 'top_form_submit'
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
   end
 
-  it 'can successfully run an archive search immediately after a find_site search' do
-    # TODO: change this to use form fill-in when JS seleniun is working on bronte
-    # it 'can successfully run an archive search immediately after a find_site search' do
-    # visit '/search'
-    # fill_in 'q', :with => 'water'
-    # choose 'fsfsearch'
-    # click_link 'form_submit'
-    visit '/search?search_type=find_site&search=true&q=women'
-    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
+  it 'can successfully run an archive search immediately after a find_site search', :js => true do
+    visit '/search'
+    fill_in 'q', :with => 'water'
+    choose 'fsfsearch'
+    click_link 'form_submit'
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
-    # TODO: change this to use form fill-in when JS seleniun is working on bronte
-    # visit '/search'
-    # fill_in 'q', :with => 'women'
-    # choose 'asfsearch'
-    # click_link 'form_submit'
-    visit '/search?search_type=archive&search=true&q=women'
-    page.should have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS' )
-    page.should_not have_content( 'REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS')
+    visit '/search'
+    fill_in 'q', :with => 'women'
+    choose 'asfsearch'
+    click_link 'form_submit'
+    
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
   end
 
   describe 'advanced_search_version_of_default_search_form' do
