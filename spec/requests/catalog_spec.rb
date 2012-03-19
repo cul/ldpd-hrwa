@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.default_wait_time = 10
+Capybara.default_wait_time = 20
 
 describe 'all searches' do
   it 'should not have "host" param in querystring', :js => true do
@@ -117,15 +117,6 @@ describe 'find site search' do
       click_link 'form_submit'
       page.should have_content('Center for Economic and Social Rights')
     end
-  
-    it 'returns search results for q_and="human" and a title that contains the word "human"', :js => true do
-      visit '/search'
-      click_link 'advo_link'
-      fill_in 'q_and', :with => 'human'
-      click_link 'form_submit'
-      
-      page.should_not have_content( 'No results found' )
-    end
   end
 
 end
@@ -173,22 +164,6 @@ describe 'the portal search' do
     
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
-  end
-
-  describe 'advanced_search_version_of_default_search_form' do
-
-    it 'returns search results for a known successful query' do
-      visit '/search'
-  
-      click_link 'advo_link'
-      fill_in 'q_and',     :with => 'water'
-      fill_in 'q_phrase',  :with => 'Provides information'
-      fill_in 'q_or',      :with => 'human rights'
-      fill_in 'q_exclude', :with => 'zamboni'
-      click_link 'form_submit'
-      page.should have_content('Center for Economic and Social Rights')
-    end
-
   end
 
 end
