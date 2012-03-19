@@ -29,7 +29,7 @@
 		<div id="simple_options">
 		  <div id="heross">
 
-			<div class="input-append pull-left">
+			<div class="input-append pull-left invisible">
 			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span9 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
 
 			  <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
