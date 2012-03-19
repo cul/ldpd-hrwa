@@ -228,7 +228,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
   describe '#set_solr_field_boost_levels' do
     before :all do
       @default_qf   = [ 'contentTitle^1', 'contentBody^1', 'originalUrl^1' ]
-      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^1' ]
+      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^4' ]
       @bad_params   = [ 'title^5', 'body^3' ]
     end
 
@@ -237,7 +237,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
     
     it 'sets full field set boosts correctly' do
-      @params[ :'field[]' ] = @valid_params
+      @params[ :field ] = @valid_params
       extra_controller_params = { :qf => @default_qf }
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @valid_params }
@@ -245,13 +245,13 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     
     it 'sets partial field set boosts correctly' do
       @partial_params = @valid_params.slice( 0..@valid_params.length - 2 )
-      @params[ :'field[]' ] = @partial_params
+      @params[ :field ] = @partial_params
       extra_controller_params = { :qf => @default_qf }
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @partial_params }
     end
 
-    it 'does nothing and exits when no field[] params present' do
+    it 'does nothing and exits when no field params present' do
       extra_controller_params = { :qf => @default_qf }
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @default_qf }
@@ -264,7 +264,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           expect{ 
             @configurator.set_solr_field_boost_levels(
               {},
-              { :'field[]' => [ "contentTitle^#{ value }" ] }
+              { :field => [ "contentTitle^#{ value }" ] }
             )
           }.to raise_error( ArgumentError )
         end
@@ -273,7 +273,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     
     it 'ignores invalid field arguments' do
       extra_controller_params = { :qf => @default_qf }
-      @params.merge!( :'field[]' => @valid_params | @bad_params )
+      @params.merge!( :field => @valid_params | @bad_params )
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @valid_params }
     end

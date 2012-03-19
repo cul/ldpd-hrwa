@@ -219,6 +219,7 @@ class HRWA::ArchiveSearchConfigurator
   def process_search_request( extra_controller_params, user_params = params )
    add_capture_date_range_fq_to_solr( extra_controller_params, user_params )
    add_exclude_fq_to_solr( extra_controller_params, user_params )
+   set_solr_field_boost_levels( extra_controller_params, user_params )
   end
 
   def prioritized_highlight_field_list
@@ -238,12 +239,12 @@ class HRWA::ArchiveSearchConfigurator
   end
   
   def set_solr_field_boost_levels( extra_controller_params, user_params )
-    return if ! user_params.has_key?( :'field[]' )
+    return if ! user_params.has_key?( :field )
     
     valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
     
     qf = []
-    user_params[ :'field[]' ].each { | field_boost |
+    user_params[ :field ].each { | field_boost |
       field, boost_level = field_boost.split( /\^/ )
       
       # Raise error if boost_level is not a positive number
