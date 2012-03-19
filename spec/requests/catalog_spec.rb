@@ -3,7 +3,67 @@ require 'spec_helper'
 
 Capybara.default_wait_time = 20
 
-describe 'all searches' do
+describe 'the portal search' do
+  it 'renders the "search home page" if there are no params' do
+    visit '/search'
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS/ ).should_not be nil
+  end
+
+  # JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
+  # CatalogController is apparently re-used.  If blacklight_config of the CatalogController
+  # is not reset to a blank state reset to blank state in each request, there is
+  # the potential for a SOLR error to occur due to old stuff such as config.facet_fields and
+  # config.sort_fields defined in the previous request referencing SOLR fields that don't exist in the
+  # SOLR index for the current search_type.
+  #
+  # Example: It used to be that archive search had sort='score desc, dateOfCaptureYYYYMMDD desc'
+  # find_site had sort='score desc'.  If there was no sort param in the HTTP query string
+  # then the FindSiteSearchConfigurator would attempt to set the sort field to
+  # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
+  describe 'over multipe searchs' do
+    # These examples also serve as tests of simple search for ASF and FSF
+    
+    # Use top form for first test and in-page form for second test to exercise both forms
+    it 'can successfully run a find_site search immediately after an archive search', :js => true do
+      visit '/search'
+      fill_in 'q', :with => 'women'
+      choose 'asfsearch_t'
+      click_link 'top_form_submit'
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      
+      visit '/search'
+      fill_in 'q', :with => 'water'
+      choose 'fsfsearch_t'
+      click_link 'top_form_submit'
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
+    end
+  
+    # TODO: For some reason this test fails using form fill-in when running full test suite, 
+    # but not when running just this spec file.  Once this is debugged, convert this back into 
+    # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
+    # :js => true is not doing its job.
+    it 'can successfully run an archive search immediately after a find_site search', :js => true do
+      # visit '/search'
+      # fill_in 'q', :with => 'water'
+      # choose 'fsfsearch'
+      # click_link 'form_submit'
+      visit '/search?utf8=%E2%9C%93&search=true&q=water&search_type=find_site'
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+  
+      # visit '/search'
+      # fill_in 'q', :with => 'women'
+      # choose 'asfsearch'
+      # click_link 'form_submit'
+      visit '/search?utf8=%E2%9C%93&search=true&q=women&search_type=archive'
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
+    end
+  end
+
+end
+
+describe 'archive search' do
   it 'should not have "host" param in querystring', :js => true do
     visit '/search'
     fill_in 'q', :with => 'water'
@@ -15,13 +75,6 @@ describe 'all searches' do
     params_hash[ :host ].should be_nil
   end
 
-  it 'render the "search home page" if there are no params' do
-    visit '/search'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS/ ).should_not be nil
-  end
-end
-
-describe 'archive search' do
   # TODO: For some reason this test fails using form fill-in when running full test suite, 
   # but not when running just this spec file.  Once this is debugged, convert this back into 
   # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
@@ -125,56 +178,3 @@ describe 'find site search' do
   end
 
 end
-
-# JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
-# CatalogController is apparently re-used.  If blacklight_config of the CatalogController
-# is not reset to a blank state reset to blank state in each request, there is
-# the potential for a SOLR error to occur due to old stuff such as config.facet_fields and
-# config.sort_fields defined in the previous request referencing SOLR fields that don't exist in the
-# SOLR index for the current search_type.
-#
-# Example: It used to be that archive search had sort='score desc, dateOfCaptureYYYYMMDD desc'
-# find_site had sort='score desc'.  If there was no sort param in the HTTP query string
-# then the FindSiteSearchConfigurator would attempt to set the sort field to
-# 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
-describe 'the portal search' do
-  # Use top form for first test and in-page form for second test to exercise both forms
-
-  it 'can successfully run a find_site search immediately after an archive search', :js => true do
-    visit '/search'
-    fill_in 'q', :with => 'women'
-    choose 'asfsearch_t'
-    click_link 'top_form_submit'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-    
-    visit '/search'
-    fill_in 'q', :with => 'water'
-    choose 'fsfsearch_t'
-    click_link 'top_form_submit'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
-  end
-
-  # TODO: For some reason this test fails using form fill-in when running full test suite, 
-  # but not when running just this spec file.  Once this is debugged, convert this back into 
-  # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
-  # :js => true is not doing its job.
-  it 'can successfully run an archive search immediately after a find_site search', :js => true do
-    # visit '/search'
-    # fill_in 'q', :with => 'water'
-    # choose 'fsfsearch'
-    # click_link 'form_submit'
-    visit '/search?utf8=%E2%9C%93&search=true&q=water&search_type=find_site'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-
-    # visit '/search'
-    # fill_in 'q', :with => 'women'
-    # choose 'asfsearch'
-    # click_link 'form_submit'
-    visit '/search?utf8=%E2%9C%93&search=true&q=women&search_type=archive'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
-  end
-
-end
-
