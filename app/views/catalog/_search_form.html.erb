@@ -5,9 +5,11 @@
 	<% if ! params[:search].nil? %>
 	  <%= link_to 'Start a new search', search_path, :class=> 'floatright', :id => 'start_new_search_link' %>
 	<% end %>
-    <h3>Human Rights Web Archive</h3>
+    <% 
+    #<h3>Human Rights Web Archive</h3>
 
-    <% #<a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a> %>
+    #<a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a> 
+    %>
 
 	<script type="text/javascript">
 	  HRWA.q = decodeURIComponent("<%= params[:q].blank? ? '' : CGI.escape(params[:q]).gsub('+','%20') %>");
