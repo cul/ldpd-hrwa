@@ -64,6 +64,7 @@ iframe#x_container { width:100%; }
 #fqs { margin-top:0.5em; }
 #fqs a.delfq { font-size:80%; }
 #topfqs { display:none; }
+#primary #fqs a.btn { margin-bottom:2px; padding:2px; }
 #site_footer #culcul { padding-left:28px; background:#fff url('./crown-small-blue.png') no-repeat 0 2px; line-height:28px; font-size:11px; }
 #primary article {overflow:hidden;}
 #primary article:nth-child(odd) dl { background-color: #fafafe; }
