@@ -203,7 +203,7 @@ jQuery(function($) {
 
 	if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'outside_of_form')
 	{
-	  var current_search_type = $('#fsfsearch').attr('checked') == 'checked' ? 'find_site' : 'archive';
+	  var current_search_type = $('#fsfsearch, #fsfsearch_t').attr('checked') == 'checked' ? 'find_site' : 'archive';
 	  showAdvancedSearch(current_search_type);
 	  HRWA.currently_visible_form = (current_search_type == 'find_site') ? 'advanced_fsf' : 'advanced_asf';
 	}
@@ -217,7 +217,7 @@ jQuery(function($) {
 	return false;
   });
 
-  $('#fsfsearch').click(function(){
+  $('#fsfsearch, #fsfsearch_t').click(function(){
     if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'inside_of_form')
     {
 	  sync_all_forms(HRWA.currently_visible_form);
@@ -226,7 +226,7 @@ jQuery(function($) {
     }
   });
 
-  $('#asfsearch').click(function(){
+  $('#asfsearch, #asfsearch_t').click(function(){
     if($('#advanced_options_asf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_fsf').parent().attr('id') == 'inside_of_form')
     {
 	  sync_all_forms(HRWA.currently_visible_form);
