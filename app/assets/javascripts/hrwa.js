@@ -269,8 +269,13 @@ $('.moreless').live('click', function() {
 });
 
 // resubmit
-$('.submit_topsearch').live('click',function(e) {
-	$('#topsearchform').submit();
+$('#top_form_submit').live('click',function(e) {
+    if($('#hero-container').css('display') == 'none') {
+	  $('#topsearchform').submit();
+    } else {
+	  var cform = $('#searchform');
+	  cform.submit();
+    }
 	return false;
 });
 
