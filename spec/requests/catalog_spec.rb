@@ -3,12 +3,12 @@ require 'spec_helper'
 
 Capybara.javascript_driver = :webkit
 
-# TODO: change static form fill-in to real form fill-in when selenium working on bronte
 describe 'all searches' do
-  it 'should not have "host" param in querystring' do
-    visit '/advanced_asf'
-    fill_in 'q_and', :with => 'woman'
-    click_button 'submit_search'
+  it 'should not have "host" param in querystring', :js => true do
+    visit '/search'
+    fill_in 'q', :with => 'water'
+    choose 'asfsearch'
+    click_link 'form_submit'
 
     querystring = URI.parse( current_url ).query
     params_hash = Rack::Utils.parse_nested_query( querystring ).deep_symbolize_keys
@@ -21,10 +21,13 @@ describe 'all searches' do
   end
 end
 
-# # TODO: change this to form fill-in
 describe 'archive search' do
-  it 'does not raise an error when paging through results' do
-    visit '/catalog?page=3&q=water&search_type=archive&search=true'
+  it 'does not raise an error when paging through results', :js => true do
+    visit '/search'
+    fill_in 'q', :with => 'water'
+    choose 'asfsearch'
+    click_link 'form_submit'
+    click_link '3'
     page.should_not have_content( %q{can't convert Fixnum into String} )
   end
 
@@ -72,8 +75,9 @@ end
 # then the FindSiteSearchConfigurator would attempt to set the sort field to
 # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
 describe 'the portal search' do
+  # Use top form for first test and in-page form for second test to exercise both forms
+
   it 'can successfully run a find_site search immediately after an archive search', :js => true do
-    # Use top form for first search and in-page form for second to exercise both
     visit '/search'
     fill_in 'q', :with => 'women'
     choose 'asfsearch_t'
