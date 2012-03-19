@@ -7,7 +7,7 @@
 	<% end %>
     <h3>Human Rights Web Archive</h3>
 
-    <a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a>
+    <% #<a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a> %>
 
 	<script type="text/javascript">
 	  HRWA.q = decodeURIComponent("<%= params[:q].blank? ? '' : CGI.escape(params[:q]).gsub('+','%20') %>");
@@ -28,7 +28,7 @@
 		  <div id="heross">
 
 			<div class="input-append pull-left">
-			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span8 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
+			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span9 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
 
 			  <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
 								      :q, :qt, :page,
