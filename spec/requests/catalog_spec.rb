@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 5
 
 describe 'all searches' do
   it 'should not have "host" param in querystring', :js => true do
