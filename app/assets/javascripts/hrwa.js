@@ -148,12 +148,12 @@ jQuery(function($) {
 
   function disableSimpleForm()
   {
-    $("#q, #q_t").attr("disabled", "disabled").css('color','#bbbbcc');
+    $("#q, #q_t").attr("disabled", "disabled");
     $("#appliedParams").hide(0);
   }
   function enableSimpleForm()
   {
-    $("#q, #q_t").removeAttr("disabled").css('color','#808080');
+    $("#q, #q_t").removeAttr("disabled");
     $("#appliedParams").show(0);
   }
 
@@ -257,7 +257,7 @@ jQuery(function($) {
 	$('.advanced_options input[type=text]').val('');
   });
 
-  $('.submitss').parent().css('visibility','visible');
+  $('.navbar .submitss').parent().css('visibility','visible');
   $('.submitss').live('click', function (e) {
 	var cform = $(this).closest('form');
 	cform.submit();
