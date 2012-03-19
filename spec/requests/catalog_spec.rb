@@ -62,6 +62,7 @@ describe 'archive search' do
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
+      choose 'asfsearch'
       click_link 'advo_link'
       fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
       click_link 'form_submit'
@@ -73,6 +74,7 @@ describe 'archive search' do
     # Delete them when Rails Port milestone is reached.
     it 'returns 3,199,634 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)', :js => true do
       visit '/search'
+      choose 'asfsearch'
       click_link 'advo_link'
       fill_in 'q_and', :with => 'women'
       click_link 'form_submit'
