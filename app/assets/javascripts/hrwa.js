@@ -197,6 +197,8 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
+    if($('#hero-container').css('display') == 'none') { $('#hero-container').slideDown(); } else { $('#hero-container').slideUp(); }
+
 	sync_all_forms(HRWA.currently_visible_form);
 
 	if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'outside_of_form')
