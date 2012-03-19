@@ -146,14 +146,12 @@ describe 'the portal search' do
 
   it 'can successfully run a find_site search immediately after an archive search', :js => true do
     visit '/search'
-    click_link 'advo_link'
     fill_in 'q', :with => 'women'
     choose 'asfsearch_t'
     click_link 'top_form_submit'
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
     
     visit '/search'
-    click_link 'advo_link'
     fill_in 'q', :with => 'water'
     choose 'fsfsearch_t'
     click_link 'top_form_submit'
@@ -163,14 +161,12 @@ describe 'the portal search' do
 
   it 'can successfully run an archive search immediately after a find_site search', :js => true do
     visit '/search'
-    click_link 'advo_link'
     fill_in 'q', :with => 'water'
     choose 'fsfsearch'
     click_link 'form_submit'
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
     visit '/search'
-    click_link 'advo_link'
     fill_in 'q', :with => 'women'
     choose 'asfsearch'
     click_link 'form_submit'
