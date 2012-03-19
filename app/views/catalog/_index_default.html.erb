@@ -52,11 +52,11 @@
 	<% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
 
 	<% site_detail_url = {:controller => 'catalog', :action => 'site_detail', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
-	<%= link_to 'Site Detail', site_detail_url, :title => 'Site detail permalink for: ' +  document.get("title")%>
-	[<%= link_to preview_icon, site_detail_url, :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
+	<%= link_to 'Site Detail', site_detail_url, :rel => 'tooltip', :title => 'Site detail permalink for: ' +  document.get("title")%>
+	[<%= link_to preview_icon, site_detail_url, :rel => 'tooltip', :title => 'Site detail preview for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
 
 	<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
-	<%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
+	<%= link_to 'Crawl Calendar', archived_url, :rel => 'tooltip', :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
       </span>
     </dd>
 
