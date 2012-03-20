@@ -145,7 +145,7 @@ class HRWA::ArchiveSearchConfigurator
       }
     end
 
-  def add_capture_date_range_fq_to_solr( extra_controller_params, user_params = params )
+  def add_capture_date_range_fq_to_solr( solr_parameters, user_params = params )
       # We are going to assume that the capture date params are non-nil from this
       # point onward
       # Get range endpoints, using * for open-ended wildcard
@@ -158,21 +158,28 @@ class HRWA::ArchiveSearchConfigurator
 
       return if ( capture_start_date == '*' && capture_end_date == '*' )
 
-      extra_controller_params[ :fq ] ||= []
-      extra_controller_params[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing capture date range filter
+      # debugger
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^dateOfCaptureYYYYMM/ }
+      
+      solr_parameters[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
-  def add_exclude_fq_to_solr( extra_controller_params, user_params = params )
+  def add_exclude_fq_to_solr( solr_parameters, user_params = params )
      # :fq, map from :excl_domain.
     if ( user_params[ :'excl_domain' ] )
       exclude_domain_request_params = user_params[ :'excl_domain' ]
 
-      extra_controller_params[ :fq ] ||= []
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing exclude domain filter
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^-domain/ }
+      
       exclude_domain_request_params.each do | value_list |
         value_list ||= []
         value_list = [ value_list ] unless value_list.respond_to? :each
         value_list.each do | value |
-          extra_controller_params[ :fq ] << exclude_value_to_fq_string( 'domain', value )
+          solr_parameters[ :fq ] << exclude_value_to_fq_string( 'domain', value )
         end
       end
     end
@@ -216,10 +223,10 @@ class HRWA::ArchiveSearchConfigurator
     return true
   end
   
-  def process_search_request( extra_controller_params, user_params = params )
-   add_capture_date_range_fq_to_solr( extra_controller_params, user_params )
-   add_exclude_fq_to_solr( extra_controller_params, user_params )
-   set_solr_field_boost_levels( extra_controller_params, user_params )
+  def process_search_request( solr_parameters, user_params = params )
+   add_capture_date_range_fq_to_solr( solr_parameters, user_params )
+   add_exclude_fq_to_solr( solr_parameters, user_params )
+   set_solr_field_boost_levels( solr_parameters, user_params )
   end
 
   def prioritized_highlight_field_list
@@ -238,7 +245,7 @@ class HRWA::ArchiveSearchConfigurator
     return 'group'
   end
   
-  def set_solr_field_boost_levels( extra_controller_params, user_params )
+  def set_solr_field_boost_levels( solr_parameters, user_params )
     return if ! user_params.has_key?( :field )
     
     valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
@@ -258,7 +265,7 @@ class HRWA::ArchiveSearchConfigurator
     }
     
     # Overwrite existing qf
-    extra_controller_params[ :qf ] = qf
+    solr_parameters[ :qf ] = qf
   end
 
   # Takes optional environment arg for testability

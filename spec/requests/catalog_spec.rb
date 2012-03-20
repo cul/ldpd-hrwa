@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.default_wait_time = 20
+# Capybara.default_wait_time = 30
 
 describe 'the portal search' do
   it 'renders the "search home page" if there are no params' do
@@ -20,8 +20,7 @@ describe 'the portal search' do
   # find_site had sort='score desc'.  If there was no sort param in the HTTP query string
   # then the FindSiteSearchConfigurator would attempt to set the sort field to
   # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
-  describe 'over multipe searchs' do
-    # These examples also serve as tests of simple search for ASF and FSF
+  describe 'over multiple searches' do
     
     # Use top form for first test and in-page form for second test to exercise both forms
     it 'can successfully run a find_site search immediately after an archive search', :js => true do
@@ -75,7 +74,23 @@ describe 'archive search' do
     params_hash[ :host ].should be_nil
   end
 
-  # TODO: For some reason this test fails using form fill-in when running full test suite, 
+  # HRWA-359 Bug
+  it 'does not wipe out facet fq params when a exclude domain filter is specified', :js => true, :focus => true  do
+    # TODO: right now no way to click on the correct Domain- button so using visit URL.
+    # Convert this to form fill-in when possible
+    # visit '/search'
+    # choose 'asfsearch'
+    # fill_in 'q', :with => 'shirkatgah.org'
+    # click_link 'form_submit'
+    # click_link 'English'
+    # clink_link 'Domain-'
+    # click_link 'Menu'
+    # click_link 'Turn debug on'
+    visit 'http://bronte.cul.columbia.edu:3020/search?excl_domain%5B%5D=www.shirkatgah.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=shirkatgah.org&search=true&search_type=archive&utf8=%E2%9C%93'
+    page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.shirkatgah.org"]} )
+  end
+
+# TODO: For some reason this test fails using form fill-in when running full test suite, 
   # but not when running just this spec file.  Once this is debugged, convert this back into 
   # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
   # :js => true is not doing its job.
@@ -139,6 +154,22 @@ describe 'archive search' do
       page.should have_content( '3,199,634' )
     end
     
+    # HRWA-359 Bug
+    it 'does not wipe out facet fq params when a Date of Capture filter is specified', :js => true do
+      visit '/search'
+      choose 'asfsearch'
+      click_link 'advo_link'
+      fill_in 'q_and',              :with => 'women'
+      fill_in 'capture_end_date',   :with => '201203'
+      fill_in 'capture_start_date', :with => '200803'
+      click_link 'form_submit'
+      click_link 'English'
+      click_link 'Menu'
+      click_link 'Turn debug on'
+      Rails.logger.debug( page.html )
+      page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
+    end
+
   end
 end
 

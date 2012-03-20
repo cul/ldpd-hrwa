@@ -16,27 +16,29 @@ class CatalogController < ApplicationController
 
   # get search results from the solr index
   def index
-    # Params that fall outside of current standarad Blacklight processing
-    @extra_controller_params = {}
-
     if !params[:search].blank?
 
       _configure_by_search_type
-
+      
+      # Add our own processing to the end of the standard Blacklght SOLR
+      # params method chain
+      
+      if params[ :search_mode ] == "advanced"
+      
       # Advanced searches require some extra params manipulation
-      _advanced_search_processing if params[ :search_mode ] == "advanced"
-
-      @configurator.process_search_request( @extra_controller_params, params )
+        self.solr_search_params_logic << :advanced_search_processing
+      end
+      
+      self.solr_search_params_logic << :process_search_request
 
       begin
-        (@response, @result_list) = get_search_results( params,
-                                                        @extra_controller_params )
+        (@response, @result_list) = get_search_results( params, {} )
       rescue => ex
         @errors = ex.to_s.html_safe
 
         # TODO: remove this from production version
         if params.has_key?( :hrwa_debug )
-          _set_debug_display( @extra_controller_params )
+          _set_debug_display
         end
       
         render :error and return
@@ -57,7 +59,7 @@ class CatalogController < ApplicationController
 
       # TODO: remove this from production version
       if params.has_key?( :hrwa_debug )
-        _set_debug_display( @extra_controller_params )
+        _set_debug_display
       end
 
       respond_to do |format|
@@ -78,46 +80,17 @@ class CatalogController < ApplicationController
     @response, @document = get_solr_response_for_doc_id(@bib_key)
   end
 
-  private
-
-  def _advanced_search_processing
+  def advanced_search_processing( solr_parameters, user_params )
     # For now the q_* fields are processed the same for all search_types
-    advanced_search_processing_q_fields
+    advanced_search_processing_q_fields( solr_parameters, user_params )
+  end
+  
+  # This has to be defined in controller in order to be added to solr_search_params_logic
+  def process_search_request( solr_parameters, user_params )
+    @configurator.process_search_request( solr_parameters, user_params )
   end
 
-
-  def _set_debug_display( extra_controller_params = {} )
-    @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
-    @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
-
-    @debug << "<h1>extra_controller_params</h3>".html_safe
-    @debug << hash_pp( extra_controller_params )
-
-    @debug << "<h1>params[]</h1>".html_safe
-    @debug << params_list
-
-    @debug << '<h1>solr_search_params_logic</h1>'.html_safe
-    @debug << array_pp( self.solr_search_params_logic )
-
-    @debug << "<h1>self.solr_search_params( params ).merge( extra_controller_params )</h1>\n\n".html_safe
-    
-    merged_solr_search_params =
-      self.solr_search_params( params ).merge( @extra_controller_params )
-    merged_solr_search_params.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
-      @debug << "<strong>#{key}</strong> = ".html_safe << merged_solr_search_params[ key ].to_s << "<br/>".html_safe
-    end
-
-    if @response
-      @debug << '<h1>@response.request_params</h1>'.html_safe
-      @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
-
-      @debug << '<h1>@result_list</h1>'.html_safe
-      @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
-
-      @debug << '<h1>@response</h1>'.html_safe
-      @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
-    end
-  end
+  private
 
   def _configure_by_search_type(search_type = params[:search_type])
     @debug = ''.html_safe
@@ -134,6 +107,34 @@ class CatalogController < ApplicationController
     CatalogController.configure_blacklight( &@configurator.config_proc )
 
     Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url )
+  end
+  
+  def _set_debug_display
+    @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
+    @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
+
+    @debug << "<h1>params[]</h1>".html_safe
+    @debug << params_list
+
+    @debug << '<h1>solr_search_params_logic</h1>'.html_safe
+    @debug << array_pp( self.solr_search_params_logic )
+
+    @debug << "<h1>self.solr_search_params( params )</h1>\n\n".html_safe
+    solr_search_parameters = self.solr_search_params( params ) 
+    solr_search_parameters.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
+      @debug << "<strong>#{key}</strong> = ".html_safe << solr_search_parameters[ key ].to_s << "<br/>".html_safe
+    end
+
+    if @response
+      @debug << '<h1>@response.request_params</h1>'.html_safe
+      @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
+
+      @debug << '<h1>@result_list</h1>'.html_safe
+      @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
+
+      @debug << '<h1>@response</h1>'.html_safe
+      @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
+    end
   end
 
 end
