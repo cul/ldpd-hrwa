@@ -20,7 +20,7 @@ class CatalogController < ApplicationController
     @extra_controller_params = {}
 
     if !params[:search].blank?
-
+debugger
       _configure_by_search_type
 
       # Advanced searches require some extra params manipulation
