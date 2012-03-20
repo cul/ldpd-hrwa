@@ -1,6 +1,39 @@
 <div class="container">
-   <h1>HUMAN RIGHTS WEB ARCHIVE</h1>
+ <div class="row">
+  <div class="span9">
+   <h1 class="black">HUMAN RIGHTS WEB ARCHIVE</h1>
    <h3>@ Columbia University</h3>
+  </div>
+  <div class="span3">
+          <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="http://zapata.cul.columbia.edu/mkimg/320-250-cccccc-969696" alt="">
+                <div class="carousel-caption">
+                  <h4>First Thumbnail label</h4>
+                  <p>caption 1</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="http://zapata.cul.columbia.edu/mkimg/320-250-aaccdd-969696" alt="">
+                <div class="carousel-caption">
+                  <h4>Second Thumbnail label</h4>
+                  <p>caption 2</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="http://zapata.cul.columbia.edu/mkimg/320-250-99aabb-969696" alt="">
+                <div class="carousel-caption">
+                  <h4>Third Thumbnail label</h4>
+                  <p>caption 3</p>
+                </div>
+              </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+          </div>
+  </div>
+ </div>
 </div>
 
 <div id="hero-container" class="container">
@@ -32,7 +65,7 @@
 
       <div id="inside_of_form">
 		<div id="simple_options">
-		  <div id="heross">
+		  <div id="heross" class="invisible">
 
 			<div class="input-append pull-left invisible">
 			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span9 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
