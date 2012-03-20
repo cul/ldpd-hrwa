@@ -35,8 +35,10 @@ class CatalogController < ApplicationController
         @errors = ex.to_s.html_safe
 
         # TODO: remove this from production version
-        _set_debug_display( @extra_controller_params )
-
+        if params.has_key?( :hrwa_debug )
+          _set_debug_display( @extra_controller_params )
+        end
+      
         render :error and return
       end
 
@@ -97,9 +99,12 @@ class CatalogController < ApplicationController
     @debug << '<h1>solr_search_params_logic</h1>'.html_safe
     @debug << array_pp( self.solr_search_params_logic )
 
-    @debug << "<h1>solr_search_params after get_search_results has run</h1>\n\n".html_safe
-    self.solr_search_params.keys.map { | key | key.to_s }.sort.each do |key|
-      @debug << "<strong>#{key}</strong> = #{ solr_search_params[ key ] } <br/>".html_safe
+    @debug << "<h1>self.solr_search_params( params ).merge( extra_controller_params )</h1>\n\n".html_safe
+    
+    merged_solr_search_params =
+      self.solr_search_params( params ).merge( @extra_controller_params )
+    merged_solr_search_params.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
+      @debug << "<strong>#{key}</strong> = ".html_safe << merged_solr_search_params[ key ].to_s << "<br/>".html_safe
     end
 
     if @response
