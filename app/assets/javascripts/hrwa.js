@@ -7,20 +7,6 @@ jQuery(function($) {
 	return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
   }
 
-
-  // Dropdown example for topbar nav
-  // ===============================
-
-/* //using bootstrap-dropdown.js now
-  $("body").bind("click", function (e) {
-    $('a.menu').parent("li").removeClass("open");
-  });
-
-  $("a.menu").click(function (e) {
-    var $li = $(this).parent("li").toggleClass('open');
-    return false;
-  });
-*/
   $('.dropdown-toggle').dropdown()
 
   $('.tabs').tab()
