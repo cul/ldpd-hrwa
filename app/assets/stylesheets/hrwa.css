@@ -1,4 +1,6 @@
 body { padding-top:60px; color:#808080; }
+@font-face { font-family: codelight; src: url('./fonts/CODE_Light.otf'); }
+@font-face { font-family: codebold; src: url('./fonts/CODE_Bold.otf'); }
 .navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
 .navbar .fill { border-bottom:1px solid #000;
   background-color:#174785;
@@ -39,15 +41,17 @@ body { padding-top:60px; color:#808080; }
 #hero-container { position:absolute; z-index:200; top:36px; display:none; }
 .hero-unit {  padding: 40px 1em; background-color:#fcfcfc; background:#fcfcfc; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
 #hero-container .hero-unit { background-color:#174785; background-color:rgba(23,71,133,0.85); color:#fefefe; -webkit-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8), 2px 2px 2px rgba(100, 1000, 100, 0.8); -moz-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8), 2px 2px 2px rgba(100, 100, 100, 0.8); }
-.hero-unit h1 { font-size:50px; color:#000; text-shadow: 0 1px 0 #ffffff;}
+.hero-unit h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; font-size:50px; color:#000; text-shadow: 0 1px 0 #ffffff; letter-spacing:1px; }
+.hero-unit h2, .hero-unit h3, #inner-headline h1, #inner-headline h3 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; }
 .hero-unit input#q[disabled="disabled"] {color:#5C5C5C;}
 .hero-unit input#q { background-color: rgba(255, 255, 255, 0.8); }
 .hero-unit input#q:focus { border-color:#ddd; }
 .hero-unit #heross input#q, .hero-unit #heross .add-on { font-size:125%; padding-top:6px;padding-bottom:6px; }
 .hero-unit #heross .add-on { font-size:110%; }
 /*.no-hero { margin-top:60px; }*/
-.hero-border { border:1px solid #ddd; padding-right:-1px; padding-left:-1px; }
+.hero-border { border:1px solid #dde; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
+#inner-headline { margin-bottom:1em; }
 .blobble { background-color: #f1f1f1; max-width: 700px; padding: 60px 1em; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
 .cc_box { float:left;border:1px solid #ccc;margin:0 12px 12px 0;padding:6px; width:108px; min-height:108px; font-size:85%; text-align:center; overflow:hidden; }
 .cc_box a { text-decoration:none; }
