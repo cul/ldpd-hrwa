@@ -89,7 +89,7 @@ iframe#x_container { width:100%; }
 #primary article .other_capture_instances {padding:3px;margin:6px 0px 4px;}
 #primary article .other_capture_instances ul {margin-bottom:0px;}
 #primary article .file_tech_info {font-size:11px;color:#707070;font-style:italic;}
-#primary article code { font-size:inherit; }
+#primary article code { color:#444; background-color:#FEE9CC; font-size:inherit; }
 #primary .ui-datepicker-calendar {display:none;}
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
