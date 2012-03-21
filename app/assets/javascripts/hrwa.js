@@ -10,6 +10,7 @@ jQuery(function($) {
   $('.dropdown-toggle').dropdown()
 
   $('.tabs').tab()
+  $('.carousel').carousel()
 
   $('.donothing').click(function (e) {
 		alert('this does nothing... yet.');
