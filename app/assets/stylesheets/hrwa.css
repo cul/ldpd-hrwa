@@ -117,6 +117,7 @@ article.entry h3 { line-height:1.2; margin:8px 0; }
 img.preview_icon { vertical-align:middle; opacity:0.75; }
 img.preview_icon:hover { opacity:1.0 }
 .moreless.btn, .toggle_all_btn, .see_all_hits.btn, .exclude_from_hits.btn, .results_control a.btn, .results_control span { padding:2px 6px 3px!important; font-family:monospace; }
+a.moreless.btn { font-size:80%; }
 .results_control span { padding-right:0!important; }
 .results_control { display:none; /*float:right;*/text-align:left; line-height:10px; margin-bottom:9px; }
 .results_control .btn, .results_control span, .results_control select { font-size:80%!important; }
