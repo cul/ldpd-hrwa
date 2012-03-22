@@ -51,7 +51,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .hero-unit #heross input#q, .hero-unit #heross .add-on { font-size:125%; padding-top:6px;padding-bottom:6px; }
 .hero-unit #heross .add-on { font-size:110%; }
 /*.no-hero { margin-top:60px; }*/
-.hero-border { border:1px solid #dde; padding-right:-1px; padding-left:-1px; }
+.hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
 #inner-headline-outer { border-bottom:1px solid #eee; }
 #inner-headline { margin-bottom:1em; }
