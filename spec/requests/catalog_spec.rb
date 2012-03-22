@@ -75,7 +75,7 @@ describe 'archive search' do
   end
 
   # HRWA-359 Bug
-  it 'does not wipe out facet fq params when a exclude domain filter is specified', :js => true, :focus => true  do
+  it 'does not wipe out facet fq params when a exclude domain filter is specified', :js => true do
     # TODO: right now no way to click on the correct Domain- button so using visit URL.
     # Convert this to form fill-in when possible
     # visit '/search'
@@ -86,8 +86,8 @@ describe 'archive search' do
     # clink_link 'Domain-'
     # click_link 'Menu'
     # click_link 'Turn debug on'
-    visit 'http://bronte.cul.columbia.edu:3020/search?excl_domain%5B%5D=www.shirkatgah.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=shirkatgah.org&search=true&search_type=archive&utf8=%E2%9C%93'
-    page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.shirkatgah.org"]} )
+    visit 'http://bronte.cul.columbia.edu:3020/search?excl_domain%5B%5D=www.privacyinternational.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=Privacy+International&search=true&search_type=archive&utf8=%E2%9C%93'
+    page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.privacyinternational.org"]} )
   end
 
 # TODO: For some reason this test fails using form fill-in when running full test suite, 
@@ -142,16 +142,13 @@ describe 'archive search' do
       page.should have_content('No results found')
     end
 
-    # TODO: This is just a cheap, temporary test for assistance during initial development.
-    # SOLR index is stable but later will be incrementally updated so these tests are super-brittle.
-    # Delete them when Rails Port milestone is reached.
-    it 'returns 3,199,634 results for q_and=women (TEMPORARY TEST: DELETE ME LATER)', :js => true do
+    it 'returns 2,306 results for q_and=women', :js => true do
       visit '/search'
       choose 'asfsearch'
       click_link 'advo_link'
       fill_in 'q_and', :with => 'women'
       click_link 'form_submit'
-      page.should have_content( '3,199,634' )
+      page.should have_content( '2,306' )
     end
     
     # HRWA-359 Bug
