@@ -77,7 +77,7 @@ iframe#x_container { width:100%; }
 #primary article:nth-child(odd) dl { background-color: #fafafe; }
 #primary article dl { margin-bottom:0.25em; margin-top:0.25em; }
 #primary article dl, #secondary ul, #cbf_widgets ul { padding:4px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; border:1px solid #dde; }
-#primary article dl dt { line-height:1.2; font-size:119%; }
+#primary article dl dt { line-height:1.2; font-size:121%; }
 #primary article dl dt span.dtcount { display:inline-block; line-height:1.5; color:rgba(0,0,0,0.3); font-weight:normal; float:left; margin-left:-28px; font-size:90%; }
 #primary article dl dd { margin-left:3px;margin-right:3px; }
 #primary article dl dd .site_detail_and_crawl_calendar_link_container {position:relative;top:2px;}
