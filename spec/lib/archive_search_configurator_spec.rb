@@ -286,7 +286,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.solr_url.should == 'http://carter.cul.columbia.edu:8080/solr-4/asf'
+      @configurator.solr_url.should == 'http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test'
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
