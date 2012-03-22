@@ -12,10 +12,10 @@
 
   <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
   <body class="<%= render_body_class.html_safe %>">
-
+<div class="container" id="outer-container">
     <div class="navbar navbar-fixed-top"> 
       <div class="navbar-inner fill">
-        <div class="container">
+        <div class="container" id="navbar-container">
 	  <ul id="crowndown" class="nav pull-left">
 	    <li class="dropdown menu">
               <% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
@@ -93,5 +93,6 @@
 
     <%= render 'layouts/footer_scripts' %>
 
+</div>
   </body>
 </html>

@@ -1,6 +1,8 @@
-body { padding-top:60px; color:#808080; }
+body { padding-top:60px; color:#808080; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center top; background-size: auto 100%; }
 @font-face { font-family: codelight; src: url('./fonts/CODE_Light.otf'); }
 @font-face { font-family: codebold; src: url('./fonts/CODE_Bold.otf'); }
+#outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.75);min-width:960px;border:1px solid #bbb;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
+#navbar-container { min-width:960px; }
 .navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
 .navbar .fill { border-bottom:1px solid #000;
   background-color:#174785;
@@ -51,6 +53,7 @@ body { padding-top:60px; color:#808080; }
 /*.no-hero { margin-top:60px; }*/
 .hero-border { border:1px solid #dde; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
+#inner-headline-outer { border-bottom:1px solid #eee; }
 #inner-headline { margin-bottom:1em; }
 #inner-headline h1 { color:#000; font-size:250%; }
 #inner-headline h3 { font-weight:normal; }
@@ -74,6 +77,7 @@ iframe#x_container { width:100%; }
 #site_footer { margin-top:2em; border-top:1px solid #eee; }
 #site_footer #culcul { padding-left:28px; background:#fff url('./crown-small-blue.png') no-repeat 0 2px; line-height:28px; font-size:11px; }
 #primary article {overflow:hidden;}
+#primary article dl {background:#fff;}
 #primary article:nth-child(odd) dl { background-color: #fafafe; }
 #primary article dl { margin-bottom:0.25em; margin-top:0.25em; }
 #primary article dl, #secondary ul, #cbf_widgets ul { padding:4px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; border:1px solid #dde; }
