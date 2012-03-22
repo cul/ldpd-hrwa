@@ -54,7 +54,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
 #inner-headline-outer { border-bottom:1px solid #eee; }
-#inner-headline { margin-bottom:1em; }
+#inner-headline { margin-bottom:1em; padding:.5em 0; }
 #inner-headline h1 { color:#000; font-size:250%; }
 #inner-headline h3 { font-weight:normal; }
 .blobble { background-color: #f1f1f1; max-width: 700px; padding: 60px 1em; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
