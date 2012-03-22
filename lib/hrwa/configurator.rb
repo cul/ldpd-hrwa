@@ -38,8 +38,8 @@ class HRWA::Configurator
     return @configurator.post_blacklight_processing( solr_response, results_list )
   end
 
-  def process_search_request( extra_controller_params, user_params = params )
-    @configurator.process_search_request( extra_controller_params, user_params )
+  def process_search_request( solr_parameters, user_params = params )
+    @configurator.process_search_request( solr_parameters, user_params )
   end
 
   # See https://issues.cul.columbia.edu/browse/HRWA-324

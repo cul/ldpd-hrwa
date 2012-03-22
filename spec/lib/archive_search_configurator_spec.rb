@@ -3,15 +3,9 @@ require 'blacklight/configuration'
 
 describe 'HRWA::ArchiveSearchConfigurator' do
   before ( :all ) do
+    @advanced_search_q_and_women_params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
+    
     @configurator = HRWA::ArchiveSearchConfigurator.new
-  end
-
-  it 'returns the correct partial name' do
-    @configurator.result_partial.should == 'group'
-  end
-
-  it 'returns the correct result type' do
-    @configurator.result_type.should == 'group'
   end
 
   context '#config_proc' do
@@ -133,41 +127,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     # TODO: add group and highlight specs
   end
 
-  describe '#configure_facet_action' do
-    before :all do
-      @blacklight_config  = Blacklight::Configuration.new
-      config_proc        = @configurator.config_proc
-      @blacklight_config.configure &config_proc
-    end
-    
-    it 'removed the group params from the Blacklight configuration default_solr_params hash' do
-      @configurator.configure_facet_action( @blacklight_config )
-      @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
-        should be_empty
-    end    
-  end
 
-  describe '#process_search_request - domain exclusion' do
-    before :each do
-      @params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
-    end
-
-    domains_to_exclude = [
-                           [ 'www.hrw.org', 'wayback.archive-it.org', 'amnesty.org' ],
-                           [ 'advocacyforum.org' ],
-                           [ ],
-                         ]
-    domains_to_exclude.each { | domains |
-      it "creates correct fq SOLR params for excl_domain[] = #{ domains }" do
-        @params.merge!( { :'excl_domain' => domains } )
-        extra_controller_params = {}
-        @configurator.process_search_request( extra_controller_params, @params )
-        extra_controller_params[ :fq ].should == domains.map { | domain | "-domain:#{ domain }" }
-      end
-    }
-
-  end
-  
   describe '#add_capture_date_range_fq_to_solr' do
     before :each do
       @extra_controller_params = {}
@@ -215,6 +175,107 @@ describe 'HRWA::ArchiveSearchConfigurator' do
         { :capture_start_date => '20080101', :capture_end_date => '20120101' }
       )
       @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO 20120101 ]' ]
+    end
+  end
+
+  describe '#configure_facet_action' do
+    before :all do
+      @blacklight_config  = Blacklight::Configuration.new
+      config_proc        = @configurator.config_proc
+      @blacklight_config.configure &config_proc
+    end
+    
+    it 'removed the group params from the Blacklight configuration default_solr_params hash' do
+      @configurator.configure_facet_action( @blacklight_config )
+      @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
+        should be_empty
+    end    
+  end
+
+  describe '#process_search_request - domain exclusion' do
+    before :each do
+      @params = @advanced_search_q_and_women_params.dup
+    end
+
+    domains_to_exclude = [
+                           [ 'www.hrw.org', 'wayback.archive-it.org', 'amnesty.org' ],
+                           [ 'advocacyforum.org' ],
+                           [ ],
+                         ]
+    domains_to_exclude.each { | domains |
+      it "creates correct fq SOLR params for excl_domain[] = #{ domains }" do
+        @params.merge!( { :'excl_domain' => domains } )
+        extra_controller_params = {}
+        @configurator.process_search_request( extra_controller_params, @params )
+        extra_controller_params[ :fq ].should == domains.map { | domain | "-domain:#{ domain }" }
+      end
+    }
+
+  end
+  
+  describe '#result_partial' do
+    it 'returns the correct partial name' do
+      @configurator.result_partial.should == 'group'
+    end
+  end
+
+  describe '#result_type' do
+    it 'returns the correct result type' do
+      @configurator.result_type.should == 'group'
+    end
+  end
+
+  describe '#set_solr_field_boost_levels' do
+    before :all do
+      @default_qf   = [ 'contentTitle^1', 'contentBody^1', 'originalUrl^1' ]
+      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^4' ]
+      @bad_params   = [ 'title^5', 'body^3' ]
+    end
+
+    before :each do
+      @params = @advanced_search_q_and_women_params.dup
+    end
+    
+    it 'sets full field set boosts correctly' do
+      @params[ :field ] = @valid_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @valid_params }
+    end
+    
+    it 'sets partial field set boosts correctly' do
+      @partial_params = @valid_params.slice( 0..@valid_params.length - 2 )
+      @params[ :field ] = @partial_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @partial_params }
+    end
+
+    it 'does nothing and exits when no field params present' do
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @default_qf }
+    end
+    
+    describe 'argument validation' do
+      # Test bad boost values
+      [ '-12', 'orange', '0' ].each { | value |
+        it "raises ArgumentError for bad boost value #{ value }" do
+          expect{ 
+            @configurator.set_solr_field_boost_levels(
+              {},
+              { :field => [ "contentTitle^#{ value }" ] }
+            )
+          }.to raise_error( ArgumentError )
+        end
+      }
+    end
+    
+    it 'ignores invalid field arguments' do
+      extra_controller_params = { :qf => @default_qf }
+      @params.merge!( :field => @valid_params | @bad_params )
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @valid_params }
     end
   end
 

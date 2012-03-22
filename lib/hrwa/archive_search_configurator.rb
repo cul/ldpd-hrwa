@@ -145,31 +145,7 @@ class HRWA::ArchiveSearchConfigurator
       }
     end
 
-    def configure_facet_action( blacklight_config )
-      # The SOLR group* params break Blacklight's faceting
-      blacklight_config.default_solr_params.delete_if { | key, value |
-        key.to_s.starts_with?( 'group' ) }
-    end
-
-    # Did Blacklight give us everything we need in SOLR response and
-    # results list objects?
-    def post_blacklight_processing_required?
-      return true
-    end
-
-    # Do more with the SOLR response and results list that Blacklight
-    # gives us.
-    def post_blacklight_processing( solr_response, result_list )
-      result_list = solr_response.groups
-      return solr_response, result_list
-    end
-
-    def process_search_request( extra_controller_params, user_params = params )
-     add_capture_date_range_fq_to_solr( extra_controller_params, user_params )
-     add_exclude_fq_to_solr( extra_controller_params, user_params )
-    end
-
-    def add_capture_date_range_fq_to_solr( extra_controller_params, user_params = params )
+  def add_capture_date_range_fq_to_solr( solr_parameters, user_params = params )
       # We are going to assume that the capture date params are non-nil from this
       # point onward
       # Get range endpoints, using * for open-ended wildcard
@@ -182,68 +158,119 @@ class HRWA::ArchiveSearchConfigurator
 
       return if ( capture_start_date == '*' && capture_end_date == '*' )
 
-      extra_controller_params[ :fq ] ||= []
-      extra_controller_params[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing capture date range filter
+      # debugger
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^dateOfCaptureYYYYMM/ }
+      
+      solr_parameters[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
-    def add_exclude_fq_to_solr( extra_controller_params, user_params = params )
-       # :fq, map from :excl_domain.
-      if ( user_params[ :'excl_domain' ] )
-        exclude_domain_request_params = user_params[ :'excl_domain' ]
+  def add_exclude_fq_to_solr( solr_parameters, user_params = params )
+     # :fq, map from :excl_domain.
+    if ( user_params[ :'excl_domain' ] )
+      exclude_domain_request_params = user_params[ :'excl_domain' ]
 
-        extra_controller_params[ :fq ] ||= []
-        exclude_domain_request_params.each do | value_list |
-          value_list ||= []
-          value_list = [ value_list ] unless value_list.respond_to? :each
-          value_list.each do | value |
-            extra_controller_params[ :fq ] << exclude_value_to_fq_string( 'domain', value )
-          end
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing exclude domain filter
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^-domain/ }
+      
+      exclude_domain_request_params.each do | value_list |
+        value_list ||= []
+        value_list = [ value_list ] unless value_list.respond_to? :each
+        value_list.each do | value |
+          solr_parameters[ :fq ] << exclude_value_to_fq_string( 'domain', value )
         end
       end
     end
+  end
 
-    ##
-    # Convert a field/value pair into a solr fq parameter
-    def exclude_value_to_fq_string( exclude_field, value)
-      case
-        when (value.is_a?(Integer) or (value.to_i.to_s == value if value.respond_to? :to_i))
-          "-#{exclude_field}:#{value}"
-        when (value.is_a?(Float) or (value.to_f.to_s == value if value.respond_to? :to_f))
-          "-#{exclude_field}:#{value}"
-        when value.is_a?(Range)
-          "-#{exclude_field}:[#{value.first} TO #{value.last}]"
-        else
-          "-#{ exclude_field}:#{ value }"
+  ##
+  # Convert a field/value pair into a solr fq parameter
+  def exclude_value_to_fq_string( exclude_field, value)
+    case
+      when (value.is_a?(Integer) or (value.to_i.to_s == value if value.respond_to? :to_i))
+        "-#{exclude_field}:#{value}"
+      when (value.is_a?(Float) or (value.to_f.to_s == value if value.respond_to? :to_f))
+        "-#{exclude_field}:#{value}"
+      when value.is_a?(Range)
+        "-#{exclude_field}:[#{value.first} TO #{value.last}]"
+      else
+        "-#{ exclude_field}:#{ value }"
+    end
+  end
+
+  def configure_facet_action( blacklight_config )
+    # The SOLR group* params break Blacklight's faceting
+    blacklight_config.default_solr_params.delete_if { | key, value |
+      key.to_s.starts_with?( 'group' ) }
+  end
+  
+  def name
+    return 'archive'
+  end
+
+  # Do more with the SOLR response and results list that Blacklight
+  # gives us.
+  def post_blacklight_processing( solr_response, result_list )
+    result_list = solr_response.groups
+    return solr_response, result_list
+  end
+
+  # Did Blacklight give us everything we need in SOLR response and
+  # results list objects?
+  def post_blacklight_processing_required?
+    return true
+  end
+  
+  def process_search_request( solr_parameters, user_params = params )
+   add_capture_date_range_fq_to_solr( solr_parameters, user_params )
+   add_exclude_fq_to_solr( solr_parameters, user_params )
+   set_solr_field_boost_levels( solr_parameters, user_params )
+  end
+
+  def prioritized_highlight_field_list
+    return [
+            'originalUrl',
+            'contentTitle',
+            'contentBody',
+            ]
+  end
+  
+  def result_partial
+    return result_type
+  end
+
+  def result_type
+    return 'group'
+  end
+  
+  def set_solr_field_boost_levels( solr_parameters, user_params )
+    return if ! user_params.has_key?( :field )
+    
+    valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
+    
+    qf = []
+    user_params[ :field ].each { | field_boost |
+      field, boost_level = field_boost.split( /\^/ )
+      
+      # Raise error if boost_level is not a positive number
+      if ! ( boost_level.match( /^\d+$/ ) && boost_level.to_f > 0.0 ) then
+        raise ArgumentError.new( "#{ boost_level } is not a valid boost level." )
       end
-    end
+      
+      if valid_solr_fields.include?( field ) then
+        qf << "#{ field }^#{ boost_level }"
+      end
+    }
+    
+    # Overwrite existing qf
+    solr_parameters[ :qf ] = qf
+  end
 
-    def result_partial
-      return result_type
-    end
-
-    def result_type
-      return 'group'
-    end
-
-    def search_type_specific_processing( extra_controller_params, params )
-      return false
-    end
-
-    # Takes optional environment arg for testability
-    def solr_url( environment = Rails.env )
-      YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
-    end
-
-    def prioritized_highlight_field_list
-      return [
-              'originalUrl',
-              'contentTitle',
-              'contentBody',
-              ]
-    end
-
-    def name
-      return 'archive'
-    end
+  # Takes optional environment arg for testability
+  def solr_url( environment = Rails.env )
+    YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+  end
 
 end
