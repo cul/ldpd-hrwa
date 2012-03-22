@@ -131,6 +131,8 @@ a.moreless.btn { font-size:80%; }
 #primary .results_control a { font-size:95%!important; padding:0px 2px!important; }
 #slideshow { overflow:hidden; }
 #slideshow img { max-width:100%; }
+#fpCarousel { overflow:hidden; }
+#fpCarousel .carousel-inner .item img { height:220px; margin-left:auto; margin-right:auto; }
 #cbf .results_control, .results_control, .widgetmore { font-size:80%; text-align:left; margin-bottom:0; }
 .mono { font-family: monospace!important; }
 .sc { font-variant:small-caps!important; }
