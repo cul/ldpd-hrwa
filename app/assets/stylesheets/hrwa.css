@@ -34,7 +34,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #crowndown img { /*float:left;*/ margin-top:-7px; margin-right:0; padding-right:0; }
 /*#crowndown .menu-dropdown { width:320px; }*/
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
-.navbar li.dropdown.menu:hover { background:rgba(255,255,255,0.05); }
+.navbar li.dropdown.menu:hover, .navbar a.brand:hover { background:rgba(255,255,255,0.05); }
 .navbar .dropdown-menu {  -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 .navbar .dropdown-menu li a { color:#ccc; }
 #pages_dropdown { margin-top:2px; }
