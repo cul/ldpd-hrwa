@@ -30,11 +30,11 @@ hrwa_dev: *development
 
 hrwa_test:
   asf:
-    url: http://carter.cul.columbia.edu:8080/solr-4/asf
+    url: http://harding.cul.columbia.edu:8080/solr-4/asf
   fsf:
-    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
+    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
   site_detail:
-    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
+    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
 
 cucumber:
   <<: *test
