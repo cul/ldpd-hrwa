@@ -132,7 +132,7 @@ a.moreless.btn { font-size:80%; }
 #slideshow { overflow:hidden; }
 #slideshow img { max-width:100%; }
 #fpCarousel { overflow:hidden; }
-#fpCarousel .carousel-inner .item img { height:220px; margin-left:auto; margin-right:auto; }
+#fpCarousel .carousel-inner .item img { height:210px; margin-left:auto; margin-right:auto; }
 #cbf .results_control, .results_control, .widgetmore { font-size:80%; text-align:left; margin-bottom:0; }
 .mono { font-family: monospace!important; }
 .sc { font-variant:small-caps!important; }
