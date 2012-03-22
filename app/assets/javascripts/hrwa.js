@@ -184,6 +184,8 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
+	$('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+
     if($('#hero-container').css('display') == 'none') { $('#hero-container').slideDown(); } else { $('#hero-container').slideUp(); }
 
 	sync_all_forms(HRWA.currently_visible_form);
