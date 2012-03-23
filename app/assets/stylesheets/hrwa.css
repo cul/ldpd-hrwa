@@ -3,6 +3,8 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 @font-face { font-family: codebold; src: url('./fonts/CODE_Bold.otf'); }
 @font-face { font-family: trajanpro; src: url('./fonts/TrajanPro-Regular.otf'); }
 @font-face { font-family: trajanprobold; src: url('./fonts/TrajanPro-Bold.otf'); }
+@font-face { font-family: bluehighway-rg; src: url('./fonts/blue_highway_rg.otf'); font-weight:normal; font-style:normal; }
+@font-face { font-family: bluehighway-cd; src: url('./fonts/blue_highway_cd.otf'); font-weight:normal; font-style:normal; }
 #outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.7);min-width:960px;border:1px solid #aaa;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 #navbar-container { min-width:960px; }
 .navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
@@ -37,6 +39,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 /*#crowndown .menu-dropdown { width:320px; }*/
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
 .navbar li.dropdown.menu:hover, .navbar a.brand:hover { background:rgba(255,255,255,0.05); }
+.navbar a.brand { font-family: "blue highway cd", bluehighway-cd, sans-serif; font-weight:normal; font-size:140%; letter-spacing:1px; text-shadow:1px 1px 0 #004; }
 .navbar .dropdown-menu {  -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 .navbar .dropdown-menu li a { color:#ccc; }
 #pages_dropdown { margin-top:2px; }
@@ -45,8 +48,8 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #hero-container { position:absolute; z-index:200; top:36px; display:none; }
 .hero-unit {  padding: 40px 1em; background-color:#fff; background:#fff; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
 #hero-container .hero-unit { background-color:#174785; background-color:rgba(23,71,133,0.85); color:#fefefe; -webkit-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 1000, 100, 0.8); -moz-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 100, 100, 0.8); }
-.hero-unit h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; font-size:45px; color:#000; text-shadow: 0 1px 0 #ffffff; letter-spacing:1px; }
-.hero-unit h2, .hero-unit h3, #inner-headline h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; }
+.hero-unit h1 { font-family: "blue highway cd", bluehighway-cd, sans-serif; font-weight:normal; font-size:45px; color:#000; text-shadow: 0 1px 0 #004; letter-spacing:1px; }
+.hero-unit h2, .hero-unit h3, #inner-headline h1 { font-family: "blue highway cd", bluehighway-cd, sans-serif; font-weight:normal; }
 .hero-unit input#q[disabled="disabled"] {color:#5C5C5C;}
 .hero-unit input#q { background-color: rgba(255, 255, 255, 0.8); }
 .hero-unit input#q:focus { border-color:#ddd; }
@@ -57,7 +60,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #hero-container .hero-border { border-color:#000; }
 #inner-headline-outer { border-bottom:2px solid #fff; background:rgba(23,71,133,0.5); background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; padding:1.7em 10px 0.3em 10px; margin-top:-2em; margin-left:-10px; margin-right:-10px; margin-bottom:1em; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
-#inner-headline h1 { color:#fff; font-size:300%; text-shadow: 1px 1px 0 #000; letter-spacing:1px; }
+#inner-headline h1 { color:#fff; font-size:340%; font-weight:normal; text-shadow:2px 2px 0 #000; }
 #inner-headline h2 { font-weight:normal; color:#eee; font-family:"trajan pro", trajanpro, trajan, georgia, serif; font-size:140%; text-shadow:none; }
 .blobble { background-color: #f1f1f1; max-width: 700px; padding: 60px 1em; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
 .cc_box { float:left;border:1px solid #ccc;margin:0 12px 12px 0;padding:6px; width:108px; min-height:108px; font-size:85%; text-align:center; overflow:hidden; }
