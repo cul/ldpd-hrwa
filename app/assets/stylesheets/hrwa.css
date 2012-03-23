@@ -1,7 +1,7 @@
 body { padding-top:60px; color:#808080; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center top; background-size: auto;/* 100%;*/ }
 @font-face { font-family: codelight; src: url('./fonts/CODE_Light.otf'); }
 @font-face { font-family: codebold; src: url('./fonts/CODE_Bold.otf'); }
-#outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.6);min-width:960px;border:1px solid #bbb;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
+#outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.7);min-width:960px;border:1px solid #aaa;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 #navbar-container { min-width:960px; }
 .navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
 .navbar .fill { border-bottom:1px solid #000;
@@ -43,7 +43,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #hero-container { position:absolute; z-index:200; top:36px; display:none; }
 .hero-unit {  padding: 40px 1em; background-color:#fff; background:#fff; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
 #hero-container .hero-unit { background-color:#174785; background-color:rgba(23,71,133,0.85); color:#fefefe; -webkit-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 1000, 100, 0.8); -moz-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 100, 100, 0.8); }
-.hero-unit h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; font-size:50px; color:#000; text-shadow: 0 1px 0 #ffffff; letter-spacing:1px; }
+.hero-unit h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; font-size:45px; color:#000; text-shadow: 0 1px 0 #ffffff; letter-spacing:1px; }
 .hero-unit h2, .hero-unit h3, #inner-headline h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; }
 .hero-unit input#q[disabled="disabled"] {color:#5C5C5C;}
 .hero-unit input#q { background-color: rgba(255, 255, 255, 0.8); }
@@ -100,8 +100,8 @@ iframe#x_container { width:100%; }
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
-#home-tab-content .tab-pane { max-height:480px; overflow:auto; border:1px solid #ddd; border-top:0; padding-top:5px; }
-ul.tabs { margin-bottom:0; }
+#home-tab-content .tab-pane { max-height:480px; overflow:auto; border-bottom:1px solid #ddd; padding-top:5px; }
+ul.tabs { margin-bottom:0; padding-left:10px;}
 #home-tab-content { background:#fff; }
 #home-tab-content .tab-pane ul { -webkit-column-count:3;-moz-column-count:3;column-count:3; list-style:none; margin-left:0.2em; padding:10px 0; max-width:620px; word-wrap:break-word;} /* max-width is a hack for long urls in URL tab. must find better solution */
 #home-tab-content .tab-pane ul li { display:block; line-height:1em; margin-bottom:4px; padding-bottom:2px; padding-top:2px;}
