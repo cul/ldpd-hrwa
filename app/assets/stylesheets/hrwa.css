@@ -41,7 +41,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #topsearchform input#q_t, .hero-unit input#q { background-image: url(./search.png); background-repeat: no-repeat; background-position:center right; padding:4px 10px 4px 4px; background-color: rgba(255, 255, 255, 0.4); }
 #topsearchform input#q_t:focus, .hero-unit input#q:focus { background-image: none; background-color: rgba(255, 255, 255, 1.0); border: 1px solid #111111; text-shadow:none;}
 #hero-container { position:absolute; z-index:200; top:36px; display:none; }
-.hero-unit {  padding: 40px 1em; background-color:#eef; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
+.hero-unit {  padding: 40px 1em; background-color:#fff; background:#fff; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; }
 #hero-container .hero-unit { background-color:#174785; background-color:rgba(23,71,133,0.85); color:#fefefe; -webkit-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 1000, 100, 0.8); -moz-box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.8) inset, 2px 2px 2px rgba(100, 100, 100, 0.8); }
 .hero-unit h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; font-size:50px; color:#000; text-shadow: 0 1px 0 #ffffff; letter-spacing:1px; }
 .hero-unit h2, .hero-unit h3, #inner-headline h1 { font-family: "CODE Light", codelight, sans-serif; font-weight:normal; }
@@ -100,8 +100,9 @@ iframe#x_container { width:100%; }
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
-#home-tab-content .tab-pane { max-height:480px; overflow:auto; border-bottom:1px solid #ccc; }
-ul.tabs { margin-bottom:5px; }
+#home-tab-content .tab-pane { max-height:480px; overflow:auto; border:1px solid #ddd; border-top:0; padding-top:5px; }
+ul.tabs { margin-bottom:0; }
+#home-tab-content { background:#fff; }
 #home-tab-content .tab-pane ul { -webkit-column-count:3;-moz-column-count:3;column-count:3; list-style:none; margin-left:0.2em; padding:10px 0; max-width:620px; word-wrap:break-word;} /* max-width is a hack for long urls in URL tab. must find better solution */
 #home-tab-content .tab-pane ul li { display:block; line-height:1em; margin-bottom:4px; padding-bottom:2px; padding-top:2px;}
 #home-tab-content .tab-pane ul li div { display:inline-block;}
