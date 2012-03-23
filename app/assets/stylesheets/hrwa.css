@@ -59,6 +59,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
 #inner-headline-outer { border-bottom:2px solid #fff; background:rgba(23,71,133,0.5); background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; padding:1.7em 10px 0.3em 10px; margin-top:-2em; margin-left:-10px; margin-right:-10px; margin-bottom:1em; }
+#inner-headline-outer #header-pic { border:1px solid #ccc; padding:3px; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
 #inner-headline h1 { color:#fff; font-size:340%; font-weight:normal; text-shadow:2px 2px 0 #000; }
 #inner-headline h2 { font-weight:normal; color:#111; font-family:"trajan pro", trajanpro, trajan, georgia, serif; font-size:140%; text-shadow:none; }
