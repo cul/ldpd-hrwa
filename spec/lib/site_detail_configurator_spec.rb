@@ -154,7 +154,7 @@ describe 'HRWA::SiteDetailConfigurator' do
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.solr_url.should == 'http://carter.cul.columbia.edu:8080/solr-4/fsf'
+      @configurator.solr_url.should == 'http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test'
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
