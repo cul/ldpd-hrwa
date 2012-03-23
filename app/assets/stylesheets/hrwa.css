@@ -53,7 +53,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 /*.no-hero { margin-top:60px; }*/
 .hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #hero-container .hero-border { border-color:#000; }
-#inner-headline-outer { border-bottom:1px solid #eee; }
+#inner-headline-outer { border-bottom:1px solid #ccc; background:rgba(0,0,80,0.04); padding:1.7em 10px 0.3em 10px; margin-top:-2em; margin-left:-10px; margin-right:-10px; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
 #inner-headline h1 { color:#000; font-size:260%; }
 #inner-headline h3 { font-weight:normal; }
