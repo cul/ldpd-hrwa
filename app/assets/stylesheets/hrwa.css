@@ -1,7 +1,7 @@
-body { padding-top:60px; color:#808080; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center top; background-size: auto 100%; }
+body { padding-top:60px; color:#808080; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center top; background-size: auto;/* 100%;*/ }
 @font-face { font-family: codelight; src: url('./fonts/CODE_Light.otf'); }
 @font-face { font-family: codebold; src: url('./fonts/CODE_Bold.otf'); }
-#outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.75);min-width:960px;border:1px solid #bbb;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
+#outer-container { margin-top:-20px;padding-top:25px;background:rgba(255,255,255,0.6);min-width:960px;border:1px solid #bbb;border-top:0; -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 #navbar-container { min-width:960px; }
 .navbar { z-index: 99999; } /* z-index needed to be really high to work with multiselect dropdowns. Bootstrap default 10000 wasn't enough. */
 .navbar .fill { border-bottom:1px solid #000;
@@ -106,7 +106,7 @@ ul.tabs { margin-bottom:5px; }
 #home-tab-content .tab-pane ul li { display:block; line-height:1em; margin-bottom:4px; padding-bottom:2px; padding-top:2px;}
 #home-tab-content .tab-pane ul li div { display:inline-block;}
 #home-tab-content .tab-pane ul li:nth-child(even) { background:#eef; }
-#secondary ul, #cbf_widgets ul { background:#fafafe; margin-left:0; margin-bottom:0; list-style:none; border-style:dotted; font-size:95%; }
+#secondary ul, #cbf_widgets ul { background:#fff; margin-left:0; margin-bottom:0; list-style:none; border-style:dotted; font-size:95%; }
 #secondary h6, #cbf_widgets h6 { line-height:1.5em; }
 #secondary h6 { margin-top:1em; }
 #secondary #facets a.remove { margin-left:.2em; }
