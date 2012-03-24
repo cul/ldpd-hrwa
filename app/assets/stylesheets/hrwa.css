@@ -32,7 +32,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #cul_right { float:right; color:#ccc; }
 #cul_top a { color:#ddd; }
 /*#crown_top { margin-left:-40px; padding-left:0; }*/
-#crowndown { float:left; margin-left:-35px; margin-right:16px; padding-left:0px; }
+#crowndown { float:left; margin-left:-28px; margin-right:16px; padding-left:0px; }
 #crowndown li.menu{ padding-right:0; padding-left:0; }
 #crowndown a.menu { padding-right:4px; padding-left:4px; }
 #crowndown img { /*float:left;*/ margin-top:-7px; margin-right:0; padding-right:0; }
@@ -106,7 +106,7 @@ iframe#x_container { width:100%; }
 #primary div.pageEntriesInfo { margin:13px 0 0.5em 0; font-size:105%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
-#home-tab-content .tab-pane { max-height:480px; overflow:auto; border-bottom:1px solid #ddd; padding-top:5px; }
+#home-tab-content .tab-pane { max-height:480px; overflow:auto; border:1px solid #ddd; border-top:0;padding-top:5px; }
 ul.tabs { margin-bottom:0; padding-left:10px;}
 #home-tab-content { background:#fff; }
 #home-tab-content .tab-pane ul { -webkit-column-count:3;-moz-column-count:3;column-count:3; list-style:none; margin-left:0.2em; padding:10px 0; max-width:620px; word-wrap:break-word;} /* max-width is a hack for long urls in URL tab. must find better solution */
