@@ -21,7 +21,7 @@ describe 'the portal search' do
   # then the FindSiteSearchConfigurator would attempt to set the sort field to
   # 'score desc, dateOfCaptureYYYYMMDD desc', causing a SOLR error.
   describe 'over multiple searches' do
-    
+
     # Use top form for first test and in-page form for second test to exercise both forms
     it 'can successfully run a find_site search immediately after an archive search', :js => true do
       visit '/search'
@@ -29,7 +29,7 @@ describe 'the portal search' do
       choose 'asfsearch_t'
       click_link 'top_form_submit'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-      
+
       visit '/search'
       fill_in 'q', :with => 'water'
       choose 'fsfsearch_t'
@@ -37,10 +37,10 @@ describe 'the portal search' do
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
     end
-  
-    # TODO: For some reason this test fails using form fill-in when running full test suite, 
-    # but not when running just this spec file.  Once this is debugged, convert this back into 
-    # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
+
+    # TODO: For some reason this test fails using form fill-in when running full test suite,
+    # but not when running just this spec file.  Once this is debugged, convert this back into
+    # a form fill-in test.  The page source has <noscript> in it, which would indicate that
     # :js => true is not doing its job.
     it 'can successfully run an archive search immediately after a find_site search', :js => true do
       # visit '/search'
@@ -49,7 +49,7 @@ describe 'the portal search' do
       # click_link 'form_submit'
       visit '/search?utf8=%E2%9C%93&search=true&q=water&search_type=find_site'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-  
+
       # visit '/search'
       # fill_in 'q', :with => 'women'
       # choose 'asfsearch'
@@ -86,13 +86,13 @@ describe 'archive search' do
     # clink_link 'Domain-'
     # click_link 'Menu'
     # click_link 'Turn debug on'
-    visit 'http://bronte.cul.columbia.edu:3020/search?excl_domain%5B%5D=www.privacyinternational.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=Privacy+International&search=true&search_type=archive&utf8=%E2%9C%93'
+    visit '/search?excl_domain%5B%5D=www.privacyinternational.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=Privacy+International&search=true&search_type=archive&utf8=%E2%9C%93'
     page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.privacyinternational.org"]} )
   end
 
-# TODO: For some reason this test fails using form fill-in when running full test suite, 
-  # but not when running just this spec file.  Once this is debugged, convert this back into 
-  # a form fill-in test.  The page source has <noscript> in it, which would indicate that 
+# TODO: For some reason this test fails using form fill-in when running full test suite,
+  # but not when running just this spec file.  Once this is debugged, convert this back into
+  # a form fill-in test.  The page source has <noscript> in it, which would indicate that
   # :js => true is not doing its job.
     it 'does not raise an error when paging through results', :js => true do
     # visit '/search'
@@ -118,20 +118,20 @@ describe 'archive search' do
       end
     }
   end
-  
+
   # TODO: change this to form fill-in when advanced form has field boost controls
   describe 'SOLR field boost level overriding' do
     it 'correctly sets new weights for contentBody, contentTitle, and originalUrl' do
       visit '/search?utf8=%E2%9C%93&search=true&hrwa_debug=true&field%5B%5D=originalUrl%5E2&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&search_mode=advanced&q_phrase=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc&search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc'
       page.should have_content( %q{:qf=>["originalUrl^2", "contentTitle^3", "contentBody^4"]} )
     end
-    
+
     it 'correctly sets new weights for contentBody, contentTitle, with originalUrl omitted' do
       visit 'http://bronte.cul.columbia.edu:3020/search?utf8=%E2%9C%93&search=true&hrwa_debug=true&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&search_mode=advanced&q_phrase=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc&search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc'
       page.should have_content( %q{:qf=>["contentTitle^3", "contentBody^4"]} )
     end
   end
-  
+
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
@@ -150,7 +150,7 @@ describe 'archive search' do
       click_link 'form_submit'
       page.should have_content( '2,306' )
     end
-    
+
     # HRWA-359 Bug
     it 'does not wipe out facet fq params when a Date of Capture filter is specified', :js => true do
       visit '/search'
@@ -183,7 +183,7 @@ describe 'find site search' do
       page.status_code.should == 200
     end
   }
-  
+
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
@@ -192,7 +192,7 @@ describe 'find site search' do
       click_link 'form_submit'
       page.should have_content('No results found')
     end
-  
+
     it 'returns search results for a known successful query', :js => true do
       visit '/search'
       click_link 'advo_link'
