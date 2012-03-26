@@ -19,22 +19,9 @@
       <div class="row">
         <div class="span4">
           <h4 class="inline">HUMAN RIGHTS WEB ARCHIVE at Columbia University</h4>
-	      <p class="inline"> provides access to snapshots of over 350 web sites in the area of human rights. <a href="<%= about_path %>">Read more&hellip;</a></p><p></p>
+	      <p class="inline"> provides access to snapshots of over 350 web sites in the area of human rights. <a href="<%= about_path %>">&hellip;more</a>.</p><p></p>
 	      <p class="invisible">There are currently over 7 million pages of Web content in 8 languages, and cover a broad range of human rights issues, such as women's rights, genocide, refugees, war crimes, reconciliation, AIDS, civil rights, democracy, gun control, human trafficking, and many others. <a href="<%= about_path %>">Read more&hellip;</a></p>
 
-
-	      <div class="alert alert-link alert-info">
-                <%= link_to "&raquo;".html_safe, search_path(:search_type => "find_site"), :class => "goto floatright" %>
-      	        <p><strong>Search:</strong> for Sites</a></p>
-      	  </div>
-	      <div class="alert alert-link alert-info">
-                <%= link_to "&raquo;".html_safe, search_path(:search_type => "archive"), :class => "goto floatright" %>
-		        <p><strong>Search:</strong> the Web Archive</p>
-	      </div>
-	      <div class="alert alert-link alert-success">
-		        <%= link_to "&raquo;".html_safe, browse_path, :class => "goto floatright" %>
-		        <p><strong>Browse:</strong> List of Websites</p>
-	      </div>
 
           <div class="hero-border ui-corner-all">
           <div id="fpCarousel" class="carousel slide nomar">
@@ -65,6 +52,21 @@
             <a class="right carousel-control" href="#fpCarousel" data-slide="next">›</a>
           </div>
           </div>
+
+          <br />
+
+	      <div class="alert alert-link alert-info">
+                <%= link_to "&raquo;".html_safe, search_path(:search_type => "find_site"), :class => "goto floatright" %>
+      	        <p><strong>Search:</strong> for Sites</a></p>
+      	  </div>
+	      <div class="alert alert-link alert-info">
+                <%= link_to "&raquo;".html_safe, search_path(:search_type => "archive"), :class => "goto floatright" %>
+		        <p><strong>Search:</strong> the Web Archive</p>
+	      </div>
+	      <div class="alert alert-link alert-success">
+		        <%= link_to "&raquo;".html_safe, browse_path, :class => "goto floatright" %>
+		        <p><strong>Browse:</strong> List of Websites</p>
+	      </div>
 
      </div><!-- /span4 -->
 
