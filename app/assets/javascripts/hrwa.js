@@ -184,27 +184,27 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
-	$('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+      $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
 
-    if($('#hero-container').css('display') == 'none') { $('#hero-container').slideDown(); } else { $('#hero-container').slideUp(); }
+      if($('#hero-container').css('display') == 'none') { $('#hero-container').slideDown(); } else { $('#hero-container').slideUp(); }
 
-	sync_all_forms(HRWA.currently_visible_form);
+          sync_all_forms(HRWA.currently_visible_form);
 
-	if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'outside_of_form')
-	{
-	  var current_search_type = $('#fsfsearch, #fsfsearch_t').attr('checked') == 'checked' ? 'find_site' : 'archive';
-	  showAdvancedSearch(current_search_type);
-	  HRWA.currently_visible_form = (current_search_type == 'find_site') ? 'advanced_fsf' : 'advanced_asf';
-	}
-	else
-	{
-	  showSimpleSearch();
-	  HRWA.currently_visible_form = 'simple';
-	}
+          if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'outside_of_form')
+          {
+            var current_search_type = $('#fsfsearch, #fsfsearch_t').attr('checked') == 'checked' ? 'find_site' : 'archive';
+            showAdvancedSearch(current_search_type);
+            HRWA.currently_visible_form = (current_search_type == 'find_site') ? 'advanced_fsf' : 'advanced_asf';
+          }
+          else
+          {
+            showSimpleSearch();
+            HRWA.currently_visible_form = 'simple';
+          }
 
-	$(this).blur();
-	return false;
-  });
+          $(this).blur();
+          return false;
+      });
 
   $('#fsfsearch, #fsfsearch_t').click(function(){
     if($('#advanced_options_fsf').parent().attr('id') == 'outside_of_form' && $('#advanced_options_asf').parent().attr('id') == 'inside_of_form')

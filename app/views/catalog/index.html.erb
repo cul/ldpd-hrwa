@@ -18,8 +18,6 @@
   <!-- Main heading -->
   <%= render :partial=>'static/inner_headlines' %>
 
-  <%= render :partial=>'search_form' %>
-
   <% unless has_search_parameters? %>
     <%# if there are no input/search related params, display the "search_home" partial -%>
     <%= render :partial=>'search_home' %>

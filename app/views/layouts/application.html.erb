@@ -13,7 +13,7 @@
   <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
   <body class="<%= render_body_class.html_safe %>">
 <div class="container" id="outer-container">
-    <div class="navbar navbar-fixed-top"> 
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner fill">
         <div class="container" id="navbar-container">
 	  <ul id="crowndown" class="nav pull-left">
@@ -30,21 +30,19 @@
           <h3 class='topbarlogo'><a href="<%= root_path %>" class="brand" rel="tooltip" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
 
           <%= form_tag search_path, :method => :get, :id => 'topsearchform', :class => 'form-inline navbar-search pull-left' do %>
-			<input type="hidden" name="search" value="true" />
+	    <input type="hidden" name="search" value="true" />
             <div class="input-append"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle mono small pull-right lime">Adv+</a><%
-                    %><input class="span5 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><%
-					%><label class="pull-right add-on success hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label><%
-					%><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch_t" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
-					%><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch_t" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
-            %>
-
+	    %><input class="span6 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><%
+	    %><label class="pull-right add-on success hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label><%
+	    %><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch_t" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
+	    %><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch_t" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
+	    %>
             </div>
-
-<%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
-                                      :q, :qt, :page,
-                                      #hrwa custom additions
-                                      :utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :sort
-                                     ]).html_safe %>
+	    <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+							:q, :qt, :page,
+							#hrwa custom additions
+							:utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :sort
+						      ]).html_safe %>
 
           <% end %>
           <ul id="dropdown" class="nav pull-right">
@@ -63,6 +61,8 @@
         </div>
       </div>
     </div> <!-- //.navbar -->
+
+    <%= render 'layouts/advanced_search_form' %>
 
     <%
       # Start main content!

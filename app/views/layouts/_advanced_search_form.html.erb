@@ -1,4 +1,3 @@
-
 <div id="hero-container" class="container">
 
   <!-- Main hero unit for a primary marketing message or call to action -->
@@ -6,10 +5,10 @@
 	<% if ! params[:search].nil? %>
 	  <%= link_to 'Start a new search', search_path, :class=> 'floatright', :id => 'start_new_search_link' %>
 	<% end %>
-    <% 
+    <%
     #<h3>Human Rights Web Archive</h3>
 
-    #<a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a> 
+    #<a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle btn mono floatright lime">Adv+</a>
     %>
 
 	<script type="text/javascript">
@@ -50,7 +49,7 @@
 			</div>
 
 		  </div><!--/heross-->
-		  <%= render 'constraints', :localized_params=>params %>
+		  <%= render 'catalog/constraints', :localized_params=>params %>
 		</div><!--/simple_options-->
       </div> <!--/inside_of_form-->
 
@@ -60,13 +59,13 @@
 
       <div id="advanced_options_fsf" class="advanced_options">
 
-	<%= render :partial=>'advanced_options_fsf' %>
+	<%= render 'layouts/advanced_options_fsf' %>
 
       </div> <!-- //advanced_options_fsf -->
 
       <div id="advanced_options_asf" class="advanced_options">
 
-	<%= render :partial=>'advanced_options_asf' %>
+	<%= render 'layouts/advanced_options_asf' %>
 
       </div> <!-- //advanced_options_asf -->
 
