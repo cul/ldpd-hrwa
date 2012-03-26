@@ -362,8 +362,8 @@ if($('article.post').length > 0)
 }
 
 function sortState(foo) {
-$('.results_control').find('a').removeClass('success');
-foo.addClass('success');
+$('.results_control').find('a').removeClass('btn-success');
+foo.addClass('btn-success');
 }
 $('#primary .sort_default').live('click', function() { $('article.post').tinysort({attr:"id"}); sortState($(this)); });
 $('#primary .sort_a-z').live('click', function() { $('article.post').tinysort({order:"asc"}); sortState($(this)); });
