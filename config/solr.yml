@@ -12,19 +12,19 @@
 
 development: &development
   asf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/asf
+    url: http://carter.cul.columbia.edu:8080/solr-4/asf
   fsf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
   site_detail:
-    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+    url: http://carter.cul.columbia.edu:8080/solr-4/fsf
   
 test: &test
   asf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test
+    url: http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test
   fsf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test
+    url: http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test
   site_detail:
-    url: http://harding.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test
+    url: http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test
 
 hrwa_dev: *development
 
