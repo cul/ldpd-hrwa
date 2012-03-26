@@ -264,17 +264,19 @@ button.ui-multiselect span { color:#888; }
 /* Smaller screens */
 
 @media only screen and (max-width: 1023px) {
+/*
 	body {
 	font-size: 0.8em;
 	line-height: 1.5em;
 	}
+*/
 }
 
 
 /* Mobile */
 
 @media handheld, only screen and (max-width: 767px) {
-
+/*
 	body {
 	font-size: 16px;
 	-webkit-text-size-adjust: none;
@@ -302,7 +304,6 @@ button.ui-multiselect span { color:#888; }
 	.hero-unit h1 { font-size:280%; }
 	.no-hero { margin-top:80px; }
 	.no-hero-mobile { padding-top:60px; }
-	/*#cul_top { display:none; }*/
 	#crowndown { display:none; }
 	#topsearchform { display:block; width:100%; margin-bottom:6px; border-top:2px solid #000; margin-top:0; padding-top:6px; }
 	#topfqs { display:block; }
@@ -325,5 +326,5 @@ button.ui-multiselect span { color:#888; }
 
 	#primary { margin-top:80px; display:block; width:100%; padding:0; }
     #home-tab-content { max-height:100%; overflow:visible; }
-
+*/
 }
