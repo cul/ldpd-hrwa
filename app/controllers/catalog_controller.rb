@@ -6,6 +6,7 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
+  include HRWA::SolrHelper
 
   # displays values and pagination links for a single facet field
   def facet
@@ -20,17 +21,6 @@ class CatalogController < ApplicationController
 
       _configure_by_search_type
       
-      # Add our own processing to the end of the standard Blacklght SOLR
-      # params method chain
-      
-      if params[ :search_mode ] == "advanced"
-      
-      # Advanced searches require some extra params manipulation
-        self.solr_search_params_logic << :advanced_search_processing
-      end
-      
-      self.solr_search_params_logic << :process_search_request
-
       begin
         (@response, @result_list) = get_search_results( params, {} )
       rescue => ex
@@ -78,16 +68,6 @@ class CatalogController < ApplicationController
     _configure_by_search_type('site_detail')
     @bib_key = params[:bib_key]
     @response, @document = get_solr_response_for_doc_id(@bib_key)
-  end
-
-  def advanced_search_processing( solr_parameters, user_params )
-    # For now the q_* fields are processed the same for all search_types
-    advanced_search_processing_q_fields( solr_parameters, user_params )
-  end
-  
-  # This has to be defined in controller in order to be added to solr_search_params_logic
-  def process_search_request( solr_parameters, user_params )
-    @configurator.process_search_request( solr_parameters, user_params )
   end
 
   private
