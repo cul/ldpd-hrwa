@@ -380,7 +380,6 @@ $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
 $('article span[rel=tooltip], .hero-unit label[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
 
 // cbf home onload sorting and showing
-$('.tab-content .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
 $('.tab-content .results_control .sort_a-z.btn').click();
 $('.tab-content .results_control').show();
 
@@ -407,13 +406,30 @@ $('#cbf_widgets .results_control').show();
 	});
 */
 
-$( ".datepicker" ).datepicker({
+/* HRWA Date Picker Stuff */
+
+//Define the actual datepicker creation function
+jQuery.fn.hrwadatepicker = function() {
+      var o = $(this[0]);
+
+      o.bind('click', function(){
+            alert('hey! you clicked!');
+      });
+      
+};
+
+$(".hrwadatepicker_start").hrwadatepicker({
 	minDate: new Date(2008, 1, 1),
-	gotoCurrent: true,
-	changeMonth: true,
-	changeYear: true,
-	dateFormat: "yymm"
+        maxDate: new Date(),
+	defaultDate: new Date(2008, 1, 1),
 });
+
+$(".hrwadatepicker_end").hrwadatepicker({
+	minDate: new Date(2008, 1, 1),
+        maxDate: new Date(),
+	defaultDate: new Date(),
+});
+
 
 // reverse parse advanced form inputs to q
 function adv_to_q() {
