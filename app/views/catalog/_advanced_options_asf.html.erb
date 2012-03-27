@@ -92,9 +92,9 @@
     </div>
     <div id="search_date_range" class="control-group">
       <label class="span2 control-label">date of capture</label>
-      <% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
-         capture_end_date_value   = params[ :capture_end_date ].nil?   ? '' : params[ :capture_end_date   ] %>
-      <input id="capture_start_date" class="span2 datepicker" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 datepicker" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
+      <% capture_start_date_value = params[ :capture_start_date ].nil? ? 'YYYYMM' : params[ :capture_start_date ]
+         capture_end_date_value   = params[ :capture_end_date ].nil?   ? 'YYYYMM' : params[ :capture_end_date   ] %>
+      <input id="capture_start_date" class="span2 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
     </div>
 </div>
 </div>
