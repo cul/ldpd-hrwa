@@ -163,6 +163,8 @@ a.moreless.btn { font-size:80%; }
 .alignright { text-align:right!important; }
 .alignleft { text-align:left!important; }
 .floatright { float:right; }
+.opacity_75 { opacity:.75; }
+.opacity_50 { opacity:.50; }
 .clear { clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0; }
 .clearfix { clear:both; }
 .clearfix:after { clear:both; content:' '; display:block; font-size:0; line-height:0; visibility:hidden; width:0; height:0 }
