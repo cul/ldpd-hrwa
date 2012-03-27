@@ -34,6 +34,7 @@
             <div class="input-append"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle mono small pull-right lime">Adv+</a><%
 	    %><input class="span6 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><%
 	    %><label class="pull-right add-on success hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label><%
+	    %><label class="pull-right add-on" title="Start a New Search" rel="tooltip"> <a href="#" class="donothing" id="top_form_new_search"><i class="icon-refresh icon-white"></i></a></label><%
 	    %><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch_t" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
 	    %><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch_t" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
 	    %>
