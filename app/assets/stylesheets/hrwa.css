@@ -24,6 +24,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .navbar form .add-on.success { background-color:#468847; }
 .add-on { white-space:nowrap; vertical-align:middle; }
 .navbar form input[type=radio], .navbar form label.donothing, .hero-unit form label.donothing { padding-left:0.5em; width:auto; }
+.navbar form label { margin-bottom:0; }
 .add-on input[type=radio] { margin-right:3px; }
 .navbar input { background-color: rgba(255, 255, 255, 0.4); }
 .navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; }
