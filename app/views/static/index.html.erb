@@ -55,15 +55,17 @@
 
           <br />
 
-	      <div class="alert alert-link alert-info">
-                <%= link_to "&raquo;".html_safe, search_path(:search_type => "find_site"), :class => "goto floatright" %>
-      	        <p><i class="icon-search opacity_50"></i> <strong>Search</strong> for Sites</a></p>
+	      <div class="alert alert-link alert-success">
+                <% #= link_to "&raquo;".html_safe, search_path(:search_type => "find_site"), :class => "goto floatright" %>
+                <a href="#" id="focus_fsf" class="goto floatright">&raquo;</a>
+      	        <p><i class="icon-search opacity_50"></i> <strong>Search</strong> for Sites</p>
       	  </div>
-	      <div class="alert alert-link alert-info">
-                <%= link_to "&raquo;".html_safe, search_path(:search_type => "archive"), :class => "goto floatright" %>
+	      <div class="alert alert-link alert-success">
+                <% #= link_to "&raquo;".html_safe, search_path(:search_type => "archive"), :class => "goto floatright" %>
+                <a href="#" id="focus_asf" class="goto floatright">&raquo;</a>
 		        <p><i class="icon-search opacity_50"></i> <strong>Search</strong> the Web Archive</p>
 	      </div>
-	      <div class="alert alert-link alert-success">
+	      <div class="alert alert-link alert-info">
 		        <%= link_to "&raquo;".html_safe, browse_path, :class => "goto floatright" %>
 		        <p><i class="icon-eye-open opacity_50"></i> <strong>Browse</strong> for Sites</p>
 	      </div>
