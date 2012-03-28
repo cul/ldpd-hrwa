@@ -164,7 +164,6 @@ describe 'archive search' do
       click_link 'English'
       click_link 'Menu'
       click_link 'Turn debug on'
-      Rails.logger.debug( page.html )
       page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
     end
 
