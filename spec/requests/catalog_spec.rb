@@ -167,6 +167,27 @@ describe 'archive search' do
       page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
     end
 
+    # TODO: HRWA-375 Bug Test
+    #it 'does not create duplicate pills during an advanced search', :js => true do
+    #  visit '/search'
+    #  choose 'asfsearch'
+    #  click_link 'advo_link'
+    #
+    #  click_link 'form_submit'
+    #  click_link 'English'
+    #  #page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
+    #end
+
+    # Slider test in advanced form (for the 'field' query string parameter )
+    it 'submits the slider values in the advanced form so that they appear in the form-generated url', :js => true do
+      visit '/search'
+      choose 'asfsearch'
+      click_link 'advo_link'
+      click_link 'form_submit'
+
+      page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
+    end
+
   end
 end
 
