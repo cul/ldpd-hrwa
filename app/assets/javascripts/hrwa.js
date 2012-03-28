@@ -28,6 +28,15 @@ jQuery(function($) {
 	window.location = $(this).find('a').attr('href');
 	//return false;
   });
+  $('.alert-jump').live('click', function(e) {
+    $('#q_t').focus();
+    if ($(this).find('a').attr('id') == 'focus_fsf') {
+      $('#fsfsearch_t').prop('checked', true);
+    } else {
+      $('#asfsearch_t').prop('checked', true);
+    }
+    return false;
+  });
 
   /* Start -- Result item hiding/showing logic */
 

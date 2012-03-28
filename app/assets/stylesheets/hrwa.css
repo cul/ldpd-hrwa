@@ -200,7 +200,7 @@ a.moreless.btn { font-size:80%; }
   -moz-opacity: 0.4;
   opacity: 0.4;
 }
-.alert-link,.moreless { cursor:pointer; }
+.alert-link,.alert-jump,.moreless { cursor:pointer; }
 
 #hero-search #searchform, #hero-search #appliedParams {margin-bottom:0px;}
 #hero-search {padding-bottom:24px}
