@@ -419,9 +419,10 @@ jQuery.fn.hrwadatepicker = function() {
       o.bind('click', function(){
             alert('hey! you clicked!');
       });
-      
+
 };
 
+/*
 $(".hrwadatepicker_start").hrwadatepicker({
 	minDate: new Date(2008, 1, 1),
         maxDate: new Date(),
@@ -433,7 +434,51 @@ $(".hrwadatepicker_end").hrwadatepicker({
         maxDate: new Date(),
 	defaultDate: new Date(),
 });
+*/
 
+//Temporary
+$(".hrwadatepicker_start, .hrwadatepicker_end").datepicker({
+	minDate: new Date(2008, 1, 1),
+	gotoCurrent: true,
+	changeMonth: true,
+	changeYear: true,
+	dateFormat: "yymm"
+});
+
+//Weighting sliders
+$('#url_weight_slider').slider({
+      value: $('#url_weight_slider').attr('data-val-from-url') ? parseFloat($('#url_weight_slider').attr('data-val-from-url')) : 1,
+      min: 1,
+      max: 500,
+      step: 1,
+      slide: function( event, ui ) {
+          $( "#url_weight_label" ).html( "URL: " + ui.value );
+          $( "#url_weight" ).html( "originalUrl^" + ui.value );
+      }
+});
+$('#page_title_weight_slider').slider({
+      value: $('#page_title_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) : 1,
+      min: 1,
+      max: 500,
+      step: 1,
+      slide: function( event, ui ) {
+          $( "#page_title_weight_label" ).html( "Page Title: " + ui.value );
+          $( "#page_title_weight" ).html( "contentTitle^" + ui.value );
+      }
+});
+$('#page_content_weight_slider').slider({
+      value: $('#page_content_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) : 1,
+      min: 1,
+      max: 500,
+      step: 1,
+      slide: function( event, ui ) {
+          $( "#page_content_weight_label" ).html( "Page Content: " + ui.value );
+          $( "#page_content_weight" ).html( "contentBody^" + ui.value );
+      }
+});
+$( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );
+$( "#page_title_weight_label" ).html( "Page Title: " + $( "#page_title_weight_slider" ).slider( "value" ) );
+$( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
 
 // reverse parse advanced form inputs to q
 function adv_to_q() {

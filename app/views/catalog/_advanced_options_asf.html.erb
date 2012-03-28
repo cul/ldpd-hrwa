@@ -92,8 +92,8 @@
     </div>
     <div id="search_date_range" class="control-group">
       <label class="span2 control-label">date of capture</label>
-      <% capture_start_date_value = params[ :capture_start_date ].nil? ? 'YYYYMM' : params[ :capture_start_date ]
-         capture_end_date_value   = params[ :capture_end_date ].nil?   ? 'YYYYMM' : params[ :capture_end_date   ] %>
+      <% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
+         capture_end_date_value   = params[ :capture_end_date ].nil?   ? '' : params[ :capture_end_date   ] %>
       <input id="capture_start_date" class="span2 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
     </div>
 </div>
@@ -101,50 +101,79 @@
 </div>
 
 <div class="row">
-<div class="span12">
- <h6>display options</h6>
- <div class="span6 nomar">
-        <div class="control-group">
-        <label class="span2 control-label">results per page</label>
-        <select class="control-group" name="per_page">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-        </select>
-    </div>
- </div>
- <div class="span6 nomar">
-        <div class="control-group">
-        <label class="span2 control-label">sort</label>
-        <select class="control-group" name="sort">
-          <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
-        </select>
-    </div>
- </div>
-</div>
+	<div class="span12">
+		<h6>display options</h6>
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">results per page</label>
+					 <select class="control-group" name="per_page">
+									 <option>10</option>
+									 <option>25</option>
+									 <option>50</option>
+					 </select>
+			 </div>
+		</div>
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">sort</label>
+					 <select class="control-group" name="sort">
+						 <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
+					 </select>
+			 </div>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-<div class="span12">
- <h6>dev options (temporary)</h6>
- <div class="span6 nomar">
-        <div class="control-group">
-        <label class="span2 control-label">host</label>
-        <select class="control-group pull-left">
-          <option></option>
-        </select>
+    <div class="span12">
+			<h6>dev options (temporary)</h6>
+			<div class="span6 nomar">
+						 <div class="control-group">
+						 <label class="span2 control-label">host</label>
+						 <select class="control-group pull-left">
+							 <option></option>
+						 </select>
+				 </div>
+			</div>
+			<div class="span6 nomar">
+						 <div class="control-group">
+						 <label class="span2 control-label">core</label>
+						 <select class="control-group pull-left">
+							 <option></option>
+						 </select>
+				 </div>
+			</div>
     </div>
- </div>
- <div class="span6 nomar">
-        <div class="control-group">
-        <label class="span2 control-label">core</label>
-        <select class="control-group pull-left">
-          <option></option>
-        </select>
+</div>
+
+<div class="row">
+    <div class="span12">
+			<h6>Weighting options (temporary)</h6>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+					<label id="url_weight_label" class="span2 control-label">URL: 1</label>
+					<div id="url_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+					<input type="hidden" id="url_weight" name="field[]" value="originalUrl^1"/>
+				</div>
+			</div>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+					<label id="page_title_weight_label" class="span2 control-label">Page Title: 1</label>
+					<div id="page_title_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+					<input type="hidden" id="page_title_weight" name="field[]" value="contentTitle^1"/>
+				</div>
+			</div>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+						<label id="page_content_weight_label" class="span2 control-label">Page Content: 1</label>
+						<div id="page_content_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+						<input type="hidden" id="page_content_weight" name="field[]" value="contentBody^1"/>
+				 </div>
+			</div>
     </div>
- </div>
 </div>
-</div>
+
+
 
 <span>
   <%# hidden Submit button goes here -- allows use of enter for submitting form %>
