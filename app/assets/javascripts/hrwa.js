@@ -161,6 +161,7 @@ jQuery(function($) {
   function showSimpleSearch()
   {
     $('.advanced_options').appendTo('#outside_of_form');
+    $('#extra_hidden_fields').appendTo('#inside_of_form');
 
     //$('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
 
@@ -177,6 +178,8 @@ jQuery(function($) {
     //Simple options always remains inside of the form now
     //$('#simple_options').appendTo('#outside_of_form');
     disableSimpleForm();
+
+    $('#extra_hidden_fields').appendTo('#outside_of_form');
 
     $('.advanced_options').appendTo('#outside_of_form'); //This is necessary for switching straight from advanced_asf mode to advanced_fsf mode.
 

@@ -141,16 +141,25 @@ module HRWA::CatalogHelperBehavior
 
   def get_specific_search_weight_from_weighting_string(search_weight_type, weighting_string)
 
-    return nil;
+    if(
+        weighting_string.empty? ||
+        weighting_string.index(search_weight_type).nil? ||
+        (search_weight_type.length + 1) > weighting_string.length
+      )
+      return nil
+    end
 
-    #start_of_numeric_value = (weighting_string.index(search_weight_type) + search_weight_type.length) + 1
-    #numeric_value = (weighting_string.index(/[0-9*]/, start_of_numeric_value))
+    start_of_numeric_value_index = (weighting_string.index(search_weight_type) + search_weight_type.length) + 1
+    end_of_numeric_value_index = (weighting_string.index(/\D/, start_of_numeric_value_index))
 
-    #if(numeric_value.to_s.length > 0)
-    #  return numeric_value.to_i
-    #else
-    #  return nil
-    #end
+    if(end_of_numeric_value_index.nil?)
+      #this number was found at the end of the weighting_string
+      numeric_value = weighting_string[start_of_numeric_value_index..weighting_string.length]
+    else
+      numeric_value = weighting_string[start_of_numeric_value_index..end_of_numeric_value_index]
+    end
+
+    return numeric_value.to_i unless numeric_value.to_i == 0 # because if numeric_value.to_i == 0, that means that no valid numeric value was supplied for the search_weight_type
 
   end
 
