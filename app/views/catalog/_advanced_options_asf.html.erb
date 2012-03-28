@@ -152,21 +152,21 @@
 			<div class="span12 nomar">
 				<div class="control-group span10">
 					<label id="url_weight_label" class="span2 control-label">URL: 1</label>
-					<div id="url_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+					<div id="url_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('originalUrl', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
 					<input type="hidden" id="url_weight" name="field[]" value="originalUrl^1"/>
 				</div>
 			</div>
 			<div class="span12 nomar">
 				<div class="control-group span10">
 					<label id="page_title_weight_label" class="span2 control-label">Page Title: 1</label>
-					<div id="page_title_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+					<div id="page_title_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('contentTitle', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
 					<input type="hidden" id="page_title_weight" name="field[]" value="contentTitle^1"/>
 				</div>
 			</div>
 			<div class="span12 nomar">
 				<div class="control-group span10">
 						<label id="page_content_weight_label" class="span2 control-label">Page Content: 1</label>
-						<div id="page_content_weight_slider" data-val-from-url="<%= '' %>" class="clearfix"></div>
+						<div id="page_content_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('contentBody', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
 						<input type="hidden" id="page_content_weight" name="field[]" value="contentBody^1"/>
 				 </div>
 			</div>

@@ -132,3 +132,7 @@ describe 'see_all_hits_from_domain_link' do
     link_tag.should == @expected_link_tag
   end
 end
+
+describe 'get_specific_search_weight_from_weighting_string' do
+  
+end

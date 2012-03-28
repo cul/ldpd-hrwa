@@ -453,7 +453,7 @@ $('#url_weight_slider').slider({
       step: 1,
       slide: function( event, ui ) {
           $( "#url_weight_label" ).html( "URL: " + ui.value );
-          $( "#url_weight" ).html( "originalUrl^" + ui.value );
+          $( "#url_weight" ).val( "originalUrl^" + ui.value );
       }
 });
 $('#page_title_weight_slider').slider({
@@ -463,7 +463,7 @@ $('#page_title_weight_slider').slider({
       step: 1,
       slide: function( event, ui ) {
           $( "#page_title_weight_label" ).html( "Page Title: " + ui.value );
-          $( "#page_title_weight" ).html( "contentTitle^" + ui.value );
+          $( "#page_title_weight" ).val( "contentTitle^" + ui.value );
       }
 });
 $('#page_content_weight_slider').slider({
@@ -473,7 +473,7 @@ $('#page_content_weight_slider').slider({
       step: 1,
       slide: function( event, ui ) {
           $( "#page_content_weight_label" ).html( "Page Content: " + ui.value );
-          $( "#page_content_weight" ).html( "contentBody^" + ui.value );
+          $( "#page_content_weight" ).val( "contentBody^" + ui.value );
       }
 });
 $( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );

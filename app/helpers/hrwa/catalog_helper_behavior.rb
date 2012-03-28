@@ -138,4 +138,20 @@ module HRWA::CatalogHelperBehavior
                                   )
   end
 
+
+  def get_specific_search_weight_from_weighting_string(search_weight_type, weighting_string)
+
+    return nil;
+
+    #start_of_numeric_value = (weighting_string.index(search_weight_type) + search_weight_type.length) + 1
+    #numeric_value = (weighting_string.index(/[0-9*]/, start_of_numeric_value))
+
+    #if(numeric_value.to_s.length > 0)
+    #  return numeric_value.to_i
+    #else
+    #  return nil
+    #end
+
+  end
+
 end
