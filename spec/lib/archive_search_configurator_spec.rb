@@ -281,7 +281,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   describe '#solr_url' do
     it 'returns correct URL for environment "development"' do
-      @configurator.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf'
+      @configurator.solr_url( 'development' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/asf'
     end
 
     it 'returns correct URL for environment "test"' do
@@ -290,11 +290,11 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf'
+      @configurator.solr_url( 'hrwa_dev' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/asf'
     end
 
     it 'returns correct URL for environment "hrwa_test"' do
-      @configurator.solr_url( 'hrwa_test' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/asf'
+      @configurator.solr_url( 'hrwa_test' ).should == 'http://machete.cul.columbia.edu:8080/solr-4/asf'
     end
   end
 
