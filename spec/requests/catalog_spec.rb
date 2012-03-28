@@ -172,10 +172,10 @@ describe 'archive search' do
     #  visit '/search'
     #  choose 'asfsearch'
     #  click_link 'advo_link'
-    #
+    #  # ...other stuff here... (select items in <select> elements)
     #  click_link 'form_submit'
     #  click_link 'English'
-    #  #page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
+    #  #page.should_not have_content( %q{...put adjacent duplicate pill html here...} )
     #end
 
     # Slider test in advanced form (for the 'field' query string parameter )
