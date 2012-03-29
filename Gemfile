@@ -19,6 +19,7 @@ gem 'nokogiri', '1.5.0'
 gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'grouping'
 gem 'sass', '3.1.14'
 gem 'sass-rails', '3.1.5'
+gem 'spreadsheet', '0.6.8'
 gem 'sqlite3'
 gem 'therubyracer', '0.9.9'
 # Use unicorn as the web server

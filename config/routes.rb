@@ -10,6 +10,9 @@ Hrwa::Application.routes.draw do
   match '/search'  => 'catalog#index'
   match '/site_detail/:bib_key'  => 'catalog#site_detail'
 
+  # Internal stuff
+  match '/internal/seed_list' => 'internal#seed_list'
+
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
   match '/advanced_fsf',      :to => redirect( '/advanced_fsf.html' )

@@ -157,6 +157,7 @@ jQuery(function($) {
   function showSimpleSearch()
   {
     $('.advanced_options').appendTo('#outside_of_form');
+    $('#extra_hidden_fields').appendTo('#inside_of_form');
 
     //$('#s_type_selector_and_submit').appendTo('#simple_options .submit_button_container');
 
@@ -173,6 +174,8 @@ jQuery(function($) {
     //Simple options always remains inside of the form now
     //$('#simple_options').appendTo('#outside_of_form');
     disableSimpleForm();
+
+    $('#extra_hidden_fields').appendTo('#outside_of_form');
 
     $('.advanced_options').appendTo('#outside_of_form'); //This is necessary for switching straight from advanced_asf mode to advanced_fsf mode.
 
@@ -269,8 +272,10 @@ $('.moreless').live('click', function() {
 // resubmit
 $('#top_form_submit').live('click',function(e) {
     if($('#hero-container').css('display') == 'none') {
+			alert('submitting top');
 	  $('#topsearchform').submit();
     } else {
+			alert('submitting advanced');
 	  var cform = $('#searchform');
 	  cform.submit();
     }
@@ -310,6 +315,7 @@ $('a.ccf_quicklook').live('click', function() {
 });
 
 // advanced form dropdown multiselect
+
  $('.advanced_options select[multiple=multiple]').multiselect({
    selectedText: "# of # selected"
  });
@@ -318,6 +324,7 @@ $('a.ccf_quicklook').live('click', function() {
    selectedList: 1,
    height:'auto'
  });
+
 
 // avf stuff
 
@@ -419,18 +426,71 @@ $('#cbf_widgets .results_control').show();
 
 //Define the actual datepicker creation function
 jQuery.fn.hrwadatepicker = function() {
-      var o = $(this[0]);
+  var o = $(this[0]);
 
-      o.bind('click', function(){
-            alert('hey! you clicked!');
-      });
+	//Wrap this input in a div
 
+	o.wrap('<span class="hrwadatepicker_wrapper" />');
+
+	var hrwaDatePickerHtml =
+	'<span style="display:none;" class="hrwadatepicker_selects">'+
+		'<select class="span1 month">'+
+			'<option val="01">Jan</option>'+
+			'<option val="02">Feb</option>'+
+			'<option val="03">Mar</option>'+
+			'<option val="04">Apr</option>'+
+			'<option val="05">May</option>'+
+			'<option val="06">Jun</option>'+
+			'<option val="07">Jul</option>'+
+			'<option val="08">Aug</option>'+
+			'<option val="09">Sep</option>'+
+			'<option val="10">Oct</option>'+
+			'<option val="11">Nov</option>'+
+			'<option val="12">Dec</option>'+
+		'</select>'+
+		'<select class="span1 year">'+
+			'<option val="2012">2012</option>'+
+		'</select> '+
+		'<a href="#" class="ok_button">ok</a>'+
+	'</span>';
+
+	o.parent().append(hrwaDatePickerHtml);
+
+  o.bind('click', function(){
+		$(this).css('display', 'none');
+		$(this).parent().children('.hrwadatepicker_selects').first().css('display', 'inline');
+  });
+
+	o.parent().children('.hrwadatepicker_selects').children('a').bind('click', function(){
+
+		var month_name_to_number = {
+			'Jan' : '01',
+			'Feb' : '02',
+			'Mar' : '03',
+			'Apr' : '04',
+			'May' : '05',
+			'Jun' : '06',
+			'Jul' : '07',
+			'Aug' : '08',
+			'Sep' : '09',
+			'Oct' : '10',
+			'Nov' : '11',
+			'Dec' : '12'
+		}
+
+		var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
+		var year_select_value = $(this).parent().children('select.year').val();
+
+		$(this).parent().css('display', 'none');
+		$(this).parent().parent().children('input').css('display', 'inline').val(year_select_value+''+month_select_value);
+		return false;
+	});
 };
 
 /*
 $(".hrwadatepicker_start").hrwadatepicker({
 	minDate: new Date(2008, 1, 1),
-        maxDate: new Date(),
+    maxDate: new Date(),
 	defaultDate: new Date(2008, 1, 1),
 });
 
@@ -441,6 +501,7 @@ $(".hrwadatepicker_end").hrwadatepicker({
 });
 */
 
+
 //Temporary
 $(".hrwadatepicker_start, .hrwadatepicker_end").datepicker({
 	minDate: new Date(2008, 1, 1),
@@ -449,6 +510,7 @@ $(".hrwadatepicker_start, .hrwadatepicker_end").datepicker({
 	changeYear: true,
 	dateFormat: "yymm"
 });
+
 
 //Weighting sliders
 $('#url_weight_slider').slider({
@@ -811,8 +873,7 @@ function single_q_to_multi_q(q)
 
 // Warn users that the submit bug report link on the bottom doesn't currently work
 $('#submit_bug_report_link').bind('click', function(){
-  alert('Bug reporting by public users is not yet implemented.');
-  return false;
+  alert('Bug reporting by public users is not yet implemented. You will now be redirected to the internal feedback form.');
 });
 
 }); // ready
