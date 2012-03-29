@@ -809,8 +809,7 @@ function single_q_to_multi_q(q)
 
 // Warn users that the submit bug report link on the bottom doesn't currently work
 $('#submit_bug_report_link').bind('click', function(){
-  alert('Bug reporting by public users is not yet implemented.');
-  return false;
+  alert('Bug reporting by public users is not yet implemented. You will now be redirected to the internal feedback form.');
 });
 
 }); // ready
