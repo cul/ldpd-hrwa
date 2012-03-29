@@ -4,7 +4,7 @@ require 'pp'
 class InternalController < ApplicationController
   include HRWA::Internal
   
-  SITE_ID_FILE = '/tmp/hrwa_site_id_list.xls'
+  SITE_ID_FILE = 'tmp/hrwa_site_id_list.xls'
 
   def seed_list
     workbook = seed_list_excel_workbook
