@@ -216,6 +216,7 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-ole (1.2.11.3)
     ruby-prof (0.10.8)
     ruby_gntp (0.3.4)
     rubyzip (0.9.6.1)
@@ -231,6 +232,8 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     spork (0.9.0)
+    spreadsheet (0.6.8)
+      ruby-ole (>= 1.0)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -294,6 +297,7 @@ DEPENDENCIES
   sass (= 3.1.14)
   sass-rails (= 3.1.5)
   spork (= 0.9.0)
+  spreadsheet (= 0.6.8)
   sqlite3
   therubyracer (= 0.9.9)
   uglifier (= 1.0.3)
