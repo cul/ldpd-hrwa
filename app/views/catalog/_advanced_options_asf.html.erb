@@ -90,14 +90,30 @@
         <% end %>
       </select>
     </div>
-    <div id="search_date_range" class="control-group">
-      <label class="span2 control-label">date of capture</label>
-      <% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
+</div>
+</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<h6>date of capture</h6>
+
+		<% capture_start_date_value = params[ :capture_start_date ].nil? ? '' : params[ :capture_start_date ]
          capture_end_date_value   = params[ :capture_end_date ].nil?   ? '' : params[ :capture_end_date   ] %>
-      <input id="capture_start_date" class="span2 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /> - <input id="capture_end_date" class="span2 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
-    </div>
-</div>
-</div>
+
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">start date</label>
+					 <input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" />
+			 </div>
+		</div>
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">end date</label>
+					 <input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
+			 </div>
+		</div>
+	</div>
 </div>
 
 <div class="row">

@@ -175,7 +175,6 @@ img.preview_icon:hover { opacity:1.0 }
 .advanced_options label.add-on { width:186px; text-align:right; color:#777; }
 .advanced_options .control-group { margin-bottom:4px; }
 .advanced_options label.control-label { color:#777; margin-right:3px; }
-input#capture_start_date, input#capture_end_date { width:99px; }
 .advanced_options { margin-bottom:1em; clear:both; }
 .advanced_options a[rel=tooltip] { color:#88C34B; }
 .advanced_options h6 { color:#777; }

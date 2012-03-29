@@ -156,7 +156,7 @@ GEM
       treetop (~> 1.4.8)
     marc (0.4.4)
     mime-types (1.18)
-    multi_json (1.1.0)
+    multi_json (1.2.0)
     mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
