@@ -8,10 +8,10 @@ class MockInternalController
 end
 
 describe 'HRWA::Internal' do     
-  it '#site_id_list_spreadsheet' do
+  it '#site_list_excel_workbook' do
     expected_rows = spreadsheet_to_rows( expected_site_id_list_workbook.worksheet 'Site ID List' )
     got_rows      = spreadsheet_to_rows(
-      MockInternalController.new.site_id_list_spreadsheet.worksheet 'Site ID List'
+      MockInternalController.new.site_list_excel_workbook.worksheet 'Site ID List'
     )
     got_rows.should == expected_rows
   end

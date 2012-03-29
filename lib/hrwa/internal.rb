@@ -4,7 +4,7 @@ require 'spreadsheet'
 module HRWA::Internal
   extend ActiveSupport::Concern
   
-  def site_id_list_spreadsheet
+  def site_list_excel_workbook
     solr_url = YAML.load_file( 'config/solr.yml' )[ Rails.env ][ 'fsf' ][ 'url' ]
   
     solr = RSolr.connect :url => solr_url
