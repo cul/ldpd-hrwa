@@ -134,5 +134,15 @@ describe 'see_all_hits_from_domain_link' do
 end
 
 describe 'get_specific_search_weight_from_weighting_string' do
-  
+  it 'works as expected' do
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 100
+    get_specific_search_weight_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 200
+    get_specific_search_weight_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 300
+
+    get_specific_search_weight_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == nil
+
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^^').should == nil
+  end
 end

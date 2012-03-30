@@ -86,7 +86,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(245,245,245,.2)', endColorstr='rgba(238,238,238,.2)',GradientType=0 ); /* IE6-9 */
   background-image: linear-gradient(top, rgba(245,245,245,.2) 0%,rgba(238,238,238,.2) 100%); /* W3C */
   border-bottom: 1px solid #aaa;
-  margin-bottom:1.5em; 
+  margin-bottom:1.5em;
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
           border-radius: 0;
@@ -107,7 +107,7 @@ display:inline-block;
   text-transform:lowercase;
   font-variant:small-caps;
   color:#888;
-}      
+}
 .subnav .nav > .active > a,
 .subnav .nav > .active > a:hover {
   padding-left: 13px;
@@ -289,7 +289,6 @@ a.moreless.btn { font-size:80%; }
 .advanced_options label.add-on { width:186px; text-align:right; color:#777; }
 .advanced_options .control-group { margin-bottom:4px; }
 .advanced_options label.control-label { color:#ddd; margin-right:3px; }
-input#capture_start_date, input#capture_end_date { width:99px; }
 .advanced_options { margin-bottom:1em; clear:both; }
 .advanced_options a[rel=tooltip] { color:#88C34B; }
 .advanced_options h6 { color:#eee; }

@@ -27,31 +27,34 @@
       <input type="hidden" name="search" value="true" />
 
       <div id="inside_of_form">
-		<div id="simple_options">
-		  <div id="heross" class="invisible">
 
-			<div class="input-append pull-left invisible">
-			  <div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span9 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
+				<div id="simple_options">
+					<div id="heross" class="invisible">
+						<div class="input-append pull-left invisible">
+							<div id="q_container" class="pull-left"><%= text_field_tag :q, params[:q], :class => "span9 pull-left", :placeholder =>'Enter search terms...', :size => '16' %></div>
+							<span class="submit_button_container">
+							<span id="s_type_selector_and_submit">
+								<label class="add-on pull-left" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" class="pull-left" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label>
+								<label class="add-on pull-left" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" class="pull-left" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label>
+								<label class="add-on hidden pull-left">
+									<a href="#" id="form_submit" class="submitss">Submit</a>
+								</label>
+							</span>
+							</span>
+						</div>
 
-			  <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
-								      :q, :qt, :page,
-								      #hrwa custom additions
-								      :utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :sort
-								     ]).html_safe %>
-			  <span class="submit_button_container">
-				<span id="s_type_selector_and_submit">
-				  <label class="add-on pull-left" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" class="pull-left" id="fsfsearch" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label>
-				  <label class="add-on pull-left" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" class="pull-left" id="asfsearch" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label>
-				  <label class="add-on hidden pull-left">
-					<a href="#" id="form_submit" class="submitss">Submit</a>
-				  </label>
-				</span>
-			  </span>
-			</div>
+					</div><!--/heross-->
+					<%= render 'catalog/constraints', :localized_params=>params %>
+				</div><!--/simple_options-->
 
-		  </div><!--/heross-->
-		  <%= render 'catalog/constraints', :localized_params=>params %>
-		</div><!--/simple_options-->
+				<div id="extra_hidden_fields">
+							<%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+												:q, :qt, :page,
+												#hrwa custom additions
+												:utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :sort
+											 ]).html_safe %>
+				</div>
+
       </div> <!--/inside_of_form-->
 
     <% end %>
