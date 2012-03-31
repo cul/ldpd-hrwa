@@ -36,9 +36,9 @@
 			<div id="topbarformdiv" class="navbar-search pull-left">
 			  <input type="hidden" name="search" value="true" />
 			  <div class="input-append"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle mono small pull-right lime">Adv+</a><%
-				%><input class="span6 pull-left search-query" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><%
+				%><input class="span6 pull-left search-query" type="text" value="<%= params[:q] %>" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q"><%
 				%><label class="pull-right add-on success"><a href="#" id="top_form_submit" class="submitss white">Submit</a><input type="submit" class="hidden" /></label><%
-				%><label class="pull-right add-on" title="Start a New Search" rel="tooltip"> <a href="#" class="donothing" id="top_form_new_search"><i class="icon-refresh icon-white"></i></a></label><%
+				%><label class="pull-right add-on" title="Start a New Search" rel="tooltip"><%= link_to '<i class="icon-refresh icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
 				%><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch_t" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
 				%><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch_t" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
 				%><label class="pull-right add-on" title="Construct a query" rel="tooltip"><a href="#" data-toggle="modal" data-target="#construct_query_modal" id="top_form_construct_query"><i class="icon-edit icon-white"></i></a></label><%
@@ -66,9 +66,6 @@
 	  <div id="advanced_options_container" class="container">
 		  <div id="hero-search" class="hero-unit hero-border ">
 			<h3 class="floatleft">Advanced Search Options</h3>
-			<% if ! params[:search].nil? %>
-			  <%= link_to 'Start a new search', search_path, :class=> 'floatright', :id => 'start_new_search_link' %>
-			<% end %>
 			<input type="hidden" name="search" value="true" />
 			<div id="inside_of_form">
 			  <div id="extra_hidden_fields">
@@ -77,9 +74,6 @@
 									#hrwa custom additions
 									:utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :sort
 								 ]).html_safe %>
-			  </div>
-			  <div id="advanced_options_fsf" class="advanced_options">
-				<%= render 'layouts/advanced_options_fsf' %>
 			  </div>
 			</div> <!--/inside_of_form-->
 		  </div>
@@ -123,6 +117,9 @@
 	<div id="outside_of_form" class="invisible">
 	  <div id="advanced_options_asf" class="advanced_options">
 		<%= render 'layouts/advanced_options_asf' %>
+	  </div>
+	  <div id="advanced_options_fsf" class="advanced_options">
+		<%= render 'layouts/advanced_options_fsf' %>
 	  </div>
 	</div>
 

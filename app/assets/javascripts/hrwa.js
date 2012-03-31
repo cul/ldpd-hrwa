@@ -145,27 +145,42 @@ jQuery(function($) {
 	}
 	else
 	{
-	  $('#advanced_options_container').slideUp(600);
+	  $('#advanced_options_container').slideUp(600, function(){
+		//And then remove any .advanced_options divs when the form closes
+		$('#outside_of_form').append($('.advanced_options'));
+	  });
 	}
 
 	return false;
   });
 
-  HRWA.current_search_type = 'fsf'; //by default
+  HRWA.current_search_type = ''; //by default
+  switchToSearchTypeFSF(); //initially
+
+  function switchToSearchTypeFSF()
+  {
+	HRWA.current_search_type = 'fsf';
+	$('#outside_of_form').append($('#advanced_options_asf'));
+	$('#inside_of_form').append($('#advanced_options_fsf'));
+  }
+  function switchToSearchTypeASF()
+  {
+	HRWA.current_search_type = 'asf';
+	$('#outside_of_form').append($('#advanced_options_fsf'));
+	$('#inside_of_form').append($('#advanced_options_asf'));
+  }
+
   $('#fsfsearch_t').click(function(){
+	switchToFSFMode();
 	if(HRWA.current_search_type != 'fsf')
 	{
-	  HRWA.current_search_type = 'fsf';
-	  $('#outside_of_form').append($('#advanced_options_asf'));
-	  $('#inside_of_form').append($('#advanced_options_fsf'));
+	  switchToSearchTypeFSF();
 	}
   });
   $('#asfsearch_t').click(function(){
 	if(HRWA.current_search_type != 'asf')
 	{
-	  HRWA.current_search_type = 'asf';
-	  $('#outside_of_form').append($('#advanced_options_fsf'));
-	  $('#inside_of_form').append($('#advanced_options_asf'));
+	  switchToSearchTypeASF();
 	}
   });
 
