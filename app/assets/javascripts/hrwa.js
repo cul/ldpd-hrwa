@@ -40,7 +40,7 @@ jQuery(function($) {
 
   /* Result item detail hiding/showing logic */
 
-  window.max_height_for_hl_snippets = '53px'; //53px seems to equal two lines worth of text for a 12px font.
+  window.max_height_for_hl_snippets = '52px'; //53px seems to equal two lines worth of text for a 12px font.
 
   $('.hl_snippet').each(function(){
 
