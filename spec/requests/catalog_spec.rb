@@ -137,10 +137,8 @@ describe 'archive search' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
       choose 'asfsearch'
-      click_link 'top_form_construct_query'
-      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'generate_query_button'
       click_link 'advo_link'
+      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
       click_link 'top_form_submit'
       page.should have_content('No results found')
     end
@@ -148,9 +146,8 @@ describe 'archive search' do
     it 'returns 2,306 results for q_and=women', :js => true do
       visit '/search'
       choose 'asfsearch'
-      click_link 'top_form_construct_query'
+      click_link 'advo_link'
       fill_in 'q_and', :with => 'women'
-      click_link 'generate_query_button'
       click_link 'top_form_submit'
       page.should have_content( '2,306' )
     end
@@ -211,10 +208,8 @@ describe 'find site search' do
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
-      click_link 'top_form_construct_query'
-      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'generate_query_button'
       click_link 'advo_link'
+      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
       click_link 'top_form_submit'
       page.should have_content('No results found')
     end
