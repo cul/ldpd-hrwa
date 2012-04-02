@@ -138,33 +138,50 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
-	$('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+    $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
 
-	if($('#advanced_options_container').css('display') == 'none') {
+    if($('#advanced_options_container').css('display') == 'none') {
 
-	  if(HRWA.current_search_type == 'asf')
-	  {
-		$('#inside_of_form').append($('#advanced_options_asf'));
-	  }
-	  else
-	  {
-		$('#inside_of_form').append($('#advanced_options_fsf'));
-	  }
+      //disable simple search input (#q)
+      $('#q').attr('disabled', 'disabled');
 
-	  $('#outside_of_form').append($('#hidden_search_fields'));
+      //synch simple -> advanced search inputs
+      var multi_q_arr = single_q_to_multi_q($('#q').val());
+      //single_q_to_multi_q returns an array of the format:
+      //[0] == q_and, [1] == q_phrase, [2] == q_or, [3] == q_exclude
+      $('#advanced_options_query .q_and').val(multi_q_arr[0]);
+      $('#advanced_options_query .q_phrase').val(multi_q_arr[1]);
+      $('#advanced_options_query .q_or').val(multi_q_arr[2]);
+      $('#advanced_options_query .q_exclude').val(multi_q_arr[3]);
 
-	  $('#advanced_options_container').slideDown(600);
-	}
-	else
-	{
-	  $('#advanced_options_container').slideUp(600, function(){
-		//And then remove any .advanced_options divs when the form closes
-		$('#outside_of_form').append($('.advanced_options'));
-		$('#inside_of_form').append($('#hidden_search_fields'));
-	  });
-	}
+      if(HRWA.current_search_type == 'asf')
+      {
+          $('#inside_of_form').append($('#advanced_options_query'));
+      $('#inside_of_form').append($('#advanced_options_asf'));
+      }
+      else
+      {
+          $('#inside_of_form').append($('#advanced_options_query'));
+      $('#inside_of_form').append($('#advanced_options_fsf'));
+      }
 
-	return false;
+      $('#outside_of_form').append($('#hidden_search_fields'));
+
+      $('#advanced_options_container').slideDown(600);
+    }
+    else
+    {
+      $('#advanced_options_container').slideUp(600, function(){
+      //And then remove any .advanced_options divs when the form closes
+      $('#outside_of_form').append($('.advanced_options'));
+      $('#inside_of_form').append($('#hidden_search_fields'));
+
+          //enable simple search input (#q)
+          $('#q').removeAttr('disabled');
+      });
+    }
+
+    return false;
   });
 
   //HRWA.current_search_type is determined by which radio button is initially checked
@@ -190,7 +207,7 @@ jQuery(function($) {
   }
 
   $('#fsfsearch').click(function(){
-	switchToFSFMode();
+	switchToSearchTypeFSF();
 	if(HRWA.current_search_type != 'fsf')
 	{
 	  switchToSearchTypeFSF();
@@ -213,37 +230,27 @@ jQuery(function($) {
 	  $(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
   });
 
-  /* construct query generator modal */
+  /* advanced->simple query form synch */
+  //Note: No need to synch the simple query field with the advanced query fields
+  //in real time because the advanced fields are never visible when you're in
+  //simple mode.
 
-  $('#construct_query_modal').modal('hide');
-  $('#construct_query_modal').on('show', function () {
+  $('#advanced_options_query .q_and,' +
+    '#advanced_options_query .q_phrase,' +
+    '#advanced_options_query .q_or,' +
+    '#advanced_options_query .q_exclude').bind('keyup blur', function(){
 
-	var multi_q_arr = single_q_to_multi_q($('#q').val());
-	//single_q_to_multi_q returns an array of the format:
-	//[0] == q_and, [1] == q_phrase, [2] == q_or, [3] == q_exclude
+    $('#q').val(
+      multi_q_to_single_q(
+                            $('#advanced_options_query .q_and').val(),
+                            $('#advanced_options_query .q_phrase').val(),
+                            $('#advanced_options_query .q_or').val(),
+                            $('#advanced_options_query .q_exclude').val()
+                          )
+    );
 
-	$('#construct_query_modal .q_and').val(multi_q_arr[0]);
-	$('#construct_query_modal .q_phrase').val(multi_q_arr[1]);
-	$('#construct_query_modal .q_or').val(multi_q_arr[2]);
-	$('#construct_query_modal .q_exclude').val(multi_q_arr[3]);
-  })
-
-  $('#construct_query_modal #generate_query_button').bind('click', function(){
-	$('#q').val(
-					multi_q_to_single_q(
-										  $('#construct_query_modal .q_and').val(),
-										  $('#construct_query_modal .q_phrase').val(),
-										  $('#construct_query_modal .q_or').val(),
-										  $('#construct_query_modal .q_exclude').val()
-										)
-				  );
   });
 
-  //When #q has the class 'focus', focus on it on page load
-  if ($('#q').hasClass('focus'))
-  {
-	$('#q').focus();
-  }
 
   // submit top form
   $('#top_form_submit').bind('click',function(e) {
