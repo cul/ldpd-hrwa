@@ -141,6 +141,18 @@ jQuery(function($) {
 	$('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
 
 	if($('#advanced_options_container').css('display') == 'none') {
+
+	  if(HRWA.current_search_type == 'asf')
+	  {
+		$('#inside_of_form').append($('#advanced_options_asf'));
+	  }
+	  else
+	  {
+		$('#inside_of_form').append($('#advanced_options_fsf'));
+	  }
+
+	  $('#outside_of_form').append($('#hidden_search_fields'));
+
 	  $('#advanced_options_container').slideDown(600);
 	}
 	else
@@ -148,26 +160,33 @@ jQuery(function($) {
 	  $('#advanced_options_container').slideUp(600, function(){
 		//And then remove any .advanced_options divs when the form closes
 		$('#outside_of_form').append($('.advanced_options'));
+		$('#inside_of_form').append($('#hidden_search_fields'));
 	  });
 	}
 
 	return false;
   });
 
-  HRWA.current_search_type = ''; //by default
-  switchToSearchTypeFSF(); //initially
+  //HRWA.current_search_type is determined by which radio button is initially checked
+  HRWA.current_search_type = ($('#fsfsearch_t').attr('checked') == 'checked') ? 'fsf' : 'asf';
 
   function switchToSearchTypeFSF()
   {
 	HRWA.current_search_type = 'fsf';
-	$('#outside_of_form').append($('#advanced_options_asf'));
-	$('#inside_of_form').append($('#advanced_options_fsf'));
+	if($('#advanced_options_container').css('display') != 'none')
+	{
+	  $('#outside_of_form').append($('#advanced_options_asf'));
+	  $('#inside_of_form').append($('#advanced_options_fsf'));
+	}
   }
   function switchToSearchTypeASF()
   {
 	HRWA.current_search_type = 'asf';
-	$('#outside_of_form').append($('#advanced_options_fsf'));
-	$('#inside_of_form').append($('#advanced_options_asf'));
+	if($('#advanced_options_container').css('display') != 'none')
+	{
+	  $('#outside_of_form').append($('#advanced_options_fsf'));
+	  $('#inside_of_form').append($('#advanced_options_asf'));
+	}
   }
 
   $('#fsfsearch_t').click(function(){
@@ -220,9 +239,28 @@ jQuery(function($) {
 				  );
   });
 
+  //When #q_t has the class 'focus', focus on it on page load
+  if ($('#q_t').hasClass('focus'))
+  {
+	$('#q_t').focus();
+  }
+
   // submit top form
   $('#top_form_submit').bind('click',function(e) {
+
 	var cform = $('#topsearchform');
+
+	//Important!
+	//Whenever the asf is submitted in simple mode, we need to replace
+	//the hidden input[name="sort"] value with 'score desc' no matter what.
+	//This needs to be done so that we can automatically include sort
+	//as a hidden form field to preserve sorting order between simple
+	//and advanced searches.
+	if(HRWA.current_search_type == 'asf')
+	{
+	  cform.find('#hidden_search_fields input[name="sort"]').val('score desc');
+	}
+
 	cform.submit();
 	return false;
   });
