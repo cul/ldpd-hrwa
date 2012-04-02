@@ -21,18 +21,17 @@
 <%# <div id="secondary_nav_right" class="pull-right opacity_50"><i class="icon-heart"></i> <i class="icon-fire"></i> <i class="icon-leaf"></i></div> %>
 <ul class="nav nav-pills">
   <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About the Archive</a></li>
-  <li><a href="#" class="donothing">Nominate a Site</a></li>
   <li><a href="#" class="donothing">Statistics</a></li>
   <li class="dropdown">
     <a class="dropdown-toggle"
        data-toggle="dropdown"
        href="#">
-        Dropdown
+        Nominate a Site
         <b class="caret"></b>
       </a>
     <ul class="dropdown-menu">
-     <li><a href="#" class="donothing">sub one</a></li>
-     <li><a href="#" class="donothing">sub two</a></li>
+     <li><a href="#" class="donothing">Owner Nomination Form</a></li>
+     <li><a href="#" class="donothing">Public Nomination Form</a></li>
     </ul>
   </li>
 </ul>

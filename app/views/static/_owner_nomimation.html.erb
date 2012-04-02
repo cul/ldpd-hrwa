@@ -1,0 +1,51 @@
+
+    <div class="container no-hero-mobile">
+
+  <!-- Main heading -->
+  <%= render :partial=>'static/inner_headlines' %>
+
+	  <div class="content">
+
+      <div class="row">
+        <div class="span12 columns">
+	<article class="entry">
+        <h2>Nominate you site for the Human Rights Web Archive</h2>
+        <p>This form is for site owners who wish to nominate their organization or site for inclusion in the <strong>Human Rights Web Archive</strong>. If you are not the owner of the site you are nominating, please use the <a href="#" class="donothing">public nomination form</a>.</p>
+        <p>Please note that we cannot guarantee the inclusion of a nominated website in this program. We review the nominations carefully and assess the subject, technical, and copyright issues that may affect a site's suitability for archiving. Send questions and comments to <a href="mailto:culhrweb@libraries.cul.columbia.edu">culhrweb@libraries.cul.columbia.edu</a>. See also our <a href="#" class="donothing">FAQ</a>.</p>
+
+<form class="widget_form" id="frmWebsiteNomination" name="frmWebsiteNomination" action="https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/ownernomination">
+        <label>Name of website/organization <span>*</span></label>
+        <input id="inpSiteName" name="SiteName" type="text" size="40">
+        <label>URL of website <span>*</span></label>
+        <input id="inpURL" name="URL" type="text" size="40">
+        <label>Description of website/organization <span>*</span></label>
+        <textarea id="txtDescription" name="Description" cols="70" rows="6"></textarea>
+        <label>Additional Information</label>
+        <textarea id="txtAdditionalInformation" name="AdditionalInformation" cols="70" rows="6"></textarea>
+        <label>Permissions <span>*</span></label>
+        <p>If we select your site for inclusion in the Human Rights Web Archive, will you give Columbia University Libraries/Information Services permission to crawl your site and provide access to the archived content in the Human Rights Web Archive?</p>
+        <input id="inpPermissionsYes" name="Permissions" type="radio" value="Yes"> Yes<br>
+        <input id="inpPermissionsNo" name="Permissions" type="radio" value="No"> No<br>
+        <input id="inpPermissionsContact" name="Permissions" type="radio" value="Contact"> Please contact us to discuss permissions<br>
+        <h4>Contact Information</h4>
+        <label>Name</span> <span>*</span></label>
+        <input id="inpContactName" name="ContactName" type="text" size="40">
+        <label>Title or Position</span> <span>*</span></label>
+        <input id="inpContactTitle" name="ContactTitle" type="text" size="40">
+        <label>E-mail</span> <span>*</span></label>
+        <input id="inpContactEmail" name="ContactEmail" type="text" size="40">
+        <label>Mailing Address</span></label>
+        <textarea id="txtContactAddress" name="ContactAddress" cols="50" rows="5"></textarea>
+        <p class="submit">
+          <input type="submit" value=" Submit ">
+        </p>
+</form>
+
+	</article>
+       </div>
+      </div>
+
+	  </div> <!--//content-->
+
+
+    </div> <!-- /container -->
