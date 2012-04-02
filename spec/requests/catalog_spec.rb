@@ -27,13 +27,13 @@ describe 'the portal search' do
     it 'can successfully run a find_site search immediately after an archive search', :js => true do
       visit '/search'
       fill_in 'q', :with => 'women'
-      choose 'asfsearch_t'
+      choose 'asfsearch'
       click_link 'top_form_submit'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       visit '/search'
       fill_in 'q', :with => 'water'
-      choose 'fsfsearch_t'
+      choose 'fsfsearch'
       click_link 'top_form_submit'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
@@ -47,14 +47,14 @@ describe 'the portal search' do
       # visit '/search'
       # fill_in 'q', :with => 'water'
       # choose 'fsfsearch'
-      # click_link 'form_submit'
+      # click_link 'top_form_submit'
       visit '/search?utf8=%E2%9C%93&search=true&q=water&search_type=find_site'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       # visit '/search'
       # fill_in 'q', :with => 'women'
       # choose 'asfsearch'
-      # click_link 'form_submit'
+      # click_link 'top_form_submit'
       visit '/search?utf8=%E2%9C%93&search=true&q=women&search_type=archive'
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
@@ -68,7 +68,7 @@ describe 'archive search' do
     visit '/search'
     fill_in 'q', :with => 'water'
     choose 'asfsearch'
-    click_link 'form_submit'
+    click_link 'top_form_submit'
 
     querystring = URI.parse( current_url ).query
     params_hash = Rack::Utils.parse_nested_query( querystring ).deep_symbolize_keys
@@ -82,7 +82,7 @@ describe 'archive search' do
     # visit '/search'
     # choose 'asfsearch'
     # fill_in 'q', :with => 'shirkatgah.org'
-    # click_link 'form_submit'
+    # click_link 'top_form_submit'
     # click_link 'English'
     # clink_link 'Domain-'
     # click_link 'Menu'
@@ -99,7 +99,7 @@ describe 'archive search' do
     # visit '/search'
     # fill_in 'q', :with => 'water'
     # choose 'asfsearch'
-    # click_link 'form_submit'
+    # click_link 'top_form_submit'
     # click_link '3'
     visit '/search?page=3&q=water&search=true&search_type=archive&utf8=%E2%9C%93'
     page.should_not have_content( %q{can't convert Fixnum into String} )
@@ -137,18 +137,21 @@ describe 'archive search' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
       choose 'asfsearch'
-      click_link 'advo_link'
+      click_link 'top_form_construct_query'
       fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'form_submit'
+      click_link 'generate_query_button'
+      click_link 'advo_link'
+      click_link 'top_form_submit'
       page.should have_content('No results found')
     end
 
     it 'returns 2,306 results for q_and=women', :js => true do
       visit '/search'
       choose 'asfsearch'
-      click_link 'advo_link'
+      click_link 'top_form_construct_query'
       fill_in 'q_and', :with => 'women'
-      click_link 'form_submit'
+      click_link 'generate_query_button'
+      click_link 'top_form_submit'
       page.should have_content( '2,306' )
     end
 
@@ -160,7 +163,7 @@ describe 'archive search' do
       fill_in 'q_and',              :with => 'women'
       fill_in 'capture_end_date',   :with => '201203'
       fill_in 'capture_start_date', :with => '200803'
-      click_link 'form_submit'
+      click_link 'top_form_submit'
       click_link 'English'
       click_link 'Menu'
       click_link 'Turn debug on'
@@ -173,7 +176,7 @@ describe 'archive search' do
     #  choose 'asfsearch'
     #  click_link 'advo_link'
     #  # ...other stuff here... (select items in <select> elements)
-    #  click_link 'form_submit'
+    #  click_link 'top_form_submit'
     #  click_link 'English'
     #  #page.should_not have_content( %q{...put adjacent duplicate pill html here...} )
     #end
@@ -183,7 +186,7 @@ describe 'archive search' do
       visit '/search'
       choose 'asfsearch'
       click_link 'advo_link'
-      click_link 'form_submit'
+      click_link 'top_form_submit'
 
       page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
     end
@@ -208,9 +211,11 @@ describe 'find site search' do
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do
       visit '/search'
-      click_link 'advo_link'
+      click_link 'top_form_construct_query'
       fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'form_submit'
+      click_link 'generate_query_button'
+      click_link 'advo_link'
+      click_link 'top_form_submit'
       page.should have_content('No results found')
     end
 
@@ -221,7 +226,7 @@ describe 'find site search' do
       fill_in 'q_phrase', :with => 'Provides information'
       fill_in 'q_or', :with => 'human rights'
       fill_in 'q_exclude', :with => 'zamboni'
-      click_link 'form_submit'
+      click_link 'top_form_submit'
       page.should have_content('Center for Economic and Social Rights')
     end
   end

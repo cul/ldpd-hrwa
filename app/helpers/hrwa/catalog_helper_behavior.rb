@@ -18,14 +18,18 @@ module HRWA::CatalogHelperBehavior
   end
 
   def exclude_domain_from_hits_link( domain, url_params = params, html_options = {} )
-    # The '[]' may or may not have been appended to the param name
-    current_excluded_domains = url_params[ :'excl_domain' ]
-    current_excluded_domains ||= url_params[ :'excl_domain[]' ]
+    current_excluded_domains = url_params[ :excl_domain ]
+
+    # The '[]' may or may not have been appended to the param name -- TODO: Determine why this happens.  Does it still happen?
+    #current_excluded_domains ||= url_params[ :'excl_domain[]' ]
 
     if ! current_excluded_domains
       # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
       # helper that we will be using later will automatically append '[]' to the end,
-      # so we want to avoid doubling.
+      # so we want to avoid doubling.  This behavior is expected because excl_domain
+      # is an array and inputs that hold arrays of data (as opposed to strings) indicate
+      # this by appending '[]' to the end of the name="" attribute of the input.
+      # (e.g. name="excl_domain[]")
       return link_to_with_new_params_reverse_merge( 'Domain-',
                                                     { :'excl_domain' => [ domain ] },
                                                     url_params,
@@ -48,7 +52,7 @@ module HRWA::CatalogHelperBehavior
     # merge from inadvertently doubling the domain exclusion we remove the current
     # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
     # after the merge and link_to call.
-    url_params.delete( :'excl_domain[]' )
+    #url_params.delete( :'excl_domain[]' )
     return link_to_with_new_params( 'Domain-',
                                     { :'excl_domain' => excluded_domains },
                                     url_params,

@@ -29,11 +29,11 @@ jQuery(function($) {
 	//return false;
   });
   $('.alert-jump').live('click', function(e) {
-	$('#q_t').focus();
+	$('#q').focus();
 	if ($(this).find('a').attr('id') == 'focus_fsf') {
-	  $('#fsfsearch_t').prop('checked', true);
+	  $('#fsfsearch').prop('checked', true);
 	} else {
-	  $('#asfsearch_t').prop('checked', true);
+	  $('#asfsearch').prop('checked', true);
 	}
 	return false;
   });
@@ -168,7 +168,7 @@ jQuery(function($) {
   });
 
   //HRWA.current_search_type is determined by which radio button is initially checked
-  HRWA.current_search_type = ($('#fsfsearch_t').attr('checked') == 'checked') ? 'fsf' : 'asf';
+  HRWA.current_search_type = ($('#fsfsearch').attr('checked') == 'checked') ? 'fsf' : 'asf';
 
   function switchToSearchTypeFSF()
   {
@@ -189,14 +189,14 @@ jQuery(function($) {
 	}
   }
 
-  $('#fsfsearch_t').click(function(){
+  $('#fsfsearch').click(function(){
 	switchToFSFMode();
 	if(HRWA.current_search_type != 'fsf')
 	{
 	  switchToSearchTypeFSF();
 	}
   });
-  $('#asfsearch_t').click(function(){
+  $('#asfsearch').click(function(){
 	if(HRWA.current_search_type != 'asf')
 	{
 	  switchToSearchTypeASF();
@@ -218,7 +218,7 @@ jQuery(function($) {
   $('#construct_query_modal').modal('hide');
   $('#construct_query_modal').on('show', function () {
 
-	var multi_q_arr = single_q_to_multi_q($('#q_t').val());
+	var multi_q_arr = single_q_to_multi_q($('#q').val());
 	//single_q_to_multi_q returns an array of the format:
 	//[0] == q_and, [1] == q_phrase, [2] == q_or, [3] == q_exclude
 
@@ -229,7 +229,7 @@ jQuery(function($) {
   })
 
   $('#construct_query_modal #generate_query_button').bind('click', function(){
-	$('#q_t').val(
+	$('#q').val(
 					multi_q_to_single_q(
 										  $('#construct_query_modal .q_and').val(),
 										  $('#construct_query_modal .q_phrase').val(),
@@ -239,10 +239,10 @@ jQuery(function($) {
 				  );
   });
 
-  //When #q_t has the class 'focus', focus on it on page load
-  if ($('#q_t').hasClass('focus'))
+  //When #q has the class 'focus', focus on it on page load
+  if ($('#q').hasClass('focus'))
   {
-	$('#q_t').focus();
+	$('#q').focus();
   }
 
   // submit top form
@@ -537,32 +537,32 @@ jQuery(function($) {
   // reverse parse advanced form inputs to q
   function adv_to_q() {
 	return;
-   if ($('#q, #q_t').val() == '') {
+   if ($('#q').val() == '') {
 	var erq_and = ($('#q_and').val() != '') ? $('#q_and').val().replace(/^|\s(?=[^ ])/g, ' +').trim() : '';
 	var erq_exclude = ($('#q_exclude').val() != '') ? $('#q_exclude').val().replace(/^|\s(?=[^ ])/g, ' -').trim() : '';
 	var erq_or = ($('#q_or').val() != '') ? $('#q_or').val().replace(/^|\s/g, ' ').trim() : '';
 	var erq_phrase = ($('#q_phrase').val() != '') ? '"'+$('#q_phrase').val()+'"' : '';
 	var ssval = erq_and + ' ' + erq_exclude + ' ' + erq_phrase + ' ' + erq_or;
-	$('#q, #q_t').val(ssval);
+	$('#q').val(ssval);
 	//$('#q_echo').html(ssval);
    }
   }
   // reverse parse q to advanced form inputs
   function q_to_adv() {
    if($('#q_phrase').val() == '') {
-	var erq_to_q_phrase = ( $('#q, #q_t').val().match(/".*"/g) ) ? $('#q, #q_t').val().match(/".*"/g).join('').replace(/"/g,'').trim() : '';
+	var erq_to_q_phrase = ( $('#q').val().match(/".*"/g) ) ? $('#q').val().match(/".*"/g).join('').replace(/"/g,'').trim() : '';
 	$('#q_phrase').val(erq_to_q_phrase);
    }
    if($('#q_and').val() == '') {
-	var erq_to_q_and = ( $('#q, #q_t').val().match(/\+[A-Za-z0-9]+\s?/g) ) ? $('#q, #q_t').val().match(/\+[A-Za-z0-9]+\s?/g).join('').replace(/\+/g,'').trim() : '';
+	var erq_to_q_and = ( $('#q').val().match(/\+[A-Za-z0-9]+\s?/g) ) ? $('#q').val().match(/\+[A-Za-z0-9]+\s?/g).join('').replace(/\+/g,'').trim() : '';
 	$('#q_and').val(erq_to_q_and);
    }
    if($('#q_exclude').val() == '') {
-	var erq_to_q_exclude = ( $('#q, #q_t').val().match(/\-[A-Za-z0-9]+\s?/g) ) ? $('#q, #q_t').val().match(/\-[A-Za-z0-9]+\s?/g).join('').replace(/\-/g,'').trim() : '';
+	var erq_to_q_exclude = ( $('#q').val().match(/\-[A-Za-z0-9]+\s?/g) ) ? $('#q').val().match(/\-[A-Za-z0-9]+\s?/g).join('').replace(/\-/g,'').trim() : '';
 	$('#q_exclude').val(erq_to_q_exclude);
    }
    if($('#q_or').val() == '') {
-	var erq_to_q_or = ( $('#q, #q_t').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g) ) ? $('#q, #q_t').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g).join('').trim() : '';
+	var erq_to_q_or = ( $('#q').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g) ) ? $('#q').val().match(/(^|\s)+[A-Za-z0-9]+(?=([^"]*"[^"]*")*[^"]*$)/g).join('').trim() : '';
 	$('#q_or').val(erq_to_q_or);
    }
   }
