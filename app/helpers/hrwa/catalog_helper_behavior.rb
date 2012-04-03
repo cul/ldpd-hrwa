@@ -18,7 +18,7 @@ module HRWA::CatalogHelperBehavior
   end
 
   def exclude_domain_from_hits_link( domain, url_params = params, html_options = {} )
-    current_excluded_domains = url_params[ :excl_domain ]
+    current_excluded_domains = url_params[ :excl_domain ].nil? ? nil : url_params[ :excl_domain ].dup
 
     # The '[]' may or may not have been appended to the param name -- TODO: Determine why this happens.  Does it still happen?
     #current_excluded_domains ||= url_params[ :'excl_domain[]' ]
