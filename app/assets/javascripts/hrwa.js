@@ -404,7 +404,7 @@ jQuery(function($) {
   $('article span[rel=tooltip], .hero-unit label[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
 
   // cbf home onload sorting and showing
-  $('.tab-content .results_control .sort_a-z.btn').click();
+  $('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
   $('.tab-content .results_control').show();
 
   // cbf browse onload sorting and showing

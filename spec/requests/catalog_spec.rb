@@ -241,7 +241,7 @@ describe 'find site search' do
 
 end
 
-describe 'javascript two-way query conversion tests', :focus => true do
+describe 'javascript two-way query conversion tests' do
 
   it 'properly converts multi q to single q', :js => true do
     visit '/search'

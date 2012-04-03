@@ -34,10 +34,6 @@ module HRWA::BlacklightHelperBehavior
     my_params.delete(:commit)
     # hash_as_hidden_fields in hash_as_hidden_fields.rb
 
-    Rails.logger.debug('START------------------------------------------------------------------------------------------------------------------------------------')
-    Rails.logger.debug(my_params)
-    Rails.logger.debug('END------------------------------------------------------------------------------------------------------------------------------------')
-
     return hash_as_hidden_fields(my_params)
   end
 
