@@ -66,52 +66,11 @@
 		  <div id="hero-search" class="hero-unit hero-border ">
 			<h3 class="floatleft">Advanced Search Options</h3>
 			<input type="hidden" name="search" value="true" />
-			<div id="inside_of_form">
-			  <div id="hidden_search_fields">
-				<%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
-									:q, :qt, :page,
-									#hrwa custom additions
-									:utf8, :search, :search_type, :q_and, :q_or, :q_exclude, :q_not, :search_mode, :field
-								 ]).html_safe %>
-			  </div>
-			</div> <!--/inside_of_form-->
+			<div id="inside_of_form"></div>
 		  </div>
 	  </div>
 
 	<% end %><!-- end form -->
-
-	<div id="construct_query_modal" class="modal fade" style="display:none;z-index:999999;">
-	  <div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h3>Query Constructor</h3>
-	  </div>
-	  <div class="modal-body">
-		<div class="row span9 alignleft">
-		  <h6>Find Pages/Sites that have&hellip;</h6>
-		  <div class="input-prepend">
-				  <label class="pull-left span3 add-on">all these words:</label>
-				  <input class="pull-left span6 q_and" placeholder="Enter search terms..." name="q_and" size="16" type="text"/> <a title="You can do this in simple search by adding a + (plus sign) to the beginning of the word you require." rel="tooltip" href="#">tip</a>
-		  </div>
-		  <div class="input-prepend">
-				  <label class="pull-left span3 add-on">this exact wording or phrase:</label>
-				  <input class="pull-left span6 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/> <a title="You can do this in simple search by &quot;surrounding your phrase with quotes&quot;." rel="tooltip" href="#">tip</a>
-		  </div>
-		  <div class="input-prepend">
-				  <label class="pull-left span3 add-on">one or more of these words:</label>
-				  <input class="pull-left span6 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
-		  </div>
-		  <h6>But don't show results that have&hellip;</h6>
-		  <div class="input-prepend">
-				  <label class="pull-left span3 add-on">any of these unwanted words:</label>
-				  <input class="pull-left span6 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/> <a title="You can do this in simple search by adding a - (minus sign) to the beginning of the word you don't want." rel="tooltip" href="#">tip</a>
-		  </div>
-		</div>
-	  </div>
-	  <div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-		<a href="#" id="generate_query_button" data-dismiss="modal" class="btn btn-primary">Generate Query</a>
-	  </div>
-	</div>
 
 	<div id="outside_of_form" class="invisible">
       <div id="advanced_options_query" class="advanced_options">
@@ -123,6 +82,24 @@
 	  <div id="advanced_options_fsf" class="advanced_options">
 		<%= render 'layouts/advanced_options_fsf' %>
 	  </div>
+    <div id="hidden_search_fields_asf" class="hidden_search_fields">
+      <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+                          :q, :qt, :page, :utf8,
+                          #hrwa custom additions
+                          :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode,
+                          #omit for asf
+                          :sort
+                       ]).html_safe %>
+    </div>
+    <div id="hidden_search_fields_fsf" class="hidden_search_fields">
+      <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+                          :q, :qt, :page, :utf8,
+                          #hrwa custom additions
+                          :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode,
+                          #omit for fsf
+                          :field, :capture_start_date, :capture_end_date, :excl_domain
+                       ]).html_safe %>
+    </div>
 	</div>
 
     <%

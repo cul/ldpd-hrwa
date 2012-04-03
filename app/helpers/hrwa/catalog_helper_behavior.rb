@@ -167,4 +167,32 @@ module HRWA::CatalogHelperBehavior
 
   end
 
+  # ! Override of render_pagination_info !
+  #
+  # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
+  def render_pagination_info(response, options = {})
+      start = response.start + 1
+      per_page = response.rows
+      current_page = (response.start / per_page).ceil + 1
+      num_pages = (response.total / per_page.to_f).ceil
+      total_hits = response.total
+
+      start_num = format_num(start)
+      end_num = format_num(start + response.docs.length - 1)
+      total_num = format_num(total_hits)
+
+      entry_name = options[:entry_name] ||
+        (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
+
+      if num_pages < 2
+        case response.docs.length
+        when 0; "No #{h(entry_name.pluralize)} found".html_safe
+        when 1; "Displaying <b>1</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name)}".html_safe
+        else;   "Displaying <b>all #{total_num}</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{entry_name.pluralize}".html_safe
+        end
+      else
+        "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b>#{total_num}</b>".html_safe
+      end
+  end
+
 end
