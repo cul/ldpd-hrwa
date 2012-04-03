@@ -91,11 +91,24 @@ describe 'archive search' do
     page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.privacyinternational.org"]} )
   end
 
-# TODO: For some reason this test fails using form fill-in when running full test suite,
+  # TODO: Finish writing this test
+  # Exclude domain filter bug - For some reason, domain exclusions keep adding unnecessary extra domains that were never selected by the user.
+  # Example link: http://localhost:3020/search?excl_domain[]=aaa&f[organization_based_in__facet][]=England&q=rights&search=true&search_type=archive&utf8=%E2%9C%93
+  # Go to the link above and click the submit button without changing any other search options.  The result count shouldn't change, but it does!
+  it 'does not randomly add extra excl_domain filters that were not added by the user', :js => true do
+    # visit '/search?excl_domain[]=aaa&f[organization_based_in__facet][]=England&q=rights&search=true&search_type=archive&utf8=%E2%9C%93'
+    #page.should have_content( '407,366' )
+    # click_link 'top_form_submit'
+    #page.should have_content( '407,366' )
+  end
+
+
+
+  # TODO: For some reason this test fails using form fill-in when running full test suite,
   # but not when running just this spec file.  Once this is debugged, convert this back into
   # a form fill-in test.  The page source has <noscript> in it, which would indicate that
   # :js => true is not doing its job.
-    it 'does not raise an error when paging through results', :js => true do
+  it 'does not raise an error when paging through results', :js => true do
     # visit '/search'
     # fill_in 'q', :with => 'water'
     # choose 'asfsearch'
