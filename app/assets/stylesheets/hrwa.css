@@ -68,9 +68,9 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #advanced_options_container .hero-border { border-color:#000; }
 #inner-headline-outer { border-bottom:1px solid #888; background:rgba(23,71,133,0.5); background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; padding:1.7em 10px 0.3em 10px; margin-top:-2em; margin-left:-10px; margin-right:-10px; margin-bottom:0; }
-#inner-headline-outer #header-pic { border:1px solid #ccc; padding:3px; }
+#inner-headline-outer #header-pic { border-color:#bbb; border:1px solid rgba(255,255,255,.4); padding:3px; }
 #headlineCarousel, #header-pic { overflow:hidden; height:80px; text-align:left; }
-#header-pic div.item, #headlineCarousel .carousel-inner .item { padding:0 3px; background:#fff url('./HRLogoCMYKsmallRGB-80x80.png') no-repeat center right; min-height:80px; }
+#header-pic div.item, #headlineCarousel .carousel-inner .item { padding:0 3px; background:rgba(255,255,255,.1) url('./cul-chrdr-212x80.png') no-repeat center center; min-height:80px; }
 #header-pic div.item img, #headlineCarousel .carousel-inner .item img { max-height:100%; }
 #headlineCarousel .carousel-inner .item img { float:left;margin-left:auto; margin-right:auto; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
@@ -239,6 +239,7 @@ a.moreless.btn { font-size:80%; }
 .black { color:#000!important; }
 .gray { color:#666; }
 .lime { color:#88C34B!important; }
+.primary_blue { color:#0088CC; }
 .blue { color:#0064cd!important; }
 .culblue2 { color:#75aadb; }
 .red, a.remove { color:red; }
