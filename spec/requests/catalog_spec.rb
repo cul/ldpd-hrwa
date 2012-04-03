@@ -227,3 +227,32 @@ describe 'find site search' do
   end
 
 end
+
+describe 'javascript two-way query conversion tests', :focus => true do
+
+  it 'properly converts multi q to single q', :js => true do
+    visit '/search'
+    click_link 'advo_link'
+
+    #test 1
+    fill_in 'q_and', :with => 'and1 and2 and3'
+    fill_in 'q_phrase', :with => 'an exact phrase'
+    fill_in 'q_or', :with => 'or1 or2 or3'
+    fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
+    find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
+
+  end
+
+  it 'properly converts single q to multi q', :js => true do
+    visit '/search'
+
+    #test 1
+    fill_in 'q', :with => '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
+    click_link 'advo_link'
+    find_field('q_and').value.should == 'and1 and2 and3'
+    find_field('q_phrase').value.should == 'an exact phrase'
+    find_field('q_or').value.should == 'or1 or2 or3'
+    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+  end
+
+end
