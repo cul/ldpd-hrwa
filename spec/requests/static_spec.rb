@@ -4,12 +4,12 @@ require 'spec_helper'
 describe 'home page' do
   it 'loads with the correct text' do
     visit '/'
-    page.should have_content('Human Rights Web Archive')
+    page.should have_content('HUMAN RIGHTS WEB ARCHIVE')
   end
 
   it 'checks the default top bar search checkbox' do
     visit '/'
-    page.has_checked_field?('#fsfsearch_t')
+    page.has_checked_field?('#fsfsearch')
   end
 end
 

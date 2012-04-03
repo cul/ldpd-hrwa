@@ -9,8 +9,8 @@ describe 'exclude_domain_from_hits_link' do
     @domain2 = 'amnesty.org'
     @params_unsorted = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
 
-    @params_expected_in_url1 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1 ] )
-    @params_expected_in_url2 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1, @domain2 ] )
+    @params_expected_in_url1 = @params_unsorted.merge( :'excl_domain' => [ @domain1 ] )
+    @params_expected_in_url2 = @params_unsorted.merge( :'excl_domain' => [ @domain1, @domain2 ] )
 
     # NOTE: The method being tested uses sorted params
 
@@ -20,7 +20,11 @@ describe 'exclude_domain_from_hits_link' do
       name  = CGI::escape( key.to_s )
       if @params_expected_in_url1[ key ].respond_to?( :each )
         @params_expected_in_url1[ key ].each { | value |
-          @expected_link_tag1 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          if @params_expected_in_url1[ key ].is_a?(Array)
+            @expected_link_tag1 << "#{ name }%5B%5D=#{ CGI::escape( value ) }&amp;"
+          else
+            @expected_link_tag1 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          end
         }
       else
         value = CGI::escape( @params_expected_in_url1[ key ] )
@@ -37,7 +41,11 @@ describe 'exclude_domain_from_hits_link' do
       name  = CGI::escape( key.to_s )
       if @params_expected_in_url2[ key ].respond_to?( :each )
         @params_expected_in_url2[ key ].each { | value |
-          @expected_link_tag2 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          if @params_expected_in_url2[ key ].is_a?(Array)
+            @expected_link_tag2 << "#{ name }%5B%5D=#{ CGI::escape( value ) }&amp;"
+          else
+            @expected_link_tag2 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          end
         }
       else
         value = CGI::escape( @params_expected_in_url2[ key ] )

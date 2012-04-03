@@ -1,0 +1,39 @@
+<div class="container" id="inner-headline-outer">
+ <div class="row">
+  <div class="span9">
+  <div id="inner-headline">
+   <h1>HUMAN RIGHTS WEB ARCHIVE</h1>
+   <h2>@ Columbia University</h2>
+  </div>
+  </div>
+  <div class="span3">
+	<div id="header-pic"> 
+              <div class="item">
+				<p class="hidden"><span class="trajanprobold culblue2">Columbia University Libraries</span><br /><span class="black sc">Center for Human Rights Documentation &amp; Research</span></p>
+              </div>
+    </div>
+  </div>
+ </div>
+</div>
+
+<div id="secondary_nav">
+ <div class="subnav">
+<%# <div id="secondary_nav_right" class="pull-right opacity_50"><i class="icon-heart"></i> <i class="icon-fire"></i> <i class="icon-leaf"></i></div> %>
+<ul class="nav nav-pills">
+  <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About the Archive</a></li>
+  <li><a href="#" class="donothing">Statistics</a></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle"
+       data-toggle="dropdown"
+       href="#">
+        Nominate a Site
+        <b class="caret"></b>
+      </a>
+    <ul class="dropdown-menu">
+     <li><a href="#" class="donothing">Owner Nomination Form</a></li>
+     <li><a href="#" class="donothing">Public Nomination Form</a></li>
+    </ul>
+  </li>
+</ul>
+ </div>
+</div>

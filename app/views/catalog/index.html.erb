@@ -1,6 +1,22 @@
 <div class="container">
 
-  <%= render :partial=>'search_form' %>
+<!--
+<div class="container" id="inner-headline-outer">
+ <div class="row">
+  <div class="span9">
+  <div id="inner-headline">
+   <h1>HUMAN RIGHTS WEB ARCHIVE</h1>
+   <h3>@ Columbia University</h3>
+  </div>
+  </div>
+  <div class="span3">
+    <img class="" src="http://zapata.cul.columbia.edu/mkimg/220-80-222222-ffffff" alt="">
+  </div>
+ </div>
+</div>
+-->
+  <!-- Main heading -->
+  <%= render :partial=>'static/inner_headlines' %>
 
   <% unless has_search_parameters? %>
     <%# if there are no input/search related params, display the "search_home" partial -%>
@@ -13,6 +29,12 @@
 	    <div class="pageEntriesInfo">
     	  <%= render_pagination_info @response, :entry_name=>'result' %><% if( !params[ :q ].blank? ) %> <span id="qtime_ms">(<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <span id="q_echo" class="big lime strong"><%= q_text = params[ :q ] %></span><% end %>
     	</div>
+
+<div class="">
+<%= render 'constraints', :localized_params=>params %>
+        <div class="clear"></div>
+</div>
+
     	<%= render 'results_pagination' %>
 
         <div class="clear"></div>
