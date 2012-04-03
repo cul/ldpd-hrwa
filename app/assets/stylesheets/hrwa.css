@@ -74,7 +74,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #header-pic div.item img, #headlineCarousel .carousel-inner .item img { max-height:100%; }
 #headlineCarousel .carousel-inner .item img { float:left;margin-left:auto; margin-right:auto; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
-#inner-headline h1 { color:#fff; font-size:350%; font-weight:normal; text-shadow:2px 2px 0 #000; }
+#inner-headline h1 { color:#fff; font-size:400%; font-weight:normal; text-shadow:2px 2px 0 #000; }
 #inner-headline h2 { font-weight:normal; color:#111; font-family:"trajan pro", trajanpro, trajan, georgia, serif; font-size:140%; text-shadow:none; }
 /* Subnav */
 #secondary_nav { margin-right:-10px; margin-left:-10px; }
