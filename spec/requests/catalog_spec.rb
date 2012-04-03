@@ -247,25 +247,74 @@ describe 'javascript two-way query conversion tests' do
     visit '/search'
     click_link 'advo_link'
 
-    #test 1
+    #test 1 - basic test
     fill_in 'q_and', :with => 'and1 and2 and3'
     fill_in 'q_phrase', :with => 'an exact phrase'
     fill_in 'q_or', :with => 'or1 or2 or3'
     fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
     find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
 
+    #clear all q's
+    fill_in 'q_and', :with => ''
+    fill_in 'q_phrase', :with => ''
+    fill_in 'q_or', :with => ''
+    fill_in 'q_exclude', :with => ''
   end
 
   it 'properly converts single q to multi q', :js => true do
     visit '/search'
 
-    #test 1
+    #test 1 - basic test
     fill_in 'q', :with => '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
     click_link 'advo_link'
     find_field('q_and').value.should == 'and1 and2 and3'
     find_field('q_phrase').value.should == 'an exact phrase'
     find_field('q_or').value.should == 'or1 or2 or3'
     find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+
+    #clear q
+    fill_in 'q', :with => ''
+
+    #test 2 - q starts with a quote
+    fill_in 'q', :with => '"an exact phrase" +and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3'
+    click_link 'advo_link'
+    find_field('q_and').value.should == 'and1 and2 and3'
+    find_field('q_phrase').value.should == 'an exact phrase'
+    find_field('q_or').value.should == 'or1 or2 or3'
+    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+
+    #clear q
+    fill_in 'q', :with => ''
+
+    #test 3 - q ends with a quote
+    fill_in 'q', :with => '+and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3 "an exact phrase"'
+    click_link 'advo_link'
+    find_field('q_and').value.should == 'and1 and2 and3'
+    find_field('q_phrase').value.should == 'an exact phrase'
+    find_field('q_or').value.should == 'or1 or2 or3'
+    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+
+    #clear q
+    fill_in 'q', :with => ''
+
+    #test 4 - lots of unnecessary spaces in q
+    fill_in 'q', :with => '     +and1 +and2      +and3    "an exact phrase"    or1      or2      or3     -exclude1     -exclude2 -exclude3     '
+    click_link 'advo_link'
+    find_field('q_and').value.should == 'and1 and2 and3'
+    find_field('q_phrase').value.should == 'an exact phrase'
+    find_field('q_or').value.should == 'or1 or2 or3'
+    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+
+    #clear q
+    fill_in 'q', :with => ''
+
+    #test 5 - detached pluses and minuses (if a plus or minus sign is alone, it's treated as a lone character rather than a special solr syntax item)
+    fill_in 'q', :with => '+ and1 + and2 +and3 "an exact phrase" or1 or2 or3 - exclude1 - exclude2 -exclude3'
+    click_link 'advo_link'
+    find_field('q_and').value.should == 'and3'
+    find_field('q_phrase').value.should == 'an exact phrase'
+    find_field('q_or').value.should == '+ and1 + and2 or1 or2 or3 - exclude1 - exclude2'
+    find_field('q_exclude').value.should == 'exclude3'
   end
 
 end
