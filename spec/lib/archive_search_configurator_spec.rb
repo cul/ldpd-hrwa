@@ -4,7 +4,7 @@ require 'blacklight/configuration'
 describe 'HRWA::ArchiveSearchConfigurator' do
   before ( :all ) do
     @advanced_search_q_and_women_params = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
-    
+
     @configurator = HRWA::ArchiveSearchConfigurator.new
   end
 
@@ -21,6 +21,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :defType          => "dismax",
           :facet            => true,
           :'facet.field'    => [
+                                'dateOfCaptureYYYY',
                                 'domain',
                                 'geographic_focus__facet',
                                 'organization_based_in__facet',
@@ -28,7 +29,6 @@ describe 'HRWA::ArchiveSearchConfigurator' do
                                 'language__facet',
                                 'creator_name__facet',
                                 'mimetype',
-                                'dateOfCaptureYYYY',
                                ],
           :'facet.mincount' => 1,
           :group            => true,
@@ -56,15 +56,14 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
     it 'sets Blacklight::Configuration.facet_fields.* stuff correctly' do
       expected_facet_fields = {
+        'dateOfCaptureYYYY'            => { :label => 'Date Of Capture',            :limit => 5 },
         'domain'                       => { :label => 'Domain',                     :limit => 5 },
-        'geographic_focus__facet'      => { :label => 'Geographic Focus',
-                                                                                    :limit => 5 },
-        'organization_based_in__facet' => { :label => 'Organization Based in', :limit => 5 },
+        'geographic_focus__facet'      => { :label => 'Geographic Focus',           :limit => 5 },
+        'organization_based_in__facet' => { :label => 'Organization Based In',      :limit => 5 },
         'organization_type__facet'     => { :label => 'Organization Type',          :limit => 5 },
         'language__facet'              => { :label => 'Website Language',           :limit => 5 },
-        'creator_name__facet'          => { :label => 'Creator',               :limit => 5 },
+        'creator_name__facet'          => { :label => 'Creator',                    :limit => 5 },
         'mimetype'                     => { :label => 'File Type',                  :limit => 5 },
-        'dateOfCaptureYYYY'            => { :label => 'Year of Capture',            :limit => 5 },
       }
 
       expected_facet_fields.each { | name, expected |
@@ -133,9 +132,9 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       @extra_controller_params = {}
       @extra_controller_params[ :fq ] = nil
     end
-    
+
     blank_inputs = [ nil, '' ]
-    
+
     # Test all permutations of completely blank/nil input
     blank_inputs.each { | start_date |
       [ nil, '' ].each{ | end_date |
@@ -145,7 +144,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
             { :capture_start_date => start_date, :capture_end_date => end_date }
           )
           @extra_controller_params[ :fq ].should be_nil
-        end        
+        end
       }
     }
 
@@ -153,28 +152,28 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       it "adds closed-start, open-end :fq date range with non-blank start and end = #{ end_date.to_s }" do
         @configurator.add_capture_date_range_fq_to_solr(
           @extra_controller_params,
-          { :capture_start_date => '20080101', :capture_end_date => end_date }
+          { :capture_start_date => '200801', :capture_end_date => end_date }
         )
-        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO * ]' ]
+        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 200801 TO * ]' ]
       end
-    } 
+    }
 
     blank_inputs.each { | start_date |
       it "adds and open-start, closed-end date range with start = #{ start_date.to_s } and non-blank end" do
         @configurator.add_capture_date_range_fq_to_solr(
           @extra_controller_params,
-          { :capture_start_date => start_date, :capture_end_date => '20080101' }
+          { :capture_start_date => start_date, :capture_end_date => '200801' }
         )
-        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ * TO 20080101 ]' ]
+        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ * TO 200801 ]' ]
       end
     }
-    
+
     it 'adds a closed-start, closed-end :fq date range with non-blank start and end inputs' do
       @configurator.add_capture_date_range_fq_to_solr(
         @extra_controller_params,
-        { :capture_start_date => '20080101', :capture_end_date => '20120101' }
+        { :capture_start_date => '200801', :capture_end_date => '201201' }
       )
-      @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 20080101 TO 20120101 ]' ]
+      @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 200801 TO 201201 ]' ]
     end
   end
 
@@ -184,12 +183,12 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       config_proc        = @configurator.config_proc
       @blacklight_config.configure &config_proc
     end
-    
+
     it 'removed the group params from the Blacklight configuration default_solr_params hash' do
       @configurator.configure_facet_action( @blacklight_config )
       @blacklight_config.default_solr_params.select { | k, v | k.to_s.start_with?( 'group' ) }.
         should be_empty
-    end    
+    end
   end
 
   describe '#process_search_request - domain exclusion' do
@@ -212,7 +211,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     }
 
   end
-  
+
   describe '#result_partial' do
     it 'returns the correct partial name' do
       @configurator.result_partial.should == 'group'
@@ -235,14 +234,14 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     before :each do
       @params = @advanced_search_q_and_women_params.dup
     end
-    
+
     it 'sets full field set boosts correctly' do
       @params[ :field ] = @valid_params
       extra_controller_params = { :qf => @default_qf }
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @valid_params }
     end
-    
+
     it 'sets partial field set boosts correctly' do
       @partial_params = @valid_params.slice( 0..@valid_params.length - 2 )
       @params[ :field ] = @partial_params
@@ -256,12 +255,12 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @default_qf }
     end
-    
+
     describe 'argument validation' do
       # Test bad boost values
       [ '-12', 'orange', '0' ].each { | value |
         it "raises ArgumentError for bad boost value #{ value }" do
-          expect{ 
+          expect{
             @configurator.set_solr_field_boost_levels(
               {},
               { :field => [ "contentTitle^#{ value }" ] }
@@ -270,7 +269,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
         end
       }
     end
-    
+
     it 'ignores invalid field arguments' do
       extra_controller_params = { :qf => @default_qf }
       @params.merge!( :field => @valid_params | @bad_params )

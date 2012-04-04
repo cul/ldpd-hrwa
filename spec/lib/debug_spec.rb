@@ -46,8 +46,8 @@ def params
               :lim_organization_based_in => '',
               :lim_organization_type => '',
               :lim_creator_name => '',
-              :capture_start_date => '2012-02-07',
-              :capture_end_date => '2012-02-09',
+              :capture_start_date => '2012-02',
+              :capture_end_date => '2012-02',
               :rows => '10',
               :sort => 'score desc',
               :solr_host => 'harding.cul.columbia.edu',
@@ -69,5 +69,5 @@ def params
   end
 
   def params_list_expected_html
-    return %q{<strong>action</strong> = index <br/><strong>capture_end_date</strong> = 2012-02-09 <br/><strong>capture_start_date</strong> = 2012-02-07 <br/><strong>controller</strong> = catalog <br/><strong>path</strong> = /solr-4/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>solr_host</strong> = harding.cul.columbia.edu <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
+    return %q{<strong>action</strong> = index <br/><strong>capture_end_date</strong> = 2012-02 <br/><strong>capture_start_date</strong> = 2012-02 <br/><strong>controller</strong> = catalog <br/><strong>path</strong> = /solr-4/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>solr_host</strong> = harding.cul.columbia.edu <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
   end

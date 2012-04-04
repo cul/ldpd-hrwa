@@ -46,6 +46,9 @@
       </div><!--/primary-->
 
       <div id="secondary" class="span3">
+      <%# Script below used for custom date range in sidebar %>
+      <script type="text/javascript">HRWA.current_url_without_capture_date_params = decodeURIComponent("<%= CGI.escape(url_for_without_capture_date_params).gsub('+','%20') %>");</script>
+
 	<% sidebar_items << capture do %>
 	  <%= render :partial=>'facets' %>
 	<% end %>

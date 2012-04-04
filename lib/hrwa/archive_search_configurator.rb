@@ -57,6 +57,11 @@ class HRWA::ArchiveSearchConfigurator
         # on the solr side in the request handler itself. Request handler defaults
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
+
+        config.add_facet_field 'dateOfCaptureYYYY',
+                               :label => 'Date Of Capture',
+                               :limit => 5
+
         config.add_facet_field 'domain',
                                :label => 'Domain',
                                :limit => 5
@@ -66,7 +71,7 @@ class HRWA::ArchiveSearchConfigurator
                                :limit => 5
 
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization Based in',
+                               :label => 'Organization Based In',
                                :limit => 5
 
         config.add_facet_field 'organization_type__facet',
@@ -84,11 +89,6 @@ class HRWA::ArchiveSearchConfigurator
         config.add_facet_field 'mimetype',
                                :label => 'File Type',
                                :limit => 5
-
-        config.add_facet_field 'dateOfCaptureYYYY',
-                               :label => 'Year of Capture',
-                               :limit => 5
-
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
@@ -158,11 +158,19 @@ class HRWA::ArchiveSearchConfigurator
 
       return if ( capture_start_date == '*' && capture_end_date == '*' )
 
+      #Convert capture_start_date and capture_end_date from YYYY-MM format to YYYYMM (as needed)
+      if (capture_start_date != '*')
+        capture_start_date = capture_start_date.gsub('-', '')
+      end
+      if (capture_end_date != '*')
+        capture_end_date = capture_end_date.gsub('-', '')
+      end
+
       solr_parameters[ :fq ] ||= []
       # Remove any existing capture date range filter
       # debugger
       solr_parameters[ :fq ].delete_if { | param | param =~ /^dateOfCaptureYYYYMM/ }
-      
+
       solr_parameters[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
@@ -174,7 +182,7 @@ class HRWA::ArchiveSearchConfigurator
       solr_parameters[ :fq ] ||= []
       # Remove any existing exclude domain filter
       solr_parameters[ :fq ].delete_if { | param | param =~ /^-domain/ }
-      
+
       exclude_domain_request_params.each do | value_list |
         value_list ||= []
         value_list = [ value_list ] unless value_list.respond_to? :each
@@ -205,7 +213,7 @@ class HRWA::ArchiveSearchConfigurator
     blacklight_config.default_solr_params.delete_if { | key, value |
       key.to_s.starts_with?( 'group' ) }
   end
-  
+
   def name
     return 'archive'
   end
@@ -222,7 +230,7 @@ class HRWA::ArchiveSearchConfigurator
   def post_blacklight_processing_required?
     return true
   end
-  
+
   def process_search_request( solr_parameters, user_params = params )
    add_capture_date_range_fq_to_solr( solr_parameters, user_params )
    add_exclude_fq_to_solr( solr_parameters, user_params )
@@ -236,7 +244,7 @@ class HRWA::ArchiveSearchConfigurator
             'contentBody',
             ]
   end
-  
+
   def result_partial
     return result_type
   end
@@ -244,26 +252,26 @@ class HRWA::ArchiveSearchConfigurator
   def result_type
     return 'group'
   end
-  
+
   def set_solr_field_boost_levels( solr_parameters, user_params )
     return if ! user_params.has_key?( :field )
-    
+
     valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
-    
+
     qf = []
     user_params[ :field ].each { | field_boost |
       field, boost_level = field_boost.split( /\^/ )
-      
+
       # Raise error if boost_level is not a positive number
       if ! ( boost_level.match( /^\d+$/ ) && boost_level.to_f > 0.0 ) then
         raise ArgumentError.new( "#{ boost_level } is not a valid boost level." )
       end
-      
+
       if valid_solr_fields.include?( field ) then
         qf << "#{ field }^#{ boost_level }"
       end
     }
-    
+
     # Overwrite existing qf
     solr_parameters[ :qf ] = qf
   end

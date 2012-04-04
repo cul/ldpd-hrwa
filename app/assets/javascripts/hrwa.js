@@ -516,7 +516,7 @@ jQuery(function($) {
 	  gotoCurrent: true,
 	  changeMonth: true,
 	  changeYear: true,
-	  dateFormat: "yymm"
+	  dateFormat: "yy-mm"
   });
 
 
@@ -556,8 +556,27 @@ jQuery(function($) {
   $( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
 
 
-  /* Round-trip parsing functions */
+  /* Sidebar facet modifications */
+  /* --- Date of Capture */
+  $('#facets.archive .sb_widget h6:contains(Date Of Capture)').siblings('ul').append(
+	(
+	  ($('#capture_start_date').val() != '' || $('#capture_end_date').val() != '') ?
 
+	  '<li>' +
+		($('#capture_end_date').val() == '' ? 'After ' + $('#capture_start_date').val() : ($('#capture_start_date').val() == '' ? '' : $('#capture_start_date').val() + ' to ')) +
+		($('#capture_start_date').val() == '' ? 'Before ' + $('#capture_end_date').val() : $('#capture_end_date').val()) +
+		' <a class="remove custom_date" rel="tooltip" data-original-title="Remove this filter" href="' + HRWA.current_url_without_capture_date_params + '">[x]</a>' +
+	  '</li>'
+
+	  : ''
+	) +
+    '<li><a href="#">Custom range...</a></li>'
+  );
+  //Manually add js twipsy tooltip to the recently added custom date
+  $('.remove.custom_date').tooltip();
+
+
+  /* Round-trip parsing functions */
 
   // reverse parse advanced form inputs to q
   function adv_to_q() {

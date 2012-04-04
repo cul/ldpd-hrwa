@@ -20,7 +20,7 @@ module HRWA::CatalogHelperBehavior
   def exclude_domain_from_hits_link( domain, url_params = params, html_options = {} )
     current_excluded_domains = url_params[ :excl_domain ].nil? ? nil : url_params[ :excl_domain ].dup
 
-    # The '[]' may or may not have been appended to the param name -- TODO: Determine why this happens.  Does it still happen?
+    # The '[]' may or may not have been appended to the param name -- TODO: Determine why this happens.  Does it still happen?  It doesn't seem like it ever does.
     #current_excluded_domains ||= url_params[ :'excl_domain[]' ]
 
     if ! current_excluded_domains
@@ -100,6 +100,23 @@ module HRWA::CatalogHelperBehavior
       #otherwise return a link to add this facet to the current url
       return (link_to body, add_facet_params_and_redirect(facet_type, facet_value), options).html_safe
     end
+
+  end
+
+  # Returns the current url without any capture-date-related params
+  # i.e. - Removes :capture_start_date, :capture_end_date and :f['dateOfCaptureYYYY']
+  def url_for_without_capture_date_params(url_params = params)
+
+    #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+
+    #remove capture_start params
+    url_params.delete(:capture_start_date)
+    url_params.delete(:capture_end_date)
+    # also remove url_params[:f]['dateOfCaptureYYYY']
+    url_params[:f].delete('dateOfCaptureYYYY') unless url_params[:f].nil?
+
+    return url_for(url_params)
 
   end
 
