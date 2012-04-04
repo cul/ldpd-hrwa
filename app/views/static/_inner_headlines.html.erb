@@ -32,7 +32,7 @@
         <b class="caret"></b>
       </a>
     <ul class="dropdown-menu">
-     <li><a href="#" class="donothing">Owner Nomination Form</a></li>
+     <li <% if current_page?(owner_nomination_path) %>class="active"<% end %>><a href="<%= owner_nomination_path %>" class="">Owner Nomination Form</a></li>
      <li><a href="#" class="donothing">Public Nomination Form</a></li>
     </ul>
   </li>
