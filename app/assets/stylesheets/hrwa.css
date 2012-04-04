@@ -317,7 +317,7 @@ a.moreless.btn { font-size:80%; }
 
 /*Sidebar date of capture custom range */
 #date_of_cap_custom_range_input_container {margin-top:5px;}
-#date_of_cap_custom_range_input_container label {width:65px;}
+#date_of_cap_custom_range_input_container label {width:60px;}
 #date_of_cap_custom_range_input_container input {width:110px;margin-bottom:5px;}
 #date_of_cap_custom_range_input_container .btn-small.cancel {margin-left:79px;margin-right:5px;}
 

@@ -574,9 +574,8 @@ jQuery(function($) {
 		'<span id="date_of_cap_custom_range_container">' +
 			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
 			'<span id="date_of_cap_custom_range_input_container" class="invisible form-inline">' +
-				'<label>Start Date:</label> <input class="input-small" type="text" name="capture_start_date" />' +
-				'<br />' +
-				'<label>End Date:</label> <input class="input-small" type="text" name="capture_end_date" />' +
+				'<div class="input-prepend"><label class="add-on">Start Date:</label><input class="span2" type="text" name="capture_start_date_sidebar" /></div>' +
+				'<div class="input-prepend"><label class="add-on">End Date:</label><input class="span2" type="text" name="capture_end_date_sidebar" /></div>' +
 				'<br />' +
 				'<a href="#" class="btn btn-small cancel">Cancel</a><a href="#" class="btn btn-small submit">Search</a>' +
 			'</span>' +
@@ -598,8 +597,8 @@ jQuery(function($) {
   });
   $('#date_of_cap_custom_range_input_container').find('.btn.submit').bind('click', function(){
     window.location = HRWA.current_url_without_capture_date_params +
-		'&capture_start_date=' + $(this).parent().children('input[name="capture_start_date"]').val() +
-		'&capture_end_date=' + $(this).parent().children('input[name="capture_end_date"]').val();
+		'&capture_start_date=' + $(this).parent().find('input[name="capture_start_date_sidebar"]').val() +
+		'&capture_end_date=' + $(this).parent().find('input[name="capture_end_date_sidebar"]').val();
   });
 
 
