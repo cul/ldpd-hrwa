@@ -13,6 +13,6 @@
  * Using require_self below to make sure that the items below it are included in
  * the specified order (or at least that's what I think it does)
  * = require_self
- * = require bootstrap/bootstrap.min
+ * = require bootstrap/css/bootstrap.min
  * = require hrwa
 */
