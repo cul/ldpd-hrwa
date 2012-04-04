@@ -133,26 +133,29 @@ describe 'archive search' do
     }
   end
 
-  # TODO: Get these tests working
-  ## We don't have a way of using capybara to slide the sliders,
-  ## so this text involves going to a url in which the sliders are already set, but
-  ## then we re-submit the form to make sure that the sliders preserve the value in
-  ## the params and then resubmit that value properly.
-  #describe 'SOLR field boost level overriding', :focus => true do
-  #  it 'correctly sets new weights for contentBody, contentTitle, and originalUrl', :focus => true do
-  #
-  #    visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&hrwa_debug=true'
-  #    choose 'asfsearch'
-  #    click_link 'advo_link'
-  #    click_link 'top_form_submit'
-  #    page.should have_content( %q{:qf=>["originalUrl^2", "contentTitle^3", "contentBody^4"]} )
-  #  end
-  #
-  #  it 'correctly sets new weights for contentBody, contentTitle, with originalUrl omitted' do
-  #    visit 'http://bronte.cul.columbia.edu:3020/search?utf8=%E2%9C%93&search=true&hrwa_debug=true&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&search_mode=advanced&q_phrase=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc&search_type=archive&search_mode=advanced&q_and=women&q_phrase=&q_or=&q_exclude=&capture_start_date=&capture_end_date=&per_page=10&sort=score+desc'
-  #    page.should have_content( %q{:qf=>["contentTitle^3", "contentBody^4"]} )
-  #  end
-  #end
+  # We don't have a way of using capybara to slide the sliders, so this test
+  # involves going to a url in which the sliders are already set, but
+  # no other form settings are set.  Then we re-submit the form to make sure
+  # that the sliders preserve the query string values and properly resubmit
+  # them with the other new form values.
+  describe 'SOLR field boost level overriding' do
+    it 'correctly sets new weights for contentBody, contentTitle, and originalUrl', :js => true do
+
+      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&hrwa_debug=true'
+      choose 'asfsearch'
+      click_link 'advo_link'
+      click_link 'top_form_submit'
+      page.should have_content( %q{:qf=>["originalUrl^2", "contentTitle^3", "contentBody^4"]} )
+    end
+
+    it 'correctly sets new weights for contentBody, contentTitle and originalUrl, with originalUrl omitted in form submission', :js => true do
+      visit '/search?field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&hrwa_debug=true'
+      choose 'asfsearch'
+      click_link 'advo_link'
+      click_link 'top_form_submit'
+      page.should have_content( %q{:qf=>["originalUrl^1", "contentTitle^3", "contentBody^4"]} )
+    end
+  end
 
   describe 'advanced mode' do
     it 'informs user "No results found" if advanced search returns no hits', :js => true do

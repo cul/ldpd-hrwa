@@ -409,9 +409,9 @@ jQuery(function($) {
 
   // cbf home col controls
     // this is gross. will want to clean up.
-  $('.tab-content .results_control .sort_col-1').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-2').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-3').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-1').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
+  $('.tab-content .results_control .sort_col-2').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
+  $('.tab-content .results_control .sort_col-3').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
 
   // cbf browse onload sorting and showing
   $('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
@@ -560,6 +560,9 @@ jQuery(function($) {
   $( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight_label" ).html( "Page Title: " + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
+  $( "#url_weight" ).val( 'originalUrl^' + $( "#url_weight_slider" ).slider( "value" ) );
+  $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
+  $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
 
 
   /* Sidebar facet modifications */
