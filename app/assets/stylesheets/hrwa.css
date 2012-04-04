@@ -25,9 +25,9 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .add-on { white-space:nowrap; vertical-align:middle; }
 .navbar #topbarformdiv input[type=radio], .navbar form label.donothing, .hero-unit form label.donothing { padding-left:0.5em; width:auto; }
 .navbar #topbarformdiv label { margin-bottom:0; }
-.add-on input[type=radio] { margin-right:3px; }
+.add-on input[type="radio"] { margin-right:3px; }
 .navbar input { background-color: rgba(255, 255, 255, 0.4); }
-.navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; }
+.navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; margin-top:1px;}
 #cul_top { }
 #cul_inner { width:960px; margin-right:auto;margin-left:auto; background:transparent url('./crown-bts-24x24.png') no-repeat left top; color:#aaa; font-size:9px; padding:4px 5px 1px 28px; /*-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;*/ /*border:1px solid #555;*/ }
 #cul_right { float:right; color:#ccc; }
@@ -36,7 +36,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #crowndown { float:left; margin-left:-28px; margin-right:16px; padding-left:0px; }
 #crowndown li.menu{ padding-right:0; padding-left:0; }
 #crowndown a.menu { padding-right:4px; padding-left:4px; }
-#crowndown img { /*float:left;*/ margin-top:-7px; margin-right:0; padding-right:0; }
+#crowndown img { /*float:left;*/ margin-top:-8px; margin-right:0; padding-right:0; }
 /*#crowndown .menu-dropdown { width:320px; }*/
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
 .navbar li.dropdown.menu:hover, .navbar a.brand:hover { background:rgba(255,255,255,0.05); }
