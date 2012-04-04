@@ -565,15 +565,42 @@ jQuery(function($) {
 	  '<li>' +
 		($('#capture_end_date').val() == '' ? 'After ' + $('#capture_start_date').val() : ($('#capture_start_date').val() == '' ? '' : $('#capture_start_date').val() + ' to ')) +
 		($('#capture_start_date').val() == '' ? 'Before ' + $('#capture_end_date').val() : $('#capture_end_date').val()) +
-		' <a class="remove custom_date" rel="tooltip" data-original-title="Remove this filter" href="' + HRWA.current_url_without_capture_date_params + '">[x]</a>' +
+		' <a class="remove post_pageload_tooltip" rel="tooltip" data-original-title="Remove this filter" href="' + HRWA.current_url_without_capture_date_params + '">[x]</a>' +
 	  '</li>'
 
 	  : ''
 	) +
-    '<li><a href="#">Custom range...</a></li>'
+    '<li>' +
+		'<span id="date_of_cap_custom_range_container">' +
+			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
+			'<span id="date_of_cap_custom_range_input_container" class="invisible form-inline">' +
+				'<label>Start Date:</label> <input class="input-small" type="text" name="capture_start_date" />' +
+				'<br />' +
+				'<label>End Date:</label> <input class="input-small" type="text" name="capture_end_date" />' +
+				'<br />' +
+				'<a href="#" class="btn btn-small cancel">Cancel</a><a href="#" class="btn btn-small submit">Search</a>' +
+			'</span>' +
+			'<span class="clearfix"></span>' +
+		'<span>' +
+	'</li>'
   );
-  //Manually add js twipsy tooltip to the recently added custom date
-  $('.remove.custom_date').tooltip();
+  //Manually add js twipsy tooltips to the recently added anchor tags
+  $('.post_pageload_tooltip').tooltip();
+  //Add the mini sidebar date chooser when the #date_of_cap_custom_range_link is clicked
+  $('#date_of_cap_custom_range_link').bind('click', function(){
+	$('#date_of_cap_custom_range_link').addClass('invisible');
+	$('#date_of_cap_custom_range_input_container').removeClass('invisible');
+  });
+  $('#date_of_cap_custom_range_input_container').find('.btn.cancel').bind('click', function(){
+    $('#date_of_cap_custom_range_link').removeClass('invisible');
+	$('#date_of_cap_custom_range_input_container').addClass('invisible');
+	$(this).parent().children('input').val('');
+  });
+  $('#date_of_cap_custom_range_input_container').find('.btn.submit').bind('click', function(){
+    window.location = HRWA.current_url_without_capture_date_params +
+		'&capture_start_date=' + $(this).parent().children('input[name="capture_start_date"]').val() +
+		'&capture_end_date=' + $(this).parent().children('input[name="capture_end_date"]').val();
+  });
 
 
   /* Round-trip parsing functions */

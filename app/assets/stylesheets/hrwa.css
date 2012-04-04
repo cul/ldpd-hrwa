@@ -315,6 +315,12 @@ a.moreless.btn { font-size:80%; }
 .advanced_options h6 {margin-bottom:6px;}
 .advanced_options .hidden_submit {visibility:hidden;height:0px;width:0px;padding:0;margin:0;border:none;}
 
+/*Sidebar date of capture custom range */
+#date_of_cap_custom_range_input_container {margin-top:5px;}
+#date_of_cap_custom_range_input_container label {width:65px;}
+#date_of_cap_custom_range_input_container input {width:110px;margin-bottom:5px;}
+#date_of_cap_custom_range_input_container .btn-small.cancel {margin-left:79px;margin-right:5px;}
+
 /* result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
 
