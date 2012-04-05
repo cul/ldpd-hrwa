@@ -2,11 +2,11 @@
 
 <div class="row">
 <div class="span12">
-    <h6>Currently Applied Search Filters</h6>
+    <h6>Additional Search Filters</h6>
 <div class="span6 nomar">
 	<div class="control-group">
 	<label class="span2 control-label">organization type</label>
-	<select name="f[organization_type__facet][]" class="pull-left" multiple="multiple">
+	<select name="f_add[organization_type__facet][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
 	  <% organization_type_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -15,7 +15,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">subject</label>
-	<select name="f[subject__facet][]" class="pull-left" multiple="multiple">
+	<select name="f_add[subject__facet][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:subject__facet] %>
 	  <% subject_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -24,7 +24,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">geographic focus</label>
-	  <select name="f[geographic_focus__facet][]" class="pull-left" multiple="multiple">
+	  <select name="f_add[geographic_focus__facet][]" class="pull-left">
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
 	    <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
 	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -33,7 +33,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">organization based in</label>
-	  <select name="f[organization_based_in__facet][]" class="pull-left" multiple="multiple">
+	  <select name="f_add[organization_based_in__facet][]" class="pull-left">
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
 	    <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
 	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -45,7 +45,7 @@
 <div class="span6 nomar">
 	<div class="control-group">
 	<label class="span2 control-label">language</label>
-	<select name="f[language__facet][]" class="pull-left" multiple="multiple">
+	<select name="f_add[language__facet][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
 	  <% language_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -55,7 +55,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">site title</label>
-	<select name="f[title__facet][]" class="pull-left" multiple="multiple">
+	<select name="f_add[title__facet][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:title__facet] %>
 	  <% title_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -64,7 +64,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">creator name</label>
-	<select name="f[creator_name__facet][]" class="pull-left" multiple="multiple">
+	<select name="f_add[creator_name__facet][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
 	  <% creator_name_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
@@ -73,7 +73,7 @@
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">original url</label>
-	<select name="f[original_urls][]" class="pull-left" multiple="multiple">
+	<select name="f_add[original_urls][]" class="pull-left">
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:original_urls] %>
 	  <% original_urls_options(:selected => selected_items).each do | key, value | %>
 	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>

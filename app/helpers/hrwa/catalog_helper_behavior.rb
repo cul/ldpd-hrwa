@@ -204,11 +204,11 @@ module HRWA::CatalogHelperBehavior
       if num_pages < 2
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
-        when 1; "Displaying <b>1</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name)}".html_safe
-        else;   "Displaying <b>all #{total_num}</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{entry_name.pluralize}".html_safe
+        when 1; "Displaying <b id='search_result_count'>1</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name)}".html_safe
+        else;   "Displaying <b id='search_result_count'>all #{total_num}</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{entry_name.pluralize}".html_safe
         end
       else
-        "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b>#{total_num}</b>".html_safe
+        "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b id='search_result_count'>#{total_num}</b>".html_safe
       end
   end
 

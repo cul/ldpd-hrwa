@@ -301,6 +301,12 @@ a.moreless.btn { font-size:80%; }
   margin-bottom:14px;
 }
 
+/* HRWA Custom Datepicker */
+.hrwadatepicker_wrapper {position:relative;}
+.hrwadatepicker_wrapper .hrwadatepicker_selects {min-width:170px;width:auto;position:absolute;background:url('./hrwa_datepicker_grad.gif') repeat-x #929292;border:1px solid #dedede;z-index:100;-moz-border-radius:3px 3px 3px 3px;-webkit-border-radius:3px 3px 3px 3px;border-radius:3px 3px 3px 3px;}
+.hrwadatepicker_wrapper .hrwadatepicker_selects select {width:60px;}
+.hrwadatepicker_wrapper .hrwadatepicker_selects .ok_button {margin-left:5px;width:20px;padding-left:10px;padding-right:10px;-moz-border-radius:3px 3px 3px 3px;-webkit-border-radius:3px 3px 3px 3px;border-radius:3px 3px 3px 3px;}
+
 /* Search form */
 #start_new_search_link {margin-top: -25px; color:#88C34B; }
 
