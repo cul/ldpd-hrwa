@@ -415,9 +415,9 @@ jQuery(function($) {
 
   // cbf home column controls
     // will want to clean up.
-  $('.tab-content .results_control .sort_col-1').live('click', function() { $('#home-tab-content div.active > ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-2').live('click', function() { $('#home-tab-content div.active > ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-3').live('click', function() { $('#home-tab-content div.active > ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-1').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-2').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-3').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
 
   // cbf browse onload sorting and showing
   $('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
