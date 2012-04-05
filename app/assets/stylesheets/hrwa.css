@@ -303,8 +303,8 @@ a.moreless.btn { font-size:80%; }
 
 /* HRWA Custom Datepicker */
 .hrwadatepicker_wrapper {position:relative;}
-.hrwadatepicker_wrapper .hrwadatepicker_selects {min-width:176px;width:auto;position:absolute;background:url('./hrwa_datepicker_grad.gif') repeat-x #929292;border:1px solid #dedede;z-index:100;-moz-border-radius:3px 3px 3px 3px;-webkit-border-radius:3px 3px 3px 3px;border-radius:3px 3px 3px 3px;}
-.hrwadatepicker_wrapper .hrwadatepicker_selects select {width:66px;}
+.hrwadatepicker_wrapper .hrwadatepicker_selects {min-width:176px;}
+.hrwadatepicker_wrapper .hrwadatepicker_selects select {width:49%;margin-right:1%;float:left;}
 .hrwadatepicker_wrapper .hrwadatepicker_selects .ok_button {margin-left:5px;width:14px;padding-left:10px;padding-right:10px;-moz-border-radius:3px 3px 3px 3px;-webkit-border-radius:3px 3px 3px 3px;border-radius:3px 3px 3px 3px;}
 
 /* Search form */
@@ -326,10 +326,11 @@ a.moreless.btn { font-size:80%; }
 .advanced_options .hidden_submit {visibility:hidden;height:0px;width:0px;padding:0;margin:0;border:none;}
 
 /*Sidebar date of capture custom range */
-#date_of_cap_custom_range_input_container {margin-top:5px;}
-#date_of_cap_custom_range_input_container label {width:60px;}
-#date_of_cap_custom_range_input_container input {width:110px;margin-bottom:5px;}
-#date_of_cap_custom_range_input_container .btn-small.cancel {margin-left:79px;margin-right:5px;}
+#date_of_cap_custom_range_input_container {}
+#date_of_cap_custom_range_input_container label {width:60px;font-size:12px;margin-top:3px;}
+#date_of_cap_custom_range_input_container input {width:110px;}
+#date_of_cap_custom_range_input_container .btn-small {margin-top:5px;margin-bottom:3px;}
+#date_of_cap_custom_range_input_container .btn-small.cancel {margin-left:67px;margin-right:5px;}
 
 /* result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}

@@ -453,8 +453,6 @@ jQuery(function($) {
         var minYear = params.minYear;
         var maxYear = params.maxYear;
 
-        var alignBoxWithWhichSideOfInput = params.alignBoxWithWhichSideOfInput;
-
         //By default, set selectedDate to null
         var selectedDate = null;
         //But if a valid date already exists in the input, use it
@@ -517,50 +515,24 @@ jQuery(function($) {
 
         var hrwaDatePickerHtml =
         '<span style="display:none;" class="hrwadatepicker_selects form-inline">'+
-            '<select class="span1 year">'+
+            '<select class="year">'+
                 '<option val="YYYY"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>YYYY</option>' +
                 yearSelectOptionHtml +
             '</select> '+
-            '<select class="span1 month">'+
+            '<select class="month">'+
                 '<option val="MM"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>MM</option>' +
                 monthSelectOptionHtml +
-            '</select>'+
-            '<a href="#" class="btn ok_button"><i class="icon-ok"></i></a>'+
+            '</select>' +
         '</span>';
 
         $(this).parent().append(hrwaDatePickerHtml);
 
-        $(this).bind('click', function(){
-            if($(this).parent().children('.hrwadatepicker_selects').first().css('display') == 'none')
-            {
-                if(alignBoxWithWhichSideOfInput == 'left')
-                {
-                    $(this).parent().children('.hrwadatepicker_selects').first().css({
-                        'display' : 'block',
-                        'left': '0px',
-                        'top' : $(this).height() + 1 + 'px',
-                        'padding' : '5px'
-                    });
-                }
-                else
-                {
-                    $(this).parent().children('.hrwadatepicker_selects').first().css({
-                        'display' : 'block',
-                        'right': '0px',
-                        'top' : $(this).height() + 1 + 'px',
-                        'padding' : '5px'
-                    });
-                }
-            }
+        //Show newly added html, hide original input
+        $(this).parent().children('.hrwadatepicker_selects').first().css({
+            'display' : 'inline-block',
+            'width'   : $(this).width() + 'px'
         });
-
-        $(this).parent().children('.hrwadatepicker_selects').children('.ok_button').bind('click', function(){
-            $(this).parent().css({
-                'display' : 'none'
-            });
-            $(this).parent().parent().children('input').css('display', 'inline')
-            return false;
-        });
+        $(this).addClass('invisible');
 
         $(this).parent().children('.hrwadatepicker_selects').children('select').bind('change', function(){
             var month_name_to_number = {
@@ -595,13 +567,11 @@ jQuery(function($) {
   $(".hrwadatepicker_start").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-      alignBoxWithWhichSideOfInput: 'left'
   });
 
   $(".hrwadatepicker_end").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-      alignBoxWithWhichSideOfInput: 'left'
   });
 
   //Temporary
@@ -673,10 +643,9 @@ jQuery(function($) {
     '<li>' +
 		'<span id="date_of_cap_custom_range_container">' +
 			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
-			'<span id="date_of_cap_custom_range_input_container" class="invisible form-inline">' +
-				'<div class="input-prepend"><label class="add-on">Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
-				'<div class="input-prepend"><label class="add-on">End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
-				'<br />' +
+			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
+				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
+				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
 				'<a href="#" class="btn btn-small cancel">Cancel</a><a href="#" class="btn btn-small submit">Search</a>' +
 			'</span>' +
 			'<span class="clearfix"></span>' +
@@ -704,12 +673,10 @@ jQuery(function($) {
   $("#capture_start_date_sidebar").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-      alignBoxWithWhichSideOfInput: 'right'
   });
   $("#capture_end_date_sidebar").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-      alignBoxWithWhichSideOfInput: 'right'
   });
 
 
