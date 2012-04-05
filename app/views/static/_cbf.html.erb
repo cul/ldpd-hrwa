@@ -19,14 +19,14 @@
       </div>
 
 	  <div id="t1" class="tab-pane active">
-		<ul>
+		<ul class="no-count">
 		<% title_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
 	  <div id="t2" class="tab-pane">
-		<ul>
+		<ul class="no-count">
 		<% original_urls_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[original_urls][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
