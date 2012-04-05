@@ -455,20 +455,21 @@ jQuery(function($) {
 
         var alignBoxWithWhichSideOfInput = params.alignBoxWithWhichSideOfInput;
 
-        //By default, set selectedDate to params.defaultSelectedDate
-        var selectedDate = params.defaultSelectedDate;
+        //By default, set selectedDate to null
+        var selectedDate = null;
         //But if a valid date already exists in the input, use it
         //Note: We have to convert the month to month-1 because the new Date() constructor uses zero-indexed months
         var dateInInput = $(this).val();
+
         if(dateInInput != '' && dateInInput.search(/^\d{4}-\d{2}$/) != -1 )
         {
             selectedDate = new Date(parseInt(dateInInput.substring(0, dateInInput.indexOf("-"))), parseInt(dateInInput.substring(dateInInput.indexOf("-")+1, dateInInput.length))-1, 1);
         }
 
-        var selectedYear = selectedDate.getFullYear();
+        var selectedYear = selectedDate != null ? selectedDate.getFullYear() : -1;
 
         //Note: The month in a date is zero-indexed (so 0 == January and 1 == February)
-        var selectedMonth = selectedDate.getMonth()+1;
+        var selectedMonth = selectedDate != null ? selectedDate.getMonth()+1 : -1;
         //Note: At this point, the selected month does NOT have a leading 0
 
         var yearSelectOptionHtml = '';
@@ -517,12 +518,14 @@ jQuery(function($) {
         var hrwaDatePickerHtml =
         '<span style="display:none;" class="hrwadatepicker_selects form-inline">'+
             '<select class="span1 year">'+
+                '<option val="YYYY"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>YYYY</option>' +
                 yearSelectOptionHtml +
             '</select> '+
             '<select class="span1 month">'+
+                '<option val="MM"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>MM</option>' +
                 monthSelectOptionHtml +
             '</select>'+
-            '<a href="#" class="btn ok_button">ok</a>'+
+            '<a href="#" class="btn ok_button"><i class="icon-ok"></i></a>'+
         '</span>';
 
         $(this).parent().append(hrwaDatePickerHtml);
@@ -551,9 +554,17 @@ jQuery(function($) {
             }
         });
 
-        $(this).parent().children('.hrwadatepicker_selects').children('a').bind('click', function(){
+        $(this).parent().children('.hrwadatepicker_selects').children('.ok_button').bind('click', function(){
+            $(this).parent().css({
+                'display' : 'none'
+            });
+            $(this).parent().parent().children('input').css('display', 'inline')
+            return false;
+        });
 
+        $(this).parent().children('.hrwadatepicker_selects').children('select').bind('change', function(){
             var month_name_to_number = {
+                'MM'  : 'MM',
                 'Jan' : '01',
                 'Feb' : '02',
                 'Mar' : '03',
@@ -568,15 +579,14 @@ jQuery(function($) {
                 'Dec' : '12'
             }
 
-            var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
             var year_select_value = $(this).parent().children('select.year').val();
+            var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
 
-            $(this).parent().css({
-                'display' : 'none'
-            });
-            $(this).parent().parent().children('input').css('display', 'inline').val(year_select_value+'-'+month_select_value);
+            if(year_select_value != 'YYYY' && month_select_value != 'MM')
+            {
+                $(this).parent().parent().children('input').val(year_select_value+'-'+month_select_value);
+            }
 
-            return false;
         });
 
     });
@@ -585,14 +595,12 @@ jQuery(function($) {
   $(".hrwadatepicker_start").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-	  defaultSelectedDate: new Date(2008, 0, 1),
       alignBoxWithWhichSideOfInput: 'left'
   });
 
   $(".hrwadatepicker_end").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-	  defaultSelectedDate: new Date(),
       alignBoxWithWhichSideOfInput: 'left'
   });
 
@@ -696,13 +704,11 @@ jQuery(function($) {
   $("#capture_start_date_sidebar").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-	  defaultSelectedDate: new Date(2008, 0, 1),
       alignBoxWithWhichSideOfInput: 'right'
   });
   $("#capture_end_date_sidebar").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
-	  defaultSelectedDate: new Date(),
       alignBoxWithWhichSideOfInput: 'right'
   });
 
