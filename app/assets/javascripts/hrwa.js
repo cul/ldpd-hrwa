@@ -29,7 +29,7 @@ jQuery(function($) {
 	//return false;
   });
   $('.alert-jump').live('click', function(e) {
-    $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+    scrollToTop();
 	$('#q').focus();
 	if ($(this).find('a').attr('id') == 'focus_fsf') {
 	  $('#fsfsearch').prop('checked', true);
@@ -135,6 +135,11 @@ jQuery(function($) {
 
   }
 
+  /* scroll to top function */
+  function scrollToTop() {
+    $('body,html').animate({ scrollTop: 0 }, 800); 
+  }
+
   /* Show/hide advanced options */
 
   //HRWA.current_search_type is determined by which radio button is initially checked
@@ -145,7 +150,7 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
-    $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+    scrollToTop();
 
     if($('#advanced_options_container').css('display') == 'none') {
 
