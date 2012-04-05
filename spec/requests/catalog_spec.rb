@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :webkit
 # Capybara.default_wait_time = 30
 
 describe 'the portal search' do
