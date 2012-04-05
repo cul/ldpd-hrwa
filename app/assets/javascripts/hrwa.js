@@ -29,6 +29,7 @@ jQuery(function($) {
 	//return false;
   });
   $('.alert-jump').live('click', function(e) {
+    scrollToTop();
 	$('#q').focus();
 	if ($(this).find('a').attr('id') == 'focus_fsf') {
 	  $('#fsfsearch').prop('checked', true);
@@ -134,6 +135,11 @@ jQuery(function($) {
 
   }
 
+  /* scroll to top function */
+  function scrollToTop() {
+    $('body,html').animate({ scrollTop: 0 }, 800); 
+  }
+
   /* Show/hide advanced options */
 
   //HRWA.current_search_type is determined by which radio button is initially checked
@@ -144,7 +150,7 @@ jQuery(function($) {
 
   $('#advo_link').bind('click', function (e) {
 
-    $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
+    scrollToTop();
 
     if($('#advanced_options_container').css('display') == 'none') {
 
@@ -388,18 +394,38 @@ jQuery(function($) {
   }
 
   function sortState(foo) {
-  $('.results_control').find('a').removeClass('btn-success');
-  foo.addClass('btn-success');
+    $('.results_control').find('a').removeClass('btn-success');
+    foo.addClass('btn-success');
   }
+
+  //for smart cbf showings
+  function showControls() {
+    //$('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
+    $('#home-tab-content .results_control').show(0, function() {
+        if ( $('#home-tab-content div.tab-pane.active ul').hasClass('no-count') ) {
+            $(this).find('.sort_default').hide();
+        } else { 
+            $(this).find('.sort_default').show();
+        }
+      }
+    );
+  }
+
   $('#primary .sort_default').live('click', function() { $('article.post').tinysort({attr:"id"}); sortState($(this)); });
   $('#primary .sort_a-z').live('click', function() { $('article.post').tinysort({order:"asc"}); sortState($(this)); });
   $('#primary .sort_z-a').live('click', function() { $('article.post').tinysort({order:"desc"}); sortState($(this)); });
 
   $('/* #secondary .results_control,*/ #cbf .results_control').prepend('<a class="sort_default btn small" title="Sort by Count">#</a> <a class="sort_a-z btn small" title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" title="Sort by Z-A">Z-A</a>');
 
-  $('.sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
-  $('.sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
-  $('.sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
+  // for cbf page and elsewheres
+  $('.sort_default').not('#home-tab-content .sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
+  $('.sort_a-z').not('#home-tab-content .sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
+  $('.sort_z-a').not('#home-tab-content .sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
+
+  // for home cbf tabs
+  $('#home-tab-content .sort_default').live('click', function() { var c = $('#home-tab-content div.tab-pane ul:not(.no-count)'); $('li',c).tinysort('span', {order:"desc"}); });
+  $('#home-tab-content .sort_a-z').live('click', function() { var a = $('#home-tab-content div.tab-pane ul'); $('li',a).tinysort({order:"asc"}); });
+  $('#home-tab-content .sort_z-a').live('click', function() { var z = $('#home-tab-content div.tab-pane ul'); $('li',z).tinysort({order:"desc"}); });
 
   $('.navbar a[rel=tooltip], .navbar label[rel=tooltip]').tooltip({'placement': 'bottom'});
   $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
@@ -407,13 +433,15 @@ jQuery(function($) {
 
   // cbf home onload sorting and showing
   $('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
-  $('.tab-content .results_control').show();
+  $('.tab-content .results_control').not('#home-tab-content .results_control').show();
+  showControls();
+  $('ul.tabs li a').live('click', function() { showControls(); $(this).blur(); });
 
-  // cbf home col controls
-    // this is gross. will want to clean up.
-  $('.tab-content .results_control .sort_col-1').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
-  $('.tab-content .results_control .sort_col-2').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
-  $('.tab-content .results_control .sort_col-3').live('click', function() { $(this).parent().parent().parent().parent().next('ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
+  // cbf home column controls
+    // will want to clean up.
+  $('.tab-content .results_control .sort_col-1').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-2').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-3').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
 
   // cbf browse onload sorting and showing
   $('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed

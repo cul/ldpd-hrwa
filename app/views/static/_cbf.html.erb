@@ -6,51 +6,33 @@
             <li><a data-toggle="tab" href="#t5">Language</a></li>
 </ul>
 <div id="home-tab-content" class="tab-content">
-	  <div id="t1" class="tab-pane active">
-        <div class="results_control alignright"><a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a> 
-          <div class="btn-group pull-right"> 
-            <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
-            <ul class="dropdown-menu">
-          		<li><a class="sort_col-1">1 column</a></li>
-          		<li><a class="sort_col-2">2 columns</a></li>
-          		<li class="active"><a class="sort_col-3">3 columns</a></li>
-            </ul>
-          </div>
+      <div class="results_control alignright">
+        <a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a> 
+        <div class="btn-group pull-right"> 
+          <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
+          <ul class="dropdown-menu alignleft">
+        		<li><a class="sort_col sort_col-1">1 column</a></li>
+        		<li><a class="sort_col sort_col-2">2 columns</a></li>
+        		<li class="active"><a class="sort_col sort_col-3">3 columns</a></li>
+          </ul>
         </div>
-		<ul>
+      </div>
+
+	  <div id="t1" class="tab-pane active">
+		<ul class="no-count">
 		<% title_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
 	  <div id="t2" class="tab-pane">
-        <div class="results_control alignright"><a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a>
-          <div class="btn-group pull-right"> 
-            <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
-            <ul class="dropdown-menu">
-          		<li><a class="sort_col-1">1 column</a></li>
-          		<li><a class="sort_col-2">2 columns</a></li>
-          		<li class="active"><a class="sort_col-3">3 columns</a></li>
-            </ul>
-          </div>
-        </div>
-		<ul>
+		<ul class="no-count">
 		<% original_urls_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[original_urls][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>
 	  <div id="t3" class="tab-pane">
-        <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a>
-          <div class="btn-group pull-right"> 
-            <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
-            <ul class="dropdown-menu">
-          		<li><a class="sort_col-1">1 column</a></li>
-          		<li><a class="sort_col-2">2 columns</a></li>
-          		<li class="active"><a class="sort_col-3">3 columns</a></li>
-            </ul>
-          </div>
-        </div>
 		<ul>
 		<% subject_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[subject__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
@@ -58,16 +40,6 @@
 		</ul>
 	  </div>
 	  <div id="t4" class="tab-pane">
-        <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a>
-          <div class="btn-group pull-right"> 
-            <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
-            <ul class="dropdown-menu">
-          		<li><a class="sort_col-1">1 column</a></li>
-          		<li><a class="sort_col-2">2 columns</a></li>
-          		<li class="active"><a class="sort_col-3">3 columns</a></li>
-            </ul>
-          </div>
-        </div>
 		<ul>
 		<% geographic_focus_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[geographic_focus__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
@@ -75,16 +47,6 @@
 		</ul>
 	  </div>
 	  <div id="t5" class="tab-pane">
-        <div class="results_control alignright"><a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a>
-          <div class="btn-group pull-right"> 
-            <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
-            <ul class="dropdown-menu">
-          		<li><a class="sort_col-1">1 column</a></li>
-          		<li><a class="sort_col-2">2 columns</a></li>
-          		<li class="active"><a class="sort_col-3">3 columns</a></li>
-            </ul>
-          </div>
-        </div>
 		<ul>
 		<% language_browse_list.each_pair do |item, hits| %>
                   <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[language__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a> (<span>#{hits}</span>)</div></li>}.html_safe %>
