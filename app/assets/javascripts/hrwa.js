@@ -588,6 +588,9 @@ jQuery(function($) {
   $( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight_label" ).html( "Page Title: " + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
+  $( "#url_weight" ).val( 'originalUrl^' + $( "#url_weight_slider" ).slider( "value" ) );
+  $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
+  $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
 
 
   /* Sidebar facet modifications */
