@@ -29,6 +29,7 @@ jQuery(function($) {
 	//return false;
   });
   $('.alert-jump').live('click', function(e) {
+    $('body,html').animate({ scrollTop: 0 }, 800); // go to the top of the page before toggling the adv form
 	$('#q').focus();
 	if ($(this).find('a').attr('id') == 'focus_fsf') {
 	  $('#fsfsearch').prop('checked', true);
