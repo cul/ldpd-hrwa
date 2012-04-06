@@ -137,7 +137,7 @@ jQuery(function($) {
 
   /* scroll to top function */
   function scrollToTop() {
-    $('body,html').animate({ scrollTop: 0 }, 800); 
+    $('body,html').animate({ scrollTop: 0 }, 800);
   }
 
   /* Show/hide advanced options */
@@ -404,7 +404,7 @@ jQuery(function($) {
     $('#home-tab-content .results_control').show(0, function() {
         if ( $('#home-tab-content div.tab-pane.active ul').hasClass('no-count') ) {
             $(this).find('.sort_default').hide();
-        } else { 
+        } else {
             $(this).find('.sort_default').show();
         }
       }
@@ -439,9 +439,9 @@ jQuery(function($) {
 
   // cbf home column controls
     // will want to clean up.
-  $('.tab-content .results_control .sort_col-1').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-2').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
-  $('.tab-content .results_control .sort_col-3').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); }); 
+  $('.tab-content .results_control .sort_col-1').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','1').css('-webkit-column-count','1').css('column-count','1'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
+  $('.tab-content .results_control .sort_col-2').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','2').css('-webkit-column-count','2').css('column-count','2'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
+  $('.tab-content .results_control .sort_col-3').live('click', function() { $('#home-tab-content div.tab-pane > ul').css('-moz-column-count','3').css('-webkit-column-count','3').css('column-count','3'); $(this).parent().parent().find('li.active').removeClass('active'); $(this).parent().addClass('active'); });
 
   // cbf browse onload sorting and showing
   $('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
@@ -601,18 +601,6 @@ jQuery(function($) {
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
   });
-
-  //Temporary
-  /*
-  $(".hrwadatepicker_start, .hrwadatepicker_end").datepicker({
-	  minDate: new Date(2008, 1, 1),
-	  gotoCurrent: true,
-	  changeMonth: true,
-	  changeYear: true,
-	  dateFormat: "yy-mm"
-  });
-  */
-
 
   //Weighting sliders
   $('#url_weight_slider').slider({

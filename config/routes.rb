@@ -6,7 +6,7 @@ Hrwa::Application.routes.draw do
   match '/about'       => 'static#about'
   match '/browse'      => 'static#collection_browse'
   match '/owner_nomination'      => 'static#owner_nomination'
-  match '/pubnomination'      => 'static#pubnomination'
+  match '/public_nomination'      => 'static#public_nomination'
 
   # Blacklight stuff
   match '/search'  => 'catalog#index'

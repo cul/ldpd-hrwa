@@ -9,7 +9,7 @@ class StaticController < ApplicationController
   def owner_nomination
   end
 
-  def pubnomination
+  def public_nomination
   end
 
   def collection_browse

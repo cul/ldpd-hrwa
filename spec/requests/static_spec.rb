@@ -26,3 +26,17 @@ describe 'collection browse page' do
     page.should have_content('Collection Browse')
   end
 end
+
+describe 'public nomination page' do
+  it 'loads with the correct text' do
+    visit '/public_nomination'
+    page.should have_content('Nominate a Site')
+  end
+end
+
+describe 'owner nomination page' do
+  it 'loads with the correct text' do
+    visit '/owner_nomination'
+    page.should have_content('Nominate Your Site')
+  end
+end
