@@ -33,7 +33,7 @@
       </a>
     <ul class="dropdown-menu">
      <li <% if current_page?(owner_nomination_path) %>class="active"<% end %>><a href="<%= owner_nomination_path %>" class="">Owner Nomination Form</a></li>
-     <li><a href="#" class="donothing">Public Nomination Form</a></li>
+     <li <% if current_page?(pubnomination_path) %>class="active"<% end %>><a href="<%= pubnomination_path %>" class="">Public Nomination Form</a></li>
     </ul>
   </li>
 </ul>
