@@ -194,7 +194,7 @@ iframe#x_container { width:100%; }
 #home-tab-content .tab-pane { max-height:480px; overflow:auto; border:1px solid #ddd; border-top:0;padding-top:5px; }
 ul.tabs { margin-bottom:0; padding-left:10px;}
 #home-tab-content { background:#fff; }
-#home-tab-content .results_control { border:1px solid #ddd; border-top:0; border-bottom:1px dotted #eee; padding:2px 4px; }
+#home-tab-content .results_control { border:1px solid #ddd; border-top:0; border-bottom:1px dotted #eef; padding:2px 4px; }
 #home-tab-content .results_control > a { margin-right:2px; }
 #home-tab-content .tab-pane ul { -webkit-column-count:3;-moz-column-count:3;column-count:3; list-style:none; margin-left:0.2em; padding:10px 0; max-width:620px; word-wrap:break-word;} /* max-width is a hack for long urls in URL tab. must find better solution */
 #home-tab-content .results_control .btn-group { margin-left:2px; }
