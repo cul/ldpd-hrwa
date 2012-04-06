@@ -417,10 +417,10 @@ jQuery(function($) {
 
   $('/* #secondary .results_control,*/ #cbf .results_control').prepend('<a class="sort_default btn small" title="Sort by Count">#</a> <a class="sort_a-z btn small" title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" title="Sort by Z-A">Z-A</a>');
 
-  // for cbf page and elsewheres
-  $('.sort_default').not('#home-tab-content .sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
-  $('.sort_a-z').not('#home-tab-content .sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
-  $('.sort_z-a').not('#home-tab-content .sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
+  // for cbf page
+  $('#cbf_widgets .sort_default').live('click', function() { var c = $(this).parent().next('ul'); $('li',c).tinysort('span', {order:"desc"}); sortState($(this)); });
+  $('#cbf_widgets .sort_a-z').live('click', function() { var a = $(this).parent().next('ul'); $('li',a).tinysort({order:"asc"}); sortState($(this)); });
+  $('#cbf_widgets .sort_z-a').live('click', function() { var z = $(this).parent().next('ul'); $('li',z).tinysort({order:"desc"}); sortState($(this)); });
 
   // for home cbf tabs
   $('#home-tab-content .sort_default').live('click', function() { var c = $('#home-tab-content div.tab-pane ul:not(.no-count)'); $('li',c).tinysort('span', {order:"desc"}); });

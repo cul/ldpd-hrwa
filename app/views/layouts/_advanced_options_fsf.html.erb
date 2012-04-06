@@ -1,42 +1,48 @@
 <input type="hidden" name="search_mode" value="advanced" />
 
+<%= current_f_hash_as_hidden_fields %>
+
 <div class="row">
 <div class="span12">
-    <h6>Additional Search Filters</h6>
+    <h6>Add Additional Search Filters</h6>
 <div class="span6 nomar">
 	<div class="control-group">
 	<label class="span2 control-label">organization type</label>
 	<select name="f_add[organization_type__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
-	  <% organization_type_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% organization_type_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">subject</label>
 	<select name="f_add[subject__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:subject__facet] %>
-	  <% subject_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% subject_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">geographic focus</label>
 	  <select name="f_add[geographic_focus__facet][]" class="pull-left">
+        <option value="">- Choose an option -</option>
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
-	    <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
-	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	    <% geographic_focus_options().each do | key, value | %>
+	      <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	    <% end %>
 	  </select>
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">organization based in</label>
 	  <select name="f_add[organization_based_in__facet][]" class="pull-left">
+        <option value="">- Choose an option -</option>
 	    <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
-	    <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
-	      <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	    <% organization_based_in_options().each do | key, value | %>
+	      <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	    <% end %>
 	</select>
     </div>
@@ -46,9 +52,10 @@
 	<div class="control-group">
 	<label class="span2 control-label">language</label>
 	<select name="f_add[language__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
-	  <% language_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% language_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
 	<!--Non-displayed facets below here-->
@@ -56,27 +63,30 @@
 	<div class="control-group">
 	<label class="span2 control-label">site title</label>
 	<select name="f_add[title__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:title__facet] %>
-	  <% title_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% title_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">creator name</label>
 	<select name="f_add[creator_name__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
-	  <% creator_name_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% creator_name_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
     </div>
 	<div class="control-group">
 	<label class="span2 control-label">original url</label>
 	<select name="f_add[original_urls][]" class="pull-left">
+      <option value="">- Choose an option -</option>
 	  <% selected_items = params[:f].nil? ? nil : params[:f][:original_urls] %>
-	  <% original_urls_options(:selected => selected_items).each do | key, value | %>
-	    <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+	  <% original_urls_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 	  <% end %>
 	</select>
     </div>

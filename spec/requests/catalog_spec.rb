@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 Capybara.javascript_driver = :webkit
-# Capybara.default_wait_time = 30
+#Capybara.default_wait_time = 30
 
 describe 'the portal search' do
   it 'renders the "search home page" if there are no params' do
@@ -182,8 +182,10 @@ describe 'archive search' do
       choose 'asfsearch'
       click_link 'advo_link'
       fill_in 'q_and',              :with => 'women'
-      fill_in 'capture_end_date',   :with => '2012-03'
-      fill_in 'capture_start_date', :with => '2008-03'
+      find('.capture_start_date_group select.year').select('2008')
+      find('.capture_start_date_group select.month').select('Mar')
+      find('.capture_end_date_group select.year').select('2012')
+      find('.capture_end_date_group select.month').select('Mar')
       click_link 'top_form_submit'
       click_link 'English'
       click_link 'Menu'
@@ -255,24 +257,22 @@ end
 describe 'javascript two-way query conversion tests' do
 
   it 'properly converts multi q to single q', :js => true do
+
     visit '/search'
-    click_link 'advo_link'
 
     #test 1 - basic test
+    click_link 'advo_link'
     fill_in 'q_and', :with => 'and1 and2 and3'
     fill_in 'q_phrase', :with => 'an exact phrase'
     fill_in 'q_or', :with => 'or1 or2 or3'
     fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
     find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
 
-    #clear all q's
-    fill_in 'q_and', :with => ''
-    fill_in 'q_phrase', :with => ''
-    fill_in 'q_or', :with => ''
-    fill_in 'q_exclude', :with => ''
+
   end
 
   it 'properly converts single q to multi q', :js => true do
+
     visit '/search'
 
     #test 1 - basic test
@@ -283,8 +283,7 @@ describe 'javascript two-way query conversion tests' do
     find_field('q_or').value.should == 'or1 or2 or3'
     find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
 
-    #clear q
-    fill_in 'q', :with => ''
+    visit '/search'
 
     #test 2 - q starts with a quote
     fill_in 'q', :with => '"an exact phrase" +and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3'
@@ -294,8 +293,7 @@ describe 'javascript two-way query conversion tests' do
     find_field('q_or').value.should == 'or1 or2 or3'
     find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
 
-    #clear q
-    fill_in 'q', :with => ''
+    visit '/search'
 
     #test 3 - q ends with a quote
     fill_in 'q', :with => '+and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3 "an exact phrase"'
@@ -305,8 +303,7 @@ describe 'javascript two-way query conversion tests' do
     find_field('q_or').value.should == 'or1 or2 or3'
     find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
 
-    #clear q
-    fill_in 'q', :with => ''
+    visit '/search'
 
     #test 4 - lots of unnecessary spaces in q
     fill_in 'q', :with => '     +and1 +and2      +and3    "an exact phrase"    or1      or2      or3     -exclude1     -exclude2 -exclude3     '
@@ -316,8 +313,7 @@ describe 'javascript two-way query conversion tests' do
     find_field('q_or').value.should == 'or1 or2 or3'
     find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
 
-    #clear q
-    fill_in 'q', :with => ''
+    visit '/search'
 
     #test 5 - detached pluses and minuses (if a plus or minus sign is alone, it's treated as a lone character rather than a special solr syntax item)
     fill_in 'q', :with => '+ and1 + and2 +and3 "an exact phrase" or1 or2 or3 - exclude1 - exclude2 -exclude3'
