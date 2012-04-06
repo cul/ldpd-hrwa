@@ -161,7 +161,7 @@ display:inline-block;
 #ccf_dialog .cc_box { margin-right:8px;  }
 #ccf_dialog .cc_box .cc_desc { font-size:9px;  }
 iframe#x_container { width:100%; }
-#fqs { margin-top:0.5em; }
+#fqs { margin-top:0.5em;margin-bottom:0.5em; }
 #fqs a.delfq { font-size:80%; }
 #topfqs { display:none; }
 #primary #fqs a.btn { margin-bottom:4px; padding:2px; }

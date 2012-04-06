@@ -8,6 +8,8 @@ class CatalogController < ApplicationController
   include HRWA::Debug
   include HRWA::SolrHelper
 
+  before_filter :_merge_f_add_into_f, :only => [:index]
+
   # displays values and pagination links for a single facet field
   def facet
     _configure_by_search_type
@@ -20,7 +22,7 @@ class CatalogController < ApplicationController
     if !params[:search].blank?
 
       _configure_by_search_type
-      
+
       begin
         (@response, @result_list) = get_search_results( params, {} )
       rescue => ex
@@ -30,7 +32,7 @@ class CatalogController < ApplicationController
         if params.has_key?( :hrwa_debug )
           _set_debug_display
         end
-      
+
         render :error and return
       end
 
@@ -88,7 +90,7 @@ class CatalogController < ApplicationController
 
     Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url )
   end
-  
+
   def _set_debug_display
     @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
     @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
@@ -100,7 +102,7 @@ class CatalogController < ApplicationController
     @debug << array_pp( self.solr_search_params_logic )
 
     @debug << "<h1>self.solr_search_params( params )</h1>\n\n".html_safe
-    solr_search_parameters = self.solr_search_params( params ) 
+    solr_search_parameters = self.solr_search_params( params )
     solr_search_parameters.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
       @debug << "<strong>#{key}</strong> = ".html_safe << solr_search_parameters[ key ].to_s << "<br/>".html_safe
     end
@@ -115,6 +117,40 @@ class CatalogController < ApplicationController
       @debug << '<h1>@response</h1>'.html_safe
       @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
     end
+  end
+
+  # Merges params[:f_add] options into the current params[:f] hash.
+  # Ignores all options that have empty values
+  def _merge_f_add_into_f
+    if(params[:f_add])
+
+      if( ! params[:f] )
+        params[:f] = {}
+      end
+
+      #Note: We're not merging the hashes themselves, but rather,
+      #the arrays inside each of the hashes.
+      params[:f_add].each do |hash_key, arr_value|
+
+				# if f_add contains a key that holds a single-element blank
+				# value ( [''] ), then don't do a merge.
+				if( ! arr_value[0].blank? )
+					if( ! params[:f][hash_key] )
+						params[:f][hash_key] = []
+					end
+					params[:f][hash_key] = params[:f][hash_key] | arr_value # Note: arr1 | arr2 == a single merged array (with duplicates removed)
+				end
+
+      end
+
+    end
+
+    # And now that we're done with f_add, we should delete it from params
+    # It was only meant to be used right before the catalog_controller index
+    # action anyway. It shouldn't be used by any other part of blacklight,
+    # or our application.
+    params.delete :f_add
+
   end
 
 end

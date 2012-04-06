@@ -1,41 +1,47 @@
 <input type="hidden" name="search_mode" value="advanced" />
 
+<%= current_f_hash_as_hidden_fields %>
+
 <div class="row">
 <div class="span12">
-    <h6>Additional Search Filters</h6>
+    <h6>Add Additional Search Filters</h6>
 <div class="span6 nomar">
         <div class="control-group">
         <label class="span2 control-label">organization type</label>
         <select name="f_add[organization_type__facet][]">
+          <option value="">- Choose an option -</option>
           <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
-          <% organization_type_options(:selected => selected_items).each do | key, value | %>
-            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% organization_type_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
           <% end %>
         </select>
     </div>
     <div class="control-group">
       <label class="span2 control-label">geographic focus</label>
       <select name="f_add[geographic_focus__facet][]">
+        <option value="">- Choose an option -</option>
         <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
-        <% geographic_focus_options(:selected => selected_items).each do | key, value | %>
-          <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+        <% geographic_focus_options().each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
         <% end %>
       </select>
     </div>
         <div class="control-group">
         <label class="span2 control-label">organization based in</label>
           <select name="f_add[organization_based_in__facet][]">
+            <option value="">- Choose an option -</option>
             <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
-            <% organization_based_in_options(:selected => selected_items).each do | key, value | %>
-              <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+            <% organization_based_in_options().each do | key, value | %>
+              <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
             <% end %>
         </select>
     </div>
         <div class="control-group">
         <label class="span2 control-label">file type</label>
         <select class="control-group" name="f_add[mimetype][]">
+          <option value="">- Choose an option -</option>
           <%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
-          <%# file_type_options(:selected => selected_items).each do | key, value | %>
+          <%# file_type_options().each do | key, value | %>
             <%#= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
           <%# end %>
         </select>
@@ -45,9 +51,10 @@
         <div class="control-group">
         <label class="span2 control-label">site language</label>
         <select name="f_add[language__facet][]">
+          <option value="">- Choose an option -</option>
           <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
-          <% language_options(:selected => selected_items).each do | key, value | %>
-            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% language_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
           <% end %>
         </select>
         <!--Non-displayed facets below here-->
@@ -56,18 +63,20 @@
         <div class="control-group">
         <label class="span2 control-label">creator name</label>
         <select name="f_add[creator_name__facet][]">
+          <option value="">- Choose an option -</option>
           <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
-          <% creator_name_options(:selected => selected_items).each do | key, value | %>
-            <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <% creator_name_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
           <% end %>
         </select>
     </div>
     <div class="control-group">
       <label class="span2 control-label">domain</label>
       <select class="control-group" name="f_add[domain][]">
+        <option value="">- Choose an option -</option>
         <% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
-        <% domain_options(:selected => selected_items).each do | key, value | %>
-          <%= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+        <% domain_options().each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
         <% end %>
       </select>
     </div>
@@ -82,13 +91,13 @@
 		<% capture_start_date_value =   params[ :capture_start_date ].nil?  ? '' : params[ :capture_start_date ]
          capture_end_date_value =       params[ :capture_end_date ].nil?    ? '' : params[ :capture_end_date   ] %>
 
-		<div class="span6 nomar">
+		<div class="span6 nomar capture_start_date_group">
 					 <div class="control-group">
 					 <label class="span2 control-label">start date</label>
 					 <input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" />
 			 </div>
 		</div>
-		<div class="span6 nomar">
+		<div class="span6 nomar capture_end_date_group">
 					 <div class="control-group">
 					 <label class="span2 control-label">end date</label>
 					 <input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
