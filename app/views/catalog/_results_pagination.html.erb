@@ -1,19 +1,40 @@
 <div class="row">
     <% if paginate_params(@response).num_pages > 1 %>
-    <div class="pagination span6">
+    <div class="pagination span5">
       <%= paginate_rsolr_response @response, :left => 2, :inner_window => 3, :theme => 'blacklight' %>
     </div>
-    <div class="results_control span3">
+    <div class="results_control span4">
     <% else %>
     <div class="results_control offset6 span3 pull-right">
     <% end %>
-     <a class="toggle_all_btn btn btn-success" data-original-title="Expand all results">Expand All +</a>
 
-    <% if @configurator.name == 'find_site' %>
-        <%= link_to '#', search_path(params.merge({:sort => 'score desc'})), {:class => 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
-        <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})), {:class => 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
-        <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})), {:class => 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
-    <% end %>
+        <div id="result_handling_options" class="btn-toolbar">
+
+            <div class="btn-group per_page">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Per Page
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- dropdown menu links -->
+                    <li <% if (!params[:per_page] || params[:per_page] == '10') %> class="active"<% end %>><%= link_to '10', search_path(params.merge({:per_page => '10'})) %></li>
+                    <li <% if (params[:per_page] == '25') %> class="active"<% end %>><%= link_to '25', search_path(params.merge({:per_page => '25'})) %></li>
+                    <li <% if (params[:per_page] == '50') %> class="active"<% end %>><%= link_to '50', search_path(params.merge({:per_page => '50'})) %></li>
+                </ul>
+            </div>
+
+            <% if @configurator.name == 'find_site' %>
+            <div class="btn-group sort_by">
+                <%= link_to '#', search_path(params.merge({:sort => 'score desc'})),            {:class => (!params[:sort] || params[:sort] == 'score desc' ? 'active ' : '') + 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
+                <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})),    {:class => (params[:sort] == 'title__facet asc' ? 'active ' : '') + 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
+                <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})),   {:class => (params[:sort] == 'title__facet desc' ? 'active ' : '') + 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
+            </div>
+            <% end %>
+
+            <div class="btn-group">
+                <a class="toggle_all_btn btn btn-success" data-original-title="Expand all results">Expand All +</a>
+            </div>
+        </div>
 
     </div>
 </div>

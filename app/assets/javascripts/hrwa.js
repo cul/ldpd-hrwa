@@ -445,7 +445,7 @@ jQuery(function($) {
 
   // cbf browse onload sorting and showing
   $('#cbf_widgets .results_control .sort_default.btn').first().hide(); //hide # sort, not needed
-  $('#cbf_widgets .results_control .sort_a-z.btn').click();
+  $('#cbf_widgets .results_control .sort_a-z.btn').click().removeClass('btn-success');
   $('#cbf_widgets .results_control').show();
 
   // autocomplete
