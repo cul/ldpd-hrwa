@@ -905,8 +905,12 @@ jQuery(function($) {
 	alert('Bug reporting by public users is not yet implemented. You will now be redirected to the internal feedback form.');
   });
 
-// form stuffs. actions here to slow robots.
+// nomination form stuffs. actions here to slow robots.
   $('#frmWebsiteNomination').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/ownernomination');
   $('#frmWebsiteNomination-pub').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/publicnomination');
+
+// email mailto: to slow robots.
+  var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu'
+  $('.culhrweb-email').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
 
 }); // ready
