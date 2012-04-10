@@ -7,7 +7,7 @@ module HRWA::RenderConstraintsHelperBehavior
   # Render actual constraints, not including header or footer
   # info.
   def render_constraints(localized_params = params)
-    (render_constraints_filters(localized_params) + render_exclude_filters(localized_params)).html_safe
+    render_constraints_filters(localized_params) + render_excl_domain_filters(localized_params) + render_capture_date_filters(localized_params)
   end
 
 
@@ -67,31 +67,72 @@ module HRWA::RenderConstraintsHelperBehavior
 
 
 
+  #TODO: Don't do direct html rendering using link_to.  Use a shared partial instead (catalog/constraints_element).
+  def render_excl_domain_filters(localized_params = params)
 
+    values = localized_params[:excl_domain] ? localized_params[:excl_domain].dup : nil
 
+    if(values)
+       values.map do |value|
 
-  #TODO: Display exclusion filter as sub-search-bar "pills"
-  def render_exclude_filters(localized_params = params)
-    #content << render_exclude_element('excl_domain', localized_params[:excl_domain], localized_params)
-    return ''.html_safe
-  end
-=begin
-  #Custom method
-  def render_exclude_element(exclusion_facet, values, localized_params)
+            options = {:remove => remove_excl_domain_filter(value), :classes => ["exclusion"]}
+            removal_link_body = "[x] Excluding: #{value}"
+            return link_to(
+                            removal_link_body,
+                            options[:remove],
+                            :rel=>'tooltip', :title=>'Remove this filter', :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes]))
 
-    # Custom code time!  Add domain exclusion filter:
-    # TODO: Later, we should probably move all exlucsion filters into their
-    #% hash (like params[:f] for facets, we could do params[:excl])
-    content << render_exclude_element('excl_domain', localized_params[:excl_domain], localized_params)
-
-    values.map do |val|
-      render_constraint_element( exclusion_facet,
-                  val,
-                  :remove => catalog_index_path(remove_facet_params(exclusion_facet, val, localized_params)),
-                  :classes => ["filter", "filter-" + exclusion_facet.parameterize]
-                ) + "\n"
+        end
     end
+
   end
-=end
+
+  # Based on the remove_facet_params method in facets_helper_behavior.rb
+  def remove_excl_domain_filter(domain_value_to_remove, source_params = params)
+    p = source_params.dup
+
+    p[:excl_domain] = (p[:excl_domain] || []).dup
+    p.delete :page
+    p.delete :id
+    p.delete :counter
+    p.delete :commit
+    p[:excl_domain] = p[:excl_domain] - [domain_value_to_remove]
+    p.delete(:excl_domain) if p[:excl_domain].size == 0
+
+    return p
+  end
+
+
+
+
+
+  #TODO: Don't do direct html rendering using link_to.  Use a shared partial instead (catalog/constraints_element).
+  def render_capture_date_filters(localized_params = params)
+
+    capture_start_date = localized_params[:capture_start_date].blank? ? nil : localized_params[:capture_start_date]
+    capture_end_date = localized_params[:capture_end_date].blank? ? nil : localized_params[:capture_end_date]
+
+    if(capture_start_date || capture_end_date)
+
+        capture_date_range_sting = 'zzzzzzzzzz';
+
+        if(capture_start_date && capture_end_date)
+            capture_date_range_sting = "#{capture_start_date} - #{capture_end_date}"
+        elsif(capture_start_date && !capture_end_date)
+            capture_date_range_sting = "After #{capture_start_date}"
+        elsif(!capture_start_date && capture_end_date)
+            capture_date_range_sting = "Before #{capture_end_date}"
+        end
+
+        options = {:remove => url_for_without_capture_date_params, :classes => ["capture_date"]}
+        removal_link_body = "Date Of Capture Range: #{capture_date_range_sting}"
+        return link_to(
+                        removal_link_body,
+                        options[:remove],
+                        :rel=>'tooltip', :title=>'Remove this filter', :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes]))
+
+    end
+
+  end
 
 end
