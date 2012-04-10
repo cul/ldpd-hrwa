@@ -193,6 +193,7 @@ iframe#x_container { width:100%; }
 #primary div.pagination { margin:0 0 1em 20px; height:auto; display:block; font-size:0.85em; }
 #home-tab-content .tab-pane { max-height:480px; overflow:auto; border:1px solid #ddd; border-top:0;padding-top:5px; }
 ul.tabs { margin-bottom:0; padding-left:10px;}
+ul.tabs li a {color:#88C34B;}
 #home-tab-content { background:#fff; }
 #home-tab-content .results_control { border:1px solid #ddd; border-top:0; border-bottom:1px dotted #eef; padding:2px 4px; }
 #home-tab-content .results_control > a { margin-right:2px; }
