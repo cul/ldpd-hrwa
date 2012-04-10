@@ -658,7 +658,7 @@ jQuery(function($) {
 	) +
     '<li>' +
 		'<span id="date_of_cap_custom_range_container">' +
-			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
+			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip lime" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
 			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
 				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
 				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
@@ -904,5 +904,13 @@ jQuery(function($) {
   $('#submit_bug_report_link').bind('click', function(){
 	alert('Bug reporting by public users is not yet implemented. You will now be redirected to the internal feedback form.');
   });
+
+// nomination form stuffs. actions here to slow robots.
+  $('#frmWebsiteNomination').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/ownernomination');
+  $('#frmWebsiteNomination-pub').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/publicnomination');
+
+// email mailto: to slow robots.
+  var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu'
+  $('.culhrweb-email').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
 
 }); // ready
