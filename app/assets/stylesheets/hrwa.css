@@ -221,15 +221,16 @@ article.entry h3 { line-height:1.2; margin:8px 0; }
 #sb-container { z-index:20000; }
 img.preview_icon { vertical-align:middle; opacity:0.75; }
 img.preview_icon:hover { opacity:1.0 }
-.moreless.btn, .toggle_all_btn, .see_all_hits.btn, .exclude_from_hits.btn, .results_control a.btn, .results_control span { padding:2px 6px 3px!important; font-family:monospace; }
+.moreless.btn, .toggle_all_btn, .see_all_hits.btn, .exclude_from_hits.btn, .results_control a.btn, .results_control .sort_by span { padding:2px 6px 3px!important; font-family:monospace; }
 a.moreless.btn { font-size:80%; }
 .results_control span { padding-right:0!important; }
+.results_control .per_page .dropdown-menu {min-width: 100px;}
 .results_control { display:none; /*float:right;*/text-align:left; line-height:10px; margin-bottom:9px; }
 .results_control .btn, .results_control span, .results_control select { font-size:80%!important; }
 .results_control select { width:55px; padding:0!important; height:20px; }
 .tab-content .results_control { padding-right:.5em; }
 #primary .results_control { text-align:right; vertical-align:middle; line-height:26px; margin-bottom:1em; }
-#primary .results_control a { font-size:95%!important; padding:0px 2px!important; }
+#primary .results_control a { text-align:left; font-size:95%!important; padding:0px 2px!important; }
 #slideshow { overflow:hidden; }
 #slideshow img { max-width:100%; }
 #fpCarousel { overflow:hidden; }
@@ -334,8 +335,14 @@ a.moreless.btn { font-size:80%; }
 #date_of_cap_custom_range_input_container .btn-small {margin-top:5px;margin-bottom:3px;}
 #date_of_cap_custom_range_input_container .btn-small.cancel {margin-left:67px;margin-right:5px;}
 
-/* result pagination */
+/* Search results */
+
+#result_handling_options.btn-toolbar {margin-top:3px;}
+#result_handling_options.btn-toolbar .btn-group .btn {padding: 0px 4px !important;}
+
+/* --- result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
+
 
 /* noscript */
 #js_warn { position:absolute; top:41px; z-index:9999; width:960px; text-align:center; }
