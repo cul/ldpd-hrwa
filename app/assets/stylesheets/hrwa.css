@@ -1,6 +1,16 @@
 body { padding-top:60px; color:#808080; background:#eef; background-image: url('./map-dark-150.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center top; background-size: auto;/* 100%;*/ }
-@font-face { font-family: trajanpro; src: url('./fonts/TrajanPro-Regular.otf'); }
 @font-face { font-family: trajanprobold; src: url('./fonts/TrajanPro-Bold.otf'); }
+@font-face {
+    font-family: 'TrajanProRegular';
+    src: url('./fonts/trajanpro-regular-webfont.eot');
+    src: url('./fonts/trajanpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/trajanpro-regular-webfont.woff') format('woff'),
+         url('./fonts/trajanpro-regular-webfont.ttf') format('truetype'),
+         url('./fonts/trajanpro-regular-webfont.svg#TrajanProRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 @font-face {
     font-family: 'BlueHighwayCondensed';
     src: url('./fonts/blue_highway_cd-webfont.eot');
@@ -97,7 +107,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #headlineCarousel .carousel-inner .item img { float:left;margin-left:auto; margin-right:auto; }
 #inner-headline { margin-bottom:1em; padding:.5em 0; }
 #inner-headline h1, #inner-headline h1 a { color:#fff; font-size:52px; font-weight:normal; text-shadow:2px 2px 0 #000; text-decoration:none; }
-#inner-headline h2 { font-weight:normal; color:#111; font-family:"trajan pro", trajanpro, trajan, georgia, serif; font-size:140%; text-shadow:none; }
+#inner-headline h2 { font-weight:normal; color:#111; font-family:TrajanProRegular, trajan, georgia, serif; font-size:140%; text-shadow:none; }
 /* Subnav */
 #secondary_nav { margin-right:-10px; margin-left:-10px; }
 #secondary_nav_right { line-height:26px;margin-right:20px; }
@@ -285,7 +295,7 @@ a.moreless.btn { font-size:80%; }
 .floatright { float:right; }
 .opacity_75 { opacity:.75; }
 .opacity_50 { opacity:.50; }
-.trajanpro { font-family:"trajan pro", trajanpro, trajan, georgia, serif; }
+.trajanpro { font-family:TrajanProRegular, trajan, georgia, serif; }
 .trajanprobold { font-family:"trajan pro bold", trajanprobold, trajan, georgia, serif; font-weight:bold; }
 .clear { clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0; }
 .clearfix { clear:both; }
