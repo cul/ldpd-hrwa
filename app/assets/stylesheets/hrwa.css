@@ -91,7 +91,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
   background-image: -webkit-linear-gradient(top, rgba(245,245,245,.2) 0%,rgba(238,238,238,.2) 100%); /* Chrome 10+,Safari 5.1+ */
   background-image: -ms-linear-gradient(top, rgba(245,245,245,.2) 0%,rgba(238,238,238,.2) 100%); /* IE10+ */
   background-image: -o-linear-gradient(top, rgba(245,245,245,.2) 0%,rgba(238,238,238,.2) 100%); /* Opera 11.10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(245,245,245,.2)', endColorstr='rgba(238,238,238,.2)',GradientType=0 ); /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
   background-image: linear-gradient(top, rgba(245,245,245,.2) 0%,rgba(238,238,238,.2) 100%); /* W3C */
   border-bottom: 1px solid #aaa;
   margin-bottom:1.5em;
