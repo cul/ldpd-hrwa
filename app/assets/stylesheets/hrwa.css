@@ -68,7 +68,21 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 /*.no-hero { margin-top:60px; }*/
 .hero-border { border:1px solid #ccd; padding-right:-1px; padding-left:-1px; }
 #advanced_options_container .hero-border { border-color:#000; }
-#inner-headline-outer { border-bottom:1px solid #888; background:rgba(23,71,133,0.7); background-image: url('./map-dark-lorez.png'); background-attachment:absolute; background-repeat: repeat-x; background-position:center; background-size: auto 100%; padding:1.7em 10px 0.3em 10px; margin-top:-2em; margin-left:-10px; margin-right:-10px; margin-bottom:0; }
+#inner-headline-outer { 
+	border-bottom:1px solid #888; 
+    background:#285896; /* for IE */
+	background:rgba(23,71,133,0.7); 
+	background-image: url('./map-dark-lorez.png'); 
+	background-attachment:absolute; 
+	background-repeat: repeat-x; 
+	background-position:center; 
+	background-size: auto 100%; 
+	padding:1.7em 10px 0.3em 10px; 
+	margin-top:-2em; 
+	margin-left:-10px; 
+	margin-right:-10px; 
+	margin-bottom:0; 
+}
 #inner-headline-outer #header-pic { border-color:#bbb; border:1px solid rgba(255,255,255,.4); padding:3px; }
 #headlineCarousel, #header-pic { overflow:hidden; height:80px; text-align:left; }
 #header-pic div.item, #headlineCarousel .carousel-inner .item { padding:0 3px; background:rgba(255,255,255,.6) url('./cul-chrdr-212x80.v3.png') no-repeat center center; min-height:80px; }
