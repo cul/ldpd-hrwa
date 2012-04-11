@@ -18,6 +18,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
   background-image: -webkit-linear-gradient(top, #285896, #174785);
   background-image: -o-linear-gradient(top, #285896, #174785);
   background-image: linear-gradient(top, #285896, #174785);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#285896', endColorstr='#174785',GradientType=0 ); /* IE6-9 */
 }
 .navbar ul.menu-dropdown { background-color:#174785!important; }
 .navbar #topbarformdiv .add-on { -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.25); background-color: rgba(255, 255, 255, 0.2); border: 1px solid #111111; border-left:0;color: rgba(255, 255, 255, 0.75); text-shadow:none; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12px; white-space:nowrap!important; }
