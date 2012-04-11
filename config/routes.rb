@@ -1,5 +1,9 @@
 Hrwa::Application.routes.draw do
 
+  # Our Blacklight stuff (before Blacklight adds its own routes)
+  match '/search'  => 'catalog#index'
+  match '/site_detail/:bib_key'  => 'catalog#site_detail'
+
   Blacklight.add_routes(self)
 
   # Static pages - no dynamic content at all
@@ -7,10 +11,6 @@ Hrwa::Application.routes.draw do
   match '/browse'      => 'static#collection_browse'
   match '/owner_nomination'      => 'static#owner_nomination'
   match '/public_nomination'      => 'static#public_nomination'
-
-  # Blacklight stuff
-  match '/search'  => 'catalog#index'
-  match '/site_detail/:bib_key'  => 'catalog#site_detail'
 
   # Internal stuff
   match '/internal/seed_list' => 'internal#seed_list'

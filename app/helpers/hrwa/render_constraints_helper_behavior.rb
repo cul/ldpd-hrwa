@@ -28,7 +28,7 @@ module HRWA::RenderConstraintsHelperBehavior
 
       render_constraint_element( label,
                   val,
-                  :remove => catalog_index_path(remove_facet_params(facet_or_filter, val, localized_params)),
+                  :remove => search_path(remove_facet_params(facet_or_filter, val, localized_params)),
                   :classes => ["filter", "filter-" + facet_or_filter.parameterize]
                 ) + "\n"
     end
