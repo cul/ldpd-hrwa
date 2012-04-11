@@ -87,7 +87,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #inner-headline-outer { 
 	border-bottom:1px solid #888; 
     background:#285896; /* for IE */
-	background:rgba(23,71,133,0.7); 
+	background:rgba(23,71,133,0.65); 
 	background-image: url('./map-dark-lorez.png'); 
 	background-attachment:absolute; 
 	background-repeat: repeat-x; 
