@@ -134,20 +134,26 @@
     <div class="span12">
 			<h6>dev options (temporary)</h6>
 			<div class="span6 nomar">
-						 <div class="control-group">
-						 <label class="span2 control-label">host</label>
-						 <select class="control-group pull-left">
-							 <option></option>
-						 </select>
-				 </div>
+				<div class="control-group">
+                    <label class="span2 control-label">host</label>
+                    <select name="hrwa_host" class="control-group pull-left"><%
+                        hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
+                        %>
+                        <option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
+                        <option value="dev"<%= hrwa_solr_host == 'dev' ? ' selected="selected"'.html_safe : '' %>>Dev</option>
+                        <option value="test"<%= hrwa_solr_host == 'test' ? ' selected="selected"'.html_safe : '' %>>Test</option>
+                        <option value="prod"<%= hrwa_solr_host == 'prod' ? ' selected="selected"'.html_safe : '' %>>Prod</option>
+                    </select>
+				</div>
 			</div>
 			<div class="span6 nomar">
-						 <div class="control-group">
-						 <label class="span2 control-label">core</label>
-						 <select class="control-group pull-left">
-							 <option></option>
-						 </select>
-				 </div>
+                <div class="control-group">
+                    <label class="span2 control-label">core</label>
+                    <select class="control-group pull-left">
+                        <option value="">- Choose an option -</option>
+                        <option value="asf" selected="selected">ASF (always selected for now)</option>
+                    </select>
+                </div>
 			</div>
     </div>
 </div>

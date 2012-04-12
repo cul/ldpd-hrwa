@@ -277,8 +277,19 @@ class HRWA::ArchiveSearchConfigurator
   end
 
   # Takes optional environment arg for testability
-  def solr_url( environment = Rails.env )
-    YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+  def solr_url(localized_params = params, environment = Rails.env)
+
+    if( !localized_params[:hrwa_host] || localized_params[:hrwa_host].blank? )
+      YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+		else
+      if localized_params[:hrwa_host] == 'dev'
+        'http://carter.cul.columbia.edu:8080/solr-4/asf'
+      elsif localized_params[:hrwa_host] == 'test'
+        'http://harding.cul.columbia.edu:8080/solr-4/asf'
+      elsif localized_params[:hrwa_host] == 'prod'
+        'http://machete.cul.columbia.edu:8080/solr-4/asf'
+      end
+    end
   end
 
 end
