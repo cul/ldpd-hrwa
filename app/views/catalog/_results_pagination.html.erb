@@ -26,8 +26,8 @@
             <% if @configurator.name == 'find_site' %>
             <div class="btn-group sort_by">
                 <%= link_to '#', search_path(params.merge({:sort => 'score desc'})),            {:class => (!params[:sort] || params[:sort] == 'score desc' ? 'active ' : '') + 'all_sort_default btn', :'data-original-title' => 'Sort by Relevance'} %>
-                <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__facet asc'})),    {:class => (params[:sort] == 'title__facet asc' ? 'active ' : '') + 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
-                <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__facet desc'})),   {:class => (params[:sort] == 'title__facet desc' ? 'active ' : '') + 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
+                <%= link_to 'A-Z', search_path(params.merge({:sort => 'title__sort asc'})),    {:class => (params[:sort] == 'title__sort asc' ? 'active ' : '') + 'all_sort_a-z btn', :'data-original-title' => 'Sort by A-Z'} %>
+                <%= link_to 'Z-A', search_path(params.merge({:sort => 'title__sort desc'})),   {:class => (params[:sort] == 'title__sort desc' ? 'active ' : '') + 'all_sort_z-a btn', :'data-original-title' => 'Sort by Z-A'} %>
             </div>
             <% end %>
 
