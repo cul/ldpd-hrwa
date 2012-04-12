@@ -109,6 +109,8 @@ module HRWA::CatalogHelperBehavior
 
     #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
     url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+    url_params.delete(:f) if url_params[:f] = nil
 
     #remove capture_start params
     url_params.delete(:capture_start_date)
@@ -210,6 +212,31 @@ module HRWA::CatalogHelperBehavior
       else
         "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b id='search_result_count'>#{total_num}</b>".html_safe
       end
+  end
+
+  #Uses params to determine the currently selected hrwa solr host,
+  #and if no host is specified in the params this method defaults
+  #to the current Rails.env value
+  def get_current_hrwa_solr_host(localized_params = params)
+
+    current_hrwa_solr_host = nil
+    valid_hosts = ["dev", "test", "prod"]
+
+    if(params[:hrwa_host] && valid_hosts.include?(params[:hrwa_host]))
+      current_hrwa_solr_host = params[:hrwa_host]
+    else
+        rails_env =  Rails.env;
+
+        #Use Rails.env instead
+        if(rails_env.development?)
+            current_hrwa_solr_host = 'dev'
+        elsif(rails_env.test?)
+            current_hrwa_solr_host = 'test'
+        else
+            current_hrwa_solr_host = 'prod'
+        end
+    end
+
   end
 
 end

@@ -48,6 +48,7 @@ class CatalogController < ApplicationController
       # Select appropriate partials
       @result_partial = @configurator.result_partial
       @result_type    = @configurator.result_type
+      @solr_url       = @configurator.solr_url(params)
 
       # TODO: remove this from production version
       if params.has_key?( :hrwa_debug )
@@ -88,12 +89,14 @@ class CatalogController < ApplicationController
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
 
-    Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url )
+    Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url(params) )
   end
 
   def _set_debug_display
     @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
     @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
+
+    @debug << "<h1>@solr_url    = #{ @solr_url }</h1>".html_safe
 
     @debug << "<h1>params[]</h1>".html_safe
     @debug << params_list
