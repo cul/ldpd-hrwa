@@ -113,8 +113,8 @@
 	<label class="span2 control-label">sort</label>
 	<select class="control-group" name="sort">
 	  <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
-	  <option value="title__facet asc" <%= params[:sort] == 'title__facet asc' ? 'selected="selected"'.html_safe : ''.html_safe %>>A-Z</option>
-	  <option value="title__facet desc" <%= params[:sort] == 'title__facet desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Z-A</option>
+	  <option value="title__sort asc" <%= params[:sort] == 'title__sort asc' ? 'selected="selected"'.html_safe : ''.html_safe %>>A-Z</option>
+	  <option value="title__sort desc" <%= params[:sort] == 'title__sort desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Z-A</option>
 	</select>
     </div>
  </div>
