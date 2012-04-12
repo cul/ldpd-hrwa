@@ -1,15 +1,27 @@
 <div class="container">
 
+      <!-- Main heading -->
+      <%= render :partial=>'static/inner_headlines' %>
+
+  <div class="row">
+    <div id="error-outer" class="span12">
+
 <%= debug_link %>
 
-<h1>ERROR:</h1>
-<%= @error_message %>
+<h3>ERROR:</h3>
+<div class="error-message">
+  <p>
+  <%= @error_message %>
+  </p>
+</div>
 
 <!-- TODO: TAKE THIS OUT OF PROD -->
 <div id="debug" name="debug" style="background-color: white; color: black; padding: 10px; border: 1px solid red; margin: 30px;">
   <%= @debug %>
 </div>
 
+    </div> 
+  </div>
 </div>
 
 <!-- REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS -->
