@@ -27,8 +27,14 @@ class CatalogController < ApplicationController
       begin
         (@response, @result_list) = get_search_results( params, {} )
       rescue => ex
-        @errors = ex.to_s.html_safe
-
+        @error = ex.to_s
+        Rails.logger.error( @error )
+        
+        # Get query text if there is any
+        user_q_text    = ex.request[ :params ][ :q ]
+        user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
+        @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see [placeholder for help link]." 
+        
         # TODO: remove this from production version
         if params.has_key?( :hrwa_debug )
           _set_debug_display
