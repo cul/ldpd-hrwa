@@ -6,18 +6,10 @@
   <div class="row">
     <div id="error-outer" class="span12">
 
-<%= debug_link %>
 
+<div class="error-message alert alert-danger big">
 <h3>ERROR:</h3>
-<div class="error-message">
-  <p>
   <%= @error_message %>
-  </p>
-</div>
-
-<!-- TODO: TAKE THIS OUT OF PROD -->
-<div id="debug" name="debug" style="background-color: white; color: black; padding: 10px; border: 1px solid red; margin: 30px;">
-  <%= @debug %>
 </div>
 
     </div> 
