@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
   include HRWA::SolrHelper
+  include HRWA::Catalog::Dev
 
   before_filter :_merge_f_add_into_f, :only => [:index]
 
@@ -48,7 +49,7 @@ class CatalogController < ApplicationController
       # Select appropriate partials
       @result_partial = @configurator.result_partial
       @result_type    = @configurator.result_type
-      @solr_url       = @configurator.solr_url(params)
+      @solr_url       = @configurator.solr_url
 
       # TODO: remove this from production version
       if params.has_key?( :hrwa_debug )
@@ -89,7 +90,9 @@ class CatalogController < ApplicationController
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
 
-    Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url(params) )
+    solr_url = (!params[:hrwa_host] || params[:hrwa_host].blank?) ? @configurator.solr_url : get_solr_host_from_url(@configurator.name, params)
+
+    Blacklight.solr = RSolr::Ext.connect( :url => solr_url)
   end
 
   def _set_debug_display

@@ -127,7 +127,7 @@
         <div class="span6 nomar">
             <div class="control-group">
                 <label class="span2 control-label">host</label>
-                <select name="hrwa_host" class="control-group pull-left"><%
+                <select name="hrwa_host" class="control-group pull-left hrwa_host"><%
                     hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
                     %>
                     <option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>

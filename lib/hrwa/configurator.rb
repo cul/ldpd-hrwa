@@ -62,8 +62,8 @@ class HRWA::Configurator
     return @configurator.result_type
   end
 
-  def solr_url(params)
-    return @configurator.solr_url(params)
+  def solr_url
+    return @configurator.solr_url
   end
 
   def prioritized_highlight_field_list

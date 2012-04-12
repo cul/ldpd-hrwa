@@ -218,11 +218,7 @@ class HRWA::SiteDetailConfigurator
     end
 
     # Takes optional environment arg for testability
-    # Note: localized_params isn't actually used by this method, and
-    # I pass a nil value to it automatically to indicate this.
-    # I only put these parameters here so that this method stays in
-    # synch with the other solr_url methods in the other configurators.
-    def solr_url(localized_params = nil, environment = Rails.env)
+    def solr_url(environment = Rails.env)
       YAML.load_file( 'config/solr.yml' )[ environment ][ 'site_detail' ][ 'url' ]
     end
 

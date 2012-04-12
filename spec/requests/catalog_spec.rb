@@ -214,6 +214,17 @@ describe 'archive search' do
       page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
     end
 
+    #it 'chooses the correct server when hrwa_host is selected in the advanced options', :js => true, :focus => true do
+    #  visit '/search'
+    #  choose 'asfsearch'
+    #  click_link 'advo_link'
+    #  fill_in 'q_and',              :with => 'women'
+    #  find('#advanced_options_asf select.hrwa_host').select('test')
+    #  click_link 'Menu'
+    #  click_link 'Turn debug on'
+    #  page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/fsf} )
+    #end
+
   end
 end
 
