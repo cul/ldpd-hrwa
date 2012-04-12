@@ -661,7 +661,7 @@ jQuery(function($) {
 	) +
     '<li>' +
 		'<span id="date_of_cap_custom_range_container">' +
-			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip lime" rel="tooltip" data-original-title="Filter by a custom date range" href="#">Custom range...</a>' +
+			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip lime" rel="tooltip" data-original-title="Filter by a custom date range" href="#">custom range &raquo;</a>' +
 			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
 				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
 				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
