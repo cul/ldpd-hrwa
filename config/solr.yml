@@ -35,6 +35,14 @@ hrwa_test:
     url: http://harding.cul.columbia.edu:8080/solr-4/fsf
   site_detail:
     url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+
+hrwa_staging:
+  asf:
+    url: http://harding.cul.columbia.edu:8080/solr-4/asf
+  fsf:
+    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+  site_detail:
+    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
     
 # TODO: This is temporary until we have our dedicated SOLR server
 # Please note the port is 8181 and not 8080, which currently is the

@@ -165,6 +165,10 @@ describe 'HRWA::SiteDetailConfigurator' do
       @configurator.solr_url( 'hrwa_test' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/fsf'
     end
 
+    it 'returns correct URL for environment "hrwa_staging"' do
+      @configurator.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/fsf'
+    end
+
     it 'returns correct URL for environment "hrwa_prod"' do
       @configurator.solr_url( 'hrwa_prod' ).should == 'http://machete.cul.columbia.edu:8181/solr-4/fsf'
     end
