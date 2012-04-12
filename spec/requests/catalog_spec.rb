@@ -167,7 +167,7 @@ describe 'archive search' do
       page.should have_content('No results found')
     end
 
-    it 'returns 2,306 results for q_and=women', :js => true, :focus => true do
+    it 'returns 2,306 results for q_and=women', :js => true do
       visit '/search'
       choose 'asfsearch'
       click_link 'advo_link'

@@ -435,6 +435,9 @@ jQuery(function($) {
   $('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
   $('.tab-content .results_control').not('#home-tab-content .results_control').show();
   showControls();
+  if ($.browser.msie) {
+    $('#col_control').css('display','none');
+  }
   $('ul.tabs li a').live('click', function() { showControls(); $(this).blur(); });
 
   // cbf home column controls

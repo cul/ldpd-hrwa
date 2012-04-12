@@ -220,7 +220,7 @@ class HRWA::FindSiteSearchConfigurator
 
     # Takes optional environment and localized_params args for testability
     def solr_url(localized_params = params, environment = Rails.env)
-      if( !localized_params[:hrwa_host].blank? )
+      if( !localized_params[:hrwa_host] || localized_params[:hrwa_host].blank? )
         YAML.load_file( 'config/solr.yml' )[ environment ][ 'fsf' ][ 'url' ]
       else
         if localized_params[:hrwa_host] == 'dev'
