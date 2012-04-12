@@ -29,12 +29,18 @@ class CatalogController < ApplicationController
       rescue => ex
         @error = ex.to_s
         Rails.logger.error( @error )
-        
-        # Get query text if there is any
-        user_q_text    = ex.request[ :params ][ :q ]
-        user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
-        @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see [placeholder for help link]." 
-        
+
+        # We are categorizing user errors into :user and :system
+        if ! ex.to_s.match( /org\.apache\.lucene\.queryParser\.ParseException/).nil?
+          # Get query text if there is any
+          user_q_text    = ex.request[ :params ][ :q ]
+          user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
+          @error_type    = :user
+          @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see <a hrea=''>[placeholder for help link].</a>".html_safe 
+        else
+          @error_type    = :system
+          @error_message = "Sorry, there has been an internal system error.  Please contact <a hrea=''>[placeholder for help link].</a>".html_safe
+        end
         # TODO: remove this from production version
         if params.has_key?( :hrwa_debug )
           _set_debug_display
