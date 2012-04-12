@@ -49,11 +49,11 @@
 			  <li class="dropdown menu">
 				<a href="#" class="dropdown-toggle menu" data-toggle="dropdown">Menu <b class="caret"></b></a>
 				<ul id="pages_dropdown" class="dropdown-menu menu-dropdown">
-				  <li <% if current_page?(root_path) %>class="active"<% end %>><a href="<%= root_path %>">HRWA Home</a></li>
-				  <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About HRWA</a></li>
-				  <li><a href="#help" class="donothing">Help &amp; Tips</a></li>
+				  <li <% if current_page?(root_path) %>class="active"<% end %>><a href="<%= root_path %>"><i class="icon-home icon-white"></i> HRWA Home</a></li>
+				  <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>"><i class="icon-info-sign icon-white"></i> About HRWA</a></li>
+				  <li><a href="#help" class="donothing"><i class="icon-question-sign icon-white"></i> Help &amp; Tips</a></li>
 				  <li class="divider"></li>
-				  <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>">Browse HRWA</a></li>
+				  <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>"><i class="icon-eye-open icon-white"></i> Browse HRWA</a></li>
 				  <li><%if params[:controller] == 'catalog' && params[:action] == 'index' %><%= debug_link %><% end %></li>
 				</ul>
 			  </li>
