@@ -165,7 +165,7 @@ iframe#x_container { width:100%; }
 #fqs a.delfq { font-size:80%; color:#0088CC; }
 #fqs a.delfq.exclusion { font-size:80%; color:red; }
 #topfqs { display:none; }
-#primary #fqs a.btn { margin-bottom:4px; padding:2px; }
+#primary #fqs a.btn { margin-bottom:4px; padding:2px 4px; }
 #site_footer { margin-top:2em; border-top:1px solid #eee; }
 #site_footer #culcul { padding-left:28px; background:#fff url('./crown-small-blue.png') no-repeat 0 2px; line-height:28px; font-size:11px; }
 #primary article {overflow:hidden;}

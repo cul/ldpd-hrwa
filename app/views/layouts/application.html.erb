@@ -87,8 +87,9 @@
                           :q, :qt, :page, :utf8,
                           #hrwa custom additions
                           :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode, :f_add,
-                          #omit for asf
-                          :sort
+                          #top level params to omit for asf
+                          :sort,
+                          #facets to omit for fsf
                        ]).html_safe %>
     </div>
     <div id="hidden_search_fields_fsf" class="hidden_search_fields">
@@ -96,8 +97,10 @@
                           :q, :qt, :page, :utf8,
                           #hrwa custom additions
                           :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode, :f_add,
-                          #omit for fsf
-                          :field, :capture_start_date, :capture_end_date, :excl_domain
+                          #top level params to omit for fsf
+                          :field, :capture_start_date, :capture_end_date, :excl_domain,
+                          #facets to omit for fsf
+                          { :f => ['dateOfCaptureYYYY'] }
                        ]).html_safe %>
     </div>
 	</div>
