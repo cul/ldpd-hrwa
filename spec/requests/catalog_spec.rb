@@ -336,3 +336,16 @@ describe 'javascript two-way query conversion tests' do
   end
 
 end
+
+describe 'error handler' do
+  it 'returns invalid query error to user when query is a single plus sign' do
+    visit '/search'
+    
+    fill_in 'q', :with => '+'
+    
+    # TODO: change this from a page scan to just referencing whatever div the Eri[ck]s put the 
+    # error text in
+    page.should have_content( '"+" is not valid.' )
+    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should_not be_nil
+  end  
+end
