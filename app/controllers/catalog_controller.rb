@@ -36,10 +36,10 @@ class CatalogController < ApplicationController
           user_q_text    = ex.request[ :params ][ :q ]
           user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
           @error_type    = :user
-          @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see <a hrea=''>[placeholder for help link].</a>".html_safe 
+          @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see <a href='#'>[placeholder for help link]</a>.".html_safe
         else
           @error_type    = :system
-          @error_message = "Sorry, there has been an internal system error.  Please contact <a hrea=''>[placeholder for help link].</a>".html_safe
+          @error_message = "Sorry, there has been an internal system error.  Please contact <a href='#'>[placeholder for help link]</a>.".html_safe
         end
         # TODO: remove this from production version
         if params.has_key?( :hrwa_debug )
