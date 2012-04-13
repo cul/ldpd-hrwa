@@ -18,4 +18,7 @@ class StaticController < ApplicationController
   def index
   end
 
+  def bug_report
+  end
+
 end

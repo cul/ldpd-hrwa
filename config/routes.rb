@@ -11,6 +11,7 @@ Hrwa::Application.routes.draw do
   match '/browse'      => 'static#collection_browse'
   match '/owner_nomination'      => 'static#owner_nomination'
   match '/public_nomination'      => 'static#public_nomination'
+  match '/bug_report'      => 'static#bug_report'
 
   # Internal stuff
   match '/internal/seed_list' => 'internal#seed_list'
