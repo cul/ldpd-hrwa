@@ -348,7 +348,7 @@ a.moreless.btn { font-size:80%; }
 #start_new_search_link {margin-top: -25px; color:#88C34B; }
 
 /* Simple search form */
-#advo_link {padding:5px;line-height:20px; }
+#advo_link {/*padding:5px;line-height:20px;*/ }
 
 /* advanced search form */
 #advo a { text-decoration:none; }
