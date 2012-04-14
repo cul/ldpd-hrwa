@@ -46,6 +46,8 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .navbar input { background-color: rgba(255, 255, 255, 0.4); }
 .navbar input[type="radio"] { background-color:transparent; /* for ie */ border:0; /* for opera */ }
 .navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; margin-top:1px;}
+.navbar .add-on a { text-decoration:none; }
+.navbar .add-on a:hover { color: #fff; }
 #cul_top { }
 #cul_inner { width:960px; margin-right:auto;margin-left:auto; background:transparent url('./crown-bts-24x24.png') no-repeat left top; color:#aaa; font-size:9px; padding:4px 5px 1px 28px; /*-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;*/ /*border:1px solid #555;*/ }
 #cul_right { float:right; color:#ccc; }
@@ -280,7 +282,7 @@ a.moreless.btn { font-size:80%; }
 .inline { display:inline; }
 .black { color:#000!important; }
 .gray { color:#666; }
-.lime { color:#88C34B!important; }
+.lime { color:#88C34B; }
 .primary_blue { color:#0088CC; }
 .blue { color:#0064cd!important; }
 .culblue2 { color:#75aadb; }
