@@ -148,29 +148,32 @@ describe 'HRWA::SiteDetailConfigurator' do
   end
 
   describe '#solr_url' do
+
+    solr_yml = YAML.load_file( 'config/solr.yml' )
+
     it 'returns correct URL for environment "development"' do
-      @configurator.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/fsf'
+      @configurator.solr_url( 'development' ).should == solr_yml['development']['site_detail']['url']
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.solr_url().should == 'http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test'
+      @configurator.solr_url().should == solr_yml['test']['site_detail']['url']
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/fsf'
+      @configurator.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['site_detail']['url']
     end
 
     it 'returns correct URL for environment "hrwa_test"' do
-      @configurator.solr_url( 'hrwa_test' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/fsf'
+      @configurator.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['site_detail']['url']
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/fsf'
+      @configurator.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['site_detail']['url']
     end
 
     it 'returns correct URL for environment "hrwa_prod"' do
-      @configurator.solr_url( 'hrwa_prod' ).should == 'http://machete.cul.columbia.edu:8181/solr-4/fsf'
+      @configurator.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['site_detail']['url']
     end
   end
 

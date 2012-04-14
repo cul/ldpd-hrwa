@@ -265,74 +265,76 @@ describe 'find site search' do
 
 end
 
-describe 'javascript two-way query conversion tests' do
+describe 'javascript two-way query conversion' do
 
-  it 'properly converts multi q to single q', :js => true do
+  describe 'proper multi q to single q conversion', :js => true do
 
-    visit '/search'
+		before :each do
+			visit '/search'
+		end
 
-    #test 1 - basic test
-    click_link 'advo_link'
-    fill_in 'q_and', :with => 'and1 and2 and3'
-    fill_in 'q_phrase', :with => 'an exact phrase'
-    fill_in 'q_or', :with => 'or1 or2 or3'
-    fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
-    find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
-
+    it 'succeeds at a basic test' do
+			click_link 'advo_link'
+			fill_in 'q_and', :with => 'and1 and2 and3'
+			fill_in 'q_phrase', :with => 'an exact phrase'
+			fill_in 'q_or', :with => 'or1 or2 or3'
+			fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
+			find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
+    end
 
   end
 
-  it 'properly converts single q to multi q', :js => true do
+  describe 'proper single q to multi q conversion', :js => true do
 
-    visit '/search'
+    before :each do
+        visit '/search'
+    end
 
-    #test 1 - basic test
-    fill_in 'q', :with => '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
-    click_link 'advo_link'
-    find_field('q_and').value.should == 'and1 and2 and3'
-    find_field('q_phrase').value.should == 'an exact phrase'
-    find_field('q_or').value.should == 'or1 or2 or3'
-    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    it 'succeeds at a basic test' do
+        fill_in 'q', :with => '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
+        click_link 'advo_link'
+        find_field('q_and').value.should == 'and1 and2 and3'
+        find_field('q_phrase').value.should == 'an exact phrase'
+        find_field('q_or').value.should == 'or1 or2 or3'
+        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    end
 
-    visit '/search'
+    it 'works when q starts with a double quote' do
+        fill_in 'q', :with => '"an exact phrase" +and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3'
+        click_link 'advo_link'
+        find_field('q_and').value.should == 'and1 and2 and3'
+        find_field('q_phrase').value.should == 'an exact phrase'
+        find_field('q_or').value.should == 'or1 or2 or3'
+        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    end
 
-    #test 2 - q starts with a quote
-    fill_in 'q', :with => '"an exact phrase" +and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3'
-    click_link 'advo_link'
-    find_field('q_and').value.should == 'and1 and2 and3'
-    find_field('q_phrase').value.should == 'an exact phrase'
-    find_field('q_or').value.should == 'or1 or2 or3'
-    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    it 'works when q ends with a double quote' do
+        fill_in 'q', :with => '+and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3 "an exact phrase"'
+        click_link 'advo_link'
+        find_field('q_and').value.should == 'and1 and2 and3'
+        find_field('q_phrase').value.should == 'an exact phrase'
+        find_field('q_or').value.should == 'or1 or2 or3'
+        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    end
 
-    visit '/search'
+it 'works when q has lots of unnecessary extra spaces' do
+        fill_in 'q', :with => '     +and1 +and2      +and3    "an exact phrase"    or1      or2      or3     -exclude1     -exclude2 -exclude3     '
+        click_link 'advo_link'
+        find_field('q_and').value.should == 'and1 and2 and3'
+        find_field('q_phrase').value.should == 'an exact phrase'
+        find_field('q_or').value.should == 'or1 or2 or3'
+        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    end
 
-    #test 3 - q ends with a quote
-    fill_in 'q', :with => '+and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3 "an exact phrase"'
-    click_link 'advo_link'
-    find_field('q_and').value.should == 'and1 and2 and3'
-    find_field('q_phrase').value.should == 'an exact phrase'
-    find_field('q_or').value.should == 'or1 or2 or3'
-    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
+    it 'works when q has lots of detached pluses and minuses (if a plus or minus sign is alone, it\'s treated as a lone character rather than a special solr syntax item)' do
+        fill_in 'q', :with => '+ and1 + and2 +and3 "an exact phrase" or1 or2 or3 - exclude1 - exclude2 -exclude3'
+        click_link 'advo_link'
+        find_field('q_and').value.should == 'and3'
+        find_field('q_phrase').value.should == 'an exact phrase'
+        find_field('q_or').value.should == '+ and1 + and2 or1 or2 or3 - exclude1 - exclude2'
+        find_field('q_exclude').value.should == 'exclude3'
+    end
 
-    visit '/search'
-
-    #test 4 - lots of unnecessary spaces in q
-    fill_in 'q', :with => '     +and1 +and2      +and3    "an exact phrase"    or1      or2      or3     -exclude1     -exclude2 -exclude3     '
-    click_link 'advo_link'
-    find_field('q_and').value.should == 'and1 and2 and3'
-    find_field('q_phrase').value.should == 'an exact phrase'
-    find_field('q_or').value.should == 'or1 or2 or3'
-    find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
-
-    visit '/search'
-
-    #test 5 - detached pluses and minuses (if a plus or minus sign is alone, it's treated as a lone character rather than a special solr syntax item)
-    fill_in 'q', :with => '+ and1 + and2 +and3 "an exact phrase" or1 or2 or3 - exclude1 - exclude2 -exclude3'
-    click_link 'advo_link'
-    find_field('q_and').value.should == 'and3'
-    find_field('q_phrase').value.should == 'an exact phrase'
-    find_field('q_or').value.should == '+ and1 + and2 or1 or2 or3 - exclude1 - exclude2'
-    find_field('q_exclude').value.should == 'exclude3'
   end
 
 end
@@ -340,13 +342,13 @@ end
 describe 'error handler' do
   it 'returns invalid query error to user when query is a single plus sign', :js => true do
     visit '/search'
-    
+
     fill_in 'q', :with => '+'
     click_link 'top_form_submit'
-    
-    # TODO: change this from a page scan to just referencing whatever div the Eri[ck]s put the 
+
+    # TODO: change this from a page scan to just referencing whatever div the Eri[ck]s put the
     # error text in
     page.should have_content( '"+" is not valid.' )
     page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should_not be_nil
-  end  
+  end
 end
