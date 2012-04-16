@@ -35,10 +35,11 @@
 			<!-- TODO: Clean up unnecessary classes.-->
 			<div id="topbarformdiv" class="navbar-search pull-left">
 			  <input type="hidden" name="search" value="true" />
-			  <div class="input-append"><a href="#" id="advo_link" title="Advanced Options Toggle" rel="tooltip" class="advtoggle mono small pull-right lime">Adv+</a><%
-				%><input class="span6 pull-left search-query" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"><%
-				%><label class="pull-right add-on success"><a href="#" id="top_form_submit" class="submitss white">Submit</a><input type="submit" class="hidden invisible" /></label><%
-				%><label class="pull-right add-on" title="Start a New Search" rel="tooltip"><%= link_to '<i class="icon-refresh icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
+			  <div class="input-append">
+				<input class="span5 pull-left search-query" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"><%
+				%><label class="pull-right add-on success" id="top_form_submit_label"><a href="#" id="top_form_submit" class="submitss white">Submit <i class="icon-arrow-right icon-white"></i></a><input type="submit" class="hidden invisible" /></label><%
+				%><label class="pull-right add-on" title="Advanced Options Toggle" rel="tooltip"><a href="#" id="advo_link" class="advtoggle lime">Advanced</a></label><%
+				%><label class="pull-right add-on" title="Reset All Filters &amp; Start a New Search" rel="tooltip"><%= link_to '<i class="icon-refresh icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
 				%><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
 				%><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
 				%>
@@ -123,6 +124,7 @@
 
     <div class="container">
       <footer id="site_footer">
+        <p class="alignright"><a href="<%= public_feedback_path %>" class="">Public Feedback Form</a> &bull; <a href="<%= public_bugreports_path %>" class="">Public Bug Report Form</a></p>
         <p class="alignright"><a id="submit_bug_report_link" href="/internal_feedback">Submit bug report</a></p>
 	<p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2012</span><!--<a href="http://columbia.edu">CU Home</a> &gt; <a href="http://library.columbia.edu">Libraries Home</a>--></p>
       </footer>
