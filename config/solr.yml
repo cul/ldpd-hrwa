@@ -30,11 +30,11 @@ hrwa_dev: *development
 
 hrwa_staging:
   asf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/asf
+    url: http://machete.cul.columbia.edu:8080/solr-4/asf
   fsf:
-    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+    url: http://machete.cul.columbia.edu:8080/solr-4/fsf
   site_detail:
-    url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+    url: http://machete.cul.columbia.edu:8080/solr-4/fsf
     
 hrwa_test:
   asf:
