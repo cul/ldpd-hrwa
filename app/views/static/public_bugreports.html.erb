@@ -1,0 +1,57 @@
+
+    <div class="container no-hero-mobile">
+
+  <!-- Main heading -->
+  <%= render :partial=>'static/inner_headlines' %>
+
+	  <div class="content">
+
+      <div class="row">
+        <div class="span12 columns">
+	<article class="entry">
+        <h2>Bug Report</h2>
+        <p>This form is for public bug reports for <strong>Human Rights Web Archive</strong>. For comments/feedback, please use the <a href="<%= public_feedback_path %>" class="">public feedback form</a>.</p>
+        <p>Or send an email to <a class="culhrweb-bugreports" href="#">&hellip;</a>. See also our <a href="#" class="donothing">FAQ</a>.</p>
+
+<form class="form-horizontal" id="frmBugReports" name="frmBugReports" action="#">
+        <input type="hidden" value="(none)" name="http_referer">
+        <input type="hidden" value="culhrweb-bugreports$$" name="subject">
+        <input type="hidden" class="culhrweb-bugreports" value="#" name="mail_dest">       
+        <input type="hidden" value="true" name="echo_data">
+  <fieldset>
+    <div class="control-group">
+        <label class="control-label">Bug Report Description</label>
+      <div class="controls">
+        <textarea class="span9" id="txtBugreport" name="Bugreport" cols="70" rows="6" required="required"></textarea>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Contact Information</legend>
+    <p>Contact information is optional, but would be helpful in case we have any questions.
+    <div class="control-group">
+        <label class="control-label">Name</label>
+      <div class="controls">
+        <input class="span9" id="inpContactName" name="ContactName" type="text" size="40">
+      </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">E-mail</label>
+      <div class="controls">
+        <input class="span9" id="inpContactEmail" name="ContactEmail" type="text" size="40">
+      </div>
+    </div>
+  </fieldset>
+        <p class="submit">
+          <input type="submit" value="Submit" class="btn btn-primary donothing">
+        </p>
+</form>
+
+	</article>
+       </div>
+      </div>
+
+	  </div> <!--//content-->
+
+
+    </div> <!-- /container -->

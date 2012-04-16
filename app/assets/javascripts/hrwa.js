@@ -915,12 +915,12 @@ jQuery(function($) {
   $('#frmPublicFeedback').attr('action', 'http://www.columbia.edu/cgi-bin/cul/ldpd-inbox.pl');
 
 // email mailto: to slow robots.
-  var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu'
-  var culhrweb-bugreports = 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu'
-  var culhrweb-all = 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu'
+  var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu';
+  var culhrweb_bugreports = 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu';
+  var culhrweb_all = 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu';
   $('a.culhrweb-email').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
-  $('a.culhrweb-bugreports').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
-  $('a.culhrweb-all').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
+  $('a.culhrweb-bugreports').attr('href', 'm'+'ailto:'+culhrweb_bugreports).html(culhrweb_bugreports);
+  $('a.culhrweb-all').attr('href', 'm'+'ailto:'+culhrweb_all).html(culhrweb_all);
   $('input.culhrweb-all').attr('value', 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu');
   $('input.culhrweb-bugreports').attr('value', 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu');
 

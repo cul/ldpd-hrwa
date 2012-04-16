@@ -21,4 +21,10 @@ class StaticController < ApplicationController
   def bug_report
   end
 
+  def public_feedback
+  end
+
+  def public_bugreports
+  end
+
 end
