@@ -6,16 +6,6 @@ GIT
     rsolr-ext (1.0.3)
       rsolr (>= 1.0.1)
 
-PATH
-  remote: ~/.rvm/gems/ruby-1.9.3-p0/gems/linecache19-0.5.13/
-  specs:
-    linecache19 (0.5.13)
-
-PATH
-  remote: ~/.rvm/gems/ruby-1.9.3-p0/gems/ruby-debug-base19-0.11.26/
-  specs:
-    ruby-debug-base19 (0.11.26)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -48,6 +38,7 @@ GEM
     activesupport (3.1.2)
       multi_json (~> 1.0)
     addressable (2.2.7)
+    archive-tar-minitar (0.5.2)
     arel (2.2.3)
     bcrypt-ruby (3.0.1)
     blacklight (3.2.2)
@@ -150,6 +141,8 @@ GEM
     launchy (2.0.5)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
+    linecache19 (0.5.13)
+      ruby_core_source (>= 0.1.4)
     mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -212,12 +205,18 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.8.0)
+    ruby-debug-base19 (0.11.26)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
     ruby-ole (1.2.11.3)
     ruby-prof (0.10.8)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
     ruby_gntp (0.3.4)
     rubyzip (0.9.6.1)
     sass (3.1.14)
@@ -282,7 +281,7 @@ DEPENDENCIES
   jquery-rails (= 1.0.19)
   json (= 1.6.5)
   launchy (= 2.0.5)
-  linecache19 (= 0.5.13)!
+  linecache19 (= 0.5.13)
   mysql2 (= 0.3.11)
   nokogiri (= 1.5.0)
   rails (= 3.1.2)
@@ -290,7 +289,7 @@ DEPENDENCIES
   rb-readline (= 0.4.2)
   rsolr-ext!
   rspec-rails (= 2.8.1)
-  ruby-debug-base19 (= 0.11.26)!
+  ruby-debug-base19 (= 0.11.26)
   ruby-debug19
   ruby-prof (= 0.10.8)
   ruby_gntp (= 0.3.4)
