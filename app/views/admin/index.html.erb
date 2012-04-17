@@ -1,5 +1,22 @@
 <div class="container no-hero-mobile">
-    Admin controller!
+    <h2>Hello, <%= current_admin.username %>!</h2>
 
-    Admin is signed in: <%= @admin_is_signed_in.to_s %>
+    <div>
+        <p>Here's some helpful information:</p>
+        <ul>
+            <li>
+                <strong>Ruby Version:</strong>
+                <%= RUBY_VERSION %>
+            </li>
+            <li>
+                <strong>HRWA App Version:</strong>
+                <%= IO.read('VERSION') %>
+            </li>
+            <li>
+                <strong>File system location:</strong>
+                <%= Dir.getwd %>
+            </li>
+        </ul>
+    </div>
+
 </div> <!-- /container -->
