@@ -10,7 +10,8 @@
     <dd class="result_url">
       <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
       <% #For now, I'm assuming it's just the first one. %>
-      <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
+      <% original_url = document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
+			<%= original_url %>
     </dd>
 
     <dd class="fsf hl_snippet invisible">
@@ -58,9 +59,9 @@
 
 				<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
 				<% #crawl_calendar_url_with_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
-				<% crawl_calendar_url_without_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :bib_key => document.get("bib_key")} %>
+				<% crawl_calendar_url_without_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :archived_url => url_encode(original_url)} %>
 				<%= link_to 'Crawl Calendar', archived_url, :rel => 'tooltip', :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
-				[<%= link_to preview_icon, crawl_calendar_url_without_return_to, :rel => 'tooltip', :title => 'Crawl calendar preview for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
+				<!-- [<%= link_to preview_icon, crawl_calendar_url_without_return_to, :rel => 'tooltip', :title => 'Crawl calendar preview for: ' +  document.get("title"), :class => 'ccf_quicklook'%>] -->
       </span>
     </dd>
 

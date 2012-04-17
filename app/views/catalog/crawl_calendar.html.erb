@@ -1,15 +1,18 @@
 <%
+    archived_url = params[:archived_url]
+
+    rss_link = 'http://wayback.archive-it.org/1068/xmlquery?q=type:' + url_encode('urlquery requestexactscheme:yes url:' + archived_url + ' startdate:19960101000000&count=100000&start_page=1');
+
     require 'rss/1.0'
     require 'rss/2.0'
     require 'open-uri'
 
-    source = "http://rubyforge.org/export/rss_sfnewreleases.php" # url or local file
+    # source = url or local file
+    source = rss_link
     content = "" # raw content of rss feed will be loaded here
     open(source) do |s| content = s.read end
     rss = RSS::Parser.parse(content, false)
 %>
-
-<%= rss %>
 
 <div class="container">
     <div class="row">
@@ -19,38 +22,23 @@
             </p>
             <h3>Crawl Calendar</h3>
 
-            <p>Crawl Results for: <strong>http://www.tihv.org.tr/</strong></p>
+            <p>Crawl Results for: <strong><%= archived_url %></strong></p>
             <div id='crawl_calendar'>
 
-                <div class='cc_box'>
-                    <div class='cc_cal'>
-                        <a href='avf.php?q=human&in=fsf&site=http://www.tihv.org.tr/&amp;url=http://wayback.archive-it.org/1068/20080813155611/http://www.tihv.org.tr/'>
-                            <span class='cc_day'>13</span>
-                            <span class='cc_month_year'>Aug. <span class='year'>2008</span> <span class='red' title='updated'>*</span></span>
-                        </a>
-                    </div>
-                    <div class='cc_desc'>http://www.tihv.org.tr/</div>
-                </div>
+                <% rss.items.each do |item| %>
 
-                <div class='cc_box'>
-                    <div class='cc_cal'>
-                        <a href='avf.php?q=human&in=fsf&site=http://www.tihv.org.tr/&amp;url=http://wayback.archive-it.org/1068/20080813155611/http://www.tihv.org.tr/'>
-                            <span class='cc_day'>13</span>
-                            <span class='cc_month_year'>Aug. <span class='year'>2008</span> <span class='red' title='updated'>*</span></span>
-                        </a>
+                    <div class='cc_box'>
+                        <div class='cc_cal'>
+                            <a href='<%= item.link %>'>
+                                <span class='cc_day'>13</span>
+                                <span class='cc_month_year'>Aug. <span class='year'>2008</span> <span class='red' title='updated'>*</span></span>
+                            </a>
+                        </div>
+                        <div class='cc_desc'><%= archived_url %></div>
+                        <%= item.title %>
                     </div>
-                    <div class='cc_desc'>http://www.tihv.org.tr/</div>
-                </div>
 
-                <div class='cc_box'>
-                    <div class='cc_cal'>
-                        <a href='avf.php?q=human&in=fsf&site=http://www.tihv.org.tr/&amp;url=http://wayback.archive-it.org/1068/20080813155611/http://www.tihv.org.tr/'>
-                            <span class='cc_day'>13</span>
-                            <span class='cc_month_year'>Aug. <span class='year'>2008</span> <span class='red' title='updated'>*</span></span>
-                        </a>
-                    </div>
-                    <div class='cc_desc'>http://www.tihv.org.tr/</div>
-                </div>
+                <% end %>
 
             </div>
         </div>

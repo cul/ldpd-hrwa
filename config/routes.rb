@@ -5,7 +5,7 @@ Hrwa::Application.routes.draw do
   # Our Blacklight stuff (before Blacklight adds its own routes)
   match '/search'  => 'catalog#index'
   match '/site_detail/:bib_key'  => 'catalog#site_detail'
-  match '/crawl_calendar/:bib_key'  => 'catalog#crawl_calendar'
+  match '/crawl_calendar/:archived_url'  => 'catalog#crawl_calendar', :constraints => {:archived_url => /.+/}
 
   Blacklight.add_routes(self)
 
