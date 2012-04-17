@@ -171,4 +171,10 @@ class CatalogController < ApplicationController
 
   end
 
+  def crawl_calendar
+    _configure_by_search_type('site_detail')
+    @bib_key = params[:bib_key]
+    @response, @document = get_solr_response_for_doc_id(@bib_key)
+  end
+
 end
