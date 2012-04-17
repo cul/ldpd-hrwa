@@ -38,8 +38,8 @@
 			  <div class="input-append">
 				<input class="span5 pull-left search-query" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"><%
 				%><label class="pull-right add-on success" id="top_form_submit_label"><a href="#" id="top_form_submit" class="submitss white">Submit <i class="icon-arrow-right icon-white"></i></a><input type="submit" class="hidden invisible" /></label><%
+                %><label class="pull-right add-on" title="Clear All Filters &amp; Start a New Search" rel="tooltip"><%= link_to '<i class="icon-remove icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
 				%><label class="pull-right add-on" title="Advanced Options Toggle" rel="tooltip"><a href="#" id="advo_link" class="advtoggle lime">Advanced</a></label><%
-				%><label class="pull-right add-on" title="Reset All Filters &amp; Start a New Search" rel="tooltip"><%= link_to '<i class="icon-refresh icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
 				%><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
 				%><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
 				%>
@@ -56,6 +56,19 @@
 				  <li class="divider"></li>
 				  <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>"><i class="icon-eye-open icon-white"></i> Browse HRWA</a></li>
 				  <li><%if params[:controller] == 'catalog' && params[:action] == 'index' %><%= debug_link %><% end %></li>
+                  <li class="divider"></li>
+                  <%
+                    if(admin_signed_in?)
+                        %>
+                        <li><%= link_to '<i class="icon-user icon-white"></i> Admin CP'.html_safe, admin_path %></li>
+                        <li><%= link_to '<i class="icon-arrow-left icon-white"></i> Log out'.html_safe, admin_logout_path %></li>
+                        <%
+                    else
+                        %>
+                        <li <% if current_page?(admin_login_path) %>class="active"<% end %>><%= link_to '<i class="icon-lock icon-white"></i> Admin Login'.html_safe, admin_login_path %></li>
+                        <%
+                    end
+                  %>
 				</ul>
 			  </li>
 			</ul>
@@ -109,6 +122,12 @@
     <%
       # Start main content!
     %>
+
+
+    <div class="container no-hero-mobile">
+    <!-- Main heading -->
+    <%= render :partial=>'static/inner_headlines' %>
+    </div>
 
     <%= render :partial=>'/flash_msg' %>
     <%= yield %>

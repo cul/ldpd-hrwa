@@ -1,5 +1,7 @@
 Hrwa::Application.routes.draw do
 
+  devise_for :admins
+
   # Our Blacklight stuff (before Blacklight adds its own routes)
   match '/search'  => 'catalog#index'
   match '/site_detail/:bib_key'  => 'catalog#site_detail'
@@ -18,6 +20,9 @@ Hrwa::Application.routes.draw do
   # Internal stuff
   match '/internal/seed_list' => 'internal#seed_list'
 
+  # Admin controller
+  match '/admin'      => 'admin#index'
+
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
   match '/advanced_fsf',      :to => redirect( '/advanced_fsf.html' )
@@ -27,8 +32,14 @@ Hrwa::Application.routes.draw do
   resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
   root :to => "static#index"
-  devise_for :users
 
+  # Devise Login Options
+  #devise_for :users
+  devise_for :admins, :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+  as :admin do
+    get 'admin/login' => 'devise/sessions#new', :as => :admin_login
+    get 'admin/logout' => 'devise/sessions#destroy', :as => :admin_logout
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,22 @@
+<div class="container no-hero-mobile">
+    <h2>Hello, <%= current_admin.username %>!</h2>
+
+    <div>
+        <p>Here's some helpful information:</p>
+        <ul>
+            <li>
+                <strong>Ruby Version:</strong>
+                <%= RUBY_VERSION %>
+            </li>
+            <li>
+                <strong>HRWA App Version:</strong>
+                <%= IO.read('VERSION') %>
+            </li>
+            <li>
+                <strong>HRWA App File System Location:</strong>
+                <%= Dir.getwd %>
+            </li>
+        </ul>
+    </div>
+
+</div> <!-- /container -->

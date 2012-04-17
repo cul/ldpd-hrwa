@@ -1,18 +1,37 @@
-<h2>Sign up</h2>
+<div class="container no-hero-mobile">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+    <div class="content">
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+        <div class="row">
+          <div class="span12 columns">
+            <article class="entry">
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+              <%= devise_error_messages! %>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+              <h2>Sign up</h2>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+              <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 
-<%= render :partial => "devise/shared/links" %>
+                <div><%= f.label :username %>
+                <%= f.text_field :username %></div>
+
+                <div><%= f.label :email %>
+                <%= f.email_field :email %></div>
+
+                <div><%= f.label :password %>
+                <%= f.password_field :password %></div>
+
+                <div><%= f.label :password_confirmation %>
+                <%= f.password_field :password_confirmation %></div>
+
+                <div><%= f.submit "Sign up", :class => 'btn' %></div>
+              <% end %>
+
+              <%= render :partial => "devise/shared/links" %>
+            </article>
+          </div>
+        </div>
+
+	</div> <!--//content-->
+
+</div>
