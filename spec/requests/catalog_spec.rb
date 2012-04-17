@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :webkit
 #Capybara.default_wait_time = 30
 
 describe 'the portal search' do
@@ -24,11 +24,14 @@ describe 'the portal search' do
   describe 'over multiple searches' do
 
     # Use top form for first test and in-page form for second test to exercise both forms
-    it 'can successfully run a find_site search immediately after an archive search', :js => true do
+    it 'can successfully run a find_site search immediately after an archive search', :js => true, :focus => true do
       visit '/search'
       fill_in 'q', :with => 'women'
       choose 'asfsearch'
       click_link 'top_form_submit'
+      Rails.logger.debug('------------------------------------------')
+      Rails.logger.debug(page.html)
+      Rails.logger.debug('------------------------------------------')
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       visit '/search'
