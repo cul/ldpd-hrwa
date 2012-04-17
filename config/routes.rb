@@ -15,7 +15,6 @@ Hrwa::Application.routes.draw do
   match '/public_nomination'      => 'static#public_nomination'
   match '/public_feedback'      => 'static#public_feedback'
   match '/public_bugreports'      => 'static#public_bugreports'
-  match '/bug_report'      => 'static#bug_report'
 
   # Internal stuff
   match '/internal/seed_list' => 'internal#seed_list'

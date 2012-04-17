@@ -29,9 +29,6 @@ describe 'the portal search' do
       fill_in 'q', :with => 'women'
       choose 'asfsearch'
       click_link 'top_form_submit'
-      Rails.logger.debug('------------------------------------------')
-      Rails.logger.debug(page.html)
-      Rails.logger.debug('------------------------------------------')
       page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       visit '/search'
