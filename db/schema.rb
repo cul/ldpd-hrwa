@@ -33,4 +33,23 @@ ActiveRecord::Schema.define(:version => 20120417170717) do
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
   add_index "admins", ["username"], :name => "index_admins_on_username", :unique => true
 
+  create_table "bookmarks", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.string   "document_id"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_type"
+  end
+
+  create_table "searches", :force => true do |t|
+    t.text     "query_params"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_type"
+  end
+
+  add_index "searches", ["user_id"], :name => "index_searches_on_user_id"
+
 end
