@@ -1,5 +1,5 @@
-# ! Note: This is an override of the default devise_helper !
-# We needed to modify the html of the devise error message.
+# ! Override of original devise gem devise_helper.rb !
+# Needed to change html of #error_explanation.
 
 module DeviseHelper
   # A simple way to show error messages for the current devise resource. If you need
@@ -17,8 +17,8 @@ module DeviseHelper
                       :resource => resource.class.model_name.human.downcase)
 
     html = <<-HTML
-    <div id="error_explanation">
-      <h3>#{sentence}</h3>
+    <div id="error_explanation" class="alert">
+      <h2>#{sentence}</h2>
       <ul>#{messages}</ul>
     </div>
     HTML
