@@ -58,6 +58,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 .navbar .topbarlogo a { text-shadow: 1px 1px 0 #222; letter-spacing:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; margin-top:1px;}
 .navbar .add-on a { text-decoration:none; }
 .navbar .add-on a:hover { color: #fff; }
+.navbar #top_form_submit { padding-left:9px; padding-right:9px; }
 .navbar #top_form_submit_label:hover { background-color:#51a351!important; }
 #cul_top { }
 #cul_inner { width:960px; margin-right:auto;margin-left:auto; background:transparent url('./crown-bts-24x24.png') no-repeat left top; color:#aaa; font-size:9px; padding:4px 5px 1px 28px; /*-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;*/ /*border:1px solid #555;*/ }
@@ -362,7 +363,8 @@ a.moreless.btn { font-size:80%; }
 
 /* Search form */
 #start_new_search_link {margin-top: -25px; color:#88C34B; }
-#advo_link {margin-top:3px;margin-right:4px;-webkit-border-radius: 3px 3px 3px 3px;-moz-border-radius: 3px 3px 3px 3px;border-radius: 3px 3px 3px 3px;}
+#advo_link {margin-top:3px;margin-right:4px;-webkit-border-radius: 3px 3px 3px 3px;-moz-border-radius: 3px 3px 3px 3px;border-radius: 3px 3px 3px 3px; opacity:0.6; }
+#advo_link:hover { opacity:1.0; }
 
 /* advanced search form */
 #advo a { text-decoration:none; }

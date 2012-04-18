@@ -38,7 +38,7 @@
 			  <div class="input-append"><%
 				%><div id="top_q_wrapper" class="span6 pull-left"><%
                     %><input class="span5 pull-left" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"/><%
-                    %><a href="#" id="advo_link" class="span1 pull-right btn btn-mini btn-success" title="Advanced Options Toggle" rel="tooltip">Advanced</a><%
+                    %><a href="#" id="advo_link" class="span1 pull-right btn btn-mini btn-success" title="Advanced Options Toggle" rel="tooltip">Advanced<span class="caret"></span></a><%
                 %></div><%
 				%><label class="pull-right add-on success" id="top_form_submit_label"><a href="#" id="top_form_submit" class="submitss white"><i class="icon-search icon-white"></i></a><input type="submit" class="hidden invisible" /></label><%
                 %><label class="pull-right add-on" title="Clear All Filters &amp; Start a New Search" rel="tooltip"><%= link_to '<i class="icon-remove icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
