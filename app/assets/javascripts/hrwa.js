@@ -39,6 +39,14 @@ jQuery(function($) {
 	return false;
   });
 
+  /* #q focus and blur */
+  $('#q').bind('focus', function(){
+    $('#top_q_wrapper').addClass('focused');
+  });
+  $('#q').bind('blur', function(){
+    $('#top_q_wrapper').removeClass('focused');
+  });
+
   /* Result item detail hiding/showing logic */
 
   window.max_height_for_hl_snippets = '52px'; //53px seems to equal two lines worth of text for a 12px font.
@@ -154,8 +162,9 @@ jQuery(function($) {
 
     if($('#advanced_options_container').css('display') == 'none') {
 
-      //disable simple search input (#q)
+      //disable simple search input (+wrapper)
       $('#q').attr('disabled', 'disabled');
+      $('#top_q_wrapper').addClass('disabled');
 
       //synch simple -> advanced search inputs
       var multi_q_arr = single_q_to_multi_q($('#q').val());
@@ -183,13 +192,14 @@ jQuery(function($) {
     }
     else
     {
-      $('#advanced_options_container').slideUp(600, function(){
+      $('#advanced_options_container').slideUp(500, function(){
 		//And then remove any .advanced_options divs when the form closes
 		$('#outside_of_form').append($('.advanced_options'));
 
 		moveHiddenSearchFieldsIntoForm(HRWA.current_search_type)
 
-        //enable simple search input (#q)
+        //enable simple search input (+wrapper)
+        $('#top_q_wrapper').removeClass('disabled');
         $('#q').removeAttr('disabled');
       });
     }
