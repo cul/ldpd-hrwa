@@ -9,6 +9,10 @@ jQuery(function($) {
 
   $('.dropdown-toggle').dropdown()
 
+  $('.back_button_link').bind('click', function(){
+    window.history.go(-2);
+  });
+
   $('.tabs').tab()
   $('.carousel').carousel()
 

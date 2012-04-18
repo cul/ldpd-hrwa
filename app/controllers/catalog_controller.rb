@@ -49,6 +49,15 @@ class CatalogController < ApplicationController
         render :error and return
       end
 
+      # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
+      # Check for navigation to a nonexistent/invalid result page
+      # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
+      if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
+        @error_type = :invalid_result_page
+        @error_message = 'Sorry, but there are no results available on this search result page.'
+        render :error and return
+      end
+
       # Configurator might need to manipulate the @response and @result_list
       # This is absolutely the case for an archive search
       if @configurator.post_blacklight_processing_required?

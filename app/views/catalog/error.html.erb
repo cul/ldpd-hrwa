@@ -4,6 +4,9 @@
     <div id="error-outer" class="span12">
       <div class="error-message<%= @error_type == :user ? ' alert alert-info' : ' alert alert-error' %>">
         <p><%= @error_message %></p>
+        <% if @error_type == :invalid_result_page %>
+            <p><a href="#" class="back_button_link">Click here to go back to the previous page.</a></p>
+        <% end %>
       </div>
 
       <!-- TODO: TAKE THIS OUT OF PROD -->
