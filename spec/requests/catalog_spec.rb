@@ -24,7 +24,7 @@ describe 'the portal search' do
   describe 'over multiple searches' do
 
     # Use top form for first test and in-page form for second test to exercise both forms
-    it 'can successfully run a find_site search immediately after an archive search', :js => true, :focus => true do
+    it 'can successfully run a find_site search immediately after an archive search', :js => true do
       visit '/search'
       fill_in 'q', :with => 'women'
       choose 'asfsearch'
