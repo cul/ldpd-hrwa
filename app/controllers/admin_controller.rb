@@ -5,10 +5,6 @@ class AdminController < ApplicationController
 
   before_filter :authenticate_admin!
 
-  def index
-
-  end
-
 	# Note: There is no view associated with refresh_browse_and_option_lists
 	# We do a redirect at the end of this actions
   def refresh_browse_and_option_lists
