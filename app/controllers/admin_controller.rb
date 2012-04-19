@@ -26,7 +26,7 @@ class AdminController < ApplicationController
 		flash[:notice] = 'The browse_lists and filter_options files have been updated.'
 
 		rescue UpdateException => e
-			flash[:error] = "Update of rails app aborted with error: #{ e }"
+			flash[:error] = "Update of collection browse and advanced filter options aborted with error: #{ e }"
 		end
 
 		redirect_to admin_path
