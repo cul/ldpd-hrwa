@@ -106,15 +106,13 @@ class HRWA::Update::SourceHardCodedFiles
       f.puts %q{end}
     }
 
-    puts "updated #{ params[ :destination_file ] }"
+    Rails.logger.info( "Updated #{ params[ :destination_file ] }" )
   end
 
   def fetch_items( component, params )
     begin
       docs = fetch( params[ :solr_fields ] )
     rescue UpdateException => e
-      puts "fetch_items: fetch() error: #{ e }"
-
       Rails.logger.error "fetch_items() for #{ component } failed"
       Rails.logger.error e
       Rails.logger.error @response.pretty_inspect
