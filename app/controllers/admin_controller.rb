@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+require 'hrwa/update/source_hard_coded_files.rb'
 
 # This controller handles administrative stuff
 class AdminController < ApplicationController
@@ -6,7 +6,28 @@ class AdminController < ApplicationController
   before_filter :authenticate_admin!
 
   def index
-		
+
+  end
+
+	# Note: There is no view associated with refresh_browse_and_option_lists
+	# We do a redirect at the end of this actions
+  def refresh_browse_and_option_lists
+
+		sourceHardCodedFilesUpdater = HRWA::Update::SourceHardCodedFiles.new(
+		'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
+		'app/helpers/hrwa/filter_options_source_hardcoded.rb',
+		'http://carter.cul.columbia.edu:8080/solr-4/fsf',
+	)
+
+	begin
+		sourceHardCodedFilesUpdater.update_rails_file( :browse_lists  )
+		sourceHardCodedFilesUpdater.update_rails_file( :filter_options )
+
+		rescue UpdateException => e
+			flash[:error] = "Update of rails app aborted with error: #{ e }"
+		end
+
+		redirect_to admin_path
   end
 
 end

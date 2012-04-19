@@ -22,6 +22,7 @@ Hrwa::Application.routes.draw do
 
   # Admin controller
   match '/admin'      => 'admin#index'
+  match '/refresh_browse_and_option_lists'      => 'admin#refresh_browse_and_option_lists'
 
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
   match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
