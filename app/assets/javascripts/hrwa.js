@@ -7,6 +7,9 @@ jQuery(function($) {
 	return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
   }
 
+  //If present, focus on the admin login input on page load
+  $('#admin_username').focus();
+
   $('.dropdown-toggle').dropdown()
 
   $('.back_button_link').bind('click', function(){

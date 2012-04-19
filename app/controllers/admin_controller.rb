@@ -23,6 +23,8 @@ class AdminController < ApplicationController
 		sourceHardCodedFilesUpdater.update_rails_file( :browse_lists  )
 		sourceHardCodedFilesUpdater.update_rails_file( :filter_options )
 
+		flash[:notice] = 'The browse_lists and filter_options files have been updated.'
+
 		rescue UpdateException => e
 			flash[:error] = "Update of rails app aborted with error: #{ e }"
 		end
