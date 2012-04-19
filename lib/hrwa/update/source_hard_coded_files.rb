@@ -80,9 +80,9 @@ class HRWA::Update::SourceHardCodedFiles
 
   def update_rails_file( component )
     if ! @update_params_for_component.has_key?( component.to_sym )
-      puts %Q{"#{ component }" is not a valid component.  Please choose from the following:}
-      puts "#{ @update_params_for_component.keys.sort.join( ', ' ) }"
-      return
+      message = %Q{"#{ component }" is not a valid component.  Valid components: 
+#{ @update_params_for_component.keys.sort.join( ', ' ) } }
+      raise ArgumentError, message
     end
 
     params = @update_params_for_component[ component ]
