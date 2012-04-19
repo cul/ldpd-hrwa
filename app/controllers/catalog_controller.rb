@@ -55,6 +55,9 @@ class CatalogController < ApplicationController
       if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
         @error_type = :invalid_result_page
         @error_message = 'Sorry, but there are no results available on this search result page.'
+        Rails.logger.info('-------------------------------------------------------------------------------------')
+        Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
+        Rails.logger.info('-------------------------------------------------------------------------------------')
         render :error and return
       end
 
