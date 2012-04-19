@@ -10,10 +10,10 @@ class AdminController < ApplicationController
   def refresh_browse_and_option_lists
 
 		sourceHardCodedFilesUpdater = HRWA::Update::SourceHardCodedFiles.new(
-		'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
-		'app/helpers/hrwa/filter_options_source_hardcoded.rb',
-		'http://carter.cul.columbia.edu:8080/solr-4/fsf',
-	)
+		  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
+		  'app/helpers/hrwa/filter_options_source_hardcoded.rb',
+		  'http://carter.cul.columbia.edu:8080/solr-4/fsf',
+	  )
 
 	begin
 		sourceHardCodedFilesUpdater.update_rails_file( :browse_lists  )
