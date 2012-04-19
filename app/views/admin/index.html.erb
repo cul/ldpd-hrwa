@@ -1,12 +1,16 @@
 <div class="container no-hero-mobile">
     <h2>Hello, <%= current_admin.username %>!</h2>
-
+    <br />
     <div>
-        <p>Here's some helpful information:</p>
+        <h4>Application Information</h4>
         <ul>
             <li>
                 <strong>Ruby Version:</strong>
                 <%= RUBY_VERSION %>
+            </li>
+            <li>
+                <strong>Rails Version:</strong>
+                <%= Rails::VERSION::STRING %>
             </li>
             <li>
                 <strong>HRWA App Version:</strong>
@@ -17,6 +21,9 @@
                 <%= Dir.getwd %>
             </li>
         </ul>
+        <br />
+        <h4>Administrative Tools</h4>
+        <p><%= link_to 'Refresh the hard-coded browse list and filter option files', refresh_browse_and_option_lists_path, :class => 'btn btn-small' %></p>
     </div>
 
 </div> <!-- /container -->
