@@ -1,5 +1,3 @@
-require 'logger'
-require 'pp'
 require 'rsolr'
 require 'uri'
 
