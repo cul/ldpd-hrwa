@@ -70,7 +70,7 @@ GEM
     capybara-webkit (0.11.0)
       capybara (>= 1.0.0, < 1.2)
       json
-    childprocess (0.3.1)
+    childprocess (0.3.2)
       ffi (~> 1.0.6)
     chunky_png (1.2.5)
     coffee-rails (3.1.1)
