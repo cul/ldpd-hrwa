@@ -4,7 +4,7 @@ require 'uri'
 class HRWA::Update::SourceHardCodedFiles
 	unloadable
 
-	CONSTANT_NAME_FOR_THIS_CLASS = '[HRWA::Update::SourceHardCodedFiles]'
+	LOG_ENTRY_HEADER = '[UPDATE_SOURCE_HARD_CODED_FILES]'
 
   def initialize( browse_list_file =  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
                   filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb',
@@ -108,21 +108,21 @@ class HRWA::Update::SourceHardCodedFiles
       f.puts %q{end}
     }
 
-    Rails.logger.info( CONSTANT_NAME_FOR_THIS_CLASS + " Updated #{ params[ :destination_file ] }" )
+    Rails.logger.info( LOG_ENTRY_HEADER + " Updated #{ params[ :destination_file ] }" )
   end
 
   def fetch_items( component, params )
     begin
       docs = fetch( params[ :solr_fields ] )
     rescue UpdateException => e
-      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + " fetch_items() for #{ component } failed"
-      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + ' ' + e
-      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + ' ' + @response.pretty_inspect
+      Rails.logger.error LOG_ENTRY_HEADER + " fetch_items() for #{ component } failed"
+      Rails.logger.error LOG_ENTRY_HEADER + ' ' + e
+      Rails.logger.error LOG_ENTRY_HEADER + ' ' + @response.pretty_inspect
       raise e
     end
 
     message = "fetch() retrieved #{ docs.length } docs"
-    Rails.logger.info( CONSTANT_NAME_FOR_THIS_CLASS + ' ' + message )
+    Rails.logger.info( LOG_ENTRY_HEADER + ' ' + message )
 
     docs.each { |doc|
       doc.each_pair { | field, value |
