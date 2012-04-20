@@ -4,6 +4,8 @@ require 'uri'
 class HRWA::Update::SourceHardCodedFiles
 	unloadable
 
+	CONSTANT_NAME_FOR_THIS_CLASS = '[HRWA::Update::SourceHardCodedFiles]'
+
   def initialize( browse_list_file =  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
                   filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb',
                   solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
@@ -80,8 +82,8 @@ class HRWA::Update::SourceHardCodedFiles
 
   def update_rails_file( component )
     if ! @update_params_for_component.has_key?( component.to_sym )
-      message = %Q{"#{ component }" is not a valid component.  Valid components: 
-#{ @update_params_for_component.keys.sort.join( ', ' ) } }
+      message = %Q{"#{ component }" is not a valid component.  Valid components:
+				#{ @update_params_for_component.keys.sort.join( ', ' ) } }
       raise ArgumentError, message
     end
 
@@ -106,21 +108,21 @@ class HRWA::Update::SourceHardCodedFiles
       f.puts %q{end}
     }
 
-    Rails.logger.info( "Updated #{ params[ :destination_file ] }" )
+    Rails.logger.info( CONSTANT_NAME_FOR_THIS_CLASS + " Updated #{ params[ :destination_file ] }" )
   end
 
   def fetch_items( component, params )
     begin
       docs = fetch( params[ :solr_fields ] )
     rescue UpdateException => e
-      Rails.logger.error "fetch_items() for #{ component } failed"
-      Rails.logger.error e
-      Rails.logger.error @response.pretty_inspect
+      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + " fetch_items() for #{ component } failed"
+      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + ' ' + e
+      Rails.logger.error CONSTANT_NAME_FOR_THIS_CLASS + ' ' + @response.pretty_inspect
       raise e
     end
 
     message = "fetch() retrieved #{ docs.length } docs"
-    Rails.logger.info( message )
+    Rails.logger.info( CONSTANT_NAME_FOR_THIS_CLASS + ' ' + message )
 
     docs.each { |doc|
       doc.each_pair { | field, value |
