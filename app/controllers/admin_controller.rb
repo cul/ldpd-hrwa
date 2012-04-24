@@ -28,4 +28,18 @@ class AdminController < ApplicationController
 		redirect_to admin_path
   end
 
+  def index
+		@solr_yaml = YAML.load_file( 'config/solr.yml' )
+
+		if(params[:new_primary_solr_server])
+
+
+			#If successful, replace the real yml file with the new one
+			#File.open("#{RAILS_ROOT}/config/application.yml", 'w') { |f| YAML.dump(a_config, f) }
+			flash[:notice] = 'Your primary solr server is now set to: ' + params[:new_primary_solr_server];
+		end
+
+
+  end
+
 end

@@ -1,8 +1,8 @@
 <div class="container no-hero-mobile">
-    <h2>Hello, <%= current_admin.username %>!</h2>
-    <br />
+    <h2>Admin Control Panel</h2>
+    <p>Hello, <%= current_admin.username %>!</p>
     <div>
-        <h4>Application Information</h4>
+        <h3>Application Information</h3>
         <ul>
             <li>
                 <strong>Rails Environment:</strong>
@@ -26,8 +26,31 @@
             </li>
         </ul>
         <br />
-        <h4>Administrative Tools</h4>
+
+        <h3>Administrative Tools</h3>
         <p><%= link_to 'Refresh the hard-coded browse list and filter option files', refresh_browse_and_option_lists_path, :class => 'btn btn-small' %></p>
+        <br />
+
+
+
+        <h3>Change the Solr server associated with this application instance</h3>
+        <p><strong>Current primary Solr server:</strong> <%= @solr_yaml[ Rails.env ][ 'asf' ][ 'url' ][/(http:\/\/).+(:\d+)/] %></p>
+        <p>
+
+            <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
+                <fieldset>
+                    <strong>Switch to:</strong>
+                    <select name="new_primary_solr_server">
+                        <%
+                            @solr_yaml['valid_overrides'].each_key do |key|
+                                %><%= %Q{<option value="#{key}">#{key}</option>}.html_safe %><%
+                            end
+                        %>
+                    </select>
+                    <input type="submit" value="Go" class="btn" />
+                </fieldset>
+            <% end %>
+        </p>
     </div>
 
 </div> <!-- /container -->
