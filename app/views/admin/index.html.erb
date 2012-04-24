@@ -5,16 +5,20 @@
         <h4>Application Information</h4>
         <ul>
             <li>
+                <strong>Rails Environment:</strong>
+                <%= Rails.env %>
+            </li>
+            <li>
+                <strong>HRWA App Version:</strong>
+                <%= IO.read('VERSION') %>
+            </li>
+            <li>
                 <strong>Ruby Version:</strong>
                 <%= RUBY_VERSION %>
             </li>
             <li>
                 <strong>Rails Version:</strong>
                 <%= Rails::VERSION::STRING %>
-            </li>
-            <li>
-                <strong>HRWA App Version:</strong>
-                <%= IO.read('VERSION') %>
             </li>
             <li>
                 <strong>HRWA App File System Location:</strong>
