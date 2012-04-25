@@ -1,4 +1,5 @@
 require 'hrwa/update/source_hard_coded_files.rb'
+require 'hrwa/admin/solr_config_rewriter.rb'
 
 # This controller handles administrative stuff
 class AdminController < ApplicationController
@@ -29,24 +30,14 @@ class AdminController < ApplicationController
   end
 
   def index
-
+YAML::ENGINE.yamler = 'psych'
 		if(params[:new_primary_solr_server])
-
-			new_primary_solr_server = params[:new_primary_solr_server]
-			Rails.logger.debug('-----------------------------------------------------------------------------------------------------------------------------------------------')
-			debugger
-
-			@solr_yaml = YAML.load_file( 'config/solr.yml' )
-
-			@solr_yaml[ Rails.env ][ 'asf' ][ 'url' ] = @solr_yaml['valid_overrides'][new_primary_solr_server]['asf']
-			@solr_yaml[ Rails.env ][ 'fsf' ][ 'url' ] = @solr_yaml['valid_overrides'][new_primary_solr_server]['fsf']
-			@solr_yaml[ Rails.env ][ 'site_detail' ][ 'url' ] = @solr_yaml['valid_overrides'][new_primary_solr_server]['site_detail']
-
-			File.open("tmp/solr.yml", "w") { |f| f.write(@solr_yaml.to_yaml) }
-
-			#If the write was successful, replace the real yml file with the new one
-			#File.open("#{RAILS_ROOT}/config/application.yml", 'w') { |f| YAML.dump(a_config, f) }
-			flash[:notice] = 'Your primary solr server is now set to <strong>'.html_safe + params[:new_primary_solr_server].html_safe + '</strong>.'.html_safe;
+			solrConfigRewriter = HRWA::Admin::SolrConfigRewriter.new
+			if solrConfigRewriter.change_primary_solr_server_in_solr_config(params[:new_primary_solr_server])
+				flash[:notice] = 'Your primary solr server is now set to <strong>'.html_safe + params[:new_primary_solr_server] + '</strong>.'.html_safe;
+			else
+				flash[:error] = 'An error occurred. The solr.yml file has not been modified.';
+			end
 		end
 
 		@solr_yaml = YAML.load_file( 'config/solr.yml' )

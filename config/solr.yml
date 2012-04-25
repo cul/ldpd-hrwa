@@ -18,7 +18,7 @@ development: &development
   site_detail:
     url: http://carter.cul.columbia.edu:8080/solr-4/fsf
   
-test: &test
+test:
   asf:
     url: http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test
   fsf:
@@ -47,21 +47,33 @@ hrwa_test:
 # The following valid_overrides section is for changing solr servers after deployment
 valid_overrides:
     carter:
-        asf: http://carter.cul.columbia.edu:8080/solr-4/asf
-        fsf: http://carter.cul.columbia.edu:8080/solr-4/asf
-        site_detail: http://carter.cul.columbia.edu:8080/solr-4/fsf
+        asf:
+            url: http://carter.cul.columbia.edu:8080/solr-4/asf
+        fsf:
+            url: http://carter.cul.columbia.edu:8080/solr-4/fsf
+        site_detail:
+            url: http://carter.cul.columbia.edu:8080/solr-4/fsf
     coolidge:
-        asf: http://coolidge.cul.columbia.edu:8080/solr-4/asf
-        fsf: http://coolidge.cul.columbia.edu:8080/solr-4/asf
-        site_detail: http://coolidge.cul.columbia.edu:8080/solr-4/fsf
+        asf:
+            url: http://coolidge.cul.columbia.edu:8080/solr-4/asf
+        fsf:
+            url: http://coolidge.cul.columbia.edu:8080/solr-4/fsf
+        site_detail:
+            url: http://coolidge.cul.columbia.edu:8080/solr-4/fsf
     harding:
-        asf: http://harding.cul.columbia.edu:8080/solr-4/asf
-        fsf: http://harding.cul.columbia.edu:8080/solr-4/asf
-        site_detail: http://harding.cul.columbia.edu:8080/solr-4/fsf
+        asf:
+            url: http://harding.cul.columbia.edu:8080/solr-4/asf
+        fsf:
+            url: http://harding.cul.columbia.edu:8080/solr-4/fsf
+        site_detail:
+            url: http://harding.cul.columbia.edu:8080/solr-4/fsf
     machete:
-        asf: http://machete.cul.columbia.edu:8081/solr-4/asf
-        fsf: http://machete.cul.columbia.edu:8081/solr-4/asf
-        site_detail: http://machete.cul.columbia.edu:8081/solr-4/fsf
+        asf:
+            url: http://machete.cul.columbia.edu:8081/solr-4/asf
+        fsf:
+            url: http://machete.cul.columbia.edu:8081/solr-4/fsf
+        site_detail:
+            url: http://machete.cul.columbia.edu:8081/solr-4/fsf
 
 # TODO: This is temporary until we have our dedicated SOLR server
 # Please note the port is 8181 and not 8080, which currently is the
@@ -73,6 +85,3 @@ hrwa_prod:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
   site_detail:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
-
-cucumber:
-  <<: *test
