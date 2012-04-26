@@ -44,37 +44,6 @@ hrwa_test:
   site_detail:
     url: http://harding.cul.columbia.edu:8080/solr-4/fsf
 
-# The following valid_overrides section is for changing solr servers after deployment
-valid_overrides:
-    carter:
-        asf:
-            url: http://carter.cul.columbia.edu:8080/solr-4/asf
-        fsf:
-            url: http://carter.cul.columbia.edu:8080/solr-4/fsf
-        site_detail:
-            url: http://carter.cul.columbia.edu:8080/solr-4/fsf
-    coolidge:
-        asf:
-            url: http://coolidge.cul.columbia.edu:8080/solr-4/asf
-        fsf:
-            url: http://coolidge.cul.columbia.edu:8080/solr-4/fsf
-        site_detail:
-            url: http://coolidge.cul.columbia.edu:8080/solr-4/fsf
-    harding:
-        asf:
-            url: http://harding.cul.columbia.edu:8080/solr-4/asf
-        fsf:
-            url: http://harding.cul.columbia.edu:8080/solr-4/fsf
-        site_detail:
-            url: http://harding.cul.columbia.edu:8080/solr-4/fsf
-    machete:
-        asf:
-            url: http://machete.cul.columbia.edu:8081/solr-4/asf
-        fsf:
-            url: http://machete.cul.columbia.edu:8081/solr-4/fsf
-        site_detail:
-            url: http://machete.cul.columbia.edu:8081/solr-4/fsf
-
 # TODO: This is temporary until we have our dedicated SOLR server
 # Please note the port is 8181 and not 8080, which currently is the
 # SOLR service for CLIOBeta
@@ -85,3 +54,10 @@ hrwa_prod:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
   site_detail:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
+    
+# The following valid_overrides section is for changing solr servers after deployment
+valid_overrides:
+  carter: http://carter.cul.columbia.edu:8080
+  coolidge: http://coolidge.cul.columbia.edu:8080
+  harding: http://harding.cul.columbia.edu:8080
+  machete: http://machete.cul.columbia.edu:8181
