@@ -32,6 +32,7 @@
         <br />
 
         <h3>Change the Solr server associated with this application instance</h3>
+        <%= "<p>Note: This does not work in the 'development' Rails environment because class caching is turned off.</p>".html_safe if Rails.env == 'development' %>
         <p><strong>Archive primary Solr server:</strong> <%=  @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %></p>
         <p><strong>Find Site primary Solr server:</strong> <%=  @solr_urls[:find_site][/(http:\/\/).+(.cul)/][7..-5] %></p>
         <p><strong>Site Detail primary Solr server:</strong> <%=  @solr_urls[:site_detail][/(http:\/\/).+(.cul)/][7..-5] %></p>
