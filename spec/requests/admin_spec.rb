@@ -4,6 +4,9 @@ require 'spec_helper'
 Capybara.javascript_driver = :webkit
 #Capybara.default_wait_time = 30
 
+admin_login_username = 'admin'
+admin_login_password = 'supercomplexpassword'
+
 describe 'the admin control panel', :js => true do
 
   it 'brings up a sign in screen when you click the top menu "Admin Login" link' do
@@ -15,8 +18,8 @@ describe 'the admin control panel', :js => true do
 
   it 'is possible to log into the admin control panel' do
     visit '/admin'
-    fill_in 'admin_username', :with => 'admin'
-    fill_in 'admin_password', :with => 'simplepassword'
+    fill_in 'admin_username', :with => admin_login_username
+    fill_in 'admin_password', :with => admin_login_password
     click_button 'Sign in'
 
     page.should have_content( 'Admin Control Panel' )
@@ -31,8 +34,8 @@ describe 'the admin control panel', :js => true do
 
     before :each do
       visit '/admin'
-      fill_in 'admin_username', :with => 'admin'
-      fill_in 'admin_password', :with => 'simplepassword'
+      fill_in 'admin_username', :with => admin_login_username
+      fill_in 'admin_password', :with => admin_login_password
       click_button 'Sign in'
     end
 
