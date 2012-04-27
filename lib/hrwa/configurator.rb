@@ -66,7 +66,7 @@ class HRWA::Configurator
     return @configurator.class.solr_url
   end
 
-  def reset_solr_config
+  def self.reset_solr_config
     HRWA::ArchiveSearchConfigurator.reset_solr_config
     HRWA::FindSiteSearchConfigurator.reset_solr_config
     HRWA::SiteDetailConfigurator.reset_solr_config

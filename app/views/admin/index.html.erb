@@ -60,6 +60,16 @@
                 </fieldset>
             <% end %>
         </p>
+
+        <p>
+
+            <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
+                <fieldset>
+                    <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
+                    <input type="submit" id="reset_primary_solr_server" name="reset_primary_solr_server" value="Reset all primary solr servers to defaults" class="btn" />
+                </fieldset>
+            <% end %>
+        </p>
     </div>
 
 </div> <!-- /container -->

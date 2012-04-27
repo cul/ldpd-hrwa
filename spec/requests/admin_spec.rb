@@ -48,9 +48,9 @@ describe 'the admin control panel', :js => true do
       page.should have_content( 'Site Detail primary Solr server: carter' )
     end
 
-    it 'is possible to override the solr server' do
+    it 'is possible to override the solr servers, and also possible to reset them to their defaults' do
       page.find('#new_primary_solr_server').select('coolidge')
-      click_button('Go')
+      click_button( 'Go' )
 
       page.should have_content( 'Archive primary Solr server: coolidge' )
       page.should have_content( 'Find Site primary Solr server: coolidge' )
@@ -62,7 +62,12 @@ describe 'the admin control panel', :js => true do
       page.should have_content( 'Archive primary Solr server: coolidge' )
       page.should have_content( 'Find Site primary Solr server: coolidge' )
       page.should have_content( 'Site Detail primary Solr server: coolidge' )
-      
+
+      click_button( 'Reset all primary solr servers to defaults' )
+
+      page.should have_content( 'Archive primary Solr server: carter' )
+      page.should have_content( 'Find Site primary Solr server: carter' )
+      page.should have_content( 'Site Detail primary Solr server: carter' )
     end
 
     it 'passes a test!' do

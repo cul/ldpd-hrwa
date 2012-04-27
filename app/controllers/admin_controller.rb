@@ -36,6 +36,12 @@ class AdminController < ApplicationController
 
 		@solr_yaml = YAML.load_file('config/solr.yml')
 
+		if(params[:reset_primary_solr_server])
+			# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
+			HRWA::Configurator.reset_solr_config
+			flash[:notice] = 'Your solr servers have been reset to their factory settings.'.html_safe;
+		end
+
 		if(params[:new_primary_solr_server])
 			# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
 			HRWA::Configurator.override_solr_url(@solr_yaml['valid_overrides'][params[:new_primary_solr_server]])
