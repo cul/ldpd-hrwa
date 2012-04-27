@@ -2,6 +2,8 @@
 class HRWA::SiteDetailConfigurator
   unloadable
 
+  @@solr_url = nil;
+
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -218,9 +220,22 @@ class HRWA::SiteDetailConfigurator
     end
 
     # Takes optional environment arg for testability
-    def solr_url(environment = Rails.env)
-      YAML.load_file( 'config/solr.yml' )[ environment ][ 'site_detail' ][ 'url' ]
+    def self.solr_url(environment = Rails.env)
+
+      @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'site_detail' ][ 'url' ]
+      return @@solr_url
+
     end
+
+    # Clear the current (class cached) value of @@solr_url
+    def self.reset_solr_config
+      @@solr_url = nil
+    end
+
+		# Set a new solr url for this configurator
+		def self.override_solr_url(new_solr_url)
+			@@solr_url = new_solr_url + '/solr-4/fsf'
+		end
 
     # Did Blacklight give us everything we need in SOLR response and
     # results list objects?

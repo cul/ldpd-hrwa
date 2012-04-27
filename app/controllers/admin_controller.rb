@@ -1,4 +1,8 @@
 require 'hrwa/update/source_hard_coded_files.rb'
+require 'hrwa/configurator.rb'
+require 'hrwa/archive_search_configurator.rb'
+require 'hrwa/find_site_search_configurator.rb'
+require 'hrwa/site_detail_configurator.rb'
 
 # This controller handles administrative stuff
 class AdminController < ApplicationController
@@ -29,15 +33,31 @@ class AdminController < ApplicationController
   end
 
   def index
-		@solr_yaml = YAML.load_file( 'config/solr.yml' )
+
+		@solr_yaml = YAML.load_file('config/solr.yml')
+
+		if(params[:reset_primary_solr_server])
+			# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
+			HRWA::Configurator.reset_solr_config
+			flash[:notice] = 'Your solr servers have been reset to their factory settings.'.html_safe;
+		end
 
 		if(params[:new_primary_solr_server])
-
-
-			#If successful, replace the real yml file with the new one
-			#File.open("#{RAILS_ROOT}/config/application.yml", 'w') { |f| YAML.dump(a_config, f) }
-			flash[:notice] = 'Your primary solr server is now set to: ' + params[:new_primary_solr_server];
+			# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
+			HRWA::Configurator.override_solr_url(@solr_yaml['valid_overrides'][params[:new_primary_solr_server]])
+			flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
 		end
+
+		archive_solr_url = HRWA::ArchiveSearchConfigurator.solr_url
+		find_site_solr_url = HRWA::FindSiteSearchConfigurator.solr_url
+		site_detail_solr_url = HRWA::SiteDetailConfigurator.solr_url
+
+		@solr_urls = 	{
+										:archive			=> archive_solr_url,
+										:find_site		=> find_site_solr_url,
+										:site_detail	=> site_detail_solr_url,
+									}
+
 
 
   end
