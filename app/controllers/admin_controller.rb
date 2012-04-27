@@ -1,5 +1,4 @@
 require 'hrwa/update/source_hard_coded_files.rb'
-require 'hrwa/admin/solr_config_rewriter.rb'
 require 'hrwa/configurator.rb'
 require 'hrwa/archive_search_configurator.rb'
 require 'hrwa/find_site_search_configurator.rb'
@@ -38,7 +37,6 @@ class AdminController < ApplicationController
 		@solr_yaml = YAML.load_file('config/solr.yml')
 
 		if(params[:new_primary_solr_server])
-			solrConfigRewriter = HRWA::Admin::SolrConfigRewriter.new
 			# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
 			HRWA::Configurator.override_solr_url(@solr_yaml['valid_overrides'][params[:new_primary_solr_server]])
 			flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
