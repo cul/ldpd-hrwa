@@ -7,7 +7,7 @@ Capybara.javascript_driver = :webkit
 admin_login_username = 'admin'
 admin_login_password = 'supercomplexpassword'
 
-describe 'the admin control panel', :js => true do
+describe 'the admin control panel' do
 
   it 'brings up a sign in screen when you click the top menu "Admin Login" link' do
     visit '/'
