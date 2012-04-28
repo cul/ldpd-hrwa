@@ -54,3 +54,10 @@ hrwa_prod:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
   site_detail:
     url: http://machete.cul.columbia.edu:8181/solr-4/fsf
+    
+# The following valid_overrides section is for changing solr servers after deployment
+valid_overrides:
+  carter: http://carter.cul.columbia.edu:8080
+  coolidge: http://coolidge.cul.columbia.edu:8080
+  harding: http://harding.cul.columbia.edu:8080
+  machete: http://machete.cul.columbia.edu:8181

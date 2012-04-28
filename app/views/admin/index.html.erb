@@ -1,4 +1,4 @@
-<div class="container no-hero-mobile">
+<div class="container no-hero-mobile admin_control_panel">
     <h2>Admin Control Panel</h2>
     <p>Hello, <%= current_admin.username %>!</p>
     <div>
@@ -31,23 +31,42 @@
         <p><%= link_to 'Refresh the hard-coded browse list and filter option files', refresh_browse_and_option_lists_path, :class => 'btn btn-small' %></p>
         <br />
 
-
-
+        <% # Dev note: This relies on config.cache_classes = true because we're storing the server info in class variables.
+        # For more info on class caching, see:
+        # http://stackoverflow.com/questions/2919988/rails-what-is-cached-when-using-config-cache-classes-true
+        # or
+        # http://stackoverflow.com/questions/2879891/config-cache-classes-true-in-production-mode-has-problems-in-ie
+        %>
         <h3>Change the Solr server associated with this application instance</h3>
-        <p><strong>Current primary Solr server:</strong> <%= @solr_yaml[ Rails.env ][ 'asf' ][ 'url' ][/(http:\/\/).+(:\d+)/] %></p>
+        <%= "<p>Note: This does not work in the 'development' Rails environment because class caching is turned off.</p>".html_safe if Rails.env == 'development' %>
+        <%== '<p class="alert alert-error">Waring! Class caching is currently turned off for this environment (' + Rails.env + ')! For this reason, solr server switching will not work!</p>' if Rails.application.config.cache_classes == false %>
+        <p><strong>Archive primary Solr server:</strong> <%=  @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %></p>
+        <p><strong>Find Site primary Solr server:</strong> <%=  @solr_urls[:find_site][/(http:\/\/).+(.cul)/][7..-5] %></p>
+        <p><strong>Site Detail primary Solr server:</strong> <%=  @solr_urls[:site_detail][/(http:\/\/).+(.cul)/][7..-5] %></p>
         <p>
 
             <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
                 <fieldset>
                     <strong>Switch to:</strong>
-                    <select name="new_primary_solr_server">
+                    <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
+                    <select name="new_primary_solr_server" id="new_primary_solr_server" class="input-medium">
                         <%
                             @solr_yaml['valid_overrides'].each_key do |key|
-                                %><%= %Q{<option value="#{key}">#{key}</option>}.html_safe %><%
+                                %><%== '<option value="' + key + '"' + (key == current_server_name ? ' selected="selected"' : '') + '>' + key + '</option>' %><%
                             end
                         %>
                     </select>
                     <input type="submit" value="Go" class="btn" />
+                </fieldset>
+            <% end %>
+        </p>
+
+        <p>
+
+            <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
+                <fieldset>
+                    <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
+                    <input type="submit" id="reset_primary_solr_server" name="reset_primary_solr_server" value="Reset all primary solr servers to defaults" class="btn" />
                 </fieldset>
             <% end %>
         </p>

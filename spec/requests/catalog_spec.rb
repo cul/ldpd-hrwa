@@ -214,7 +214,7 @@ describe 'archive search' do
       page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
     end
 
-    #it 'chooses the correct server when hrwa_host is selected in the advanced options', :js => true, :focus => true do
+    #it 'chooses the correct server when hrwa_host is selected in the advanced options', :js => true do
     #  visit '/search'
     #  choose 'asfsearch'
     #  click_link 'advo_link'

@@ -426,6 +426,9 @@ button.ui-multiselect span { color:#888; }
 /* remove label borders in IE6 because IE6 does not support transparency */
 * html .ui-multiselect-checkboxes label { border:none; }
 
+/* Admin Control Panel */
+.admin_control_panel h3 {margin-bottom:6px;}
+
 /* bootstrap img override */
 /* must fix this to work */
 /*
