@@ -43,8 +43,9 @@ jQuery(function($) {
 	} else {
 	  $('#asfsearch').prop('checked', true);
 	}
+    $('#q').popover('hide');
 	return false;
-  });
+  }).hover(function() { $('#q').popover('show'); }, function() { $('#q').popover('hide'); } );
 
   /* #q focus and blur */
   $('#q').bind('focus', function(){
@@ -447,6 +448,7 @@ jQuery(function($) {
   $('.navbar a[rel=tooltip], .navbar label[rel=tooltip]').tooltip({'placement': 'bottom'});
   $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
   $('article span[rel=tooltip], .hero-unit label[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
+  $('#q').popover({'placement':'bottom', 'trigger':'manual'});
 
   // cbf home onload sorting and showing
   $('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
