@@ -60,12 +60,16 @@ class HRWA::ArchiveSearchConfigurator
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
 
+        config.add_facet_field 'domain',
+                               :label => 'Domain',
+                               :limit => 5
+
         config.add_facet_field 'dateOfCaptureYYYY',
                                :label => 'Date Of Capture',
                                :limit => 5
 
-        config.add_facet_field 'domain',
-                               :label => 'Domain',
+        config.add_facet_field 'mimetype',
+                               :label => 'File Type',
                                :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
@@ -86,10 +90,6 @@ class HRWA::ArchiveSearchConfigurator
 
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator',
-                               :limit => 5
-
-        config.add_facet_field 'mimetype',
-                               :label => 'File Type',
                                :limit => 5
 
         # Have BL send all facet field names to Solr, which has been the default
