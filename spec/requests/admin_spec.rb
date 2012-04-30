@@ -68,6 +68,9 @@ describe 'the admin control panel' do
 
       click_button( 'Reset all primary solr servers to defaults' )
 
+      # Fresh visit, not just checking after form submission
+      visit '/admin'
+
       page.should have_content( 'Archive primary Solr server: carter' )
       page.should have_content( 'Find Site primary Solr server: carter' )
       page.should have_content( 'Site Detail primary Solr server: carter' )
