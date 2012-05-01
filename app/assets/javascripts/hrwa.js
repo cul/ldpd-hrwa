@@ -684,7 +684,8 @@ jQuery(function($) {
 			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
 				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
 				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
-				'<a href="#" class="btn btn-small cancel">Cancel</a><a href="#" class="btn btn-small submit">Search</a>' +
+				'<div class="pull-right"><a href="#" class="btn btn-mini cancel">Cancel</a> <a href="#" class="btn btn-mini btn-success submit">Search</a></div>' +
+			    '<div class="clear"></div>' +
 			'</span>' +
 			'<span class="clearfix"></span>' +
 		'<span>' +
