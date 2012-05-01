@@ -37,13 +37,10 @@ group :test, :development do
   # Pretty printed test output
   gem 'capybara', '1.1.2'
   gem 'capybara-webkit', '0.11.0'
-  gem 'cucumber', '1.1.9'
-  gem 'cucumber-rails', '1.3.0'
   gem 'database_cleaner', '0.7.2'
   gem 'factory_girl_rails', '3.2.0'
   gem 'growl', '1.0.3'
   gem 'guard', '1.0.1'
-  gem 'guard-cucumber', '0.7.5'
   gem 'guard-rails', '0.1.0'
   gem 'guard-rspec', '0.7.0'
   gem 'guard-spork', '0.7.1'
