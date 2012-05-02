@@ -1,10 +1,9 @@
 GIT
   remote: git@github.com:cul/rsolr-ext.git
-  revision: fde29c46dcc0ebcb288e4fd1dd058a1df5b090d7
-  branch: grouping
+  revision: 3e6f292878a49fe81b6fa75287d0ac59975eb3f2
   specs:
     rsolr-ext (1.0.3)
-      rsolr (>= 1.0.1)
+      rsolr (= 1.0.7)
 
 GEM
   remote: http://rubygems.org/
