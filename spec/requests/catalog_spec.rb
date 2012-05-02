@@ -75,7 +75,16 @@ describe 'archive search' do
     params_hash[ :host ].should be_nil
   end
 
-  # HRWA-359 Bug
+  # https://issues.cul.columbia.edu/browse/HRWA-392
+  it 'should not have "host" param in querystring', :js => true do
+    visit '/search'
+    fill_in 'q', :with => 'water'
+    choose 'asfsearch'
+    click_link 'top_form_submit'
+    
+  end
+
+  # https://issues.cul.columbia.edu/browse/HRWA-359 Bug
   it 'does not wipe out facet fq params when a exclude domain filter is specified', :js => true do
     # TODO: right now no way to click on the correct Domain- button so using visit URL.
     # Convert this to form fill-in when possible
@@ -101,8 +110,6 @@ describe 'archive search' do
     # click_link 'top_form_submit'
     #page.should have_content( '407,366' )
   end
-
-
 
   # TODO: For some reason this test fails using form fill-in when running full test suite,
   # but not when running just this spec file.  Once this is debugged, convert this back into

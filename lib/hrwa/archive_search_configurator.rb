@@ -2,6 +2,8 @@
 class HRWA::ArchiveSearchConfigurator
   unloadable
 
+  @@solr_url = nil;
+
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -58,12 +60,16 @@ class HRWA::ArchiveSearchConfigurator
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
 
+        config.add_facet_field 'domain',
+                               :label => 'Domain',
+                               :limit => 5
+
         config.add_facet_field 'dateOfCaptureYYYY',
                                :label => 'Date Of Capture',
                                :limit => 5
 
-        config.add_facet_field 'domain',
-                               :label => 'Domain',
+        config.add_facet_field 'mimetype',
+                               :label => 'File Type',
                                :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
@@ -84,10 +90,6 @@ class HRWA::ArchiveSearchConfigurator
 
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator',
-                               :limit => 5
-
-        config.add_facet_field 'mimetype',
-                               :label => 'File Type',
                                :limit => 5
 
         # Have BL send all facet field names to Solr, which has been the default
@@ -276,9 +278,21 @@ class HRWA::ArchiveSearchConfigurator
     solr_parameters[ :qf ] = qf
   end
 
-  # Takes optional environment arg for testability
-  def solr_url(environment = Rails.env)
-    YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
-  end
+    # Takes optional environment arg for testability
+    def self.solr_url(environment = Rails.env)
+       @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+       return @@solr_url
+
+    end
+
+    # Clear the current (class cached) value of @@solr_url
+    def self.reset_solr_config
+      @@solr_url = nil
+    end
+
+    # Set a new solr url for this configurator
+    def self.override_solr_url(new_solr_url)
+      @@solr_url = new_solr_url + '/solr-4/asf'
+    end
 
 end

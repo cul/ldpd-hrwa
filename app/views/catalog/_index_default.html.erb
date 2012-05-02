@@ -60,8 +60,8 @@
 				<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
 				<% #crawl_calendar_url_with_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
 				<% crawl_calendar_url_without_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :archived_url => url_encode(original_url)} %>
-				<%= link_to 'Crawl Calendar', archived_url, :rel => 'tooltip', :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
-				<!-- [<%= link_to preview_icon, crawl_calendar_url_without_return_to, :rel => 'tooltip', :title => 'Crawl calendar preview for: ' +  document.get("title"), :class => 'ccf_quicklook'%>] -->
+				<%= link_to 'See Website Captures', archived_url, :rel => 'tooltip', :title => 'Website Captures Permalink For: ' +  document.get("title") %>
+				<!-- [<%= link_to preview_icon, crawl_calendar_url_without_return_to, :rel => 'tooltip', :title => 'Website Captures Preview For: ' +  document.get("title"), :class => 'ccf_quicklook'%>] -->
       </span>
     </dd>
 
