@@ -36,16 +36,22 @@ class AdminController < ApplicationController
 
 		@solr_yaml = YAML.load_file('config/solr.yml')
 
-
 		# Dev note: Solr server swithch functionality relies on config.cache_classes = true because we're storing the server info in class variables.
 		# For more info on class caching, see:
 		# http://stackoverflow.com/questions/2919988/rails-what-is-cached-when-using-config-cache-classes-true
 		# or
 		# http://stackoverflow.com/questions/2879891/config-cache-classes-true-in-production-mode-has-problems-in-ie
 
-		if(Rails.application.config.cache_classes == true)
+		@disable_solr_core_switch_forms = ! Rails.application.config.cache_classes &&
+																			! ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A HRWA::.*Configurator \Z/x }.empty?
 
-			@class_caching_is_on = Rails.application.config.cache_classes
+		@disable_solr_core_switch_forms_error_message = 'Warning! Solr server switching will not work!<br /><br />' +
+																										"Rails.application.config.cache_classes = #{Rails.application.config.cache_classes}<br /><br />".html_safe +
+																										"ActiveSupport::Dependencies.explicitly_unloadable_constants =<br />#{ActiveSupport::Dependencies.explicitly_unloadable_constants.to_s}".html_safe +
+																										"<br /><br />Whenever config.cache_classes is false AND one or more of the configurators are unloadable, you cannot change Solr servers because any source code change will clear out the configurator class variables that store their currently associated Solr servers.".html_safe
+
+		#Checking to see if class caching is off and if
+		if( ! @disable_solr_core_switch_forms )
 
 			if(params[:reset_primary_solr_server])
 				# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
