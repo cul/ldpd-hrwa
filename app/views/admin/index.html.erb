@@ -32,8 +32,7 @@
         <br />
 
         <h3>Change the Solr server associated with this application instance</h3>
-        <%= "<p>Note: This does not work in the 'development' Rails environment because class caching is turned off.</p>".html_safe if Rails.env == 'development' %>
-        <%== '<p class="alert alert-error admin-error">Warning! Class caching is currently turned off for this environment (' + Rails.env + ')! For this reason, solr server switching will not work!</p>' if ! @class_caching_is_on %>
+        <%== '<p class="alert alert-error admin-error">' + @disable_solr_core_switch_forms_error_message + '</p>' if @disable_solr_core_switch_forms %>
         <p><strong>Archive primary Solr server:</strong> <%=  @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %></p>
         <p><strong>Find Site primary Solr server:</strong> <%=  @solr_urls[:find_site][/(http:\/\/).+(.cul)/][7..-5] %></p>
         <p><strong>Site Detail primary Solr server:</strong> <%=  @solr_urls[:site_detail][/(http:\/\/).+(.cul)/][7..-5] %></p>
@@ -43,14 +42,14 @@
                 <fieldset>
                     <strong>Switch to:</strong>
                     <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
-                    <select name="new_primary_solr_server" id="new_primary_solr_server" class="input-medium"<%= @class_caching_is_on ? '' : 'disabled="disabled"' %>>
+                    <select name="new_primary_solr_server" id="new_primary_solr_server" class="input-medium"<%= @disable_solr_core_switch_forms ? 'disabled="disabled"' :'' %>>
                         <%
                             @solr_yaml['valid_overrides'].each_key do |key|
                                 %><%== '<option value="' + key + '"' + (key == current_server_name ? ' selected="selected"' : '') + '>' + key + '</option>' %><%
                             end
                         %>
                     </select>
-                    <input type="submit" value="Go" class="btn" <%= @class_caching_is_on ? '' : 'disabled="disabled"' %>/>
+                    <input type="submit" value="Go" class="btn" <%= @disable_solr_core_switch_forms ? 'disabled="disabled"' : '' %>/>
                 </fieldset>
             <% end %>
         </p>
@@ -60,7 +59,7 @@
             <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
                 <fieldset>
                     <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
-                    <input type="submit" id="reset_primary_solr_server" name="reset_primary_solr_server" value="Reset all primary solr servers to defaults" class="btn"  <%= @class_caching_is_on ? '' : 'disabled="disabled"' %>/>
+                    <input type="submit" id="reset_primary_solr_server" name="reset_primary_solr_server" value="Reset all primary solr servers to defaults" class="btn"  <%= @disable_solr_core_switch_forms ? 'disabled="disabled"' : '' %>/>
                 </fieldset>
             <% end %>
         </p>
