@@ -1,17 +1,17 @@
 GIT
-  remote: git@github.com:cul/rsolr-ext.git
-  revision: a12116f5224c9e6aa4c62d7fddfbbb7ad13fca50
-  specs:
-    rsolr-ext (1.0.3)
-      rsolr (= 1.0.7)
-
-GIT
-  remote: https://github.com/mwmitchell/rsolr.git
+  remote: git://github.com/mwmitchell/rsolr.git
   revision: 739ed939a7e1de37e5ef79f97fe9592a6ca010d1
   tag: v1.0.7
   specs:
     rsolr (1.0.7)
       builder (>= 2.1.2)
+
+GIT
+  remote: git@github.com:cul/rsolr-ext.git
+  revision: a12116f5224c9e6aa4c62d7fddfbbb7ad13fca50
+  specs:
+    rsolr-ext (1.0.3)
+      rsolr (= 1.0.7)
 
 GEM
   remote: http://rubygems.org/
