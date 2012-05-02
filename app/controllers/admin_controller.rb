@@ -36,7 +36,16 @@ class AdminController < ApplicationController
 
 		@solr_yaml = YAML.load_file('config/solr.yml')
 
+
+		# Dev note: Solr server swithch functionality relies on config.cache_classes = true because we're storing the server info in class variables.
+		# For more info on class caching, see:
+		# http://stackoverflow.com/questions/2919988/rails-what-is-cached-when-using-config-cache-classes-true
+		# or
+		# http://stackoverflow.com/questions/2879891/config-cache-classes-true-in-production-mode-has-problems-in-ie
+
 		if(Rails.application.config.cache_classes == true)
+
+			@class_caching_is_on = Rails.application.config.cache_classes
 
 			if(params[:reset_primary_solr_server])
 				# The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
