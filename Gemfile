@@ -1,8 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.2'
-gem 'rsolr'
-
+gem 'rsolr', :git => 'https://github.com/mwmitchell/rsolr.git', :tag => 'v1.0.7'
 gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'

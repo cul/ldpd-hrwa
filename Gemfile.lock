@@ -5,6 +5,14 @@ GIT
     rsolr-ext (1.0.3)
       rsolr (= 1.0.7)
 
+GIT
+  remote: https://github.com/mwmitchell/rsolr.git
+  revision: 739ed939a7e1de37e5ef79f97fe9592a6ca010d1
+  tag: v1.0.7
+  specs:
+    rsolr (1.0.7)
+      builder (>= 2.1.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -191,8 +199,6 @@ GEM
     rb-readline (0.4.2)
     rdoc (3.12)
       json (~> 1.4)
-    rsolr (1.0.7)
-      builder (>= 2.1.2)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -289,7 +295,7 @@ DEPENDENCIES
   rails (= 3.1.2)
   rb-fsevent (= 0.9.0)
   rb-readline (= 0.4.2)
-  rsolr
+  rsolr!
   rsolr-ext!
   rspec-rails (= 2.8.1)
   ruby-debug-base19 (= 0.11.26)
