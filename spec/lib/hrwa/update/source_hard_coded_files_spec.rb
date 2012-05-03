@@ -39,4 +39,12 @@ describe 'hard coded options and browse lists file updater' do
 
     FileUtils.compare_file( @filter_options_got_file, @filter_options_expected_file ).should == true
   end
+  
+  it 'raises an ArgumentError when a invalid component is passed to update_rails_file()' do
+    begin
+      @sourceHardCodedFilesUpdater.update_rails_file( :invalid_component )
+    rescue Exception => e
+    end
+    e.class.should == ArgumentError
+  end
 end
