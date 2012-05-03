@@ -21,6 +21,7 @@ describe 'the admin control panel' do
     fill_in 'admin_username', :with => admin_login_username
     fill_in 'admin_password', :with => admin_login_password
     click_button 'Sign in'
+    visit '/admin'
 
     page.should have_content( 'Admin Control Panel' )
 
@@ -37,6 +38,7 @@ describe 'the admin control panel' do
       fill_in 'admin_username', :with => admin_login_username
       fill_in 'admin_password', :with => admin_login_password
       click_button 'Sign in'
+      visit '/admin'
     end
 
     after :each do
