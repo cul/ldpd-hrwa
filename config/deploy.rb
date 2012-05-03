@@ -29,7 +29,7 @@ namespace :deploy do
     current_version = 'v' + 
                       IO.read("VERSION").strip + 
                       "/" +
-                      DateTime.now.strftime("%Y%m%d%H%M%S")
+                      DateTime.now.strftime("%Y%m%d")
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
 
