@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.3'
 
+gem 'rsolr', :git => 'git://github.com/mwmitchell/rsolr.git', :tag => 'v1.0.7'
+gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
@@ -15,7 +17,6 @@ gem 'jquery-rails', '2.0.2'
 gem 'json', '1.6.6'
 gem 'mysql2', '0.3.11'
 gem 'nokogiri', '1.5.2'
-gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'grouping'
 gem 'sass', '3.1.16'
 gem 'sass-rails', '3.2.5'
 gem 'spreadsheet', '0.6.8'
