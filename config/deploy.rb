@@ -26,7 +26,7 @@ set :use_sudo, false
 namespace :deploy do
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
-    current_version = IO.read("VERSION").strip + Date.today.strftime("-%Y%m%d-%H%M")
+    current_version = IO.read("VERSION").strip + DateTime.now.strftime("%Y%m%d%H%M%S")
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
 
