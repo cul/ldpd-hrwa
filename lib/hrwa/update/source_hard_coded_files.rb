@@ -6,8 +6,7 @@ class HRWA::Update::SourceHardCodedFiles
 
 	LOG_ENTRY_HEADER = '[UPDATE_SOURCE_HARD_CODED_FILES]'
 
-  def initialize( browse_list_file = 
-    'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
+  def initialize( browse_list_file =  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
                   filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb',
                   solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
 
