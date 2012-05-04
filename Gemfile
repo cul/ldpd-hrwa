@@ -4,8 +4,7 @@ gem 'rails', '3.1.2'
 
 # https://issues.cul.columbia.edu/browse/HRWA-406
 gem 'rsolr', :git => 'git://github.com/mwmitchell/rsolr.git', :tag => 'v1.0.7'
-#gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'grouping'
-gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :ref => '3b6a7a4967001055bc834c3bdb7906b76090e306'
+gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'grouping'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
