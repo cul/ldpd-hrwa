@@ -344,6 +344,8 @@ a.moreless.btn { font-size:80%; }
 }
 .alert-link,.alert-jump,.moreless { cursor:pointer; }
 
+.alert.admin-error {background-color:#C22222;color:white;}
+
 #hero-search #searchform, #hero-search #appliedParams {margin-bottom:0px;}
 #hero-search {
   padding-top:20px;
@@ -425,6 +427,9 @@ button.ui-multiselect span { color:#888; }
 .ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none; }
 /* remove label borders in IE6 because IE6 does not support transparency */
 * html .ui-multiselect-checkboxes label { border:none; }
+
+/* Admin Control Panel */
+.admin_control_panel h3 {margin-bottom:6px;}
 
 /* bootstrap img override */
 /* must fix this to work */

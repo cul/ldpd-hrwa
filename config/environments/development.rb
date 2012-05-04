@@ -4,6 +4,14 @@ Hrwa::Application.configure do
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
+
+  # Warning: If you turn off config.cache_classes, this will disable solr server
+  # switching in the HRWA admin control panel, since it relies on cached class
+  # variables.
+  #
+  # But in development mode, it's okay if class caching is off, since
+  # config.cache_classes = true makes development more difficult when modifying
+  # class files.
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.

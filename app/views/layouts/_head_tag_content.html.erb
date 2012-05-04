@@ -7,17 +7,18 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 
 <!-- fav and touch icons -->
+
+<link rel="shortcut icon" href="/assets/crown-small-blue.png" />
 <%
-#<link rel="shortcut icon" href="images/favicon.ico" />
 #<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 #<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
 #<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
 %>
 
-<%= favicon_link_tag asset_path('crown-small-blue.png') %>
-<%= stylesheet_link_tag    "application" %>
+<%= favicon_link_tag 'crown-small-blue.png' %>
+<%= stylesheet_link_tag    'application' %>
 <script type="text/javascript">
   var HRWA = {}; //HRWA Namespace
 </script>
-<%= javascript_include_tag "application" %>
+<%= javascript_include_tag 'application' %>
 <%= raw(render_head_content) %>
