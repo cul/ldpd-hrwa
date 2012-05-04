@@ -1,8 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.2'
-gem 'rsolr', :git => 'git://github.com/mwmitchell/rsolr.git', :tag => 'v1.0.7'
-gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -18,6 +16,7 @@ gem 'jquery-rails', '1.0.19'
 gem 'json', '1.6.5'
 gem 'mysql2', '0.3.11'
 gem 'nokogiri', '1.5.0'
+gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'grouping'
 gem 'sass', '3.1.14'
 gem 'sass-rails', '3.1.5'
 gem 'spreadsheet', '0.6.8'
@@ -39,10 +38,13 @@ group :test, :development do
   # Pretty printed test output
   gem 'capybara', '1.1.2'
   gem 'capybara-webkit', '0.11.0'
+  gem 'cucumber', '1.1.4'
+  gem 'cucumber-rails', '1.2.1'
   gem 'database_cleaner', '0.7.1'
   gem 'factory_girl_rails', '1.6.0'
   gem 'growl', '1.0.3'
   gem 'guard', '1.0.0'
+  gem 'guard-cucumber', '0.7.5' 
   gem 'guard-rails', '0.1.0'
   gem 'guard-rspec', '0.6.0'
   gem 'guard-spork', '0.5.2'
