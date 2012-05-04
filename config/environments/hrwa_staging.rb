@@ -2,9 +2,6 @@
 Hrwa::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # Warning: If you turn off config.cache_classes, this will disable solr server
-  # switching in the HRWA admin control panel, since it relies on cached class
-  # variables.
   config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.

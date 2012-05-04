@@ -37,7 +37,7 @@
 			  <input type="hidden" name="search" value="true" />
 			  <div class="input-append"><%
 				%><div id="top_q_wrapper" class="span6 pull-left"><%
-                    %><input class="span5 pull-left" data-content="Enter your search terms or click the Advanced toggle button for more options." rel="popover" data-original-title="Search HRWA" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"/><%
+                    %><input class="span5 pull-left" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"/><%
                     %><a href="#" id="advo_link" class="span1 pull-right btn btn-mini btn-success" title="Advanced Options Toggle" rel="tooltip">Advanced<span class="caret"></span></a><%
                 %></div><%
 				%><label class="pull-right add-on success" id="top_form_submit_label" title="Submit your search." rel="tooltip"><a href="#" id="top_form_submit" class="submitss white"><i class="icon-search icon-white"></i></a><input type="submit" class="hidden invisible" /></label><%

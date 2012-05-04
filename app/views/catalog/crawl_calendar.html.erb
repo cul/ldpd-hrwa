@@ -20,9 +20,9 @@
             <p class='floatright'>
                 <%= link_to 'Return to results', params[:return_to] unless params[:return_to].blank? %>
             </p>
-            <h3>Website Captures</h3>
+            <h3>Crawl Calendar</h3>
 
-            <p>Capture Results for: <strong><%= archived_url %></strong></p>
+            <p>Crawl Results for: <strong><%= archived_url %></strong></p>
             <div id='crawl_calendar'>
 
                 <% rss.items.each do |item| %>

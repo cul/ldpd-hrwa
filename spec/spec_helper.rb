@@ -23,7 +23,7 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
   end
-
+  
   def mock_query_response_grouped
     %({"responseHeader"=>
     {"status"=>0,
@@ -647,7 +647,7 @@ Spork.prefork do
      "facet_dates"=>{},
      "facet_ranges"=>{}}})
   end
-
+  
   def create_mock_raw_response
     raw_response = eval(mock_query_response_grouped)
     return raw_response

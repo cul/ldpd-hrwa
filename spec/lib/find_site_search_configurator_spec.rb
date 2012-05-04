@@ -151,37 +151,29 @@ describe 'HRWA::FindSiteSearchConfigurator' do
 
     solr_yml = YAML.load_file( 'config/solr.yml' )
 
-    before :each do
-        @configurator.class.reset_solr_config
-    end
-
-    after :each do
-        @configurator.class.reset_solr_config
-    end
-
     it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == solr_yml['development']['fsf']['url']
+      @configurator.solr_url( 'development' ).should == solr_yml['development']['fsf']['url']
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == solr_yml['test']['fsf']['url']
+      @configurator.solr_url().should == solr_yml['test']['fsf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['fsf']['url']
+      @configurator.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['fsf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_test"' do
-      @configurator.class.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['fsf']['url']
+      @configurator.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['fsf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['fsf']['url']
+      @configurator.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['fsf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_prod"' do
-      @configurator.class.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['fsf']['url']
+      @configurator.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['fsf']['url']
     end
   end
 

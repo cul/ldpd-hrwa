@@ -21,14 +21,14 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :defType          => "dismax",
           :facet            => true,
           :'facet.field'    => [
-                                'domain',
                                 'dateOfCaptureYYYY',
-                                'mimetype',
+                                'domain',
                                 'geographic_focus__facet',
                                 'organization_based_in__facet',
                                 'organization_type__facet',
                                 'language__facet',
                                 'creator_name__facet',
+                                'mimetype',
                                ],
           :'facet.mincount' => 1,
           :group            => true,
@@ -56,14 +56,14 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
     it 'sets Blacklight::Configuration.facet_fields.* stuff correctly' do
       expected_facet_fields = {
-        'domain'                       => { :label => 'Domain',                     :limit => 5 },
         'dateOfCaptureYYYY'            => { :label => 'Date Of Capture',            :limit => 5 },
-        'mimetype'                     => { :label => 'File Type',                  :limit => 5 },
+        'domain'                       => { :label => 'Domain',                     :limit => 5 },
         'geographic_focus__facet'      => { :label => 'Geographic Focus',           :limit => 5 },
         'organization_based_in__facet' => { :label => 'Organization Based In',      :limit => 5 },
         'organization_type__facet'     => { :label => 'Organization Type',          :limit => 5 },
         'language__facet'              => { :label => 'Website Language',           :limit => 5 },
         'creator_name__facet'          => { :label => 'Creator',                    :limit => 5 },
+        'mimetype'                     => { :label => 'File Type',                  :limit => 5 },
       }
 
       expected_facet_fields.each { | name, expected |
@@ -282,37 +282,29 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
     solr_yml = YAML.load_file( 'config/solr.yml' )
 
-    before :each do
-        @configurator.class.reset_solr_config
-    end
-
-    after :each do
-        @configurator.class.reset_solr_config
-    end
-
     it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == solr_yml['development']['asf']['url']
+      @configurator.solr_url( 'development' ).should == solr_yml['development']['asf']['url']
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == solr_yml['test']['asf']['url']
+      @configurator.solr_url().should == solr_yml['test']['asf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['asf']['url']
+      @configurator.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['asf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_test"' do
-      @configurator.class.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['asf']['url']
+      @configurator.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['asf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['asf']['url']
+      @configurator.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['asf']['url']
     end
 
     it 'returns correct URL for environment "hrwa_prod"' do
-      @configurator.class.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['asf']['url']
+      @configurator.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['asf']['url']
     end
   end
 

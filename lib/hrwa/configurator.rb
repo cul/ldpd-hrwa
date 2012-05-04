@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 require 'hrwa/archive_search_configurator'
 require 'hrwa/find_site_search_configurator'
-require 'hrwa/site_detail_configurator'
 
 class HRWA::Configurator
+  unloadable
 
   include HRWA::AdvancedSearch
 
@@ -63,19 +63,7 @@ class HRWA::Configurator
   end
 
   def solr_url
-    return @configurator.class.solr_url
-  end
-
-  def self.reset_solr_config
-    HRWA::ArchiveSearchConfigurator.reset_solr_config
-    HRWA::FindSiteSearchConfigurator.reset_solr_config
-    HRWA::SiteDetailConfigurator.reset_solr_config
-  end
-
-  def self.override_solr_url(new_solr_url)
-    HRWA::ArchiveSearchConfigurator.override_solr_url(new_solr_url)
-    HRWA::FindSiteSearchConfigurator.override_solr_url(new_solr_url)
-    HRWA::SiteDetailConfigurator.override_solr_url(new_solr_url)
+    return @configurator.solr_url
   end
 
   def prioritized_highlight_field_list

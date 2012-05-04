@@ -43,9 +43,8 @@ jQuery(function($) {
 	} else {
 	  $('#asfsearch').prop('checked', true);
 	}
-    $('#q').popover('hide');
 	return false;
-  }).hover(function() { $('#q').popover('show'); }, function() { $('#q').popover('hide'); } );
+  });
 
   /* #q focus and blur */
   $('#q').bind('focus', function(){
@@ -448,7 +447,6 @@ jQuery(function($) {
   $('.navbar a[rel=tooltip], .navbar label[rel=tooltip]').tooltip({'placement': 'bottom'});
   $('a[rel=tooltip], .results_control a').tooltip({'placement': 'top'});
   $('article span[rel=tooltip], .hero-unit label[rel=tooltip]').css('cursor','pointer').tooltip({'placement': 'top'});
-  $('#q').popover({'placement':'bottom', 'trigger':'manual'});
 
   // cbf home onload sorting and showing
   $('.tab-content .results_control .sort_a-z.btn').click().removeClass('btn-success');
@@ -684,8 +682,7 @@ jQuery(function($) {
 			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
 				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
 				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
-				'<div class="pull-right"><a href="#" class="btn btn-mini cancel">Cancel</a> <a href="#" class="btn btn-mini btn-success submit">Search</a></div>' +
-			    '<div class="clear"></div>' +
+				'<a href="#" class="btn btn-small cancel">Cancel</a><a href="#" class="btn btn-small submit">Search</a>' +
 			'</span>' +
 			'<span class="clearfix"></span>' +
 		'<span>' +
