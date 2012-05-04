@@ -28,10 +28,11 @@ gem 'therubyracer', '0.10.1'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'compass', '0.12.1'
   gem 'coffee-rails', '3.2.2'
   gem 'sass-rails', '3.2.5'
   gem 'uglifier', '1.2.4'
+  gem 'compass-rails', '~> 1.0.0'
+  gem 'compass-susy-plugin', '~> 0.9.0'
 end
 
 group :test, :development do
