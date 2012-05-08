@@ -60,4 +60,4 @@ end
 
 
 after 'deploy:update_code', 'deploy:symlink_shared'
-before "deploy:symlink", "deploy:assets"
+before "deploy:create_symlink", "deploy:assets"
