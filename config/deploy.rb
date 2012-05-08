@@ -26,7 +26,10 @@ set :use_sudo, false
 namespace :deploy do
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
-    current_version = IO.read("VERSION").strip + Date.today.strftime("-%y%m%d")
+    current_version = 'v' + 
+                      IO.read("VERSION").strip + 
+                      "/" +
+                      DateTime.now.strftime("%Y%m%d")
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
 
@@ -47,7 +50,7 @@ namespace :deploy do
   end
 
 
-  desc "Compile asets"
+  desc "Compile assets"
   task :assets do
     run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean assets:precompile"
   end
