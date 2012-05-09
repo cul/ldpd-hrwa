@@ -182,8 +182,29 @@ module HRWA::CatalogHelperBehavior
       numeric_value = weighting_string[start_of_numeric_value_index..end_of_numeric_value_index]
     end
 
-    return numeric_value.to_i unless numeric_value.to_i == 0 # because if numeric_value.to_i == 0, that means that no valid numeric value was supplied for the search_weight_type
+    if(numeric_value.to_i == 0)
+      return nil
+    else
+      return numeric_value.to_i # because if numeric_value.to_i == 0, that means that no valid numeric value was supplied for the search_weight_type
+    end
 
+  end
+
+  def calculate_no_stemming_boost_weighting_from_weighting_string(search_weight_type_to_base_calculation_on, weighting_string)
+      search_weight = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on, weighting_string)
+      search_weight = 1 if search_weight.nil?
+      # Check for special exceptional case 'originalUrl'
+      if(search_weight_type_to_base_calculation_on == 'originalUrl')
+        search_weight_no_stemming = get_specific_search_weight_from_weighting_string('originalUrl__no_stemming_balancing_field' , weighting_string)
+      else
+        search_weight_no_stemming = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on + '__no_stemming' , weighting_string)
+      end
+
+      if(search_weight.nil? || search_weight_no_stemming.nil?)
+        return 1
+      else
+        return (search_weight_no_stemming / search_weight)
+      end
   end
 
   # ! Override of render_pagination_info !

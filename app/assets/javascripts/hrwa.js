@@ -631,8 +631,10 @@ jQuery(function($) {
 		max: 500,
 		step: 1,
 		slide: function( event, ui ) {
+            $(this).attr('data-val-from-url', ui.value);
 			$( "#url_weight_label" ).html( "URL: " + ui.value );
 			$( "#url_weight" ).val( "originalUrl^" + ui.value );
+            updateNoStemmingHiddenFields();
 		}
   });
   $('#page_title_weight_slider').slider({
@@ -641,8 +643,10 @@ jQuery(function($) {
 		max: 500,
 		step: 1,
 		slide: function( event, ui ) {
+            $(this).attr('data-val-from-url', ui.value);
 			$( "#page_title_weight_label" ).html( "Page Title: " + ui.value );
 			$( "#page_title_weight" ).val( "contentTitle^" + ui.value );
+            updateNoStemmingHiddenFields();
 		}
   });
   $('#page_content_weight_slider').slider({
@@ -651,16 +655,40 @@ jQuery(function($) {
 		max: 500,
 		step: 1,
 		slide: function( event, ui ) {
+            $(this).attr('data-val-from-url', ui.value);
 			$( "#page_content_weight_label" ).html( "Page Content: " + ui.value );
 			$( "#page_content_weight" ).val( "contentBody^" + ui.value );
+            updateNoStemmingHiddenFields();
+		}
+  });
+  $('#no_stemming_boost_weight_slider').slider({
+		value: $('#no_stemming_boost_weight_slider').attr('data-val-from-url') ? parseFloat($('#no_stemming_boost_weight_slider').attr('data-val-from-url')) : 1,
+		min: 1,
+		max: 500,
+		step: 1,
+		slide: function( event, ui ) {
+            $(this).attr('data-val-from-url', ui.value);
+			$( "#no_stemming_boost_weight_label" ).html( "Non-Stemming Boost: " + ui.value );
+            //Update corresponding __no_stemming hidden fields
+            updateNoStemmingHiddenFields();
 		}
   });
   $( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight_label" ).html( "Page Title: " + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
+  $( "#no_stemming_boost_weight_label" ).html( "Non-Stemming Boost: " + $( "#no_stemming_boost_weight_slider" ).slider( "value" ) );
+
   $( "#url_weight" ).val( 'originalUrl^' + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
+
+  function updateNoStemmingHiddenFields()
+  {
+    var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
+    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseFloat($('#url_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) ) );
+  }
 
 
   /* Sidebar facet modifications */
