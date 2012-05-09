@@ -266,7 +266,7 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
 
     valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl',
                           'contentBody__no_stemming', 'contentTitle__no_stemming',
-                          'originalUrl', ]
+                          'originalUrl__no_stemming_balancing_field', ]
 
     qf = []
     user_params[ :field ].each { | field_boost |
@@ -288,7 +288,7 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
 
     # Takes optional environment arg for testability
     def self.solr_url(environment = Rails.env)
-       @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+       @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf-hrwa-278' ][ 'url' ]
        return @@solr_url
 
     end

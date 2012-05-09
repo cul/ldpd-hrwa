@@ -362,7 +362,7 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
   describe '#solr_url' do
 
     before :all do
-        @dev_solr_url = 'http://coolidge.cul.columbia.edu:8080/solr-4/asf'
+        @dev_solr_url = 'http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
     end
 
     before :each do
