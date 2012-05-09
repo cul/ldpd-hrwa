@@ -164,23 +164,36 @@
 			<h6>Weighting options (temporary)</h6>
 			<div class="span12 nomar">
 				<div class="control-group span10">
-					<label id="url_weight_label" class="span2 control-label">URL: 1</label>
-					<div id="url_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('originalUrl', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
+					<label id="url_weight_label" class="span3 control-label">URL: 1</label>
+          <% originalUrlWeighting = get_specific_search_weight_from_weighting_string('originalUrl', params[:field].nil? ? '' : params[:field].join('')) %>
+					<div id="url_weight_slider" data-val-from-url="<%= originalUrlWeighting %>" class="clearfix"></div>
 					<input type="hidden" id="url_weight" name="field[]" value="originalUrl^1"/>
 				</div>
 			</div>
 			<div class="span12 nomar">
 				<div class="control-group span10">
-					<label id="page_title_weight_label" class="span2 control-label">Page Title: 1</label>
-					<div id="page_title_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('contentTitle', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
+					<label id="page_title_weight_label" class="span3 control-label">Page Title: 1</label>
+          <% contentTitleWeighting = get_specific_search_weight_from_weighting_string('contentTitle', params[:field].nil? ? '' : params[:field].join('')) %>
+					<div id="page_title_weight_slider" data-val-from-url="<%= contentTitleWeighting %>" class="clearfix"></div>
 					<input type="hidden" id="page_title_weight" name="field[]" value="contentTitle^1"/>
 				</div>
 			</div>
 			<div class="span12 nomar">
 				<div class="control-group span10">
-						<label id="page_content_weight_label" class="span2 control-label">Page Content: 1</label>
-						<div id="page_content_weight_slider" data-val-from-url="<%= get_specific_search_weight_from_weighting_string('contentBody', params[:field].nil? ? '' : params[:field].join('')) %>" class="clearfix"></div>
+						<label id="page_content_weight_label" class="span3 control-label">Page Content: 1</label>
+            <% pageContentWeighting = get_specific_search_weight_from_weighting_string('contentBody', params[:field].nil? ? '' : params[:field].join('')) %>
+						<div id="page_content_weight_slider" data-val-from-url="<%= pageContentWeighting %>" class="clearfix"></div>
 						<input type="hidden" id="page_content_weight" name="field[]" value="contentBody^1"/>
+				 </div>
+			</div>
+      <div class="span12 nomar">
+				<div class="control-group span10">
+						<label id="no_stemming_boost_weight_label" class="span3 control-label">Non-Stemming Boost: 1</label>
+            <% noStemmingBoostWeighting = calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle', params[:field].nil? ? '' : params[:field].join('')) %>
+						<div id="no_stemming_boost_weight_slider" data-val-from-url="<%= noStemmingBoostWeighting %>" class="clearfix"></div>
+						<input type="hidden" id="url_weight__no_stemming" name="field[]" value="originalUrl__no_stemming_balancing_field^1"/>
+            <input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="contentTitle__no_stemming^1"/>
+            <input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contentBody__no_stemming^1"/>
 				 </div>
 			</div>
     </div>
