@@ -57,6 +57,7 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
                                'contentTitle',
                                'contentTitle__no_stemming',
                                'originalUrl',
+                               'originalUrl__no_stemming_balancing_field',
                                ],
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
@@ -68,6 +69,7 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
                                 'contentTitle^1',
                                 'contentTitle__no_stemming^1',
                                 'originalUrl^1',
+                                'originalUrl__no_stemming_balancing_field^1',
                                ],
           :rows             => 10,
         }
