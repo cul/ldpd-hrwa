@@ -161,6 +161,8 @@ describe 'calculate_no_stemming_boost_weighting_from_weighting_string' do
     calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
     calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
 
+    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 1
+
     calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 1
     calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 1
     calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 1
