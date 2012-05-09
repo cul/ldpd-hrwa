@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'blacklight/configuration'
 
-describe 'HRWA::ArchiveSearchConfigurator' do
+describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
   before ( :all ) do
-    @advanced_search_q_and_women_params = {
+    @advanced_search_with_stemming_adjuster_q_and_women_params = { 
       :capture_start_date => '',
       :capture_end_date   => '',
       :per_page           => 10,
@@ -15,12 +15,12 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       :rows               => '10',
       :search             => 'true',
       :search_mode        => 'advanced',
-      :search_type        => 'archive',
+      :search_type        => 'archive_with_stemming_adjuster',
       :sort               => 'score+desc',
       :submit_search      => 'Advanced+Search'
     }
 
-    @configurator = HRWA::ArchiveSearchConfigurator.new
+    @configurator = HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.new
   end
 
   context '#config_proc' do
@@ -53,7 +53,9 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
                                'contentBody',
+                               'contentBody__no_stemming',
                                'contentTitle',
+                               'contentTitle__no_stemming',
                                'originalUrl',
                                ],
           :'hl.usePhraseHighlighter' => true,
@@ -62,7 +64,9 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :'q.alt'          => "*:*",
           :qf               => [
                                 'contentBody^1',
+                                'contentBody__no_stemming^1',
                                 'contentTitle^1',
+                                'contentTitle__no_stemming^1',
                                 'originalUrl^1',
                                ],
           :rows             => 10,
@@ -208,7 +212,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   describe '#process_search_request - domain exclusion' do
     before :each do
-      @params = @advanced_search_q_and_women_params.dup
+      @params = @advanced_search_with_stemming_adjuster_q_and_women_params.dup
     end
 
     domains_to_exclude = [
@@ -247,7 +251,67 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
 
     before :each do
-      @params = @advanced_search_q_and_women_params.dup
+      @params = @advanced_search_with_stemming_adjuster_q_and_women_params.dup
+    end
+
+    it 'sets full field set boosts correctly' do
+      @params[ :field ] = @valid_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @valid_params }
+    end
+
+    it 'sets partial field set boosts correctly' do
+      @partial_params = @valid_params.slice( 0..@valid_params.length - 2 )
+      @params[ :field ] = @partial_params
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @partial_params }
+    end
+
+    it 'does nothing and exits when no field params present' do
+      extra_controller_params = { :qf => @default_qf }
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @default_qf }
+    end
+
+    describe 'argument validation' do
+      # Test bad boost values
+      [ '-12', 'orange', '0' ].each { | value |
+        it "raises ArgumentError for bad boost value #{ value }" do
+          expect{
+            @configurator.set_solr_field_boost_levels(
+              {},
+              { :field => [ "contentTitle^#{ value }" ] }
+            )
+          }.to raise_error( ArgumentError )
+        end
+      }
+    end
+
+    it 'ignores invalid field arguments' do
+      extra_controller_params = { :qf => @default_qf }
+      @params.merge!( :field => @valid_params | @bad_params )
+      @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
+      extra_controller_params.should == { :qf => @valid_params }
+    end
+  end
+
+  describe '#set_no_stemming_boost_levels' do
+    before :all do
+      @default_qf   = [ 'contentTitle^1', 'contentBody^1', 'originalUrl^1',
+                        'contentTitle__no_stemming^1', 'contentBody__no_stemming^1',
+                        'originalUrl__no_stemming_balancing_field^1',
+                      ]
+      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^4',
+                        'contentTitle__no_stemming^15', 'contentBody__no_stemming^10',
+                        'originalUrl__no_stemming_balancing_field^20',
+                      ]
+      @bad_params   = [ 'title^5', 'body^3' ]
+    end
+
+    before :each do
+      @params = @advanced_search_with_stemming_adjuster_q_and_women_params.dup
     end
 
     it 'sets full field set boosts correctly' do
@@ -295,7 +359,9 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   describe '#solr_url' do
 
-    solr_yml = YAML.load_file( 'config/solr.yml' )
+    before :all do
+        @dev_solr_url = 'http://coolidge.cul.columbia.edu:8080/solr-4/asf'
+    end
 
     before :each do
         @configurator.class.reset_solr_config
@@ -306,29 +372,22 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
 
     it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == solr_yml['development']['asf']['url']
+      @configurator.class.solr_url( 'development' ).should == @dev_solr_url
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == solr_yml['test']['asf']['url']
+      @configurator.class.solr_url().should == @dev_solr_url
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == solr_yml['hrwa_dev']['asf']['url']
-    end
-
-    it 'returns correct URL for environment "hrwa_test"' do
-      @configurator.class.solr_url( 'hrwa_test' ).should == solr_yml['hrwa_test']['asf']['url']
+      @configurator.class.solr_url( 'hrwa_dev' ).should == @dev_solr_url
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == solr_yml['hrwa_staging']['asf']['url']
+      @configurator.class.solr_url( 'hrwa_staging' ).should == @dev_solr_url
     end
 
-    it 'returns correct URL for environment "hrwa_prod"' do
-      @configurator.class.solr_url( 'hrwa_prod' ).should == solr_yml['hrwa_prod']['asf']['url']
-    end
   end
 
 end
