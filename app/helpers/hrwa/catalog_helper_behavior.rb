@@ -163,10 +163,10 @@ module HRWA::CatalogHelperBehavior
 
 
   def get_specific_search_weight_from_weighting_string(search_weight_type, weighting_string)
-
+  
     if(
         weighting_string.empty? ||
-        weighting_string.index(search_weight_type).nil? ||
+        (Regexp.new(search_weight_type + '\^\d').match(weighting_string)).nil? ||
         (search_weight_type.length + 1) > weighting_string.length
       )
       return nil
@@ -183,7 +183,7 @@ module HRWA::CatalogHelperBehavior
     end
 
     if(numeric_value.to_i == 0)
-      return nil
+      return 1
     else
       return numeric_value.to_i # because if numeric_value.to_i == 0, that means that no valid numeric value was supplied for the search_weight_type
     end
@@ -200,7 +200,7 @@ module HRWA::CatalogHelperBehavior
         search_weight_no_stemming = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on + '__no_stemming' , weighting_string)
       end
 
-      if(search_weight.nil? || search_weight_no_stemming.nil?)
+      if(search_weight.nil? || search_weight == 1 || search_weight_no_stemming.nil?)
         return 1
       else
         return (search_weight_no_stemming / search_weight)
