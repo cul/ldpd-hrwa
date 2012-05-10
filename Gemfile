@@ -1,9 +1,12 @@
 source 'http://rubygems.org'
+source 'http://haydn.cul.columbia.edu/ldpd/rubygems'
 
 gem 'rails', '3.2.3'
 
-gem 'rsolr', :git => 'git://github.com/mwmitchell/rsolr.git', :tag => 'v1.0.7'
-gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git'
+# This is the LDPD fork of rsolr-ext.  See https://issues.cul.columbia.edu/browse/HRWA-415
+# for rationale behind the crazy build number (i.e. why we are using Columbia's phone number)
+gem 'rsolr-ext', '1.0.32128541754'
+
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
