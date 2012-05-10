@@ -145,6 +145,7 @@
                         <option value="test"<%= hrwa_solr_host == 'test' ? ' selected="selected"'.html_safe : '' %>>Test</option>
                         <option value="prod"<%= hrwa_solr_host == 'prod' ? ' selected="selected"'.html_safe : '' %>>Prod</option>
                     </select>
+					<input id="hrwa_host_asf_hidden" type="hidden" disabled="disabled" name="hrwa_host" value="test" />
 				</div>
 			</div>
 			<div class="span6 nomar">
@@ -156,6 +157,7 @@
                         <option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
                         <option value="asf-hrwa-278" <%= hrwa_core_asf == 'asf-hrwa-278' ? ' selected="selected"'.html_safe : '' %>>ASF-HRWA-278 (stemming and non-stemming results)</option>
                     </select>
+					<input id="hrwa_core_asf_hidden" type="hidden" disabled="disabled" name="hrwa_core" value="asf-hrwa-278" />
                 </div>
 			</div>
     </div>
