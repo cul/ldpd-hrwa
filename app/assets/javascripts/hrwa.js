@@ -626,7 +626,7 @@ jQuery(function($) {
 
   //Weighting sliders
   $('#url_weight_slider').slider({
-		value: $('#url_weight_slider').attr('data-val-from-url') ? parseInt($('#url_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#url_weight_slider').attr('data-val-from-url') ? parseFloat($('#url_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -638,7 +638,7 @@ jQuery(function($) {
 		}
   });
   $('#page_title_weight_slider').slider({
-		value: $('#page_title_weight_slider').attr('data-val-from-url') ? parseInt($('#page_title_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#page_title_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -650,7 +650,7 @@ jQuery(function($) {
 		}
   });
   $('#page_content_weight_slider').slider({
-		value: $('#page_content_weight_slider').attr('data-val-from-url') ? parseInt($('#page_content_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#page_content_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -662,7 +662,7 @@ jQuery(function($) {
 		}
   });
   $('#no_stemming_boost_weight_slider').slider({
-		value: $('#no_stemming_boost_weight_slider').attr('data-val-from-url') ? parseInt($('#no_stemming_boost_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#no_stemming_boost_weight_slider').attr('data-val-from-url') ? parseFloat($('#no_stemming_boost_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -681,33 +681,13 @@ jQuery(function($) {
   $( "#url_weight" ).val( 'originalUrl^' + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
-  
-  updateNoStemmingHiddenFields(); //call this once the page loads
 
   function updateNoStemmingHiddenFields()
   {
     var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
-    
-    // Switch to prototype core if boost of non-stemmed fields is desired
-    if ( current_boost > 1 ) {
-	  $( '#hrwa_core_asf' ).val( 'asf-hrwa-278' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
-	  $( '#hrwa_host_asf' ).val( 'test' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
-	  
-	  $( '#hrwa_core_asf_hidden' ).removeAttr('disabled');
-	  $( '#hrwa_host_asf_hidden' ).removeAttr('disabled');
-	  
-    } else {
-      // Switch back to the regular core
-      $( '#hrwa_core_asf' ).val( 'asf' ).removeAttr('disabled').css('opacity', '').css('filter', '');
-	  $( '#hrwa_host_asf' ).val( '' ).removeAttr('disabled').css('opacity', '').css('filter', '');
-	  
-	  $( '#hrwa_core_asf_hidden' ).attr('disabled', 'disabled');
-	  $( '#hrwa_host_asf_hidden' ).attr('disabled', 'disabled');
-    }
-    
-    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
+    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseFloat($('#url_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) ) );
   }
 
 
