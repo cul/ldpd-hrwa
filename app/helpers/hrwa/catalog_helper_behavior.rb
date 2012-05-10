@@ -234,6 +234,29 @@ module HRWA::CatalogHelperBehavior
         "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b id='search_result_count'>#{total_num}</b>".html_safe
       end
   end
+  
+  # Uses params to determine the currently selected hrwa core,
+  # and if no core is specified in the params this method defaults
+  # to whatever is normal for the current search_type
+  def get_current_hrwa_solr_core(localized_params = params)
+
+    current_hrwa_solr_core = nil
+    valid_cores = [ 'asf', 'fsf', 'asf-hrwa-278' ]
+
+    if( params[ :hrwa_core ] && valid_cores.include?( params[ :hrwa_core ] ) )
+      current_hrwa_solr_core = params[ :hrwa_core ]
+    else
+      # Use default for the search_type 
+      if    ( 'archive'   == params[ :search_type ] )
+        current_hrwa_solr_core = 'asf'
+      elsif ( 'find_site' == params[ :search_type ] )
+        current_hrwa_solr_host = 'fsf'
+      else
+        # There are no other search_type values, should never get here
+      end
+    end
+
+  end
 
   #Uses params to determine the currently selected hrwa solr host,
   #and if no host is specified in the params this method defaults

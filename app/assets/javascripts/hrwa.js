@@ -685,6 +685,15 @@ jQuery(function($) {
   function updateNoStemmingHiddenFields()
   {
     var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
+    
+    // Switch to prototype core if boost of non-stemmed fields is desired
+    if ( current_boost > 1 ) {
+      $( "#hrwa_core_asf" ).val( "asf-hrwa-278" )
+    } else {
+      // Switch back to the regular core
+      $( "#hrwa_core_asf" ).val( "asf" )
+    }
+    
     $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseFloat($('#url_weight_slider').attr('data-val-from-url')) ) );
     $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) ) );
     $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) ) );

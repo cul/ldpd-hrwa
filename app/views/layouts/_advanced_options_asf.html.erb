@@ -150,9 +150,11 @@
 			<div class="span6 nomar">
                 <div class="control-group">
                     <label class="span2 control-label">core</label>
-                    <select class="control-group pull-left">
+                    <select id="hrwa_core_asf" name="hrwa_core" class="control-group pull-left">
+                        <% hrwa_core_asf = params[ :hrwa_core ].blank? ? '' : get_current_hrwa_solr_core %>
                         <option value="">- Choose an option -</option>
-                        <option value="asf" selected="selected">ASF (always selected for now)</option>
+                        <option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
+                        <option value="asf-hrwa-278" <%= hrwa_core_asf == 'asf-hrwa-278' ? ' selected="selected"'.html_safe : '' %>>ASF-HRWA-278 (stemming and non-stemming results)</option>
                     </select>
                 </div>
 			</div>

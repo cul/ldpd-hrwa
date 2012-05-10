@@ -14,7 +14,7 @@ development: &development
   asf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/asf"
   asf-hrwa-278:
-    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
+    url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test"
   fsf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/fsf"
   site_detail:
@@ -24,7 +24,7 @@ test:
   asf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test"
   asf-hrwa-278:
-    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
+    url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test"
   fsf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test"
   site_detail:
