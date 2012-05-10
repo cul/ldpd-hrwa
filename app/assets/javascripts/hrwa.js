@@ -688,10 +688,12 @@ jQuery(function($) {
     
     // Switch to prototype core if boost of non-stemmed fields is desired
     if ( current_boost > 1 ) {
-      $( "#hrwa_core_asf" ).val( "asf-hrwa-278" )
+	  $( '#hrwa_core_asf' ).val( 'asf-hrwa-278' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
+	  $( '#hrwa_host_asf' ).val( 'test' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
     } else {
       // Switch back to the regular core
-      $( "#hrwa_core_asf" ).val( "asf" )
+      $( '#hrwa_core_asf' ).val( 'asf' ).removeAttr('disabled').css('opacity', '').css('filter', '');
+	  $( '#hrwa_host_asf' ).val( '' ).removeAttr('disabled').css('opacity', '').css('filter', '');
     }
     
     $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseFloat($('#url_weight_slider').attr('data-val-from-url')) ) );
