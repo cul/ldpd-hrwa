@@ -10,7 +10,7 @@ PATH
 
 GEM
   remote: http://rubygems.org/
-  remote: http://haydn.cul.columbia.edu/ldpd/rubygems/
+  remote: http://haydn.cul.columbia.edu/ldpd/
   specs:
     actionmailer (3.2.3)
       actionpack (= 3.2.3)
