@@ -200,7 +200,7 @@ module HRWA::CatalogHelperBehavior
         search_weight_no_stemming = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on + '__no_stemming' , weighting_string)
       end
 
-      if(search_weight.nil? || search_weight == 1 || search_weight_no_stemming.nil?)
+      if(search_weight.nil? || search_weight_no_stemming.nil?)
         return 1
       else
         return (search_weight_no_stemming / search_weight)
