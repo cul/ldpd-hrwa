@@ -16,7 +16,7 @@
 <%= render 'constraints', :localized_params=>params %>
         <div class="clear"></div>
 </div>
-
+		<%= '<p class="alert alert-error">Note: You are currently performing a limited-result search that favors <strong>non-stemmed</strong> field searching.<br />The results below represent only a small subset of your true result set.</p>'.html_safe if @search_type == :archive_ns %>
     	<%= render 'results_pagination' %>
 
         <div class="clear"></div>
