@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-source 'http://haydn.cul.columbia.edu/ldpd/rubygems'
+source 'http://haydn.cul.columbia.edu/ldpd/'
 
 gem 'rails', '3.2.3'
 
