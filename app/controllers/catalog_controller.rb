@@ -110,9 +110,6 @@ class CatalogController < ApplicationController
     end
 
     @configurator = HRWA::Configurator.new( @search_type )
-    
-    Rails.logger.debug('------------------------------------ Search Type: ' + @search_type.to_s + ' ---------------------------')
-    Rails.logger.debug('------------------------------------ Using: ' + @configurator.solr_url + ' ---------------------------')
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324
     @configurator.reset_configuration( self.blacklight_config )
