@@ -73,7 +73,6 @@ class CatalogController < ApplicationController
       # Select appropriate partials
       @result_partial = @configurator.result_partial
       @result_type    = @configurator.result_type
-      @solr_url       = @configurator.solr_url
 
       # TODO: remove this from production version
       if params.has_key?( :hrwa_debug )
@@ -102,15 +101,18 @@ class CatalogController < ApplicationController
 
   def _configure_by_search_type(search_type = params[:search_type])
     @debug = ''.html_safe
-
-    @search_type = search_type.to_sym
     
     # Backend method of reselecting search_type based on hrwa_core if hrwa_core is the no-stemming core
-    if ( 'asf-hrwa-278' == params[ :hrwa_core ] )
+    if ( params[ :hrwa_core ] == 'asf-hrwa-278' )
       @search_type = :archive_ns
+    else
+      @search_type = search_type.to_sym
     end
 
     @configurator = HRWA::Configurator.new( @search_type )
+    
+    Rails.logger.debug('------------------------------------ Search Type: ' + @search_type.to_s + ' ---------------------------')
+    Rails.logger.debug('------------------------------------ Using: ' + @configurator.solr_url + ' ---------------------------')
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324
     @configurator.reset_configuration( self.blacklight_config )
@@ -118,10 +120,15 @@ class CatalogController < ApplicationController
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
+    
+    if(@search_type == :archive_ns || !params[:hrwa_host] || params[:hrwa_host].blank?)
+        @solr_url = @configurator.solr_url
+    else
+        #Dev override
+        @solr_url = get_solr_host_from_url(@configurator.name, params)
+    end
 
-    solr_url = (!params[:hrwa_host] || params[:hrwa_host].blank?) ? @configurator.solr_url : get_solr_host_from_url(@configurator.name, params)
-
-    Blacklight.solr = RSolr::Ext.connect( :url => solr_url)
+    Blacklight.solr = RSolr::Ext.connect( :url => @solr_url)
   end
 
   def _set_debug_display
