@@ -699,7 +699,6 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Icelandic},
               %q{Indonesian},
               %q{Italian},
-              %q{jap [041 CODE NOT FOUND IN MARC LIST]},
               %q{Japanese},
               %q{Korean},
               %q{Latvian},
@@ -824,7 +823,6 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Nicaragua},
               %q{Niger},
               %q{Nigeria},
-              %q{No place, unknown, or undetermined},
               %q{Norway},
               %q{Pakistan},
               %q{Panama},
@@ -859,6 +857,7 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Turkey},
               %q{Uganda},
               %q{Ukraine},
+              %q{undetermined},
               %q{United Kingdom},
               %q{United States},
               %q{Uruguay},
@@ -877,7 +876,6 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{National human rights institutions},
               %q{Non-governmental organizations},
               %q{Other organization types},
-              %q{Other types of organizations},
            ]
   end
 
@@ -1507,7 +1505,7 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Homosexuality},
               %q{Honor killings},
               %q{Housing},
-              %q{Human rights},
+              %q{Human rights (General)},
               %q{Human rights -- Environmental aspects},
               %q{Human rights -- Government policy},
               %q{Human rights -- Government policy.},
@@ -1584,7 +1582,6 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Murder victims},
               %q{Muslim women -- Legal status, laws, etc.},
               %q{Nation-building},
-              %q{National human rights institutions},
               %q{Nationalism},
               %q{Nazis},
               %q{Non-governmental organizations},
