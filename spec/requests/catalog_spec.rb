@@ -81,7 +81,7 @@ describe 'archive search' do
     fill_in 'q', :with => 'water'
     choose 'asfsearch'
     click_link 'top_form_submit'
-    
+
   end
 
   # https://issues.cul.columbia.edu/browse/HRWA-359 Bug
@@ -221,16 +221,43 @@ describe 'archive search' do
       page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
     end
 
-    #it 'chooses the correct server when hrwa_host is selected in the advanced options', :js => true, :focus => true do
-    #  visit '/search'
-    #  choose 'asfsearch'
-    #  click_link 'advo_link'
-    #  fill_in 'q_and',              :with => 'women'
-    #  find('#advanced_options_asf select.hrwa_host').select('test')
-    #  click_link 'Menu'
-    #  click_link 'Turn debug on'
-    #  page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/fsf} )
-    #end
+    describe 'archive search hrwa_host override dropdown' do
+        it 'correctly selects the Dev override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_asf').select('Dev')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/asf} )
+        end
+
+        it 'correctly selects the Test override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_asf').select('Test')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-4/asf} )
+        end
+
+        it 'correctly selects the Prod override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_asf').select('Prod')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/asf} )
+        end
+    end
 
   end
 end
@@ -269,6 +296,44 @@ describe 'find site search' do
       page.should have_content('Center for Economic and Social Rights')
     end
   end
+
+  describe 'find_site search hrwa_host override dropdown' do
+        it 'correctly selects the Dev override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'fsfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_fsf').select('Dev')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/fsf} )
+        end
+
+        it 'correctly selects the Test override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'fsfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_fsf').select('Test')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-4/fsf} )
+        end
+
+        it 'correctly selects the Prod override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'fsfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_fsf').select('Prod')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/fsf} )
+        end
+    end
 
 end
 
