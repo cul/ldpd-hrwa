@@ -49,7 +49,7 @@ describe 'HRWA::FilterOptions' do
                        'organization_type'     => [ 'Non-governmental organizations' ],
                        'original_urls'         => [ 'http://hoodonline.org/'],
                        'subject'               => [ 'Women in Islam', 'Civil rights' ],
-                       'title'                 => [ 'CONECTAS Direitos Humanos', 'Amman Center for Human Rights Studies : Markaz ʻAmmān li-Dirāsāt Ḥuqūq al-Insān.']
+                       'title'                 => [ 'CONECTAS Direitos Humanos', 'Amman Center for Human Rights Studies']
                      }
 
     filter_options.each { | option, selected_values |
