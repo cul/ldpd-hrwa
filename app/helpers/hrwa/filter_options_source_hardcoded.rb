@@ -499,7 +499,6 @@ module HRWA::FilterOptionsSourceHardcoded
 
   def geographic_focus_filter_options
     return [
-              %q{},
               %q{Afghanistan},
               %q{Africa},
               %q{Africa, Eastern},
