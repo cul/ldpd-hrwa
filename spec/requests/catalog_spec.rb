@@ -258,6 +258,42 @@ describe 'archive search' do
           page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/asf} )
         end
     end
+    
+    describe 'non-stemmed search boosting' do
+        it 'displays a notice to users, informing them that they are performing a non-stemmed search', :js => true do
+          
+          #since we can't actually slide the sliders, we need to simulate this by putting the appropriate values in the initial url
+          visit '/search?&field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1&field%5B%5D=originalUrl__no_stemming_balancing_field%5E23&field%5B%5D=contentTitle__no_stemming%5E23&field%5B%5D=contentBody__no_stemming%5E23'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          click_link 'top_form_submit'
+          page.should have_content( %q{You are currently performing a limited-result search that favors non-stemmed field searching.} )
+        end
+
+        it 'correctly selects the asf-hrwa-278 core on the test server', :js => true do
+          visit '/search?&field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1&field%5B%5D=originalUrl__no_stemming_balancing_field%5E23&field%5B%5D=contentTitle__no_stemming%5E23&field%5B%5D=contentBody__no_stemming%5E23'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278} )
+        end
+
+        it 'correctly selects the Prod override server', :js => true do
+          visit '/search'
+          click_link 'Menu'
+          click_link 'Turn debug on'
+          choose 'asfsearch'
+          click_link 'advo_link'
+          fill_in 'q_and', :with => 'women'
+          find('#hrwa_host_asf').select('Prod')
+          click_link 'top_form_submit'
+          page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/asf} )
+        end
+    end
 
   end
 end

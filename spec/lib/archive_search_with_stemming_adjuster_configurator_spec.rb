@@ -361,10 +361,6 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
 
   describe '#solr_url' do
 
-    before :all do
-        @dev_solr_url = 'http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
-    end
-
     before :each do
         @configurator.class.reset_solr_config
     end
@@ -374,20 +370,20 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
     end
 
     it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == @dev_solr_url
+      @configurator.class.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == @dev_solr_url
+      @configurator.class.solr_url().should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == @dev_solr_url
+      @configurator.class.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == @dev_solr_url
+      @configurator.class.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
     end
 
   end
