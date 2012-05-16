@@ -682,7 +682,11 @@ jQuery(function($) {
   $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
   
-  updateNoStemmingHiddenFields(); //call this once the page loads
+  //If a boost is currently applied, update the interface to show this.
+  if($('#no_stemming_boost_weight_slider').attr('data-val-from-url') > 1)
+  {
+	updateNoStemmingHiddenFields(); //call this once the page loads
+  }
 
   function updateNoStemmingHiddenFields()
   {
