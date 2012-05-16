@@ -626,7 +626,7 @@ jQuery(function($) {
 
   //Weighting sliders
   $('#url_weight_slider').slider({
-		value: $('#url_weight_slider').attr('data-val-from-url') ? parseFloat($('#url_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#url_weight_slider').attr('data-val-from-url') ? parseInt($('#url_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -638,7 +638,7 @@ jQuery(function($) {
 		}
   });
   $('#page_title_weight_slider').slider({
-		value: $('#page_title_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_title_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#page_title_weight_slider').attr('data-val-from-url') ? parseInt($('#page_title_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -650,7 +650,7 @@ jQuery(function($) {
 		}
   });
   $('#page_content_weight_slider').slider({
-		value: $('#page_content_weight_slider').attr('data-val-from-url') ? parseFloat($('#page_content_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#page_content_weight_slider').attr('data-val-from-url') ? parseInt($('#page_content_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,
@@ -662,7 +662,7 @@ jQuery(function($) {
 		}
   });
   $('#no_stemming_boost_weight_slider').slider({
-		value: $('#no_stemming_boost_weight_slider').attr('data-val-from-url') ? parseFloat($('#no_stemming_boost_weight_slider').attr('data-val-from-url')) : 1,
+		value: $('#no_stemming_boost_weight_slider').attr('data-val-from-url') ? parseInt($('#no_stemming_boost_weight_slider').attr('data-val-from-url')) : 1,
 		min: 1,
 		max: 500,
 		step: 1,

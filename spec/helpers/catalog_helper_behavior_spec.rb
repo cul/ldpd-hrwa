@@ -150,8 +150,10 @@ describe 'get_specific_search_weight_from_weighting_string' do
     get_specific_search_weight_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == nil
 
     get_specific_search_weight_from_weighting_string('originalUrl','originalUrl').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','nothingAtAll').should == nil
     get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^').should == nil
     get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^^').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^20').should == 20
   end
 end
 
