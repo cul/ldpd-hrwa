@@ -12,7 +12,7 @@
 
 development: &development
   asf:
-    url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test"
+    url: "http://carter.cul.columbia.edu:8080/solr-4/asf"
   asf-hrwa-278:
     url: "http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
