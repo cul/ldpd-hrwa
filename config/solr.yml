@@ -14,7 +14,7 @@ development: &development
   asf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/asf"
   asf-hrwa-278:
-    url: "http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
+    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/fsf"
   site_detail:
@@ -24,7 +24,7 @@ test:
   asf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-asf-unit-test"
   asf-hrwa-278:
-    url: "http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
+    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
     url: "http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test"
   site_detail:
@@ -36,7 +36,7 @@ hrwa_staging:
   asf:
     url: "http://harding.cul.columbia.edu:8080/solr-4/asf"
   asf-hrwa-278:
-    url: "http://harding.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
+    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
     url: "http://harding.cul.columbia.edu:8080/solr-4/fsf"
   site_detail:
@@ -45,6 +45,8 @@ hrwa_staging:
 hrwa_test:
   asf:
     url: "http://machete.cul.columbia.edu:8181/solr-4/asf"
+  asf-hrwa-278:
+    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
     url: "http://machete.cul.columbia.edu:8181/solr-4/fsf"
   site_detail:
@@ -56,6 +58,8 @@ hrwa_test:
 hrwa_prod:
   asf:
     url: "http://machete.cul.columbia.edu:8181/solr-4/asf"
+  asf-hrwa-278:
+    url: "http://coolidge.cul.columbia.edu:8080/solr-4/asf-hrwa-278"
   fsf:
     url: "http://machete.cul.columbia.edu:8181/solr-4/fsf"
   site_detail:
@@ -63,7 +67,7 @@ hrwa_prod:
     
 # The following valid_overrides section is for changing solr servers after deployment
 valid_overrides:
-  carter:   "http://carter.cul.columbia.edu:8080"
+  carter: "http://carter.cul.columbia.edu:8080"
   coolidge: "http://coolidge.cul.columbia.edu:8080"
-  harding:  "http://harding.cul.columbia.edu:8080"
-  machete:  "http://machete.cul.columbia.edu:8181"
+  harding: "http://harding.cul.columbia.edu:8080"
+  machete: "http://machete.cul.columbia.edu:8181"
