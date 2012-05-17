@@ -247,6 +247,9 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
 
   def prioritized_highlight_field_list
     return [
+            'originalUrl__no_stemming_balancing_field',
+            'contentTitle__no_stemming',
+            'contentBody__no_stemming',
             'originalUrl',
             'contentTitle',
             'contentBody',
