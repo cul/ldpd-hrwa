@@ -11,6 +11,7 @@ Hrwa::Application.routes.draw do
 
   # Static pages - no dynamic content at all
   match '/about'       => 'static#about'
+  match '/faq'       => 'static#faq'
   match '/browse'      => 'static#collection_browse'
   match '/owner_nomination'      => 'static#owner_nomination'
   match '/public_nomination'      => 'static#public_nomination'

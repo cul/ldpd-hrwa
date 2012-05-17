@@ -55,6 +55,23 @@ jQuery(function($) {
     $('#top_q_wrapper').removeClass('focused');
   });
 
+  /* scroll to div stuff for internal anchors. also is chrome bug workaround for fixed navbar weirdness */
+  $('.jumps a').click(function() {
+    var el = $(this).attr('href');
+    var elWrapped = $(el);
+    scrollToDiv(elWrapped,44);
+    return false
+  });
+
+  function scrollToDiv(element,navheight){
+    var offset = element.offset();
+    var offsetTop = offset.top;
+    var totalScroll = offsetTop-navheight;
+    $('body,html').animate({
+            scrollTop: totalScroll
+    }, 500);
+  }
+
   /* Result item detail hiding/showing logic */
 
   window.max_height_for_hl_snippets = '52px'; //53px seems to equal two lines worth of text for a 12px font.
@@ -1003,9 +1020,11 @@ jQuery(function($) {
   var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu';
   var culhrweb_bugreports = 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu';
   var culhrweb_all = 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu';
+  var culhrweb_tech = 'culhrweb-tech'+'@'+'libraries.cul.columbia.'+'edu';
   $('a.culhrweb-email').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
   $('a.culhrweb-bugreports').attr('href', 'm'+'ailto:'+culhrweb_bugreports).html(culhrweb_bugreports);
   $('a.culhrweb-all').attr('href', 'm'+'ailto:'+culhrweb_all).html(culhrweb_all);
+  $('a.culhrweb-tech').attr('href', 'm'+'ailto:'+culhrweb_tech).html(culhrweb_tech);
   $('input.culhrweb-all').attr('value', 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu');
   $('input.culhrweb-bugreports').attr('value', 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu');
 

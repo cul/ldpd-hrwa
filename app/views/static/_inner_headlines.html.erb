@@ -23,7 +23,7 @@
 <%# <div id="secondary_nav_right" class="pull-right opacity_50"><i class="icon-heart"></i> <i class="icon-fire"></i> <i class="icon-leaf"></i></div> %>
 <ul class="nav nav-pills">
   <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About the Archive</a></li>
-  <li><a href="#" class="donothing">Statistics</a></li>
+  <li <% if current_page?(faq_path) %>class="active"<% end %>><a href="<%= faq_path %>">FAQ</a></li>
   <li class="dropdown">
     <a class="dropdown-toggle"
        data-toggle="dropdown"

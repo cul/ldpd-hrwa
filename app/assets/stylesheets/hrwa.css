@@ -269,6 +269,8 @@ ul.tabs li a {color:#88C34B;}
 #cbf_widgets li {line-height:1.1em;margin-bottom:0.5em;word-wrap:break-word;overflow:hidden;}
 article.entry { border-bottom:1px solid #aaa; }
 article.entry h3 { line-height:1.2; margin:8px 0; }
+article#faq dt { margin-top:1em; font-size:110%; }
+article#faq dd { margin:.5em 0; }
 #sdf_view table { }
 .ui-widget-overlay { opacity:0.8; }
 #sb-container { z-index:20000; }
