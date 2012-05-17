@@ -699,18 +699,19 @@ jQuery(function($) {
 
   //When the #enable_ns_boost_checkbox is checked, force core/host switching.  When it's unchecked, change back.
   $('#enable_ns_boost_checkbox').bind('click', function(){
-    enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+    enableOrDisableHControlsForCurrentNSBoostMode();
   });
 
   //Call this once the page loads
-  enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+  enableOrDisableHControlsForCurrentNSBoostMode();
 
-  function enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode()
+  function enableOrDisableHControlsForCurrentNSBoostMode()
   {
     // Switch to prototype core if boost of non-stemmed fields is desired
     if ( $('#enable_ns_boost_checkbox').attr('checked') == 'checked' ) {
 	  $( '#hrwa_core_asf' ).val( 'asf-hrwa-278' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
 	  $( '#hrwa_host_asf' ).val( 'test' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
+      $( '#no_stemming_boost_weight_slider' ).css('opacity', '').css('filter', '');
 
 	  $( '#hrwa_core_asf_hidden' ).removeAttr('disabled');
 	  $( '#hrwa_host_asf_hidden' ).removeAttr('disabled');
@@ -719,6 +720,8 @@ jQuery(function($) {
       // Switch back to the regular core
       $( '#hrwa_core_asf' ).val( 'asf' ).removeAttr('disabled').css('opacity', '').css('filter', '');
 	  $( '#hrwa_host_asf' ).val( '' ).removeAttr('disabled').css('opacity', '').css('filter', '');
+
+      $( '#no_stemming_boost_weight_slider' ).css('opacity', '.5').css('filter', 'alpha(opacity=50)');
 
 	  $( '#hrwa_core_asf_hidden' ).attr('disabled', 'disabled');
 	  $( '#hrwa_host_asf_hidden' ).attr('disabled', 'disabled');
