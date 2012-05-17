@@ -708,27 +708,38 @@ jQuery(function($) {
   function updateNoStemmingHiddenFields()
   {
     var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
-    
+
+    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
+  }
+
+  //When the #enable_ns_boost_checkbox is checked, force core/host switching.  When it's unchecked, change back.
+  $('#enable_ns_boost_checkbox').bind('click', function(){
+    enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+  });
+
+  //Call this once the page loads
+  enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+
+  function enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode()
+  {
     // Switch to prototype core if boost of non-stemmed fields is desired
-    if ( current_boost > 1 ) {
+    if ( $('#enable_ns_boost_checkbox').attr('checked') == 'checked' ) {
 	  $( '#hrwa_core_asf' ).val( 'asf-hrwa-278' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
 	  $( '#hrwa_host_asf' ).val( 'test' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
-	  
+
 	  $( '#hrwa_core_asf_hidden' ).removeAttr('disabled');
 	  $( '#hrwa_host_asf_hidden' ).removeAttr('disabled');
-	  
+
     } else {
       // Switch back to the regular core
       $( '#hrwa_core_asf' ).val( 'asf' ).removeAttr('disabled').css('opacity', '').css('filter', '');
 	  $( '#hrwa_host_asf' ).val( '' ).removeAttr('disabled').css('opacity', '').css('filter', '');
-	  
+
 	  $( '#hrwa_core_asf_hidden' ).attr('disabled', 'disabled');
 	  $( '#hrwa_host_asf_hidden' ).attr('disabled', 'disabled');
     }
-    
-    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
   }
 
   /* Sidebar facet modifications */

@@ -59,19 +59,22 @@
 				  <li class="divider"></li>
 				  <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>"><i class="icon-eye-open icon-white"></i> Browse HRWA</a></li>
 				  <li><%if params[:controller] == 'catalog' && params[:action] == 'index' %><%= debug_link %><% end %></li>
-                  <li class="divider"></li>
-                  <%
-                    if(admin_signed_in?)
-                        %>
-                        <li><%= link_to '<i class="icon-user icon-white"></i> Admin Control Panel'.html_safe, admin_path %></li>
-                        <li><%= link_to '<i class="icon-arrow-left icon-white"></i> Log out'.html_safe, admin_logout_path %></li>
-                        <%
-                    else
-                        %>
-                        <li <% if current_page?(admin_login_path) %>class="active"<% end %>><%= link_to '<i class="icon-lock icon-white"></i> Admin Login'.html_safe, admin_login_path %></li>
-                        <%
-                    end
-                  %>
+                  <% # only show admin login in certain environments %>
+                  <% if( Rails.env != 'hrwa_test' && Rails.env != 'hrwa_prod' ) %>
+                    <li class="divider"></li>
+                    <%
+                      if(admin_signed_in?)
+                          %>
+                          <li><%= link_to '<i class="icon-user icon-white"></i> Admin Control Panel'.html_safe, admin_path %></li>
+                          <li><%= link_to '<i class="icon-arrow-left icon-white"></i> Log out'.html_safe, admin_logout_path %></li>
+                          <%
+                      else
+                          %>
+                          <li <% if current_page?(admin_login_path) %>class="active"<% end %>><%= link_to '<i class="icon-lock icon-white"></i> Admin Login'.html_safe, admin_login_path %></li>
+                          <%
+                      end
+                    %>
+                  <% end %>
 				</ul>
 			  </li>
 			</ul>
