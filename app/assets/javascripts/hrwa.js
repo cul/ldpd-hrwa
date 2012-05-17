@@ -55,6 +55,23 @@ jQuery(function($) {
     $('#top_q_wrapper').removeClass('focused');
   });
 
+  /* scroll to div stuff for internal anchors. also is chrome bug workaround for fixed navbar weirdness */
+  $('.jumps a').click(function() {
+    var el = $(this).attr('href');
+    var elWrapped = $(el);
+    scrollToDiv(elWrapped,44);
+    return false
+  });
+
+  function scrollToDiv(element,navheight){
+    var offset = element.offset();
+    var offsetTop = offset.top;
+    var totalScroll = offsetTop-navheight;
+    $('body,html').animate({
+            scrollTop: totalScroll
+    }, 500);
+  }
+
   /* Result item detail hiding/showing logic */
 
   window.max_height_for_hl_snippets = '52px'; //53px seems to equal two lines worth of text for a 12px font.
@@ -691,27 +708,38 @@ jQuery(function($) {
   function updateNoStemmingHiddenFields()
   {
     var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
-    
+
+    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
+  }
+
+  //When the #enable_ns_boost_checkbox is checked, force core/host switching.  When it's unchecked, change back.
+  $('#enable_ns_boost_checkbox').bind('click', function(){
+    enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+  });
+
+  //Call this once the page loads
+  enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode();
+
+  function enableOrDisableHrwaHostAndCoreForCurrentNSBoostMode()
+  {
     // Switch to prototype core if boost of non-stemmed fields is desired
-    if ( current_boost > 1 ) {
+    if ( $('#enable_ns_boost_checkbox').attr('checked') == 'checked' ) {
 	  $( '#hrwa_core_asf' ).val( 'asf-hrwa-278' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
 	  $( '#hrwa_host_asf' ).val( 'test' ).attr('disabled', 'disabled').css('opacity', '.8').css('filter', 'alpha(opacity=80)');
-	  
+
 	  $( '#hrwa_core_asf_hidden' ).removeAttr('disabled');
 	  $( '#hrwa_host_asf_hidden' ).removeAttr('disabled');
-	  
+
     } else {
       // Switch back to the regular core
       $( '#hrwa_core_asf' ).val( 'asf' ).removeAttr('disabled').css('opacity', '').css('filter', '');
 	  $( '#hrwa_host_asf' ).val( '' ).removeAttr('disabled').css('opacity', '').css('filter', '');
-	  
+
 	  $( '#hrwa_core_asf_hidden' ).attr('disabled', 'disabled');
 	  $( '#hrwa_host_asf_hidden' ).attr('disabled', 'disabled');
     }
-    
-    $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
   }
 
   /* Sidebar facet modifications */
@@ -989,9 +1017,11 @@ jQuery(function($) {
   var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu';
   var culhrweb_bugreports = 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu';
   var culhrweb_all = 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu';
+  var culhrweb_tech = 'culhrweb-tech'+'@'+'libraries.cul.columbia.'+'edu';
   $('a.culhrweb-email').attr('href', 'm'+'ailto:'+culhrwebmail).html(culhrwebmail);
   $('a.culhrweb-bugreports').attr('href', 'm'+'ailto:'+culhrweb_bugreports).html(culhrweb_bugreports);
   $('a.culhrweb-all').attr('href', 'm'+'ailto:'+culhrweb_all).html(culhrweb_all);
+  $('a.culhrweb-tech').attr('href', 'm'+'ailto:'+culhrweb_tech).html(culhrweb_tech);
   $('input.culhrweb-all').attr('value', 'culhrweb-all'+'@'+'libraries.cul.columbia.'+'edu');
   $('input.culhrweb-bugreports').attr('value', 'culhrweb-bugreports'+'@'+'libraries.cul.columbia.'+'edu');
 
