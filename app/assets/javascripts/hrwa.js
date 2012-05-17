@@ -55,6 +55,23 @@ jQuery(function($) {
     $('#top_q_wrapper').removeClass('focused');
   });
 
+  /* scroll to div stuff for internal anchors. also is chrome bug workaround for fixed navbar weirdness */
+  $('.jumps a').click(function() {
+    var el = $(this).attr('href');
+    var elWrapped = $(el);
+    scrollToDiv(elWrapped,44);
+    return false
+  });
+
+  function scrollToDiv(element,navheight){
+    var offset = element.offset();
+    var offsetTop = offset.top;
+    var totalScroll = offsetTop-navheight;
+    $('body,html').animate({
+            scrollTop: totalScroll
+    }, 500);
+  }
+
   /* Result item detail hiding/showing logic */
 
   window.max_height_for_hl_snippets = '52px'; //53px seems to equal two lines worth of text for a 12px font.
