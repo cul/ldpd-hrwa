@@ -1,17 +1,6 @@
 # -*- encoding : utf-8 -*-
 module HRWA::CollectionBrowseLists
   include HRWA::CollectionBrowseListsSourceHardcoded
-  # TODO: make all options html_safe
-  def browse_list( browse_category_name )
-
-    begin
-      browse_list_hash = self.send( browse_category_name + '_browse_list_items' )
-    rescue NoMethodError
-      raise ArgumentError, "No such browse category as #{ browse_category_name }"
-    end
-
-    return browse_list_hash
-  end
 
   def creator_name_browse_list
     return browse_list( 'creator_name' )
@@ -47,6 +36,18 @@ module HRWA::CollectionBrowseLists
 
   def title_browse_list
     return browse_list( 'title' )
+  end
+
+  # TODO: make all options html_safe
+  def browse_list( browse_category_name )
+
+    begin
+      browse_list_hash = self.send( browse_category_name + '_browse_list_items' )
+    rescue NoMethodError
+      raise ArgumentError, "No such browse category as #{ browse_category_name }"
+    end
+
+    return browse_list_hash
   end
 
 end
