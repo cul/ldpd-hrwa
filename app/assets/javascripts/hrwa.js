@@ -732,6 +732,10 @@ jQuery(function($) {
 
 	  $( '#hrwa_core_asf_hidden' ).removeAttr('disabled');
 	  $( '#hrwa_host_asf_hidden' ).removeAttr('disabled');
+	  
+	  $( '#url_weight__no_stemming' ).removeAttr('disabled');
+	  $( '#page_title_weight__no_stemming' ).removeAttr('disabled');
+	  $( '#page_content_weight__no_stemming' ).removeAttr('disabled');
 
     } else {
       // Switch back to the regular core
@@ -742,6 +746,10 @@ jQuery(function($) {
 
 	  $( '#hrwa_core_asf_hidden' ).attr('disabled', 'disabled');
 	  $( '#hrwa_host_asf_hidden' ).attr('disabled', 'disabled');
+	  
+	  $( '#url_weight__no_stemming' ).attr('disabled', 'disabled');
+	  $( '#page_title_weight__no_stemming' ).attr('disabled', 'disabled');
+	  $( '#page_content_weight__no_stemming' ).attr('disabled', 'disabled');
     }
   }
 

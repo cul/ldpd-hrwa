@@ -196,8 +196,8 @@
 						<% noStemmingBoostWeighting = (params[:field].nil?) ? '1' : calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle', params[:field].join('')) %>
 						<div id="no_stemming_boost_weight_slider" data-val-from-url="<%= noStemmingBoostWeighting %>" class="clearfix"></div>
 						<input type="hidden" id="url_weight__no_stemming" name="field[]" value="originalUrl__no_stemming_balancing_field^1"/>
-            <input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="contentTitle__no_stemming^1"/>
-            <input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contentBody__no_stemming^1"/>
+						<input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="contentTitle__no_stemming^1"/>
+						<input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contentBody__no_stemming^1"/>
 				 </div>
 			</div>
     </div>
