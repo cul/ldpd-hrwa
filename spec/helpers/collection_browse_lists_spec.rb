@@ -4,24 +4,26 @@ require 'spec_helper'
 include HRWA::CollectionBrowseLists
 
 describe 'HRWA::CollectionBrowseLists' do
+  before :all do
+    require_relative 'fixtures/collection_browse_lists_source_hardcoded'
+    include HRWA::CollectionBrowseListsSourceHardcoded
+  end
   
-  # TODO: Checking for min lengths is a weak test.  Probably adding a test for presence of one 
-  # known, stable value will be a big improvement.
   describe '#*_browse_list methods' do
-    browse_categories = { 
-                           'creator_name'          => 363,
-                           'geographic_focus'      => 142,
-                           'language'              => 54,
-                           'organization_based_in' => 127,
+    browse_categories = {
+                           'creator_name'          => 493,
+                           'geographic_focus'      => 161,
+                           'language'              => 64,
+                           'organization_based_in' => 132,
                            'organization_type'     => 4,
-                           'original_urls'         => 457,
-                           'subject'               => 271,
-                           'title'                 => 441,
+                           'original_urls'         => 506,
+                           'subject'               => 311,
                         }
-      browse_categories.each { | browse_category, min |
+
+      browse_categories.each { | browse_category, count |
         it "retrieves full #{ browse_category } browse list" do
           browse_list = HRWA::CollectionBrowseLists.send( "#{ browse_category }_browse_list" )
-          browse_list.length.should >= min
+          browse_list.length.should == count
         end
       }
   end
