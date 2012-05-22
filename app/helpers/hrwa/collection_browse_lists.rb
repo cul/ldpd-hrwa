@@ -41,12 +41,17 @@ module HRWA::CollectionBrowseLists
   def browse_list( browse_category_name )
 
     begin
-      browse_list_hash = items_provider.send( browse_category_name + '_browse_list_items' )
+      browse_list_hash = self.send( browse_category_name + '_browse_list_items' )
     rescue NoMethodError
       raise ArgumentError, "No such browse category as #{ browse_category_name }"
     end
 
     return browse_list_hash
+  end
+
+  def load_browse_lists( browse_lists_file = 'helpers/hrwa/collection_browse_lists_source_hardcoded.rb' )
+    load browse_lists_file
+    include HRWA::CollectionBrowseListsSourceHardcoded
   end
 
 end
