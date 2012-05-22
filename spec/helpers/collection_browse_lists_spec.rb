@@ -22,7 +22,7 @@ describe 'HRWA::CollectionBrowseLists' do
 
       browse_categories.each { | browse_category, count |
         it "retrieves full #{ browse_category } browse list" do
-          browse_list = HRWA::CollectionBrowseLists.send( "#{ browse_category }_browse_list" )
+          browse_list = send( "#{ browse_category }_browse_list" )
           browse_list.length.should == count
         end
       }
@@ -30,7 +30,7 @@ describe 'HRWA::CollectionBrowseLists' do
 
   describe '#browse_list' do
     it 'raises an error when passed an unknown browse category' do
-      expect{ HRWA::CollectionBrowseLists.browse_list( 'xxx' ) }.to raise_error( ArgumentError )
+      expect{ browse_list( 'xxx' ) }.to raise_error( ArgumentError )
     end
   end
   
