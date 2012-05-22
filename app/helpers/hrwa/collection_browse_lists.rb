@@ -38,9 +38,7 @@ module HRWA::CollectionBrowseLists
   end
 
   # TODO: make all options html_safe
-  # param item_source_object is for swapping out the items source when
-  # unit testing
-  def browse_list( browse_category_name, items_provider = self )
+  def browse_list( browse_category_name )
 
     begin
       browse_list_hash = items_provider.send( browse_category_name + '_browse_list_items' )
