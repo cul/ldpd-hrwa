@@ -38,10 +38,12 @@ module HRWA::CollectionBrowseLists
   end
 
   # TODO: make all options html_safe
-  def browse_list( browse_category_name )
+  # param item_source_object is for swapping out the items source when
+  # unit testing
+  def browse_list( browse_category_name, items_provider = self )
 
     begin
-      browse_list_hash = self.send( browse_category_name + '_browse_list_items' )
+      browse_list_hash = items_provider.send( browse_category_name + '_browse_list_items' )
     rescue NoMethodError
       raise ArgumentError, "No such browse category as #{ browse_category_name }"
     end
