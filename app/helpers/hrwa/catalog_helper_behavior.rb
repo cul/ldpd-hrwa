@@ -218,7 +218,7 @@ module HRWA::CatalogHelperBehavior
       total_hits = response.total
 
       start_num = format_num(start)
-      end_num = format_num(start + response.docs.length - 1)
+      end_num = format_num(start + per_page - 1)
       total_num = format_num(total_hits)
 
       entry_name = options[:entry_name] ||

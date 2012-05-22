@@ -76,12 +76,12 @@ describe 'archive search' do
   end
 
   # https://issues.cul.columbia.edu/browse/HRWA-392
-  it 'should not have "host" param in querystring', :js => true do
+  it 'shows 10 for end of results range for q="rights"', :js => true do
     visit '/search'
-    fill_in 'q', :with => 'water'
+    fill_in 'q', :with => 'rights'
     choose 'asfsearch'
     click_link 'top_form_submit'
-
+    page.should have_content( '1 - 10' )
   end
 
   # https://issues.cul.columbia.edu/browse/HRWA-359 Bug
