@@ -10,7 +10,7 @@ end
 
 def load_tiny_collection_browse_lists
   # Load different fixture file with browse lists of short length for quick test of load
-  load_browse_lists( 'helpers/fixtures/collection_browse_lists_source_hardcoded_reload.rb' )  
+  HRWA::CollectionBrowseLists.load_browse_lists( 'helpers/fixtures/collection_browse_lists_source_hardcoded_reload.rb' )  
 end
 
 def expected_reloaded_browse_list_length
