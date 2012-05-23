@@ -48,6 +48,13 @@ describe 'HRWA::CollectionBrowseLists' do
       expect{ browse_list( 'xxx' ) }.to raise_error( ArgumentError )
     end
   end
+  
+  # Regression test for https://issues.cul.columbia.edu/browse/HRWA-290
+  describe 'title_browse_list' do
+    it 'returns list ordered by title__sort field' do
+      
+    end
+  end
 
   describe '#load_browse_lists from specified browse lists file' do
     before :all do
