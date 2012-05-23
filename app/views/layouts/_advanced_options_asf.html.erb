@@ -131,7 +131,7 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row<%= ' invisible' if(Rails.env == 'hrwa_test' || Rails.env == 'hrwa_prod') %>">
     <div class="span12">
 			<h6>dev options (temporary)</h6>
 			<div class="span6 nomar">
@@ -163,7 +163,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row<%= ' invisible' if(Rails.env == 'hrwa_test' || Rails.env == 'hrwa_prod') %>">
     <div class="span12">
 			<h6>Weighting options (temporary)</h6>
 			<div class="span12 nomar">
