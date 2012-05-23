@@ -49,7 +49,8 @@ module HRWA::CollectionBrowseLists
     return browse_list_hash
   end
 
-  def self.load_browse_lists( browse_lists_file = 'helpers/hrwa/collection_browse_lists_source_hardcoded.rb' )
+  def self.load_browse_lists( browse_lists_file = 
+    'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb' )
     load browse_lists_file
     include HRWA::CollectionBrowseListsSourceHardcoded
   end
