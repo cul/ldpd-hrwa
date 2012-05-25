@@ -19,12 +19,9 @@ end
 
 def browse_categories
   return {
-             'creator_name'          => 493,
              'geographic_focus'      => 161,
              'language'              => 64,
              'organization_based_in' => 132,
-             'organization_type'     => 4,
-             'original_urls'         => 506,
              'subject'               => 311,
              'title'                 => 488,
          }
