@@ -8,26 +8,17 @@ class HRWA::Update::SourceHardCodedFiles
 
   def initialize( browse_list_file,
                   filter_options_file,
-                  solr_url            = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
+                  solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
 
     @solr_url = solr_url
+    
+    # Configuration of components
     @update_params_for_component = {}
 
     # Containers for the final lists
     @browse_list_for    = {}
     @filter_options_for = {}    
 
-    initialize_update_params_for_components( browse_list_file, filter_options_file  )
-  end
-
-  # Setup component update configuration
-  # component: the interface element set being updated
-  # e.g. collection browse lists, filter dropdown lists
-  def initialize_update_params_for_components(
-    browse_list_file,
-    filter_options_file
-  )
-     
     initialize_update_params_for_browse_list_component( browse_list_file )
     initialize_update_params_for_filter_options_component( filter_options_file )
   end
