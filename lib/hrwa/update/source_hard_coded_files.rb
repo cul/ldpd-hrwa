@@ -274,32 +274,38 @@ class HRWA::Update::SourceHardCodedFiles
     return method_def_text
   end
 
-  def title_browse_list_items    
+  def title_browse_list_items
     title_items( @browse_list_data_for[ 'title'],
                  @browse_list_data_for[ 'title__sort'],
-                 'title_browse_list_items' )
+                 'title_browse_list_items',
+                 true )
   end
 
   def title_filter_options
     title_items( @filter_options_data_for[ 'title'],
                  @browse_list_data_for[ 'title__sort'],
-                 'title_filter_options' )
+                 'title_filter_options',
+                 false )
   end
   
-  def title_items( titles, title_sort_values, method_name )
+  def title_items( titles, title_sort_values, method_name, include_sort_value )
     
-    puts "titles.length = #{ titles.length }"
-    puts "title_sort_values.length = #{ title_sort_values.length }"
+    titles_hash = Hash[ titles.zip( title_sort_values ) ]
     
     # Start method def
     method_def_text = ''
     method_def_text << "  def #{ method_name }\n"
     method_def_text << "    return {\n"
 
-    title_sort_values_iterator = title_sort_values.to_enum
-    titles.each { | title |
-      title_sort_value = title_sort_values_iterator.next
-      method_def_text << "              %q{#{ title }} => %q{#{ title_sort_value }},\n"
+    titles_hash.sort_by { | title, sort_value | sort_value }.each { | title_and_sort_value |
+      title            = title_and_sort_value[ 0 ]
+      
+      if include_sort_value
+        title_sort_value = title_and_sort_value[ 1 ]
+        method_def_text << "              %q{#{ title }} => %q{#{ title_sort_value }},\n"
+      else
+        method_def_text << "              %q{#{ title }},\n"
+      end
     }
 
     # Close method def
