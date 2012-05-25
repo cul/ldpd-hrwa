@@ -26,7 +26,7 @@ module HRWA::FilterOptions
 
   def option_list_to_hash( option_list )
     option_hash = {}
-    option_list.sort.each { | option |
+    option_list.each { | option |
       option_hash[ option ] = false
     }
     return option_hash
