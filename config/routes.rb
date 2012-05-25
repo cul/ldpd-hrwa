@@ -18,9 +18,6 @@ Hrwa::Application.routes.draw do
   match '/public_feedback'      => 'static#public_feedback'
   match '/public_bugreports'      => 'static#public_bugreports'
 
-  # Internal stuff
-  match '/internal/seed_list' => 'internal#seed_list'
-
   # Admin controller
   match '/admin'      => 'admin#index'
   match '/refresh_browse_and_option_lists'      => 'admin#refresh_browse_and_option_lists'
