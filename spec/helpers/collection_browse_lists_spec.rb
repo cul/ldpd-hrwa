@@ -26,6 +26,7 @@ def browse_categories
              'organization_type'     => 4,
              'original_urls'         => 506,
              'subject'               => 311,
+             'title'                 => 488,
          }
 end
 
