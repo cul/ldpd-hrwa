@@ -39,10 +39,10 @@ class HRWA::Update::SourceHardCodedFiles
         :def_text_method         => self.method( :browse_list_method_def_text ),
         :special_cases_methods   => [ self.method( :title_browse_list_items ) ],
         :solr_fields_to_make_lists_from   => [
-                   'creator_name',
                    'geographic_focus',
                    'language',
                    'organization_based_in',
+                   'original_urls',
                    'subject',
                  ], 
         :solr_fields_to_retrieve_for_data => [
@@ -292,14 +292,21 @@ class HRWA::Update::SourceHardCodedFiles
     
     titles_hash = Hash[ titles.zip( title_sort_values ) ]
     
+    if include_sort_value
+      data_structure_open  = '{'
+      data_structure_close = '}'
+    else
+      data_structure_open  = '['
+      data_structure_close = ']'
+    end
+    
     # Start method def
     method_def_text = ''
     method_def_text << "  def #{ method_name }\n"
-    method_def_text << "    return {\n"
+    method_def_text << "    return #{ data_structure_open }\n"
 
-    titles_hash.sort_by { | title, sort_value | sort_value }.each { | title_and_sort_value |
-      title            = title_and_sort_value[ 0 ]
-      
+    titles_hash.sort_by { | title, sort_value | sort_value }.each { | title_and_sort_value | 
+      title = title_and_sort_value[ 0 ]
       if include_sort_value
         title_sort_value = title_and_sort_value[ 1 ]
         method_def_text << "              %q{#{ title }} => %q{#{ title_sort_value }},\n"
@@ -309,7 +316,7 @@ class HRWA::Update::SourceHardCodedFiles
     }
 
     # Close method def
-    method_def_text << "           }\n\n"
+    method_def_text << "           #{ data_structure_close }\n\n"
     method_def_text << "  end\n"
 
     return method_def_text
