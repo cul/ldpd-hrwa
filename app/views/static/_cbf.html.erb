@@ -7,8 +7,8 @@
 </ul>
 <div id="home-tab-content" class="tab-content">
       <div class="results_control alignright">
-        <a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a> 
-        <div id="col_control" class="btn-group pull-right"> 
+        <a class="sort_default btn small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn small" data-original-title="Sort by Z-A">Z-A</a>
+        <div id="col_control" class="btn-group pull-right">
           <a class="btn small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Column Count"><i class="icon-th"></i></a>
           <ul class="dropdown-menu alignleft">
         		<li><a class="sort_col sort_col-1">1 column</a></li>
@@ -20,8 +20,8 @@
 
 	  <div id="t1" class="tab-pane active">
 		<ul class="no-count">
-		<% title_browse_list.each_pair do |item, hits| %>
-                  <%= %Q{<li><div><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
+		<% title_browse_list.each_pair do |item, sort_field| %>
+                  <%= %Q{<li><div><span class="invisible sort_field">}.html_safe + sort_field.to_s + %Q{</span><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></div></li>}.html_safe %>
                 <% end %>
 		</ul>
 	  </div>

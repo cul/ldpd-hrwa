@@ -15,8 +15,8 @@
 	<h6>Site</h6>
 	<div class="results_control"></div>
 	<ul>
-	<% title_browse_list.each_pair do |item, hits| %>
-			  <%= %Q{<li><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></li>}.html_safe %>
+	<% title_browse_list.each_pair do |item, sort_field| %>
+			  <%= %Q{<li><span class="invisible sort_field">}.html_safe + sort_field.to_s + %Q{</span><a href="search?search=true&search_type=find_site&utf8=✓&f[title__facet][]=}.html_safe + item + %Q{">}.html_safe + item + %Q{</a></li>}.html_safe %>
 			<% end %>
 	</ul>
 </div>
