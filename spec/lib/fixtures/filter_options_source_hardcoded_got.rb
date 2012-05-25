@@ -2026,7 +2026,7 @@ module HRWA::FilterOptionsSourceHardcoded
            ]
   end
   def title_filter_options
-    return {
+    return [
               %q{"İnsan Hüquqları XXI ăsr-Azărbaycan" Fondu},
               %q{5·18 Kinyŏm Chaedan},
               %q{Abuelas de Plaza de Mayo},
@@ -2467,7 +2467,7 @@ module HRWA::FilterOptionsSourceHardcoded
               %q{Yesh Din, volunteers for human rights},
               %q{Zimbabwe Human Rights NGO Forum},
               %q{Zimbabwe Lawyers for Human Rights},
-           }
+           ]
 
   end
 end
