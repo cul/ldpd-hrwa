@@ -19,11 +19,12 @@ end
 
 def browse_categories
   return {
-             'geographic_focus'      => 161,
-             'language'              => 64,
-             'organization_based_in' => 132,
-             'subject'               => 311,
-             'title'                 => 488,
+             'geographic_focus'      => 157,
+             'language'              => 60,
+             'organization_based_in' => 130,
+             'original_urls'         => 458,
+             'subject'               => 271,
+             'title'                 => 440,
          }
 end
 
@@ -49,8 +50,13 @@ describe 'HRWA::CollectionBrowseLists' do
   
   # Regression test for https://issues.cul.columbia.edu/browse/HRWA-290
   describe 'title_browse_list' do
+    before :all do
+      setup_unit_test_collection_browse_lists
+    end
+    
     it 'returns list ordered by title__sort field' do
-      
+      titles = title_browse_list.keys
+      titles[ 102 ].should == 'The Burma Campaign UK'
     end
   end
 
