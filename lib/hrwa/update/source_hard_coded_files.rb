@@ -15,9 +15,13 @@ class HRWA::Update::SourceHardCodedFiles
     # Configuration of components
     @update_params_for_component = {}
 
-    # Containers for the final lists
+    # Data lists from SOLR fields needed to constrcut final lists
+    @browse_list_data_for    = {}
+    @filter_options_data_for = {}
+
+    # Final lists
     @browse_list_for    = {}
-    @filter_options_for = {}    
+    @filter_options_for = {}
 
     initialize_update_params_for_browse_list_component( browse_list_file )
     initialize_update_params_for_filter_options_component( filter_options_file )
@@ -28,12 +32,21 @@ class HRWA::Update::SourceHardCodedFiles
   )
     @update_params_for_component[ :browse_lists ] = 
       { :items_for               => @browse_list_for,
+        :data_for                => @browse_list_data_for,
         :destination_file        => browse_list_file,
         :add_single_value_method => self.method( :add_single_value_to_browse_list_for ),
         :module_name             => 'HRWA::CollectionBrowseListsSourceHardcoded',
         :def_text_method         => self.method( :browse_list_method_def_text ),
         :special_cases_methods   => nil,
-        :solr_fields             => [
+        :solr_fields_to_make_lists_from   => [
+                   'creator_name',
+                   'geographic_focus',
+                   'language',
+                   'organization_based_in',
+                   'subject',
+                   'title'
+                 ], 
+        :solr_fields_to_retrieve_for_data => [
                    'alternate_title',
                    'creator_name',
                    'geographic_focus',
@@ -43,6 +56,7 @@ class HRWA::Update::SourceHardCodedFiles
                    'original_urls',
                    'subject',
                    'title',
+                   'title__sort',
                  ],
       }
   end
@@ -52,12 +66,23 @@ class HRWA::Update::SourceHardCodedFiles
   )
     @update_params_for_component[ :filter_options ] =
     { :items_for               => @filter_options_for,
+      :data_for                => @filter_options_data_for,
       :destination_file        => filter_options_file,
       :add_single_value_method => self.method( :add_single_value_to_filter_options_for ),
       :module_name             => 'HRWA::FilterOptionsSourceHardcoded',
       :def_text_method         => self.method( :filter_options_method_def_text ),
       :special_cases_methods   => [ self.method( :domain_filter_options ) ],
-      :solr_fields             => [
+      :solr_fields_to_make_lists_from   => [
+                 'creator_name',
+                 'geographic_focus',
+                 'language',
+                 'organization_based_in',
+                 'organization_type',
+                 'subject',
+                 'title',
+               ],
+      :solr_fields_to_retrieve_for_data => [
+                 'alternate_title',
                  'creator_name',
                  'geographic_focus',
                  'language',
@@ -66,6 +91,7 @@ class HRWA::Update::SourceHardCodedFiles
                  'original_urls',
                  'subject',
                  'title',
+                 'title__sort',
                ],
     }
   end
@@ -103,7 +129,7 @@ class HRWA::Update::SourceHardCodedFiles
 
   def fetch_items( component, params )
     begin
-      docs = fetch( params[ :solr_fields ] )
+      docs = fetch( params[ :solr_fields_to_retrieve_for_data ] )
     rescue UpdateException => e
       Rails.logger.error LOG_ENTRY_HEADER + " fetch_items() for #{ component } failed"
       Rails.logger.error LOG_ENTRY_HEADER + ' ' + e
@@ -114,8 +140,28 @@ class HRWA::Update::SourceHardCodedFiles
     message = "fetch() retrieved #{ docs.length } docs"
     Rails.logger.info( LOG_ENTRY_HEADER + ' ' + message )
 
+    list_fields                    = params[ :solr_fields_to_make_lists_from ]
+    data_fields_not_used_for_lists = params[ :solr_fields_to_retrieve_for_data ] -
+                                       list_fields 
+    data_fields_not_used_for_lists.each { | field |
+      params[ :data_for ][ field ] = []
+    }
     docs.each { |doc|
-      doc.each_pair { | field, value |
+      # Data to be used for complex special cases
+      data_fields_not_used_for_lists.each { | field |
+        if doc[ field ]
+          if doc[ field ].is_a?( Array )
+            doc[ field ].each { | value |
+              params[ :data_for ][ field ] << value
+            }
+          else
+              params[ :data_for ][ field ] << doc[ field ]
+          end
+        end
+      }
+      # Final lists
+      list_fields.each { | field |
+        value = doc[ field ]
         add_to_items_for( params[ :add_single_value_method ], field, value )
       }
     }
@@ -178,14 +224,14 @@ class HRWA::Update::SourceHardCodedFiles
   end
 
   def domain_filter_options
-    original_urls = @filter_options_for[ :original_urls ]
+    original_urls = @filter_options_data_for[ 'original_urls' ]
 
     # Start method def
     method_def_text = ''
     method_def_text << "  def domain_filter_options\n"
     method_def_text << "    return [\n"
 
-    hoststrings = original_urls.keys.map { | url |
+    hoststrings = original_urls.each.map { | url |
       domain     = url.to_s.match( %r{ \A https?:// (?<domain> [^/]+ ) .* \Z }x )[ :domain ]
       hoststring = domain.sub( %r{ \A www [\w]? \. }x, '' )
       hoststring
