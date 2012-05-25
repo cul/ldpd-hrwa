@@ -19,13 +19,11 @@ end
 
 def browse_categories
   return {
-             'creator_name'          => 493,
              'geographic_focus'      => 161,
              'language'              => 64,
              'organization_based_in' => 132,
-             'organization_type'     => 4,
-             'original_urls'         => 506,
              'subject'               => 311,
+             'title'                 => 488,
          }
 end
 
@@ -46,6 +44,13 @@ describe 'HRWA::CollectionBrowseLists' do
   describe '#browse_list' do
     it 'raises an error when passed an unknown browse category' do
       expect{ browse_list( 'xxx' ) }.to raise_error( ArgumentError )
+    end
+  end
+  
+  # Regression test for https://issues.cul.columbia.edu/browse/HRWA-290
+  describe 'title_browse_list' do
+    it 'returns list ordered by title__sort field' do
+      
     end
   end
 
