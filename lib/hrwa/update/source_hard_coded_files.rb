@@ -298,7 +298,7 @@ class HRWA::Update::SourceHardCodedFiles
     title_sort_values_iterator = title_sort_values.to_enum
     titles.each { | title |
       title_sort_value = title_sort_values_iterator.next
-      method_def_text << "              %q{#{ title }} => '#{ title_sort_value }',\n"
+      method_def_text << "              %q{#{ title }} => %q{#{ title_sort_value }},\n"
     }
 
     # Close method def
