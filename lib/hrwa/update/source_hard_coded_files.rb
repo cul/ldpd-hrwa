@@ -116,10 +116,6 @@ class HRWA::Update::SourceHardCodedFiles
 
     docs.each { |doc|
       doc.each_pair { | field, value |
-        # @browse_list_for is a hash of hashes
-        # Top-level keys is the name of the SOLR field used as a browse category
-        # Each of the keys in the nested hashes are values in the category, which
-        # map to counts of how many sites fall under that category value
         add_to_items_for( params[ :add_single_value_method ], field, value )
       }
     }
