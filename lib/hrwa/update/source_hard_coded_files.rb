@@ -37,24 +37,16 @@ class HRWA::Update::SourceHardCodedFiles
         :add_single_value_method => self.method( :add_single_value_to_browse_list_for ),
         :module_name             => 'HRWA::CollectionBrowseListsSourceHardcoded',
         :def_text_method         => self.method( :browse_list_method_def_text ),
-        :special_cases_methods   => nil,
+        :special_cases_methods   => [ self.method( :title_browse_list_items ) ],
         :solr_fields_to_make_lists_from   => [
                    'creator_name',
                    'geographic_focus',
                    'language',
                    'organization_based_in',
                    'subject',
-                   'title'
                  ], 
         :solr_fields_to_retrieve_for_data => [
                    'alternate_title',
-                   'creator_name',
-                   'geographic_focus',
-                   'language',
-                   'organization_based_in',
-                   'organization_type',
-                   'original_urls',
-                   'subject',
                    'title',
                    'title__sort',
                  ],
@@ -71,7 +63,7 @@ class HRWA::Update::SourceHardCodedFiles
       :add_single_value_method => self.method( :add_single_value_to_filter_options_for ),
       :module_name             => 'HRWA::FilterOptionsSourceHardcoded',
       :def_text_method         => self.method( :filter_options_method_def_text ),
-      :special_cases_methods   => [ self.method( :domain_filter_options ) ],
+      :special_cases_methods   => [ self.method( :domain_filter_options ), self.method( :title_filter_options ) ],
       :solr_fields_to_make_lists_from   => [
                  'creator_name',
                  'geographic_focus',
@@ -79,17 +71,10 @@ class HRWA::Update::SourceHardCodedFiles
                  'organization_based_in',
                  'organization_type',
                  'subject',
-                 'title',
                ],
       :solr_fields_to_retrieve_for_data => [
                  'alternate_title',
-                 'creator_name',
-                 'geographic_focus',
-                 'language',
-                 'organization_based_in',
-                 'organization_type',
                  'original_urls',
-                 'subject',
                  'title',
                  'title__sort',
                ],
@@ -129,7 +114,8 @@ class HRWA::Update::SourceHardCodedFiles
 
   def fetch_items( component, params )
     begin
-      docs = fetch( params[ :solr_fields_to_retrieve_for_data ] )
+      solr_fields = params[ :solr_fields_to_make_lists_from ] + params[ :solr_fields_to_retrieve_for_data ]
+      docs = fetch( solr_fields )
     rescue UpdateException => e
       Rails.logger.error LOG_ENTRY_HEADER + " fetch_items() for #{ component } failed"
       Rails.logger.error LOG_ENTRY_HEADER + ' ' + e
@@ -141,8 +127,7 @@ class HRWA::Update::SourceHardCodedFiles
     Rails.logger.info( LOG_ENTRY_HEADER + ' ' + message )
 
     list_fields                    = params[ :solr_fields_to_make_lists_from ]
-    data_fields_not_used_for_lists = params[ :solr_fields_to_retrieve_for_data ] -
-                                       list_fields 
+    data_fields_not_used_for_lists = params[ :solr_fields_to_retrieve_for_data ]
     data_fields_not_used_for_lists.each { | field |
       params[ :data_for ][ field ] = []
     }
@@ -222,32 +207,7 @@ class HRWA::Update::SourceHardCodedFiles
       @filter_options_for[ field.to_sym ] = { value.to_sym => 1 }
     end
   end
-
-  def domain_filter_options
-    original_urls = @filter_options_data_for[ 'original_urls' ]
-
-    # Start method def
-    method_def_text = ''
-    method_def_text << "  def domain_filter_options\n"
-    method_def_text << "    return [\n"
-
-    hoststrings = original_urls.each.map { | url |
-      domain     = url.to_s.match( %r{ \A https?:// (?<domain> [^/]+ ) .* \Z }x )[ :domain ]
-      hoststring = domain.sub( %r{ \A www [\w]? \. }x, '' )
-      hoststring
-    }
-
-    hoststrings.sort { | a, b | a.casecmp( b ) }.each { | hoststring |
-      method_def_text << "              %q{#{ hoststring }},\n"
-    }
-
-    # Close method def
-    method_def_text << "           ]\n"
-    method_def_text << "  end\n"
-
-    return method_def_text
-  end
-
+  
   def browse_list_method_def_text( category )
     # Start method def
     method_def_text = ''
@@ -283,6 +243,71 @@ class HRWA::Update::SourceHardCodedFiles
     return method_def_text
 
   end
+
+#############################################
+
+# Methods for constructing complex special cases
+
+  def domain_filter_options
+    original_urls = @filter_options_data_for[ 'original_urls' ]
+
+    # Start method def
+    method_def_text = ''
+    method_def_text << "  def domain_filter_options\n"
+    method_def_text << "    return [\n"
+
+    hoststrings = original_urls.each.map { | url |
+      domain     = url.to_s.match( %r{ \A https?:// (?<domain> [^/]+ ) .* \Z }x )[ :domain ]
+      hoststring = domain.sub( %r{ \A www [\w]? \. }x, '' )
+      hoststring
+    }
+
+    hoststrings.sort { | a, b | a.casecmp( b ) }.each { | hoststring |
+      method_def_text << "              %q{#{ hoststring }},\n"
+    }
+
+    # Close method def
+    method_def_text << "           ]\n"
+    method_def_text << "  end\n"
+
+    return method_def_text
+  end
+
+  def title_browse_list_items    
+    title_items( @browse_list_data_for[ 'title'],
+                 @browse_list_data_for[ 'title__sort'],
+                 'title_browse_list_items' )
+  end
+
+  def title_filter_options
+    title_items( @filter_options_data_for[ 'title'],
+                 @browse_list_data_for[ 'title__sort'],
+                 'title_filter_options' )
+  end
+  
+  def title_items( titles, title_sort_values, method_name )
+    
+    puts "titles.length = #{ titles.length }"
+    puts "title_sort_values.length = #{ title_sort_values.length }"
+    
+    # Start method def
+    method_def_text = ''
+    method_def_text << "  def #{ method_name }\n"
+    method_def_text << "    return {\n"
+
+    title_sort_values_iterator = title_sort_values.to_enum
+    titles.each { | title |
+      title_sort_value = title_sort_values_iterator.next
+      method_def_text << "              %q{#{ title }} => '#{ title_sort_value }',\n"
+    }
+
+    # Close method def
+    method_def_text << "           }\n\n"
+    method_def_text << "  end\n"
+
+    return method_def_text
+  end
+
 
 end
 
