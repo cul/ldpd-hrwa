@@ -6,78 +6,77 @@ class HRWA::Update::SourceHardCodedFiles
 
 	LOG_ENTRY_HEADER = '[UPDATE_SOURCE_HARD_CODED_FILES]'
 
-  def initialize( browse_list_file =  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
-                  filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb',
-                  solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
-
-    @browse_list_for    = {}
-    @filter_options_for = {}
+  def initialize( browse_list_file,
+                  filter_options_file,
+                  solr_url            = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
 
     @solr_url = solr_url
+    @update_params_for_component = {}
 
-    @update_params_for_component = {
-      :browse_lists   =>
-        { :items_for               => @browse_list_for,
-          :destination_file        => browse_list_file,
-          :add_single_value_method => self.method( :add_single_value_to_browse_list_for ),
-          :module_name             => 'HRWA::CollectionBrowseListsSourceHardcoded',
-          :def_text_method         => self.method( :browse_list_method_def_text ),
-          :special_cases_methods   => nil,
-          :solr_fields             => [
-                     'alternate_title',
-                     'creator_name',
-                     'geographic_focus',
-                     'language',
-                     'organization_based_in',
-                     'organization_type',
-                     'original_urls',
-                     'subject',
-                     'title',
-                   ],
-                         },
-      :filter_options =>
-        { :items_for               => @filter_options_for,
-          :destination_file        => filter_options_file,
-          :add_single_value_method => self.method( :add_single_value_to_filter_options_for ),
-          :module_name             => 'HRWA::FilterOptionsSourceHardcoded',
-          :def_text_method         => self.method( :filter_options_method_def_text ),
-          :special_cases_methods   => [ self.method( :domain_filter_options ) ],
-          :solr_fields             => [
-                     'creator_name',
-                     'geographic_focus',
-                     'language',
-                     'organization_based_in',
-                     'organization_type',
-                     'original_urls',
-                     'subject',
-                     'title',
-                   ],
-                         },
+    # Containers for the final lists
+    @browse_list_for    = {}
+    @filter_options_for = {}    
+
+    initialize_update_params_for_components( browse_list_file, filter_options_file  )
+  end
+
+  # Setup component update configuration
+  # component: the interface element set being updated
+  # e.g. collection browse lists, filter dropdown lists
+  def initialize_update_params_for_components(
+    browse_list_file,
+    filter_options_file
+  )
+     
+    initialize_update_params_for_browse_list_component( browse_list_file )
+    initialize_update_params_for_filter_options_component( filter_options_file )
+  end
+
+  def initialize_update_params_for_browse_list_component(
+    browse_list_file = 'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb'
+  )
+    @update_params_for_component[ :browse_lists ] = 
+      { :items_for               => @browse_list_for,
+        :destination_file        => browse_list_file,
+        :add_single_value_method => self.method( :add_single_value_to_browse_list_for ),
+        :module_name             => 'HRWA::CollectionBrowseListsSourceHardcoded',
+        :def_text_method         => self.method( :browse_list_method_def_text ),
+        :special_cases_methods   => nil,
+        :solr_fields             => [
+                   'alternate_title',
+                   'creator_name',
+                   'geographic_focus',
+                   'language',
+                   'organization_based_in',
+                   'organization_type',
+                   'original_urls',
+                   'subject',
+                   'title',
+                 ],
+      }
+  end
+  
+  def initialize_update_params_for_filter_options_component(
+    filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb'
+  )
+    @update_params_for_component[ :filter_options ] =
+    { :items_for               => @filter_options_for,
+      :destination_file        => filter_options_file,
+      :add_single_value_method => self.method( :add_single_value_to_filter_options_for ),
+      :module_name             => 'HRWA::FilterOptionsSourceHardcoded',
+      :def_text_method         => self.method( :filter_options_method_def_text ),
+      :special_cases_methods   => [ self.method( :domain_filter_options ) ],
+      :solr_fields             => [
+                 'creator_name',
+                 'geographic_focus',
+                 'language',
+                 'organization_based_in',
+                 'organization_type',
+                 'original_urls',
+                 'subject',
+                 'title',
+               ],
     }
-
-    @browse_list_solr_fields = [
-                     'alternate_title',
-                     'creator_name',
-                     'geographic_focus',
-                     'language',
-                     'organization_based_in',
-                     'organization_type',
-                     'original_urls',
-                     'subject',
-                     'title',
-                   ]
-
-    @filter_options_solr_fields = [
-                     'creator_name',
-                     'geographic_focus',
-                     'language',
-                     'organization_based_in',
-                     'organization_type',
-                     'original_urls',
-                     'subject',
-                     'title',
-                   ]
-
   end
 
   def update_rails_file( component )
