@@ -15,6 +15,7 @@ describe 'HRWA::FilterOptions' do
                        'language'              => 54,
                        'organization_based_in' => 127,
                        'organization_type'     => 4,
+                       'original_urls'         => 1,
                        'subject'               => 271,
                        'title'                 => 441,
                      }
