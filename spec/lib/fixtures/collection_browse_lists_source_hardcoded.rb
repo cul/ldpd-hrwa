@@ -1539,6 +1539,6 @@ module HRWA::CollectionBrowseListsSourceHardcoded
               %q{Transparency International} => 1,
               %q{Physicians for Human Rights} => 1,
            }
-  end
 
+  end
 end
