@@ -70,6 +70,7 @@ class HRWA::Update::SourceHardCodedFiles
                  'language',
                  'organization_based_in',
                  'organization_type',
+                 'original_urls',
                  'subject',
                ],
       :solr_fields_to_retrieve_for_data => [
