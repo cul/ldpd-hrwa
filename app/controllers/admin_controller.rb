@@ -24,6 +24,7 @@ class AdminController < ApplicationController
     sourceHardCodedFilesUpdater.update_rails_file( :filter_options )
 
     HRWA::CollectionBrowseLists.load_browse_lists
+    HRWA::FilterOptions.load_filter_options
 
     flash[:notice] = 'The browse_lists and filter_options files have been updated.'
 

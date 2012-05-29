@@ -68,4 +68,10 @@ module HRWA::FilterOptions
     return option_list( 'title', opts )
   end
 
+  def self.load_filter_options( filter_options_file = 
+    'app/helpers/hrwa/filter_options_source_hardcoded.rb' )
+    load filter_options_file
+    include HRWA::CollectionBrowseListsSourceHardcoded
+  end
+
 end
