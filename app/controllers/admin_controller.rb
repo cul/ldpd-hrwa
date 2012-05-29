@@ -27,12 +27,16 @@ class AdminController < ApplicationController
     HRWA::FilterOptions.load_filter_options
 
     flash[:notice] = 'The browse_lists and filter_options files have been updated.'
-
-    rescue UpdateException => e
+    # Sucess/fail response for cron job
+    @refresh_browse_and_option_lists_status = 'HRWA::ADMIN::REFRESH_BROWSE_AND_OPTION_LISTS::UPDATE_SUCCESS'
+    
+  rescue UpdateException => et
       flash[:error] = "Update of collection browse and advanced filter options aborted with error: #{ e }"
+      # Sucess/fail response for cron job
+      @refresh_browse_and_option_lists_status = 'HRWA::ADMIN::REFRESH_BROWSE_AND_OPTION_LISTS::UPDATE_FAILURE'
     end
 
-    redirect_to admin_path
+    redirect_to admin_path( :status => @refresh_browse_and_option_lists_status )
   end
 
   def index
@@ -80,8 +84,9 @@ class AdminController < ApplicationController
                     :site_detail  => site_detail_solr_url,
                   }
 
-
-
+    # Sucess/fail response for cron jobs and request tests
+    @request_test_string = params[ :status ]
+    
   end
 
 end
