@@ -1022,7 +1022,9 @@ jQuery(function($) {
   $('#frmWebsiteNomination').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/ownernomination');
   $('#frmWebsiteNomination-pub').attr('action', 'https://www1.columbia.edu/sec-cgi-bin/cul/ldpd/prod/humanrights/hrwa/publicnomination');
 
-  $('#frmPublicFeedback, #frmBugReports').attr('action', 'http://www.columbia.edu/cgi-bin/cul/ldpd-inbox.pl');
+  $('#frmPublicFeedback').attr('action', '/public_feedback');
+  $('#frmBugReports').attr('action', '/public_bugreports');
+  
 
 // email mailto: to slow robots.
   var culhrwebmail = 'culhrweb'+'@'+'libraries.cul.columbia.'+'edu';

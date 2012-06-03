@@ -17,13 +17,13 @@ Hrwa::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
-
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  :address => "localhost",
-  :domain => "rossini.cc.columbia.edu",
-  :port => "25"
-}
+  
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = {
+    :location       => '/usr/sbin/sendmail',
+    :arguments      => '-i -t'
+  }
+  
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
   config.assets.compress = true
