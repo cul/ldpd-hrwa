@@ -9,12 +9,12 @@
         <p>This form is for public bug reports for <strong>Human Rights Web Archive</strong>. For comments/feedback, please use the <a href="<%= public_feedback_path %>" class="">public feedback form</a>.</p>
         <p>Or send an email to <a class="culhrweb-bugreports" href="#">&hellip;</a>. See also our <a href="#" class="donothing">FAQ</a>.</p>
 
-<form class="form-horizontal" id="frmBugReports" name="frmBugReports" action="#">
+<%= form_tag '#', :class => 'form-horizontal', :id => 'frmBugReports', :name => 'frmBugReports', :method => 'post' do %>
   <fieldset>
     <div class="control-group">
         <label class="control-label">Bug Report Description</label>
       <div class="controls">
-        <textarea class="span9" id="txtBugreport" name="Bugreport" cols="70" rows="6" required="required"></textarea>
+        <textarea class="span9" id="txtBugreport" name="bugReport[bugreport]" cols="70" rows="6" required="required"></textarea>
       </div>
     </div>
   </fieldset>
@@ -24,20 +24,20 @@
     <div class="control-group">
         <label class="control-label">Name</label>
       <div class="controls">
-        <input class="span9" id="inpContactName" name="ContactName" type="text" size="40">
+        <input class="span9" id="inpContactName" name="bugReport[contactName]" type="text" size="40">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">E-mail</label>
       <div class="controls">
-        <input class="span9" id="inpContactEmail" name="ContactEmail" type="text" size="40">
+        <input class="span9" id="inpContactEmail" name="bugReport[contactEmail]" type="text" size="40">
       </div>
     </div>
   </fieldset>
         <p class="submit">
           <input type="submit" value="Submit" class="btn btn-primary">
         </p>
-</form>
+<% end %>
 
 	</article>
        </div>
