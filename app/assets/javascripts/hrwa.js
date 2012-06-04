@@ -1024,18 +1024,18 @@ jQuery(function($) {
 
   $('#frmPublicFeedback').attr('action', '/public_feedback');
   $('#frmBugReports').attr('action', '/public_bugreports');
-  
+
   //And add hidden debug info fields to the bug report form
-  
+
   var bug_report_hidden_field_html = '';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[referrer]" value="' + encodeURIComponent(document.referrer) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[appCodeName]" value="' + encodeURIComponent(navigator.appCodeName) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[appName]" value="' + encodeURIComponent(navigator.appName) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[appVersion]" value="' + encodeURIComponent(navigator.appVersion) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[cookieEnabled]" value="' + encodeURIComponent(navigator.cookieEnabled) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[platform]" value="' + encodeURIComponent(navigator.platform) + '" />';
-  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[userAgent]" value="' + encodeURIComponent(navigator.userAgent) + '" />';
-  
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[Referrer]" value="' + (document.referrer == '' ? 'None' : document.referrer) + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[App Code Name]" value="' + navigator.appCodeName + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[App Name]" value="' + navigator.appName + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[App Version]" value="' + navigator.appVersion + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[Cookies Enabled]" value="' + navigator.cookieEnabled + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[Platform]" value="' + navigator.platform + '" />';
+  bug_report_hidden_field_html += '<input type="hidden" name="bugReport[User Agent]" value="' + navigator.userAgent + '" />';
+
   $('#frmBugReports').append(bug_report_hidden_field_html);
 
 // email mailto: to slow robots.
