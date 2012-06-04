@@ -25,15 +25,17 @@ class StaticController < ApplicationController
 
 		if(params[:feedback])
 
-      params[:feedback]['IP Address'] = request.remote_ip;
       current_time = Time.new
       params[:feedback]['Timestamp'] = current_time.to_time.to_s + ' (' + current_time.to_time.to_i.to_s + ')';
+      params[:feedback]['IP Address'] = request.remote_ip;
 
       email_body = '';
 
       params[:feedback].each_pair { |key, value|
         email_body += "#{key}: #{value}\n\n"
       }
+
+      email_body += 'If the IP address above is associated with periodic feedback form spam, please ask the developers about blocking it.'
 
 			Mailer.send_mail('culhrweb-all@libraries.cul.columbia.edu', 'culhrweb-all@libraries.cul.columbia.edu', 'HRWA Public Feedback', email_body).deliver
 			flash.now[:notice] = 'Thank you for submitting your feedback.'
@@ -43,9 +45,9 @@ class StaticController < ApplicationController
   def public_bugreports
 		if(params[:bugReport])
 
-      params[:bugReport]['IP Address'] = request.remote_ip;
       current_time = Time.new
       params[:bugReport]['Timestamp'] = current_time.to_time.to_s + '(' + current_time.to_time.to_i.to_s + ')';
+      params[:bugReport]['IP Address'] = request.remote_ip;
 
       email_body = '';
 
