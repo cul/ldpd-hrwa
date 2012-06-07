@@ -7,13 +7,13 @@ module HRWA::Static
   end
   
   def send_bug_report( recipient = 'culhrweb-bugreports@libraries.cul.columbia.edu', params = params )
-    subject = 'HRWA Public Feedback' 
+    subject = 'HRWA Public Bug Report' 
     send_helper( params[ :bugReport ], recipient, subject )
   end
   
   def send_helper( param, recipient, subject )
     current_time = Time.new
-    param['Timestamp'] = current_time.to_time.to_s + ' (' + current_time.to_time.to_i.to_s + ')';
+    param['Timestamp']  = current_time.to_time.to_s + ' (' + current_time.to_time.to_i.to_s + ')';
     param['IP Address'] = request.remote_ip;
 
     email_body = '';
