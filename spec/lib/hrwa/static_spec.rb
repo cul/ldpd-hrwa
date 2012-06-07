@@ -19,63 +19,59 @@ describe 'HRWA::Static' do
   end
 
   it '#send_public_feedback sends email correctly' do
-    feedback_text = 'This is a text.'
-    contact_name  = 'The Public'
-    contact_email = 'ThePublic@public.com'
     params = { :feedback =>
       { 
-        'Feedback Text'   => feedback_text,
-        'Contact Name'    => contact_name,
-        'Contact Email'   => contact_email,
+        'Feedback Text'   => 'This is a test.',
+        'Contact Name'    => 'The Public',
+        'Contact Email'   => 'ThePublic@public.com',
       }
     }
     recipient = 'culhrweb-all@libraries.cul.columbia.edu'
     subject   = 'HRWA Public Feedback'
     
+    # Make a copy to verify results later.  params will have new pairs inserted into it
+    # by the method being tested
+    params_check = Marshal.load( Marshal.dump( params ) )
+    
     @mock_static_controller.send_public_feedback( recipient, params )
     
-    public_feedback_email                   =  ActionMailer::Base.deliveries.last
-    public_feedback_email.to.first.should   == recipient
-    public_feedback_email.from.first.should == recipient
-    public_feedback_email.subject.should    == subject
-    
-    # Can't match the whole body because we don't know the timestamp
-    # No timestamp test for now because the method being tested timestamps
-    # very precisely.  Tricky to match that.
-    public_feedback_email.body.should       match( "Feedback Text: #{ feedback_text }"   )
-    public_feedback_email.body.should       match( "Contact Name: #{ contact_name }"  )
-    public_feedback_email.body.should       match( "Contact Email: #{ contact_email}" )
-    public_feedback_email.body.should       match( "IP Address: #{ @ip }"              )
+    email = ActionMailer::Base.deliveries.last        
+    verify_email( email, recipient, subject, params_check[ :feedback ], @ip )
   end
   
   it '#send_bug_report sends email correctly' do
-    bug_text      = 'This is a bug.'
-    contact_name  = 'The Bug Reporter'
-    contact_email = 'TheBugReporter@bugreporter.com'
     params = { :bugReport =>
       { 
-        'Bug Report Text' => bug_text,
-        'Contact Name'    => contact_name,
-        'Contact Email'   => contact_email,
+        'Bug Report Text' => 'This is a bug.',
+        'Contact Name'    => 'The Bug Reporter',
+        'Contact Email'   => 'TheBugReporter@bugreporter.com',
       }
     }
-    recipient = 'culhrweb-bugreports@libraries.cul.columbia.edu'
+    
+    # Make a copy to verify results later.  params will have new pairs inserted into it
+    # by the method being tested
+    params_check = Marshal.load( Marshal.dump( params ) )
+    
+    recipient = 'culhrweb-bugreports@libraries.cul.columbia.edux'
     subject   = 'HRWA Public Bug Report'
     
     @mock_static_controller.send_bug_report( recipient, params )
     
-    public_feedback_email                   =  ActionMailer::Base.deliveries.last
-    public_feedback_email.to.first.should   == recipient
-    public_feedback_email.from.first.should == recipient
-    public_feedback_email.subject.should    == subject
+    email = ActionMailer::Base.deliveries.last        
+    verify_email( email, recipient, subject, params_check[ :bugReport ], @ip )
+  end
+end
+
+def verify_email( email, recipient, subject, params, ip )
+    email.to.first.should   == recipient
+    email.from.first.should == recipient
+    email.subject.should    == subject
     
     # Can't match the whole body because we don't know the timestamp
     # No timestamp test for now because the method being tested timestamps
     # very precisely.  Tricky to match that.
-    public_feedback_email.body.should       match( "Bug Report Text: #{ bug_text }"   )
-    public_feedback_email.body.should       match( "Contact Name: #{ contact_name }"  )
-    public_feedback_email.body.should       match( "Contact Email: #{ contact_email}" )
-    public_feedback_email.body.should       match( "IP Address: #{ @ip }"              )
-  end
+    params.each_pair { | key, value |
+      email.body.should match( "#{ key }: #{ value }" )
+    }
+    email.body.should match( "IP Address: #{ ip }" )
 end
-
