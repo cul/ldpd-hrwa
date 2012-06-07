@@ -70,7 +70,7 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch( 'config/routes.rb')                           { "spec/routing" }
 
   # lib/
-  watch( %r{^lib/hrwa/(.+)\.rb$}                )      { |m| "spec/lib/#{m[1]}_spec.rb"                   }
+  watch( %r{^lib/hrwa/(.+)\.rb$}                )      { |m| "spec/lib/hrwa/#{m[1]}_spec.rb"                   }
   watch( %r{^lib/hrwa/(.*configurator)\.rb$}    )      { "spec/requests/catalog_spec.rb"                  }
   watch( %r{^lib/hrwa/([^/]+)/(.+)\.rb}         )      { |m| "spec/lib/hrwa/#{ m[1] }/#{ m[2] }_spec.rb"  }
   

@@ -2,7 +2,8 @@
 
 # This controller handles all requests static HTML pages
 class StaticController < ApplicationController
-
+  include HRWA::Static
+  
   def about
   end
 
@@ -22,41 +23,16 @@ class StaticController < ApplicationController
   end
 
   def public_feedback
-
 		if(params[:feedback])
-
-      current_time = Time.new
-      params[:feedback]['Timestamp'] = current_time.to_time.to_s + ' (' + current_time.to_time.to_i.to_s + ')';
-      params[:feedback]['IP Address'] = request.remote_ip;
-
-      email_body = '';
-
-      params[:feedback].each_pair { |key, value|
-        email_body += "#{key}: #{value}\n\n"
-      }
-
-      email_body += 'If the IP address above is associated with periodic feedback form spam, please ask the developers about blocking it.'
-
-			Mailer.send_mail('culhrweb-all@libraries.cul.columbia.edu', 'culhrweb-all@libraries.cul.columbia.edu', 'HRWA Public Feedback', email_body).deliver
-			flash.now[:notice] = 'Thank you for submitting your feedback.'
+      send_public_feedback( 'da217@columbia.edu' )
+      flash.now[:notice] = 'Thank you for submitting your feedback'
 		end
   end
 
   def public_bugreports
 		if(params[:bugReport])
-
-      current_time = Time.new
-      params[:bugReport]['Timestamp'] = current_time.to_time.to_s + '(' + current_time.to_time.to_i.to_s + ')';
-      params[:bugReport]['IP Address'] = request.remote_ip;
-
-      email_body = '';
-
-      params[:bugReport].each_pair { |key, value|
-        email_body += "#{key}: #{value}\n\n"
-      }
-
-			Mailer.send_mail('culhrweb-bugreports@libraries.cul.columbia.edu', 'culhrweb-bugreports@libraries.cul.columbia.edu', 'HRWA Public Bug Report', email_body).deliver
-			flash.now[:notice] = 'Thank you for submitting a bug report.'
+      send_bug_report( 'da217@columbia.edu' )
+      flash.now[:notice] = 'Thank you for submitting a bug report.'
 		end
   end
 

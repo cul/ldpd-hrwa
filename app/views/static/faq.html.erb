@@ -26,36 +26,35 @@
 What is the Human Rights Web Archive?
 </dt>
 <dd>
-<p>
-The <strong>Human Rights Web Archive (HRWA)</strong> is a collection of freely available websites featuring substantive resources related to human rights, mainly by and about non-governmental organizations dedicated to human rights issues. The HRWA is an initiative of <a href="http://library.columbia.edu/">Columbia University Libraries and Information Services</a> and its <a href="http://library.columbia.edu/content/libraryweb/indiv/humanrights.html">Center for Human Rights Documentation and Research</a>.  Our goal is to build an ongoing mechanism for preserving web-based human rights information, adaptable to a variety of fields and subjects.  The development of this program is supported by a grant from the Andrew W. Mellon Foundation.
-</p>
-<p>
-Subject specialists at Columbia University Libraries with regional and language expertise select websites for inclusion in the archive.  We also invite suggestions from researchers, students, scholars and human rights advocates.  Criteria for selection include relevance of the site to current research, teaching, and advocacy, perceived risk of a site disappearing, and likelihood that a site will not be archived or preserved by other means.  Organizations whose paper archives are held at Columbia will be another priority for web archiving.
-</p>
+The <strong>Human Rights Web Archive (HRWA)</strong> is a collection of freely available websites featuring substantive resources related to human rights, mainly by and about non-governmental organizations dedicated to human rights issues. The HRWA is an initiative of <a href="http://library.columbia.edu/">Columbia University Libr
+aries and Information Services</a> and its <a href="http://library.columbia.edu/content/libraryweb/indiv/humanrights.html">Center for Human Rights Documentation and Research</a>. Our goal is to build an ongoing mechanism for preserving web-based human rights information, adaptable to a variety of fields and subjects.  The development of this program is supported by a grant from the Andrew W. Mellon Foundation.
 </dd>
 <dt id="faq_2">
 How are websites selected for inclusion in the archive?
 </dt>
 <dd>
-Subject specialists at Columbia University Libraries with regional and language expertise select websites for inclusion in the archive.  We also invite suggestions from researchers, students, scholars and human rights advocates.  Criteria for selection include relevance of the site to current research, teaching, and advocacy, perceived risk of a site disappearing, and likelihood that a site will not be archived or preserved by other means.  Organizations whose paper archives are held at Columbia will be another priority for web archiving.
+Subject specialists at Columbia University Libraries with regional and language expertise select websites for inclusion in the archive.  We also invite suggestions from researchers, students, scholars and human rights advocates.  Criteria for selection include relevance of the site to current research, teaching, and advocacy, perceived risk of a site disappearing, and likelihood that a site will not be archived or preserved by other means.  Organizations whose paper archives are held at Columbia are another priority for web archiving.
 </dd>
 <dt id="faq_3">
 Can I suggest a site for archiving in this project?
 </dt>
 <dd>
-Yes, we welcome your suggestions.  Please use this <a href="<%= public_nomination_path %>">form</a> to nominate a website for inclusion in the archive.  We are especially interested in hearing from human rights organizations that want to nominate their own sites.  Site owners should use this <a href="<%= owner_nomination_path %>">form</a>.
+Yes, we welcome your suggestions.  Please use this <a href="<%= public_nomination_path %>">form</a> to nominate a website for inclusion in the archive.  We are especially interested in hearing from human rights organizations that want to nominate their own sites.  Site owners should use this <a href="<%= owner_nomination_path %>">
+form</a>.
 </dd>
 <dt id="faq_4">
 What is your copyright and permissions policy for archiving websites?
 </dt>
 <dd>
-We follow principles and techniques of non-intrusive harvesting.  We attempt to notify all organizations and/or site owners of our interest in archiving their sites.  We will refrain from harvesting sites whose owners do not wish to participate in this project. Some sites may contain material that is produced by other parties who may claim copyright ownership of such materials.  The HRWA reserves the right to remove any material that in our reasonable opinion may violate copyright or other intellectual property rights.  Third-party copyright holders who believe their rights have been infringed by inclusion of their content in our archive may contact us at <a href="#" class="culhrweb-email">&hellip;</a>.
+We follow principles and techniques of non-intrusive harvesting.  We attempt to notify all organizations and/or site owners of our interest in archiving their sites.  We will refrain from harvesting sites whose owners do not wish to participate in this project. Some sites may contain material that is produced by other parties who may claim copyright ownership of such materials.  The HRWA reserves the right to remove any material that in our reasonable opinion may violate copyright or other intellectual property rights.  Third-party copyright holders who believe their rights have been infringed by inclusion of their content in our archive may contact us at 
+<a href="#" class="culhrweb-email">&hellip;</a>. 
 </dd>
 <dt id="faq_5">
 How do you collect and store websites?
 </dt>
 <dd>
-We use the open source web crawler, "Heritrix," to create archival quality copies of the websites.  Currently we are managing Heritrix through the <a href="http://www.archive.org/">Internet Archive's</a> "Archive-It" service.  All data created using the Archive-It service is hosted and stored by the Internet Archive.  Eventually we will also store the data in Columbia University Libraries' digital repository.
+We use the open source web crawler, "Heritrix," to create archival quality copies of the websites.  Currently we are managing Heritrix through the <a href="http://www
+.archive.org/">Internet Archive's</a> "Archive-It" service.  All data created using the Archive-It service is hosted and stored by the Internet Archive.  Eventually we will also store the data in Columbia University Libraries' digital repository.
 </dd>
 <dt id="faq_6">
 Do site owners have to change or alter websites to be included in the crawls?
@@ -73,22 +72,22 @@ We crawl websites at a polite rate so as not to interfere with access to your we
 Are you able to capture media, audio and video files etc?
 </dt>
 <dd>
-Yes, as long as there are links to the raw content.  We cannot capture content that is retrieved through a database query.  For example, we cannot capture files retrieved from a database after a user enters a search query.
+Yes, downloadable media, audio and video files can usually be captured, although YouTube videos are challenging. Our crawler follows links in order to discover and capture content, so links to content must exist on a website in order for that content to be included in the archive.  We can't capture files that are not linked and have to be retrieved from a database via user query.  (For example, a publications database that requires one to execute a search in order to access publications.)  Streaming audio and video can't be captured at all by the current generation of web crawlers.
 </dd>
 <dt id="faq_9">
 How can I view the sites that have been archived?
 </dt>
 <dd>
-Archived sites will be publicly available.  Initially you can view sites by date of capture in our Internet Archive Human Rights Web Archive collection.  Additional means of viewing archived sites will be explored by program  staff.
+Archived websites can be viewed on this portal by date of capture by clicking on the <em>"See Website Captures"</em> link in search listings and site detail pages.
 </dd>
 <dt id="faq_10">
 Why do some sites appear to be incomplete?
 </dt>
 <dd>
-There are several reasons why a site may appear to be incomplete.  First, parts of the site may be excluded from crawls by robots.txt.  We respect all robots.txt exclusions.  Second, some types of content are very challenging and sometimes impossible to archive from a technical standpoint.  Some examples include Javascript, streaming media, and form/database driven content.  Finally, portions of a website may be restricted, or password protected.  We will only collect public content, so password protected material will not be crawled.
+There are several reasons why an archived site may appear to be incomplete. Some types of content are challenging or impossible to capture and/or reproduce, including JavaScript-driven navigation menus, streaming audio and video, and dynamic form and database-driven content. We can't capture files that are not linked and have to be retrieved from a database via user query.  (For example, a publications database that requires one to execute a search in order to access publications.) Also, portions of a website may be restricted or password-protected. We will only collect public content, so password protected material will not be crawled.
 </dd>
 <dt id="faq_11">
-I would like my organization’s site to be removed from the HRWA. Who do I contact?
+I would like my organization's site to be removed from the HRWA. Who do I contact?
 </dt>
 <dd>
 We will honor requests to remove archived content.  Please contact <a href="#" class="culhrweb-tech">&hellip;</a>.
