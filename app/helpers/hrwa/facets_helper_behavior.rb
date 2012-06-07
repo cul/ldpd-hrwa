@@ -19,7 +19,7 @@ module HRWA::FacetsHelperBehavior
   # with class, and 'remove' button.
   def render_selected_facet_value(facet_solr_field, item)
     content_tag(:span, render_facet_value(facet_solr_field, item, :suppress_link => true)) +
-      link_to("[x]", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove", :rel=>'tooltip',:title=>'Remove this filter')
+      link_to("[x]", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove", :rel=>'tooltip',:title=>'Remove this facet')
   end
 
 end
