@@ -1,0 +1,212 @@
+<input type="hidden" name="search_mode" value="advanced" />
+
+<%= current_f_hash_as_hidden_fields %>
+
+<div class="row">
+<div class="span12">
+    <h6>Add Additional Search Filters</h6>
+<div class="span6 nomar">
+        <div class="control-group">
+        <label class="span2 control-label">organization type</label>
+        <select name="f_add[organization_type__facet][]">
+          <option value="">- Choose an option -</option>
+          <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
+          <% organization_type_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+    </div>
+    <div class="control-group">
+      <label class="span2 control-label">geographic focus</label>
+      <select name="f_add[geographic_focus__facet][]">
+        <option value="">- Choose an option -</option>
+        <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+        <% geographic_focus_options().each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+        <% end %>
+      </select>
+    </div>
+        <div class="control-group">
+        <label class="span2 control-label">organization based in</label>
+          <select name="f_add[organization_based_in__facet][]">
+            <option value="">- Choose an option -</option>
+            <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
+            <% organization_based_in_options().each do | key, value | %>
+              <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+            <% end %>
+        </select>
+    </div>
+        <div class="control-group">
+        <label class="span2 control-label">file type</label>
+        <select class="control-group" name="f_add[mimetype][]">
+          <option value="">- Choose an option -</option>
+          <%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
+          <%# file_type_options().each do | key, value | %>
+            <%#= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
+          <%# end %>
+        </select>
+    </div>
+</div>
+<div class="span6 nomar">
+        <div class="control-group">
+        <label class="span2 control-label">site language</label>
+        <select name="f_add[language__facet][]">
+          <option value="">- Choose an option -</option>
+          <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
+          <% language_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+        <!--Non-displayed facets below here-->
+    </div>
+
+        <div class="control-group">
+        <label class="span2 control-label">creator name</label>
+        <select name="f_add[creator_name__facet][]">
+          <option value="">- Choose an option -</option>
+          <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
+          <% creator_name_options().each do | key, value | %>
+            <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+          <% end %>
+        </select>
+    </div>
+    <div class="control-group">
+      <label class="span2 control-label">domain</label>
+      <select class="control-group" name="f_add[domain][]">
+        <option value="">- Choose an option -</option>
+        <% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+        <% domain_options().each do | key, value | %>
+          <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+        <% end %>
+      </select>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<h6>date of capture</h6>
+
+		<% capture_start_date_value =   params[ :capture_start_date ].nil?  ? '' : params[ :capture_start_date ]
+         capture_end_date_value =       params[ :capture_end_date ].nil?    ? '' : params[ :capture_end_date   ] %>
+
+		<div class="span6 nomar capture_start_date_group">
+					 <div class="control-group">
+					 <label class="span2 control-label">start date</label>
+					 <input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" />
+			 </div>
+		</div>
+		<div class="span6 nomar capture_end_date_group">
+					 <div class="control-group">
+					 <label class="span2 control-label">end date</label>
+					 <input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
+			 </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<h6>display options</h6>
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">results per page</label>
+					 <select class="control-group" name="per_page">
+									 <option>10</option>
+									 <option>25</option>
+									 <option>50</option>
+                   <option>100</option>
+					 </select>
+			 </div>
+		</div>
+		<div class="span6 nomar">
+					 <div class="control-group">
+					 <label class="span2 control-label">sort</label>
+					 <select class="control-group" name="sort">
+						 <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
+					 </select>
+			 </div>
+		</div>
+	</div>
+</div>
+
+<div class="row<%= ' invisible' if(Rails.env == 'hrwa_test' || Rails.env == 'hrwa_prod') %>">
+    <div class="span12">
+			<h6>dev options (temporary)</h6>
+			<div class="span6 nomar">
+				<div class="control-group">
+                    <label class="span2 control-label">host</label>
+                    <select id="hrwa_host_asf" name="hrwa_host" class="control-group pull-left"><%
+                        hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
+                        %>
+                        <option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
+                        <option value="dev"<%= hrwa_solr_host == 'dev' ? ' selected="selected"'.html_safe : '' %>>Dev</option>
+                        <option value="test"<%= hrwa_solr_host == 'test' ? ' selected="selected"'.html_safe : '' %>>Test</option>
+                        <option value="prod"<%= hrwa_solr_host == 'prod' ? ' selected="selected"'.html_safe : '' %>>Prod</option>
+                    </select>
+					<input id="hrwa_host_asf_hidden" type="hidden" disabled="disabled" name="hrwa_host" value="test" />
+				</div>
+			</div>
+			<div class="span6 nomar">
+                <div class="control-group">
+                    <label class="span2 control-label">core</label>
+                    <select id="hrwa_core_asf" name="hrwa_core" class="control-group pull-left">
+                        <% hrwa_core_asf = params[ :hrwa_core ].blank? ? '' : get_current_hrwa_solr_core %>
+                        <option value="">- Choose an option -</option>
+                        <option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
+                        <option value="asf-hrwa-278" <%= hrwa_core_asf == 'asf-hrwa-278' ? ' selected="selected"'.html_safe : '' %>>ASF-HRWA-278 (stemming and non-stemming results)</option>
+                    </select>
+					<input id="hrwa_core_asf_hidden" type="hidden" disabled="disabled" name="hrwa_core" value="asf-hrwa-278" />
+                </div>
+			</div>
+    </div>
+</div>
+
+<div class="row<%= ' invisible' if(Rails.env == 'hrwa_test' || Rails.env == 'hrwa_prod') %>">
+    <div class="span12">
+			<h6>Weighting options (temporary)</h6>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+					<label id="url_weight_label" class="span3 control-label">URL: 1</label>
+					<% originalUrlWeighting = (params[:field].nil? || params[:field].join('').index('originalUrl') == nil) ? '1' : get_specific_search_weight_from_weighting_string('originalUrl', params[:field].join('')) %>
+					<div id="url_weight_slider" data-val-from-url="<%= originalUrlWeighting %>" class="clearfix"></div>
+					<input type="hidden" id="url_weight" name="field[]" value="originalUrl^1"/>
+				</div>
+			</div>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+					<label id="page_title_weight_label" class="span3 control-label">Page Title: 1</label>
+					<% contentTitleWeighting = (params[:field].nil? || params[:field].join('').index('contentTitle') == nil) ? '1' : get_specific_search_weight_from_weighting_string('contentTitle', params[:field].join('')) %>
+					<div id="page_title_weight_slider" data-val-from-url="<%= contentTitleWeighting %>" class="clearfix"></div>
+					<input type="hidden" id="page_title_weight" name="field[]" value="contentTitle^1"/>
+				</div>
+			</div>
+			<div class="span12 nomar">
+				<div class="control-group span10">
+						<label id="page_content_weight_label" class="span3 control-label">Page Content: 1</label>
+						<% pageContentWeighting = (params[:field].nil? || params[:field].join('').index('contentBody') == nil) ? '1' : get_specific_search_weight_from_weighting_string('contentBody', params[:field].join('')) %>
+						<div id="page_content_weight_slider" data-val-from-url="<%= pageContentWeighting %>" class="clearfix"></div>
+						<input type="hidden" id="page_content_weight" name="field[]" value="contentBody^1"/>
+				 </div>
+			</div>
+      <div id="asf_ns_boost_items_container" class="span12 nomar">
+				<div class="control-group span10">
+						<input type="checkbox" class="pull-left" id="enable_ns_boost_checkbox" <%= (params[:hrwa_core] && params[:hrwa_host] && params[:hrwa_core] == 'asf-hrwa-278' && params[:hrwa_host] == 'test') ? ' checked="checked"' : '' %> /> <label id="no_stemming_boost_weight_label" class="span3 control-label">Non-Stemming Boost: 1</label>
+						<% noStemmingBoostWeighting = (params[:field].nil?) ? '1' : calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle', params[:field].join('')) %>
+						<div id="no_stemming_boost_weight_slider" data-val-from-url="<%= noStemmingBoostWeighting %>" class="clearfix"></div>
+						<input type="hidden" id="url_weight__no_stemming" name="field[]" value="originalUrl__no_stemming_balancing_field^1"/>
+						<input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="contentTitle__no_stemming^1"/>
+						<input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contentBody__no_stemming^1"/>
+				 </div>
+			</div>
+    </div>
+</div>
+
+
+
+<div class="row span11">
+  <%# Submit button goes here -- presence of this button allows the enter key to submit the form %>
+  <input type="submit" value="Search" class="btn btn-success pull-right adv_search_submit"/>
+</div>
+<div class="clearfix"></div>

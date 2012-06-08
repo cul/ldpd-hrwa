@@ -6,6 +6,10 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include HRWA::AdvancedSearch::Query
   include HRWA::Debug
+  include HRWA::SolrHelper
+  include HRWA::Catalog::Dev
+
+  before_filter :_merge_f_add_into_f, :only => [:index]
 
   # displays values and pagination links for a single facet field
   def facet
@@ -16,27 +20,44 @@ class CatalogController < ApplicationController
 
   # get search results from the solr index
   def index
-    # Params that fall outside of current standarad Blacklight processing
-    @extra_controller_params = {}
-
     if !params[:search].blank?
 
       _configure_by_search_type
 
-      # Advanced searches require some extra params manipulation
-      _advanced_search_processing if params[ :search_mode ] == "advanced"
-
-      @configurator.process_search_request( @extra_controller_params, params )
-
       begin
-        (@response, @result_list) = get_search_results( params,
-                                                        @extra_controller_params )
+        (@response, @result_list) = get_search_results( params, {} )
       rescue => ex
-        @errors = ex.to_s.html_safe
+        @error = ex.to_s
+        Rails.logger.error( @error )
 
+        # We are categorizing user errors into :user and :system
+        if ! ex.to_s.match( /org\.apache\.lucene\.queryParser\.ParseException/).nil?
+          # Get query text if there is any
+          user_q_text    = ex.request[ :params ][ :q ]
+          user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
+          @error_type    = :user
+          @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see <a href='#'>[placeholder for help link]</a>.".html_safe
+        else
+          @error_type    = :system
+          @error_message = "Sorry, there has been an internal system error.  Please contact <a href='#'>[placeholder for help link]</a>.".html_safe
+        end
         # TODO: remove this from production version
-        _set_debug_display( @extra_controller_params )
+        if params.has_key?( :hrwa_debug )
+          _set_debug_display
+        end
 
+        render :error and return
+      end
+
+      # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
+      # Check for navigation to a nonexistent/invalid result page
+      # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
+      if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
+        @error_type = :invalid_result_page
+        @error_message = 'Sorry, but there are no results available on this search result page.'
+        Rails.logger.info('-------------------------------------------------------------------------------------')
+        Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
+        Rails.logger.info('-------------------------------------------------------------------------------------')
         render :error and return
       end
 
@@ -55,7 +76,7 @@ class CatalogController < ApplicationController
 
       # TODO: remove this from production version
       if params.has_key?( :hrwa_debug )
-        _set_debug_display( @extra_controller_params )
+        _set_debug_display
       end
 
       respond_to do |format|
@@ -71,24 +92,47 @@ class CatalogController < ApplicationController
   # display the site detail for an fsf record, using bib_key as a unique identifier
   # use the bib_key to get a single document from the solr index
   def site_detail
+    _configure_by_search_type('site_detail')
     @bib_key = params[:bib_key]
     @response, @document = get_solr_response_for_doc_id(@bib_key)
   end
 
   private
 
-  def _advanced_search_processing
-    # For now the q_* fields are processed the same for all search_types
-    advanced_search_processing_q_fields
+  def _configure_by_search_type(search_type = params[:search_type])
+    @debug = ''.html_safe
+    
+    # Backend method of reselecting search_type based on hrwa_core if hrwa_core is the no-stemming core
+    if ( params[ :hrwa_core ] == 'asf-hrwa-278' )
+      @search_type = :archive_ns
+    else
+      @search_type = search_type.to_sym
+    end
+
+    @configurator = HRWA::Configurator.new( @search_type )
+
+    # See https://issues.cul.columbia.edu/browse/HRWA-324
+    @configurator.reset_configuration( self.blacklight_config )
+
+    # CatalogController.configure_blacklight yields a Blacklight::Configuration object
+    # that expects a block/proc which sets its attributes accordingly
+    CatalogController.configure_blacklight( &@configurator.config_proc )
+    
+    if(@search_type == :archive_ns || !params[:hrwa_host] || params[:hrwa_host].blank?)
+        @solr_url = @configurator.solr_url
+    else
+        #Dev override
+        @solr_url = get_solr_host_from_url(@configurator.name, params)
+    end
+
+    Blacklight.solr = RSolr::Ext.connect( :url => @solr_url)
   end
 
-
-  def _set_debug_display( extra_controller_params = {} )
+  def _set_debug_display
     @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
     @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
 
-    @debug << "<h1>extra_controller_params</h3>".html_safe
-    @debug << hash_pp( extra_controller_params )
+    @debug << "<h1>@solr_url    = #{ @solr_url }</h1>".html_safe
 
     @debug << "<h1>params[]</h1>".html_safe
     @debug << params_list
@@ -96,9 +140,10 @@ class CatalogController < ApplicationController
     @debug << '<h1>solr_search_params_logic</h1>'.html_safe
     @debug << array_pp( self.solr_search_params_logic )
 
-    @debug << "<h1>solr_search_params after get_search_results has run</h1>\n\n".html_safe
-    self.solr_search_params.keys.map { | key | key.to_s }.sort.each do |key|
-      @debug << "<strong>#{key}</strong> = #{ solr_search_params[ key ] } <br/>".html_safe
+    @debug << "<h1>self.solr_search_params( params )</h1>\n\n".html_safe
+    solr_search_parameters = self.solr_search_params( params )
+    solr_search_parameters.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
+      @debug << "<strong>#{key}</strong> = ".html_safe << solr_search_parameters[ key ].to_s << "<br/>".html_safe
     end
 
     if @response
@@ -113,21 +158,41 @@ class CatalogController < ApplicationController
     end
   end
 
-  def _configure_by_search_type
-    @debug = ''.html_safe
+  # Merges params[:f_add] options into the current params[:f] hash.
+  # Ignores all options that have empty values
+  def _merge_f_add_into_f
+    if(params[:f_add])
 
-    @search_type = params[:search_type].to_sym
+      if( ! params[:f] )
+        params[:f] = {}
+      end
 
-    @configurator = HRWA::Configurator.new( @search_type )
+      #Note: We're not merging the hashes themselves, but rather,
+      #the arrays inside each of the hashes.
+      params[:f_add].each do |hash_key, arr_value|
 
-    # See https://issues.cul.columbia.edu/browse/HRWA-324
-    @configurator.reset_configuration( self.blacklight_config )
+				# if f_add contains a key that holds a single-element blank
+				# value ( [''] ), then don't do a merge.
+				if( ! arr_value[0].blank? )
+					if( ! params[:f][hash_key] )
+						params[:f][hash_key] = []
+					end
+					params[:f][hash_key] = params[:f][hash_key] | arr_value # Note: arr1 | arr2 == a single merged array (with duplicates removed)
+				end
 
-    # CatalogController.configure_blacklight yields a Blacklight::Configuration object
-    # that expects a block/proc which sets its attributes accordingly
-    CatalogController.configure_blacklight( &@configurator.config_proc )
+      end
 
-    Blacklight.solr = RSolr::Ext.connect( :url => @configurator.solr_url )
+    end
+
+    # And now that we're done with f_add, we should delete it from params
+    # It was only meant to be used right before the catalog_controller index
+    # action anyway. It shouldn't be used by any other part of blacklight,
+    # or our application.
+    params.delete :f_add
+
+  end
+
+  def crawl_calendar
   end
 
 end

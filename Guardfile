@@ -37,7 +37,7 @@ guard 'rails', rails_opts do
   watch(%r{^config/.*})
 end
 
-guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
+guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch(%r{^config/environments/.+\.rb$})
@@ -45,8 +45,6 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch('Gemfile')
   watch('Gemfile.lock')
   watch('spec/spec_helper.rb') { :rspec }
-  watch('test/test_helper.rb') { :test_unit }
-  watch(%r{features/support/}) { :cucumber }
 end
 
 guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_on_start => true, :all_after_pass => false do
@@ -72,7 +70,7 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch( 'config/routes.rb')                           { "spec/routing" }
 
   # lib/
-  watch( %r{^lib/hrwa/(.+)\.rb$}                )      { |m| "spec/lib/#{m[1]}_spec.rb"                   }
+  watch( %r{^lib/hrwa/(.+)\.rb$}                )      { |m| "spec/lib/hrwa/#{m[1]}_spec.rb"                   }
   watch( %r{^lib/hrwa/(.*configurator)\.rb$}    )      { "spec/requests/catalog_spec.rb"                  }
   watch( %r{^lib/hrwa/([^/]+)/(.+)\.rb}         )      { |m| "spec/lib/hrwa/#{ m[1] }/#{ m[2] }_spec.rb"  }
   
@@ -85,9 +83,3 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   watch( %r{^spec/support/(.+)\.rb$}      )            { "spec"          }
 end
 
-
-guard 'cucumber', :cli => '--no-profile --color --format pretty --strict' do
-  watch(%r{^features/.+\.feature$})
-  watch(%r{^features/support/.+$})          { 'features' }
-  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
-end

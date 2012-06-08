@@ -1,0 +1,49 @@
+
+    <div class="container no-hero-mobile">
+	  <div class="content">
+
+      <div class="row">
+        <div class="span12 columns">
+	<article class="entry">
+        <h2>Comments/Feedback</h2>
+        <p>This form is for public comments/feedback for <strong>Human Rights Web Archive</strong>. For bug/error reporting, please use the <a href="<%= public_bugreports_path %>" class="">bug reporting form</a>.</p>
+        <p>Or send an email to <a class="culhrweb-all" href="#">&hellip;</a>. See also our <a href="#" class="donothing">FAQ</a>.</p>
+
+<%= form_tag '#', :class => 'form-horizontal', :id => 'frmPublicFeedback', :name => 'frmPublicFeedback', :action => '#', :method => 'post' do %>
+  <fieldset>
+    <div class="control-group">
+        <label class="control-label">Feedback/Comments</label>
+      <div class="controls">
+        <textarea class="span9" id="txtFeedback" name="feedback[Feedback Text]" cols="70" rows="6" required="required"></textarea>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Contact Information</legend>
+    <p>Contact information is optional, but would be helpful in case we have any questions.
+    <div class="control-group">
+        <label class="control-label">Name</label>
+      <div class="controls">
+        <input class="span9" id="inpContactName" name="feedback[Contact Name]" type="text" size="40">
+      </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">E-mail</label>
+      <div class="controls">
+        <input class="span9" id="inpContactEmail" name="feedback[Contact Email]" type="text" size="40">
+      </div>
+    </div>
+  </fieldset>
+        <p class="submit">
+          <input type="submit" value="Submit" class="btn btn-primary">
+        </p>
+<% end %>
+
+	</article>
+       </div>
+      </div>
+
+	  </div> <!--//content-->
+
+
+    </div> <!-- /container -->

@@ -1,27 +1,44 @@
 Hrwa::Application.routes.draw do
 
+  devise_for :admins
+
+  # Our Blacklight stuff (before Blacklight adds its own routes)
+  match '/search'  => 'catalog#index'
+  match '/site_detail/:bib_key'  => 'catalog#site_detail'
+  match '/crawl_calendar/:archived_url'  => 'catalog#crawl_calendar', :constraints => {:archived_url => /.+/}
+
   Blacklight.add_routes(self)
 
   # Static pages - no dynamic content at all
   match '/about'       => 'static#about'
+  match '/faq'       => 'static#faq'
   match '/browse'      => 'static#collection_browse'
+  match '/owner_nomination'      => 'static#owner_nomination'
+  match '/public_nomination'      => 'static#public_nomination'
+  match '/public_feedback'      => 'static#public_feedback'
+  match '/public_bugreports'      => 'static#public_bugreports'
 
-  # Blacklight stuff
-  match '/search'  => 'catalog#index'
-  match '/site_detail/:bib_key'  => 'catalog#site_detail'
-
-  # Internal stuff
-  match '/internal/feedback_form'   => 'internal#feedback_form'
-  match '/internal/feedback_submit' => 'internal#feedback_submit'
+  # Admin controller
+  match '/admin'      => 'admin#index'
+  match '/refresh_browse_and_option_lists'      => 'admin#refresh_browse_and_option_lists'
 
   # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
-  match '/advanced_asf', :to => redirect( '/advanced_asf.html' )
-  match '/advanced_fsf', :to => redirect( '/advanced_fsf.html' )
+  match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
+  match '/advanced_fsf',      :to => redirect( '/advanced_fsf.html' )
+  match '/internal_feedback', :to => redirect( '/internal_feedback.html' )
+
 
   resources :catalog, :only => [:index, :show, :update], :id => /.+/
 
   root :to => "static#index"
-  devise_for :users
+
+  # Devise Login Options
+  #devise_for :users
+  devise_for :admins, :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+  as :admin do
+    get 'admin/login' => 'devise/sessions#new', :as => :admin_login
+    get 'admin/logout' => 'devise/sessions#destroy', :as => :admin_logout
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

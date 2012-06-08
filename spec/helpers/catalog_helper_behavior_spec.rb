@@ -9,8 +9,8 @@ describe 'exclude_domain_from_hits_link' do
     @domain2 = 'amnesty.org'
     @params_unsorted = { :search_type => 'archive', :search_mode => 'advanced', :q => 'women', :q_and => 'women', :q_phrase => '', :q_or => '', :q_exclude => '', :lim_domain => '', :lim_mimetype => '', :lim_language => '', :lim_geographic_focus => '', :lim_organization_based_in => '', :lim_organization_type => '', :lim_creator_name => '', :capture_start_date => '', :capture_end_date => '', :rows => '10', :sort => 'score+desc', :solr_host => 'harding.cul.columbia.edu', :solr_core_path => '%2Fsolr-4%2Fasf', :submit_search => 'Advanced+Search' }
 
-    @params_expected_in_url1 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1 ] )
-    @params_expected_in_url2 = @params_unsorted.merge( :'excl_domain[]' => [ @domain1, @domain2 ] )
+    @params_expected_in_url1 = @params_unsorted.merge( :'excl_domain' => [ @domain1 ] )
+    @params_expected_in_url2 = @params_unsorted.merge( :'excl_domain' => [ @domain1, @domain2 ] )
 
     # NOTE: The method being tested uses sorted params
 
@@ -20,7 +20,11 @@ describe 'exclude_domain_from_hits_link' do
       name  = CGI::escape( key.to_s )
       if @params_expected_in_url1[ key ].respond_to?( :each )
         @params_expected_in_url1[ key ].each { | value |
-          @expected_link_tag1 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          if @params_expected_in_url1[ key ].is_a?(Array)
+            @expected_link_tag1 << "#{ name }%5B%5D=#{ CGI::escape( value ) }&amp;"
+          else
+            @expected_link_tag1 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          end
         }
       else
         value = CGI::escape( @params_expected_in_url1[ key ] )
@@ -28,7 +32,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag1.sub!( /&amp;$/, '' )
-    @expected_link_tag1 << %Q{" data-original-title=\"Exclude www.hrw.org from results\" rel=\"twipsy\">Domain-</a>}
+    @expected_link_tag1 << %Q{" data-original-title=\"Exclude www.hrw.org from results\" rel=\"tooltip\">Domain-</a>}
 
 
     # Link for an additional domain exclusion added
@@ -37,7 +41,11 @@ describe 'exclude_domain_from_hits_link' do
       name  = CGI::escape( key.to_s )
       if @params_expected_in_url2[ key ].respond_to?( :each )
         @params_expected_in_url2[ key ].each { | value |
-          @expected_link_tag2 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          if @params_expected_in_url2[ key ].is_a?(Array)
+            @expected_link_tag2 << "#{ name }%5B%5D=#{ CGI::escape( value ) }&amp;"
+          else
+            @expected_link_tag2 << "#{ name }=#{ CGI::escape( value ) }&amp;"
+          end
         }
       else
         value = CGI::escape( @params_expected_in_url2[ key ] )
@@ -45,7 +53,7 @@ describe 'exclude_domain_from_hits_link' do
       end
     }
     @expected_link_tag2.sub!( /&amp;$/, '' )
-    @expected_link_tag2 << %Q{" data-original-title=\"Exclude amnesty.org from results\" rel=\"twipsy\">Domain-</a>}
+    @expected_link_tag2 << %Q{" data-original-title=\"Exclude amnesty.org from results\" rel=\"tooltip\">Domain-</a>}
   end
 
   it 'creates correct link if there are no domains already excluded' do
@@ -116,7 +124,7 @@ describe 'see_all_hits_from_domain_link' do
       @expected_link_tag << "#{ name }=#{ value }&amp;"
     }
     @expected_link_tag.sub!( /&amp;$/, '' )
-    @expected_link_tag << %Q{" data-original-title=\"See all results from www.hrw.org\" rel=\"twipsy\">Domain+</a>}
+    @expected_link_tag << %Q{" data-original-title=\"See all results from www.hrw.org\" rel=\"tooltip\">Domain+</a>}
   end
 
   it 'creates correct link' do
@@ -130,5 +138,41 @@ describe 'see_all_hits_from_domain_link' do
     link_tag = see_all_hits_from_domain_link( @domain,
                                                params_with_domain_facet_pair_already_present )
     link_tag.should == @expected_link_tag
+  end
+end
+
+describe 'get_specific_search_weight_from_weighting_string' do
+  it 'works as expected' do
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 100
+    get_specific_search_weight_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 200
+    get_specific_search_weight_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 300
+
+    get_specific_search_weight_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == nil
+
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','nothingAtAll').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^^').should == nil
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^20').should == 20
+  end
+end
+
+describe 'calculate_no_stemming_boost_weighting_from_weighting_string' do
+  it 'works as expected' do
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
+    calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
+    calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
+
+    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 1
+
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 1
+
+    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == 1
+
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^^').should == 1
   end
 end

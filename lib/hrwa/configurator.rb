@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
 require 'hrwa/archive_search_configurator'
+require 'hrwa/archive_search_with_stemming_adjuster_configurator'
 require 'hrwa/find_site_search_configurator'
+require 'hrwa/site_detail_configurator'
 
 class HRWA::Configurator
-  unloadable
 
   include HRWA::AdvancedSearch
 
@@ -11,8 +12,12 @@ class HRWA::Configurator
     case search_request_type
       when :archive
         @configurator = HRWA::ArchiveSearchConfigurator.new
+      when :archive_ns
+        @configurator = HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.new
       when :find_site
         @configurator = HRWA::FindSiteSearchConfigurator.new
+      when :site_detail
+        @configurator = HRWA::SiteDetailConfigurator.new
     end
   end
 
@@ -36,8 +41,8 @@ class HRWA::Configurator
     return @configurator.post_blacklight_processing( solr_response, results_list )
   end
 
-  def process_search_request( extra_controller_params, user_params = params )
-    @configurator.process_search_request( extra_controller_params, user_params )
+  def process_search_request( solr_parameters, user_params = params )
+    @configurator.process_search_request( solr_parameters, user_params )
   end
 
   # See https://issues.cul.columbia.edu/browse/HRWA-324
@@ -46,12 +51,12 @@ class HRWA::Configurator
          method_name =~ /^facet_fields|^index_fields|^search_fields|^show_fields|^sort_fields/ }.empty?
       config.facet_fields  = {}
       config.index_fields  = {}
-      config.search_fields = {}   
+      config.search_fields = {}
       config.show_fields   = {}
       config.sort_fields   = {}
     end
   end
-  
+
   def result_partial
     return @configurator.result_partial
   end
@@ -61,11 +66,27 @@ class HRWA::Configurator
   end
 
   def solr_url
-    return @configurator.solr_url
+    return @configurator.class.solr_url
+  end
+
+  def self.reset_solr_config
+    HRWA::ArchiveSearchConfigurator.reset_solr_config
+    HRWA::FindSiteSearchConfigurator.reset_solr_config
+    HRWA::SiteDetailConfigurator.reset_solr_config
+  end
+
+  def self.override_solr_url(new_solr_url)
+    HRWA::ArchiveSearchConfigurator.override_solr_url(new_solr_url)
+    HRWA::FindSiteSearchConfigurator.override_solr_url(new_solr_url)
+    HRWA::SiteDetailConfigurator.override_solr_url(new_solr_url)
   end
 
   def prioritized_highlight_field_list
     return @configurator.prioritized_highlight_field_list
+  end
+
+  def name
+    return @configurator.name
   end
 
 end

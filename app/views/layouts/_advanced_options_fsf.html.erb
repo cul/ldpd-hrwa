@@ -1,0 +1,157 @@
+<input type="hidden" name="search_mode" value="advanced" />
+
+<%= current_f_hash_as_hidden_fields %>
+
+<div class="row">
+<div class="span12">
+    <h6>Add Additional Search Filters</h6>
+<div class="span6 nomar">
+	<div class="control-group">
+	<label class="span2 control-label">organization type</label>
+	<select name="f_add[organization_type__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
+	  <% organization_type_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">subject</label>
+	<select name="f_add[subject__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:subject__facet] %>
+	  <% subject_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">geographic focus</label>
+	  <select name="f_add[geographic_focus__facet][]" class="pull-left">
+        <option value="">- Choose an option -</option>
+	    <% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+	    <% geographic_focus_options().each do | key, value | %>
+	      <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	    <% end %>
+	  </select>
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">organization based in</label>
+	  <select name="f_add[organization_based_in__facet][]" class="pull-left">
+        <option value="">- Choose an option -</option>
+	    <% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
+	    <% organization_based_in_options().each do | key, value | %>
+	      <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	    <% end %>
+	</select>
+    </div>
+
+</div>
+<div class="span6 nomar">
+	<div class="control-group">
+	<label class="span2 control-label">language</label>
+	<select name="f_add[language__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
+	  <% language_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+	<!--Non-displayed facets below here-->
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">site title</label>
+	<select name="f_add[title__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:title__facet] %>
+	  <% title_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">creator name</label>
+	<select name="f_add[creator_name__facet][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
+	  <% creator_name_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+    </div>
+	<div class="control-group">
+	<label class="span2 control-label">original url</label>
+	<select name="f_add[original_urls][]" class="pull-left">
+      <option value="">- Choose an option -</option>
+	  <% selected_items = params[:f].nil? ? nil : params[:f][:original_urls] %>
+	  <% original_urls_options().each do | key, value | %>
+	    <%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+	  <% end %>
+	</select>
+    </div>
+
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="span12">
+ <h6>display options</h6>
+ <div class="span6 nomar">
+	<div class="control-group">
+	<label class="span2 control-label">results per page</label>
+	<select class="control-group" name="per_page">
+		<option>10</option>
+		<option>25</option>
+		<option>50</option>
+		<option>100</option>
+	</select>
+    </div>
+ </div>
+ <div class="span6 nomar">
+	<div class="control-group">
+	<label class="span2 control-label">sort</label>
+	<select class="control-group" name="sort">
+	  <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
+	  <option value="title__sort asc" <%= params[:sort] == 'title__sort asc' ? 'selected="selected"'.html_safe : ''.html_safe %>>A-Z</option>
+	  <option value="title__sort desc" <%= params[:sort] == 'title__sort desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Z-A</option>
+	</select>
+    </div>
+ </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h6>dev options (temporary)</h6>
+        <div class="span6 nomar">
+            <div class="control-group">
+                <label class="span2 control-label">host</label>
+                <select id="hrwa_host_fsf" name="hrwa_host" class="control-group pull-left"><%
+                    hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
+                    %>
+                    <option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
+                    <option value="dev"<%= hrwa_solr_host == 'dev' ? ' selected="selected"'.html_safe : '' %>>Dev</option>
+                    <option value="test"<%= hrwa_solr_host == 'test' ? ' selected="selected"'.html_safe : '' %>>Test</option>
+                    <option value="prod"<%= hrwa_solr_host == 'prod' ? ' selected="selected"'.html_safe : '' %>>Prod</option>
+                </select>
+            </div>
+        </div>
+        <div class="span6 nomar">
+            <div class="control-group">
+                <label class="span2 control-label">core</label>
+                <select class="control-group pull-left">
+                    <option value="">- Choose an option -</option>
+                    <option value="asf" selected="selected">FSF (always selected for now)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row span11">
+  <%# Submit button goes here -- presence of this button allows the enter key to submit the form %>
+  <input type="submit" value="Search" class="btn btn-success pull-right adv_search_submit"/>
+</div>
+<div class="clearfix"></div>

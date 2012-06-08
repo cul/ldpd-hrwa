@@ -2,6 +2,8 @@
 class HRWA::ArchiveSearchConfigurator
   unloadable
 
+  @@solr_url = nil;
+
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
@@ -14,34 +16,19 @@ class HRWA::ArchiveSearchConfigurator
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                               'originalUrl',
-                               'contentTitle',
                                'contentBody',
-                               'contentMetaDescription',
-                               'contentMetaKeywords',
-                               'contentMetaLanguage',
-                               'contentBodyHeading1',
-                               'contentBodyHeading2',
-                               'contentBodyHeading3',
-                               'contentBodyHeading4',
-                               'contentBodyHeading5',
-                               'contentBodyHeading6',
+                               'contentTitle',
+                               'originalUrl',
                                ],
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
-          :qf               => ['contentTitle^1',
+          :qf               => [
                                 'contentBody^1',
-                                'contentMetaDescription^1',
-                                'contentMetaKeywords^1',
-                                'contentMetaLanguage^1',
-                                'contentBodyHeading1^1',
-                                'contentBodyHeading2^1',
-                                'contentBodyHeading3^1',
-                                'contentBodyHeading4^1',
-                                'contentBodyHeading5^1',
-                                'contentBodyHeading6^1'],
+                                'contentTitle^1',
+                                'originalUrl^1',
+                               ],
           :rows             => 10,
         }
 
@@ -72,8 +59,17 @@ class HRWA::ArchiveSearchConfigurator
         # on the solr side in the request handler itself. Request handler defaults
         # sniffing requires solr requests to be made with "echoParams=all", for
         # app code to actually have it echo'd back to see it.
+
         config.add_facet_field 'domain',
                                :label => 'Domain',
+                               :limit => 5
+
+        config.add_facet_field 'dateOfCaptureYYYY',
+                               :label => 'Date Of Capture',
+                               :limit => 5
+
+        config.add_facet_field 'mimetype',
+                               :label => 'File Type',
                                :limit => 5
 
         config.add_facet_field 'geographic_focus__facet',
@@ -81,7 +77,7 @@ class HRWA::ArchiveSearchConfigurator
                                :limit => 5
 
         config.add_facet_field 'organization_based_in__facet',
-                               :label => 'Organization Based in',
+                               :label => 'Organization Based In',
                                :limit => 5
 
         config.add_facet_field 'organization_type__facet',
@@ -92,22 +88,9 @@ class HRWA::ArchiveSearchConfigurator
                                :label => 'Website Language',
                                :limit => 5
 
-        config.add_facet_field 'contentMetaLanguage',
-                               :label => 'Language of page',
-                               :limit => 5
-
         config.add_facet_field 'creator_name__facet',
                                :label => 'Creator',
                                :limit => 5
-
-        config.add_facet_field 'mimetype',
-                               :label => 'File Type',
-                               :limit => 5
-
-        config.add_facet_field 'dateOfCaptureYYYY',
-                               :label => 'Year of Capture',
-                               :limit => 5
-
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
@@ -164,32 +147,8 @@ class HRWA::ArchiveSearchConfigurator
       }
     end
 
-    def configure_facet_action( blacklight_config )
-      # The SOLR group* params break Blacklight's faceting
-      blacklight_config.default_solr_params.delete_if { | key, value |
-        key.to_s.starts_with?( 'group' ) }
-    end
-
-    # Did Blacklight give us everything we need in SOLR response and
-    # results list objects?
-    def post_blacklight_processing_required?
-      return true
-    end
-
-    # Do more with the SOLR response and results list that Blacklight
-    # gives us.
-    def post_blacklight_processing( solr_response, result_list )
-      result_list = solr_response.groups
-      return solr_response, result_list
-    end
-
-    def process_search_request( extra_controller_params, user_params = params )
-     add_capture_date_range_fq_to_solr( extra_controller_params, user_params )
-     add_exclude_fq_to_solr( extra_controller_params, user_params )
-    end
-
-    def add_capture_date_range_fq_to_solr( extra_controller_params, user_params = params )
-      # We are going to assume that the capture date params are non-nil from this 
+  def add_capture_date_range_fq_to_solr( solr_parameters, user_params = params )
+      # We are going to assume that the capture date params are non-nil from this
       # point onward
       # Get range endpoints, using * for open-ended wildcard
       capture_start_date = ! ( user_params[ :capture_start_date ].nil? || user_params[ :capture_start_date ].empty? ) ?
@@ -198,76 +157,142 @@ class HRWA::ArchiveSearchConfigurator
       capture_end_date   = ! ( user_params[ :capture_end_date ].nil? || user_params[ :capture_end_date ].empty? ) ?
                            user_params[ :capture_end_date ] :
                            '*'
-                           
+
       return if ( capture_start_date == '*' && capture_end_date == '*' )
-      
-      extra_controller_params[ :fq ] ||= []
-      extra_controller_params[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
+
+      #Convert capture_start_date and capture_end_date from YYYY-MM format to YYYYMM (as needed)
+      if (capture_start_date != '*')
+        capture_start_date = capture_start_date.gsub('-', '')
+      end
+      if (capture_end_date != '*')
+        capture_end_date = capture_end_date.gsub('-', '')
+      end
+
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing capture date range filter
+      # debugger
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^dateOfCaptureYYYYMM/ }
+
+      solr_parameters[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
-    def add_exclude_fq_to_solr( extra_controller_params, user_params = params )
-       # :fq, map from :excl_domain.
-      if ( user_params[ :'excl_domain' ] )
-        exclude_domain_request_params = user_params[ :'excl_domain' ]
+  def add_exclude_fq_to_solr( solr_parameters, user_params = params )
+     # :fq, map from :excl_domain.
+    if ( user_params[ :'excl_domain' ] )
+      exclude_domain_request_params = user_params[ :'excl_domain' ]
 
-        extra_controller_params[ :fq ] ||= []
-        exclude_domain_request_params.each do | value_list |
-          value_list ||= []
-          value_list = [ value_list ] unless value_list.respond_to? :each
-          value_list.each do | value |
-            extra_controller_params[ :fq ] << exclude_value_to_fq_string( 'domain', value )
-          end
+      solr_parameters[ :fq ] ||= []
+      # Remove any existing exclude domain filter
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^-domain/ }
+
+      exclude_domain_request_params.each do | value_list |
+        value_list ||= []
+        value_list = [ value_list ] unless value_list.respond_to? :each
+        value_list.each do | value |
+          solr_parameters[ :fq ] << exclude_value_to_fq_string( 'domain', value )
         end
       end
     end
+  end
 
-    ##
-    # Convert a field/value pair into a solr fq parameter
-    def exclude_value_to_fq_string( exclude_field, value)
-      case
-        when (value.is_a?(Integer) or (value.to_i.to_s == value if value.respond_to? :to_i))
-          "-#{exclude_field}:#{value}"
-        when (value.is_a?(Float) or (value.to_f.to_s == value if value.respond_to? :to_f))
-          "-#{exclude_field}:#{value}"
-        when value.is_a?(Range)
-          "-#{exclude_field}:[#{value.first} TO #{value.last}]"
-        else
-          "-#{ exclude_field}:#{ value }"
+  ##
+  # Convert a field/value pair into a solr fq parameter
+  def exclude_value_to_fq_string( exclude_field, value)
+    case
+      when (value.is_a?(Integer) or (value.to_i.to_s == value if value.respond_to? :to_i))
+        "-#{exclude_field}:#{value}"
+      when (value.is_a?(Float) or (value.to_f.to_s == value if value.respond_to? :to_f))
+        "-#{exclude_field}:#{value}"
+      when value.is_a?(Range)
+        "-#{exclude_field}:[#{value.first} TO #{value.last}]"
+      else
+        "-#{ exclude_field}:#{ value }"
+    end
+  end
+
+  def configure_facet_action( blacklight_config )
+    # The SOLR group* params break Blacklight's faceting
+    blacklight_config.default_solr_params.delete_if { | key, value |
+      key.to_s.starts_with?( 'group' ) }
+  end
+
+  def name
+    return 'archive'
+  end
+
+  # Do more with the SOLR response and results list that Blacklight
+  # gives us.
+  def post_blacklight_processing( solr_response, result_list )
+    result_list = solr_response.groups
+    return solr_response, result_list
+  end
+
+  # Did Blacklight give us everything we need in SOLR response and
+  # results list objects?
+  def post_blacklight_processing_required?
+    return true
+  end
+
+  def process_search_request( solr_parameters, user_params = params )
+   add_capture_date_range_fq_to_solr( solr_parameters, user_params )
+   add_exclude_fq_to_solr( solr_parameters, user_params )
+   set_solr_field_boost_levels( solr_parameters, user_params )
+  end
+
+  def prioritized_highlight_field_list
+    return [
+            'originalUrl',
+            'contentTitle',
+            'contentBody',
+            ]
+  end
+
+  def result_partial
+    return result_type
+  end
+
+  def result_type
+    return 'group'
+  end
+
+  def set_solr_field_boost_levels( solr_parameters, user_params )
+    return if ! user_params.has_key?( :field )
+
+    valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
+
+    qf = []
+    user_params[ :field ].each { | field_boost |
+      field, boost_level = field_boost.split( /\^/ )
+
+      # Raise error if boost_level is not a positive number
+      if ! ( boost_level.match( /^\d+$/ ) && boost_level.to_f > 0.0 ) then
+        raise ArgumentError.new( "#{ boost_level } is not a valid boost level." )
       end
-    end
 
-    def result_partial
-      return result_type
-    end
+      if valid_solr_fields.include?( field ) then
+        qf << "#{ field }^#{ boost_level }"
+      end
+    }
 
-    def result_type
-      return 'group'
-    end
-
-    def search_type_specific_processing( extra_controller_params, params )
-      return false
-    end
+    # Overwrite existing qf
+    solr_parameters[ :qf ] = qf
+  end
 
     # Takes optional environment arg for testability
-    def solr_url( environment = Rails.env )
-      YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+    def self.solr_url(environment = Rails.env)
+       @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
+       return @@solr_url
+
     end
 
-    def prioritized_highlight_field_list
-      return [
-              'originalUrl',
-              'contentTitle',
-              'contentBody',
-              'contentMetaDescription',
-              'contentMetaKeywords',
-              'contentMetaLanguage',
-              'contentBodyHeading1',
-              'contentBodyHeading2',
-              'contentBodyHeading3',
-              'contentBodyHeading4',
-              'contentBodyHeading5',
-              'contentBodyHeading6',
-              ]
+    # Clear the current (class cached) value of @@solr_url
+    def self.reset_solr_config
+      @@solr_url = nil
+    end
+
+    # Set a new solr url for this configurator
+    def self.override_solr_url(new_solr_url)
+      @@solr_url = new_solr_url + '/solr-4/asf'
     end
 
 end

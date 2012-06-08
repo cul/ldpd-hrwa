@@ -15,11 +15,9 @@
 // the specified order (or at least that's what I think it does)
 // = require_self
 //
-// respond.min.js - https://github.com/scottjehl/Respond - Enables media queries in some unsupported browsers
+// Info about respond.min.js: - https://github.com/scottjehl/Respond - Enables media queries in some unsupported browsers
 // = require respond.min
-// = require bootstrap-twipsy
-// = require bootstrap-dropdown
-// = require bootstrap-tabs
+// = require bootstrap.min
 // = require jquery.tinysort.min
 // = require jquery.multiselect.min
 //

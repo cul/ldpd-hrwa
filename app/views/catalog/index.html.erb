@@ -1,7 +1,5 @@
 <div class="container">
 
-  <%= render :partial=>'search_form' %>
-
   <% unless has_search_parameters? %>
     <%# if there are no input/search related params, display the "search_home" partial -%>
     <%= render :partial=>'search_home' %>
@@ -9,12 +7,19 @@
   <% else %>
 
     <div class="row">
-      <div id="primary" class="span12">
+      <div id="primary" class="span9">
 	    <div class="pageEntriesInfo">
-    	  <%= render_pagination_info @response, :entry_name=>'result' %><% if( !params[ :q ].blank? ) %> <span id="qtime_ms">(<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <strong class="big lime"><%= q_text = params[ :q ] %></strong><% end %>
+    	  <%= render_pagination_info @response, :entry_name=>'result' %><span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <span id="q_echo" class="big lime strong"><%= q_text = params[ :q ] %></span>
     	</div>
+
+<div class="">
+<%= render 'constraints', :localized_params=>params %>
+        <div class="clear"></div>
+</div>
+
+	    <%= '<p class="alert alert-error">Note: You are currently performing a limited-result search that favors <strong>non-stemmed</strong> field searching.<br />The results below represent only a small subset of your true result set.</p>'.html_safe if @search_type == :archive_ns %>
+
     	<%= render 'results_pagination' %>
-    	<%#= render 'sort_and_per_page' %>
 
         <div class="clear"></div>
 
@@ -24,7 +29,10 @@
 
       </div><!--/primary-->
 
-      <div id="secondary" class="span4">
+      <div id="secondary" class="span3">
+      <%# Script below used for custom date range in sidebar %>
+      <script type="text/javascript">HRWA.current_url_without_capture_date_params = decodeURIComponent("<%= CGI.escape(url_for_without_capture_date_params).gsub('+','%20') %>");</script>
+
 	<% sidebar_items << capture do %>
 	  <%= render :partial=>'facets' %>
 	<% end %>
@@ -38,11 +46,13 @@
 </div>
 
 <!-- TODO: TAKE THIS OUT OF PROD -->
-<% if Rails.env == "development" %>
-  <% #Only show the box with a border if the hrwa_debug param value == "true" %>
+<% if Rails.env != "hrwa_prod" %>
+  <% #Only show the box (with a border) if the hrwa_debug param value == "true" %>
   <% if params[:hrwa_debug] == "true" %>
     <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
       <%= @debug %>
     </div>
   <% end %>
 <% end %>
+
+<!-- REQUEST_TEST_STRING: HRWA::CATALOG::INDEX::RENDER_SUCCESS -->

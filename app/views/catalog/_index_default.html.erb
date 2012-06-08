@@ -10,10 +10,11 @@
     <dd class="result_url">
       <% #TODO: Find out which url to show in the case of multiple original urls: https://issues.cul.columbia.edu/browse/HRWA-68 %>
       <% #For now, I'm assuming it's just the first one. %>
-      <%= document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
+      <% original_url = document.get("original_urls").is_a?(Array) ? document.get("original_urls")[0] : document.get("original_urls") %>
+			<%= original_url %>
     </dd>
 
-    <dd class="hl_snippet invisible">
+    <dd class="fsf hl_snippet invisible">
       <%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
     </dd>
 
@@ -49,15 +50,18 @@
       <a href='#' class='btn small toggle_section moreless'>Show More+</a>
 
       <span class="site_detail_and_crawl_calendar_link_container">
-	<% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+				<% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
 
-	<% site_detail_url = {:controller => 'catalog', :action => 'site_detail', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
-	<%= link_to 'Site Detail', site_detail_url, :title => 'Site detail permalink for: ' +  document.get("title")%>
-	[<%= link_to preview_icon, site_detail_url, :title => 'Site detail permalink for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
+				<% site_detail_url_with_return_to = {:controller => 'catalog', :action => 'site_detail', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
+				<% site_detail_url_without_return_to = {:controller => 'catalog', :action => 'site_detail', :bib_key => document.get("bib_key")} %>
+				<%= link_to 'Site Detail', site_detail_url_with_return_to, :rel => 'tooltip', :title => 'Site detail permalink for: ' +  document.get("title")%>
+				[<%= link_to preview_icon, site_detail_url_without_return_to, :rel => 'tooltip', :title => 'Site detail preview for: ' +  document.get("title"), :class => 'quicklook'%>] &bull;
 
-	<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
-	<%= link_to 'Crawl Calendar', archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title") %>
-	[<%= link_to preview_icon, archived_url, :title => 'Crawl calendar permalink for: ' +  document.get("title"), :class => 'ccf_quicklook'%>]
+				<% archived_url = document.get('archived_urls').is_a?(Array) ? document.get('archived_urls')[0] : document.get('archived_urls') %>
+				<% #crawl_calendar_url_with_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :bib_key => document.get("bib_key"), :return_to => request.fullpath} %>
+				<% crawl_calendar_url_without_return_to = {:controller => 'catalog', :action => 'crawl_calendar', :archived_url => url_encode(original_url)} %>
+				<%= link_to 'See Website Captures', archived_url, :rel => 'tooltip', :title => 'Website Captures Permalink For: ' +  document.get("title") %>
+				<!-- [<%= link_to preview_icon, crawl_calendar_url_without_return_to, :rel => 'tooltip', :title => 'Website Captures Preview For: ' +  document.get("title"), :class => 'ccf_quicklook'%>] -->
       </span>
     </dd>
 

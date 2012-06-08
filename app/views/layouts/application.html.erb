@@ -10,57 +10,131 @@
     <%= render 'layouts/head_tag_content' %>
   </head>
 
-  <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
-  <body onload="<%= onload_text %>" class="<%= render_body_class.html_safe %>">
+  <%# onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
+  <body onload="<%#= onload_text %>" class="<%= render_body_class.html_safe %>">
+  <div class="container" id="outer-container">
 
-    <div class="topbar">
-      <div class="fill">
-	<div class="invisible" id="cul_top">
-	  <div id="cul_inner"><a href="http://columbia.edu" title="Columbia University - Home">CU</a> &gt; <a href="http://library.columbia.edu" title="Columbia University Libraries - Home">Libraries</a> &gt; <a href="http://library.columbia.edu/indiv/humanrights.html" title="Columbia University Libraries Center for Human Rights Documentation and Research">CHRDR</a><span id="cul_right">HUMAN RIGHTS WEB ARCHIVE at Columbia University</span></div>
-	</div>
-        <div class="container">
-	  <ul id="crowndown" class="nav">
-	    <li class="menu">
-              <% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
-              <%= link_to crown_img, "#", :title => "External Links @ Columbia", :class => "menu" %>
-              <ul class="menu-dropdown">
-                <li><a href="http://columbia.edu">Columbia University - Home</a></li>
-                <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
-                <li><a title="Columbia University Libraries - CHRDR" href="http://library.columbia.edu/indiv/humanrights.html">CUL Center for Human Rights Documentation and Research</a></li>
-              </ul>
-	    </li>
-	  </ul>
-          <h3 class='topbarlogo'><a href="<%= root_path %>" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
+	<%= form_tag search_path, :method => :get, :id => 'topsearchform' do %>
 
-          <%= form_tag search_path, :method => :get, :id => 'topsearchform' do %>
+	  <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner fill">
+		  <div class="container" id="navbar-container">
+			<ul id="crowndown" class="nav pull-left">
+			  <li class="dropdown menu">
+				<% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
+				<%= link_to crown_img, "#", :"data-toggle" => "dropdown", :title => "External Links @ Columbia", :rel => "tooltip", :class => "dropdown-toggle menu" %>
+				<ul class="dropdown-menu menu-dropdown">
+				  <li><a href="http://columbia.edu">Columbia University - Home</a></li>
+				  <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
+				  <li><a title="Columbia University Libraries - CHRDR" href="http://library.columbia.edu/indiv/humanrights.html">CUL Center for Human Rights Documentation and Research</a></li>
+				</ul>
+			  </li>
+			</ul>
+			<h3 class='topbarlogo'><a href="<%= root_path %>" class="brand" rel="tooltip" title="Human Rights Web Archive at Columbia University - Home">HRWA</a></h3>
+
+			<!-- TODO: Clean up unnecessary classes.-->
+			<div id="topbarformdiv" class="navbar-search pull-left">
+			  <input type="hidden" name="search" value="true" />
+			  <div class="input-append"><%
+				%><div id="top_q_wrapper" class="span6 pull-left"><%
+                    %><input class="span5 pull-left" data-content="Enter your search terms or click the Advanced toggle button for more options." rel="popover" data-original-title="Search HRWA" type="text" value="<%= params[:q] %>" placeholder="Search&hellip;" size="16" id="q" name="q"/><%
+                    %><a href="#" id="advo_link" class="span1 pull-right btn btn-mini btn-success" title="Advanced Options Toggle" rel="tooltip">Advanced<span class="caret"></span></a><%
+                %></div><%
+				%><label class="pull-right add-on success" id="top_form_submit_label" title="Submit your search." rel="tooltip"><a href="#" id="top_form_submit" class="submitss white"><i class="icon-search icon-white"></i></a><input type="submit" class="hidden invisible" /></label><%
+                %><label class="pull-right add-on" title="Clear All Filters &amp; Start a New Search" rel="tooltip"><%= link_to '<i class="icon-remove icon-white"></i>'.html_safe, search_path, :class=> 'floatright', :id => 'top_form_new_search' %></label><%
+				%><label class="pull-right add-on" title="Search Pages" rel="tooltip"><input type="radio" name="search_type" id="asfsearch" class="pull-left" value="archive"<%= ( ! @configurator.nil? && @configurator.name  == 'archive' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Archive</label><%
+				%><label class="pull-right add-on" title="Search Websites" rel="tooltip"><input type="radio" name="search_type" id="fsfsearch" class="pull-left" value="find_site"<%= ( @configurator.nil? || @configurator.name  == 'find_site' ) ? ' checked="checked"'.html_safe : ''.html_safe; %>/> Sites</label><%
+				%>
+			  </div>
+			</div>
+
+			<ul id="dropdown" class="nav pull-right">
+			  <li class="dropdown menu">
+				<a href="#" class="dropdown-toggle menu" data-toggle="dropdown">Menu <b class="caret"></b></a>
+				<ul id="pages_dropdown" class="dropdown-menu menu-dropdown">
+				  <li <% if current_page?(root_path) %>class="active"<% end %>><a href="<%= root_path %>"><i class="icon-home icon-white"></i> HRWA Home</a></li>
+				  <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>"><i class="icon-info-sign icon-white"></i> About HRWA</a></li>
+				  <!--<li><a href="#help" class="donothing"><i class="icon-question-sign icon-white"></i> Help &amp; Tips</a></li>-->
+				  <li <% if current_page?(faq_path) %>class="active"<% end %>><a href="<%= faq_path %>"><i class="icon-question-sign icon-white"></i> FAQ</a></li>
+				  <li class="divider"></li>
+				  <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>"><i class="icon-eye-open icon-white"></i> Browse HRWA</a></li>
+				  <li><%if params[:controller] == 'catalog' && params[:action] == 'index' %><%= debug_link %><% end %></li>
+                  <% # only show admin login in certain environments %>
+                  <% if( Rails.env != 'hrwa_test' && Rails.env != 'hrwa_prod' ) %>
+                    <li class="divider"></li>
+                    <%
+                      if(admin_signed_in?)
+                          %>
+                          <li><%= link_to '<i class="icon-user icon-white"></i> Admin Control Panel'.html_safe, admin_path %></li>
+                          <li><%= link_to '<i class="icon-arrow-left icon-white"></i> Log out'.html_safe, admin_logout_path %></li>
+                          <%
+                      else
+                          %>
+                          <li <% if current_page?(admin_login_path) %>class="active"<% end %>><%= link_to '<i class="icon-lock icon-white"></i> Admin Login'.html_safe, admin_login_path %></li>
+                          <%
+                      end
+                    %>
+                  <% end %>
+				</ul>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </div> <!-- //.navbar -->
+
+	  <div id="advanced_options_container" class="container">
+		  <div id="hero-search" class="hero-unit hero-border ">
+			<h3 class="floatleft">Advanced Search Options</h3>
 			<input type="hidden" name="search" value="true" />
-            <div class="input-append">
-                    <input class="span6" type="text" value="" placeholder="Start a new search&hellip;" size="16" id="q_t" name="q">
-                    <label class="add-on"><input type="radio" name="search_type" id="fsfsearch_t" value="find_site"<%= (params[:search_type] != 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> FSF</label>
-                    <label class="add-on"><input type="radio" name="search_type" id="asfsearch_t" value="archive"<%= (params[:search_type] == 'archive') ? ' checked="checked"'.html_safe : ''.html_safe; %>/> ASF</label>
-                    <label class="add-on hidden"> <a href="#" id="top_form_submit" class="submitss white">Submit</a></label>
-            </div>
-          <% end %>
-          <ul id="dropdown" class="nav secondary-nav">
-            <li class="menu">
-              <a href="#" class="menu">Menu</a>
-              <ul class="menu-dropdown">
-                <li <% if current_page?(root_path) %>class="active"<% end %>><a href="<%= root_path %>">HRWA Home</a></li>
-                <li <% if current_page?(about_path) %>class="active"<% end %>><a href="<%= about_path %>">About HRWA</a></li>
-                <li><a href="#help" class="donothing">Help &amp; Tips</a></li>
-                <li class="divider"></li>
-                <li <% if current_page?(browse_path) %>class="active"<% end %>><a href="<%= browse_path %>">Browse HRWA</a></li>
-                <li><%if params[:controller] == 'catalog' && params[:action] == 'index' %><%= debug_link %><% end %></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div> <!-- //.topbar -->
+			<div id="inside_of_form"></div>
+		  </div>
+	  </div>
+
+	<% end %><!-- end form -->
+
+	<div id="outside_of_form" class="invisible">
+      <div id="advanced_options_query" class="advanced_options">
+		<%= render 'layouts/advanced_options_query' %>
+	  </div>
+	  <div id="advanced_options_asf" class="advanced_options">
+		<%= render 'layouts/advanced_options_asf' %>
+	  </div>
+	  <div id="advanced_options_fsf" class="advanced_options">
+		<%= render 'layouts/advanced_options_fsf' %>
+	  </div>
+    <div id="hidden_search_fields_asf" class="hidden_search_fields">
+      <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+                          :q, :qt, :page, :utf8,
+                          #hrwa custom additions
+                          :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode, :f_add,
+                          #top level params to omit for asf
+                          :sort,
+                          #facets to omit for asf
+                       ]).html_safe %>
+    </div>
+    <div id="hidden_search_fields_fsf" class="hidden_search_fields">
+      <%= search_as_hidden_fields(:omit_keys => [ #blacklight defaults
+                          :q, :qt, :page, :utf8,
+                          #hrwa custom additions
+                          :search, :search_type, :q_and, :q_phrase, :q_or, :q_exclude, :q_not, :search_mode, :f_add,
+                          #top level params to omit for fsf
+                          :field, :capture_start_date, :capture_end_date, :excl_domain,
+                          #facets to omit for fsf
+						  :hrwa_core,
+                          { :f => ['dateOfCaptureYYYY'] }
+                       ]).html_safe %>
+    </div>
+	</div>
 
     <%
       # Start main content!
     %>
+
+
+    <div class="container no-hero-mobile">
+    <!-- Main heading -->
+    <%= render :partial=>'static/inner_headlines' %>
+    </div>
 
     <%= render :partial=>'/flash_msg' %>
     <%= yield %>
@@ -76,16 +150,18 @@
 
     <div class="container">
       <footer id="site_footer">
-        <p class="alignright"><a href="#">Submit bug report</a></p>
+        <p class="alignright"><a href="<%= public_feedback_path %>" class="">Public Feedback Form</a> &bull; <a href="<%= public_bugreports_path %>" class="">Public Bug Report Form</a></p>
+        <%# <p class="alignright"><a id="submit_bug_report_link" href="/internal_feedback">Submit bug report</a></p> %>
 	<p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2012</span><!--<a href="http://columbia.edu">CU Home</a> &gt; <a href="http://library.columbia.edu">Libraries Home</a>--></p>
       </footer>
     </div> <!-- /container -->
 
     <div id="js_warn">
-	<noscript><div class="alert-message danger">Javascript is required to view this website. Please enable it in your browser.</div></noscript>
+	<noscript><div class="alert alert-danger">Javascript is required to view this website. Please enable it in your browser.</div></noscript>
     </div>
 
     <%= render 'layouts/footer_scripts' %>
 
+</div>
   </body>
 </html>

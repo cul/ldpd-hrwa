@@ -17,7 +17,6 @@ module HRWA::FilterOptions
 
     opts[ :selected ].each { | selected_value |
       if option_hash.has_key?( selected_value )
-        Rails.logger.debug(selected_value + ' is selected!!!!!!!!!!!!!!!!!!!!')
         option_hash[ selected_value ] = true
       end
     }
@@ -27,7 +26,7 @@ module HRWA::FilterOptions
 
   def option_list_to_hash( option_list )
     option_hash = {}
-    option_list.sort.each { | option |
+    option_list.each { | option |
       option_hash[ option ] = false
     }
     return option_hash
@@ -67,6 +66,12 @@ module HRWA::FilterOptions
 
   def title_options( opts = { :selected => nil } )
     return option_list( 'title', opts )
+  end
+
+  def self.load_filter_options( filter_options_file = 
+    'app/helpers/hrwa/filter_options_source_hardcoded.rb' )
+    load filter_options_file
+    include HRWA::CollectionBrowseListsSourceHardcoded
   end
 
 end

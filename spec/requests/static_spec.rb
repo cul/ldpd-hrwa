@@ -1,27 +1,15 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe 'home page' do
   it 'loads with the correct text' do
     visit '/'
-    page.should have_content('Human Rights Web Archive')
+    page.should have_content('HUMAN RIGHTS WEB ARCHIVE')
   end
 
-  it 'checks the default top bar search checkbox when type param absent or blank, or non-default' do
+  it 'checks the default top bar search checkbox' do
     visit '/'
-    page.has_checked_field?('#fsfsearch_t')
-    visit '/?type=find_site'
-    page.has_checked_field?('#fsfsearch_t')
-    visit '/?type=zzz'
-    page.has_checked_field?('#fsfsearch_t')
-    visit '/?type='
-    page.has_checked_field?('#fsfsearch_t')
-    visit '/?type=\'\''
-    page.has_checked_field?('#fsfsearch_t')
-  end
-
-  it 'checks the archive search top bar checkbox when supplied with query param type=archive' do
-    visit '/?type=archive'
-    page.has_checked_field?('#asfsearch_t')
+    page.has_checked_field?('#fsfsearch')
   end
 end
 
@@ -36,5 +24,19 @@ describe 'collection browse page' do
   it 'loads with the correct text' do
     visit '/browse'
     page.should have_content('Collection Browse')
+  end
+end
+
+describe 'public nomination page' do
+  it 'loads with the correct text' do
+    visit '/public_nomination'
+    page.should have_content('Nominate a Site')
+  end
+end
+
+describe 'owner nomination page' do
+  it 'loads with the correct text' do
+    visit '/owner_nomination'
+    page.should have_content('Nominate Your Site')
   end
 end

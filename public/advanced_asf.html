@@ -152,7 +152,7 @@ Sign in</a>
                                             <th>&nbsp;</th>
                                             <th>Boost weight</th>
                                             </th>
-                                        <script type="text/javascript" src="js/spin_control.js"></script>
+                                        <script type="text/javascript" src="temporary/js/spin_control.js"></script>
                                             <tr>
         <td>
             <input id="originalUrl" name="field[]" type="checkbox"
@@ -234,250 +234,6 @@ Sign in</a>
 
     spinCtrl_contentBody.StartListening();
 </script>
-        <tr>
-        <td>
-            <input id="contentMetaDescription" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentMetaDescription^1"/>
-                Meta-Description
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentMetaDescription_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for Meta-Description
-    var spinCtrl_contentMetaDescription = new SpinControl();
-    spinCtrl_contentMetaDescription.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentMetaDescription.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentMetaDescription.Tag = 'contentMetaDescription';
-    spinCtrl_contentMetaDescription.SetMaxValue(500);
-    spinCtrl_contentMetaDescription.SetMinValue(0);
-    spinCtrl_contentMetaDescription.SetCurrentValue( 1 );
-    spinCtrl_contentMetaDescription.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentMetaDescription_spinnerContainer' ).appendChild(
-      spinCtrl_contentMetaDescription.GetContainer() );
-
-    spinCtrl_contentMetaDescription.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentMetaKeywords" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentMetaKeywords^1"/>
-                Meta-Keywords
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentMetaKeywords_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for Meta-Keywords
-    var spinCtrl_contentMetaKeywords = new SpinControl();
-    spinCtrl_contentMetaKeywords.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentMetaKeywords.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentMetaKeywords.Tag = 'contentMetaKeywords';
-    spinCtrl_contentMetaKeywords.SetMaxValue(500);
-    spinCtrl_contentMetaKeywords.SetMinValue(0);
-    spinCtrl_contentMetaKeywords.SetCurrentValue( 1 );
-    spinCtrl_contentMetaKeywords.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentMetaKeywords_spinnerContainer' ).appendChild(
-      spinCtrl_contentMetaKeywords.GetContainer() );
-
-    spinCtrl_contentMetaKeywords.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentMetaLanguage" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentMetaLanguage^1"/>
-                Meta-Language
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentMetaLanguage_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for Meta-Language
-    var spinCtrl_contentMetaLanguage = new SpinControl();
-    spinCtrl_contentMetaLanguage.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentMetaLanguage.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentMetaLanguage.Tag = 'contentMetaLanguage';
-    spinCtrl_contentMetaLanguage.SetMaxValue(500);
-    spinCtrl_contentMetaLanguage.SetMinValue(0);
-    spinCtrl_contentMetaLanguage.SetCurrentValue( 1 );
-    spinCtrl_contentMetaLanguage.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentMetaLanguage_spinnerContainer' ).appendChild(
-      spinCtrl_contentMetaLanguage.GetContainer() );
-
-    spinCtrl_contentMetaLanguage.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading1" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading1^1"/>
-                h1 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading1_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h1 tags
-    var spinCtrl_contentBodyHeading1 = new SpinControl();
-    spinCtrl_contentBodyHeading1.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading1.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading1.Tag = 'contentBodyHeading1';
-    spinCtrl_contentBodyHeading1.SetMaxValue(500);
-    spinCtrl_contentBodyHeading1.SetMinValue(0);
-    spinCtrl_contentBodyHeading1.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading1.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading1_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading1.GetContainer() );
-
-    spinCtrl_contentBodyHeading1.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading2" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading2^1"/>
-                h2 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading2_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h2 tags
-    var spinCtrl_contentBodyHeading2 = new SpinControl();
-    spinCtrl_contentBodyHeading2.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading2.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading2.Tag = 'contentBodyHeading2';
-    spinCtrl_contentBodyHeading2.SetMaxValue(500);
-    spinCtrl_contentBodyHeading2.SetMinValue(0);
-    spinCtrl_contentBodyHeading2.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading2.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading2_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading2.GetContainer() );
-
-    spinCtrl_contentBodyHeading2.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading3" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading3^1"/>
-                h3 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading3_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h3 tags
-    var spinCtrl_contentBodyHeading3 = new SpinControl();
-    spinCtrl_contentBodyHeading3.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading3.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading3.Tag = 'contentBodyHeading3';
-    spinCtrl_contentBodyHeading3.SetMaxValue(500);
-    spinCtrl_contentBodyHeading3.SetMinValue(0);
-    spinCtrl_contentBodyHeading3.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading3.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading3_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading3.GetContainer() );
-
-    spinCtrl_contentBodyHeading3.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading4" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading4^1"/>
-                h4 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading4_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h4 tags
-    var spinCtrl_contentBodyHeading4 = new SpinControl();
-    spinCtrl_contentBodyHeading4.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading4.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading4.Tag = 'contentBodyHeading4';
-    spinCtrl_contentBodyHeading4.SetMaxValue(500);
-    spinCtrl_contentBodyHeading4.SetMinValue(0);
-    spinCtrl_contentBodyHeading4.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading4.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading4_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading4.GetContainer() );
-
-    spinCtrl_contentBodyHeading4.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading5" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading5^1"/>
-                h5 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading5_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h5 tags
-    var spinCtrl_contentBodyHeading5 = new SpinControl();
-    spinCtrl_contentBodyHeading5.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading5.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading5.Tag = 'contentBodyHeading5';
-    spinCtrl_contentBodyHeading5.SetMaxValue(500);
-    spinCtrl_contentBodyHeading5.SetMinValue(0);
-    spinCtrl_contentBodyHeading5.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading5.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading5_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading5.GetContainer() );
-
-    spinCtrl_contentBodyHeading5.StartListening();
-</script>
-        <tr>
-        <td>
-            <input id="contentBodyHeading6" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBodyHeading6^1"/>
-                h6 tags
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <div id="contentBodyHeading6_spinnerContainer"></div>
-        </td>
-    </tr>
-    <script type="text/javascript">
-    // Spin Control for h6 tags
-    var spinCtrl_contentBodyHeading6 = new SpinControl();
-    spinCtrl_contentBodyHeading6.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBodyHeading6.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBodyHeading6.Tag = 'contentBodyHeading6';
-    spinCtrl_contentBodyHeading6.SetMaxValue(500);
-    spinCtrl_contentBodyHeading6.SetMinValue(0);
-    spinCtrl_contentBodyHeading6.SetCurrentValue( 1 );
-    spinCtrl_contentBodyHeading6.AttachValueChangedListener( spinControlListener );
-
-    document.getElementById( 'contentBodyHeading6_spinnerContainer' ).appendChild(
-      spinCtrl_contentBodyHeading6.GetContainer() );
-
-    spinCtrl_contentBodyHeading6.StartListening();
-</script>
-
                                         <tr>
                                             <td><br />
                                                 <input type="button"
@@ -533,7 +289,7 @@ Sign in</a>
                                      <label>Search within a site or domain:</label>
                                </td>
                                <td>
-                                     <select name="lim_domain">
+                                     <select name="f[domain][]">
                                         <option value="" selected></option>
 <option value="advocacyforum.org" >advocacyforum.org</option>
 <option value="amigosdemujeres.org" >amigosdemujeres.org</option>
@@ -918,7 +674,7 @@ Sign in</a>
                                      <label>File type:</label>
                                </td>
                                <td>
-                                   <select name="lim_mimetype">
+                                   <select name="f[mimetype][]">
                                     <option value="" selected></option>
 <option value="pdf" >pdf</option>
 <option value="text/html" >text/html</option>
@@ -933,7 +689,7 @@ Sign in</a>
                                      <label>Website Language(s) <span class="label">(refers to website as a whole, not individual pages)</span>:</label>
                                </td>
                                <td>
-                                   <select name="lim_language">
+                                   <select name="f[language__facet][]">
                                     <option value="" selected></option>
 <option value="Albanian" >Albanian</option>
 <option value="Arabic" >Arabic</option>
@@ -1000,7 +756,7 @@ Sign in</a>
                                      <label>Organization/Site Geographic Focus:</label>
                                </td>
                                <td>
-                                   <select name="lim_geographic_focus">
+                                   <select name="f[geographic_focus__facet][]">
                                     <option value="" selected></option>
 <option value="Afghanistan" >Afghanistan</option>
 <option value="Africa" >Africa</option>
@@ -1156,7 +912,7 @@ Sign in</a>
                                      <label>Organization/Site Based In:</label>
                                </td>
                                <td>
-                                   <select name="lim_organization_based_in">
+                                   <select name="f[organization_based_in__facet][]">
                                     <option value="" selected></option>
 <option value="Afghanistan" >Afghanistan</option>
 <option value="Albania" >Albania</option>
@@ -1297,7 +1053,7 @@ Sign in</a>
                                      <label>Organization Type</label>
                                </td>
                                <td>
-                                   <select name="lim_organization_type">
+                                   <select name="f[organization_type__facet][]">
                                     <option value="" selected></option>
 <option value="Individual site creators" >Individual site creators</option>
 <option value="National human rights institutions" >National human rights institutions</option>
@@ -1314,7 +1070,7 @@ Sign in</a>
                                      <label>Creator Name</label>
                                </td>
                                <td>
-                                   <select name="lim_creator_name">
+                                   <select name="f[creator_name__facet][]">
                                     <option value="" selected></option>
 <option value="880-01 5.18 KinyoÌm Chaedan (Korea)" >880-01 5.18 KinyoÌm Chaedan (Korea)</option>
 <option value="880-03 Markaz al-MisÃÂ£riÃÂ li-HÃÂ£uquÃÂq al-MarÃÂ¾ah" >880-03 Markaz al-MisÃÂ£riÃÂ li-HÃÂ£uquÃÂq al-MarÃÂ¾ah</option>

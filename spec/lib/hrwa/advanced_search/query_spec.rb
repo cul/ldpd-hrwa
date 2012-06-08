@@ -6,6 +6,29 @@ end
 
 mock_catalog_controller = MockCatalogController.new
 
+describe 'advanced_search_processing_q_fields' do
+  it 'properly constructs a q solr param when all q_* text fields are filled out' do
+    solr_parameters = {}
+    user_parameters = { :q_and => 'all1 all2 all3',
+                        :q_exclude => 'none1 none2',
+                        :q_or      => 'any1 any2',
+                        :q_phrase  => 'this is a phrase', }
+    mock_catalog_controller.advanced_search_processing_q_fields( solr_parameters, user_parameters )
+    solr_parameters[ :q ].should == '+all1 +all2 +all3 '  +
+                                    '"this is a phrase" ' +
+                                    'any1 any2 '          +
+                                    '-none1 -none2' 
+  end
+  
+  # Regression error test: user clicks on a facet choice after performing an advanced keyword search
+  it 'properly initalizes q solr param before building new one' do
+    solr_parameters = { :q => '+women' }
+    user_parameters = { :q_and => 'women' }
+    mock_catalog_controller.advanced_search_processing_q_fields( solr_parameters, user_parameters )
+    solr_parameters[ :q ].should == '+women' # and NOT '+women +women'
+  end
+end
+
 describe 'process_q_and' do
   before( :each ) do
     @solr_parameters = { :q => 'ngo' }

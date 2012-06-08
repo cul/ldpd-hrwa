@@ -1,16 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>   
+<head>
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/external_assets/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="/temporary/js/jquery-1.6.2.min.js"><\/script>')</script>
 
     <script type="text/javascript">
         function debug( message ) {
             document.getElementById( 'debugArea' ).innerHTML = message;
-        }      
-        
+        }
+
         function compareObjectsByName( a, b ) {
             if ( a.name < b.name ) {
                 return -1;
@@ -20,7 +20,7 @@
                 return 1;
             }
         }
-        
+
         function convertMimeTypeArrayToJavascriptArray( mimeTypeArray ) {
             var array = [];
             for( var i = 0; i < mimeTypeArray.length; i++ ) {
@@ -44,7 +44,7 @@
 
         function getMimeTypesList() {
             var sortedMimeTypes = convertMimeTypeArrayToJavascriptArray(
-                                    navigator.mimeTypes 
+                                    navigator.mimeTypes
                                   );
             sortedMimeTypes.sort( compareObjectsByName );
             var countMimeTypes = sortedMimeTypes.length;
@@ -58,7 +58,7 @@
             }
             return mimeTypesListHtml;
         }
-    
+
         function getPluginsList() {
             var sortedPlugins = convertPluginArrayToJavascriptArray( navigator.plugins );
             sortedPlugins.sort( compareObjectsByName  );
@@ -68,12 +68,12 @@
                 pluginsListHtml += sortedPlugins[i].name;
                 pluginsListHtml += ' -- '        + sortedPlugins[i].description;
                 pluginsListHtml += ', version: ' + sortedPlugins[i].version;
-                pluginsListHtml += ' (file: '    + sortedPlugins[i].filename + ')';        
+                pluginsListHtml += ' (file: '    + sortedPlugins[i].filename + ')';
                 pluginsListHtml += "\n\n";
             }
             return pluginsListHtml;
         }
-                
+
         function getTimestamp() {
             // TODO: Consider a different format
             return new Date();
@@ -85,7 +85,7 @@
             } else {
                 document.getElementById( 'useSameComputerWarning' ).style.display = 'none';
             }
-        }  
+        }
 
         function validate( form ) {
             fail = validateSummary( form.summary.value );
@@ -98,7 +98,7 @@
                 return false;
             }
         }
-        
+
         function validateDescription( description ) {
             if ( description == "" ) {
                 return "No description was entered.\n";
@@ -106,7 +106,7 @@
                 return "";
             }
         }
-        
+
         function validateReporter( reporter ) {
             if ( reporter == "" ) {
                 return "A reporter must be selected.\n";
@@ -114,7 +114,7 @@
                 return "";
             }
         }
-        
+
         function validateSummary( summary ) {
             if ( summary == "" ) {
                 return "No summary was entered.\n";
@@ -123,10 +123,10 @@
             }
         }
     </script>
-    
+
     <link media="screen" rel="stylesheet" type="text/css" href="/temporary/css/internal_feedback.css" >
-    
-    <title>HRWA Portal Internal Feedback Form</title>    
+
+    <title>HRWA Portal Internal Feedback Form</title>
 </head>
 <body onload="fillInAutomaticFields();">
 
@@ -139,22 +139,22 @@
 
 <ul>
     <li class="header">
-        <input type="submit" id="submit" name="submit" value="Submit" 
+        <input type="submit" id="submit" name="submit" value="Submit"
             onClick="return validate( document.getElementById( 'jiraIssue' ) );" />
     </li>
-        
+
     <li>
         <label for="summary">Summary</label>
         <input id="summary" class="summary" type="text" value="" name="summary" maxlength="255" />
     </li>
-    
+
     <li id="useSameComputerWarning">
         <label for="useSameComputerWarning" class="useSameComputerWarning">NOTE:</label>
         <input class="useSameComputerWarning"
         value="Make sure you fill out this form using the same computer and browser you used when you originally observed the bug."
         />
     </li>
-    
+
     <li>
         <label for="issueType">JIRA Issue Type</label>
         <select id="issueType" class="issueType" name="issueType" onchange="issueType_OnChange();">
@@ -162,7 +162,7 @@
             <option value="4">Improvement</option>
         </select>
     </li>
-    
+
     <li>
         <label for="priority">Priority</label>
         <select id="priority" class="select" name="priority">
@@ -174,7 +174,7 @@
         </select>
     </li>
 
-    <li>    
+    <li>
         <label for="reporter">Reporter</label>
         <select id="reporter" class="select" name="reporter">
             <option value="" selected>[Select reporter]</option>
@@ -192,7 +192,7 @@
         </select>
     </li>
 
-    <li>    
+    <li>
         <label for="assignee">Assignee</label>
         <select id="assignee" class="select" name="assignee">
             <option value="" selected>Unassigned</option>
@@ -206,14 +206,14 @@
             </optgroup>
         </select>
     </li>
-    
+
     <li>
         <label for="components">Project components</label>
         <select id="components" class="components" name="components">
             <option value="10290" title="Archive Search Function - ASF provides full-text searching through our Archive-It (W)ARC archives."> Archive Search Function </option>
             <option value="10291" title="Archive View Function - AVF is our HRWA Toolbar + iframed Archive-It website."> Archive View Function </option>
             <option value="10292" title="Collection Browse Function - CBF allows browsing of our list of archived websites. There might be multiple CBF's: A-Z collapsible lists, geographic lists, clickable maps, timeline/slider views, etc. "> Collection Browse Function </option>
-            <option value="10293" title="Crawl Calendar Function - CCF is our customized alternative to the Archive-It calendar view. Will provide a calendar with links corresponding to captures/crawls for a specific URL. "> Crawl Calendar Function </option>
+            <option value="10293" title="Website Captures Function - WCF is our customized alternative to the Archive-It calendar view. Will provide a calendar with links corresponding to captures/crawls for a specific URL. "> Website Captures Function </option>
             <option value="10294" title="Find Site Function - FSF provides full-text and fielded search of our site-level metadata. "> Find Site Function </option>
             <option value="10310" title="Global Portal - Issues that affect the entire portal as a whole."> Global Portal </option>
             <option value="10295" title="Site Detail Function - SDF displays all information about a single specific site or organization that has been archived in our collection. "> Site Detail Function </option>
@@ -223,17 +223,17 @@
 
     <li>
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="15" cols="80"></textarea> 
+        <textarea id="description" name="description" rows="15" cols="80"></textarea>
     </li>
 </ul>
-    
+
 <a class="btn small toggle_section moreless" href="#">Show More+</a>
 <div id="toggler" class="toggler" style="display: none;">
     <ul>
         <li>
             <h3 id="notice">The information below was collected automatically and cannot be changed.</h3>
         </li>
-        
+
         <li>
             <label for="timestamp">Timestamp</label>
             <input id="timestamp_for_display_only" type="text" value="" class="for_display_only" readonly />
@@ -315,7 +315,7 @@
         <li>
             <label for="product">Browser Product Name</label>
             <input id="product_for_display_only" type="text"  value="" class="for_display_only" readonly />
-            <input id="product" name="product" type="hidden" 
+            <input id="product" name="product" type="hidden"
 
         <li>
             <label for="productSub">Browser Build Number</label>
@@ -353,7 +353,7 @@
         $('.moreless').live('click', function() {
          $(this).text(($(this).text() == 'Show Less-') ? 'Show More+' : 'Show Less-');
         });
-    
+
         function fillInAutomaticFields() {
             // From http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
             var qs = (function(a) {
@@ -366,13 +366,13 @@
                         }
                         return b;
                     })(window.location.search.substr(1).split('&'));
-            
+
             // Set component if known
             document.getElementById( 'components' ).value = qs[ 'components' ];
-            
+
             // Timestamp this issue
             document.getElementById( 'timestamp' ).value = getTimestamp();
-                
+
             // Get navigator object info of interest
             document.getElementById( 'appCodeName'   ).value = navigator.appCodeName;
             document.getElementById( 'appName'       ).value = navigator.appName;
@@ -427,7 +427,6 @@
                 = navigator.vendorSub;
         }
     </script>
-    
+
 </body>
 </html>
-    
