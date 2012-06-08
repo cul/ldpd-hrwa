@@ -1,14 +1,12 @@
 <div class="container">
 
-<%= debug_link %>
+<h2><%= @submission_status %></h1>
+<br/>
+<br/>
 
-<h1><%= submission_status %></h1>
-
-<%= submission_response %>
-
-<!-- TODO: TAKE THIS OUT OF PROD -->
-<div id="debug" name="debug" style="background-color: white; color: black; padding: 10px; border: 1px solid red; margin: 30px;">
-  <%= @debug %>
-</div>
+<pre>
+<%= @submission_response %>
+</pre>
 
 </div>
+

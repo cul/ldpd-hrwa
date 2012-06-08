@@ -64,9 +64,10 @@ class InternalController < ApplicationController
                                                
     # Report to user
     if email_sent_successfully
-      @submission_response << "Feedback has been successfully sent to Jira Project HRWA Portal.\nInfo submitted:\n"
-      @submission_response << "<pre>#{ jira_email_content }</pre>"
+      @submission_status   = 'Jira issue created'
+      @submission_response = jira_email_content
     else
+      @submission_status = 'Creation of Jira issue failed'
       @submission_response << 'Unable to submit feedback to Jira Project HRWA Portal.  ' <<
         'Please report this problem to da217@columbia.edu.'
     end
@@ -131,11 +132,10 @@ class InternalController < ApplicationController
 
   def send_jira_email( email_content, email_header )
     mail = Mail.new {
-      from    'InternalController@columbia.edu'
+      from    HRWA_JIRA_EMAIL_ADDRESS
       to      email_header[ 'to'      ]
       cc      email_header[ 'cc'      ]
       subject email_header[ 'subject' ]
-      debugger
       body    email_content
     }
     mail.deliver!
