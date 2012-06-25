@@ -16,7 +16,7 @@ class AdminController < ApplicationController
     sourceHardCodedFilesUpdater = HRWA::Update::SourceHardCodedFiles.new(
       'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
       'app/helpers/hrwa/filter_options_source_hardcoded.rb',
-      'http://carter.cul.columbia.edu:8080/solr-4/fsf',
+      HRWA::FindSiteSearchConfigurator.solr_url,
     )
 
   begin
