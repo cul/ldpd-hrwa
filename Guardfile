@@ -76,8 +76,9 @@ guard 'rspec', :version => 2, :cli => "--color --drb --format progress" , :all_o
   
   # spec/
   watch( %r{^spec/.+_spec\.rb$}                   )
-  watch( %r{^spec/([^/]+)/(.+_spec)\.rb$}         )    { |m| "spec/lib/#{ m[1] }/#{ m[2] }.rb" }
-  watch( %r{^spec/([^/]+)/([^/]+)/(.+_spec)\.rb$} )    { |m| "spec/lib/#{ m[1] }/#{ m[2] }/#{ m[3] }.rb" }
+  watch( %r{^spec/([^/]+)/([^/]+_spec)\.rb$}         )      { |m| "spec/lib/#{ m[1] }/#{ m[2] }.rb" }
+  watch( %r{^spec/([^/]+)/([^/]+)/(.+_spec)\.rb$} )         { |m| "spec/lib/#{ m[1] }/#{ m[2] }/#{ m[3] }.rb" }
+  watch( %r{^spec/([^/]+)/([^/]+)/([^/]+)/(.+_spec)\.rb$} ) { |m| "spec/lib/#{ m[1] }/#{ m[2] }/#{ m[3] }/#{ m[4] }.rb" }
   
   watch( 'spec/spec_helper.rb'            )            { "spec"          }
   watch( %r{^spec/support/(.+)\.rb$}      )            { "spec"          }
