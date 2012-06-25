@@ -8,7 +8,7 @@ class HRWA::Update::SourceHardCodedFiles
 
   def initialize( browse_list_file,
                   filter_options_file,
-                  solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
+                  solr_url = HRWA::FindSiteSearchConfigurator.solr_url )
 
     @solr_url = solr_url
     
