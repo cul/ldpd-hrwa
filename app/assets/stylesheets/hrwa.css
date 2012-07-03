@@ -67,7 +67,7 @@ body { padding-top:60px; color:#808080; background:#eef; background-image: url('
 #cul_right { float:right; color:#ccc; }
 #cul_top a { color:#ddd; }
 /*#crown_top { margin-left:-40px; padding-left:0; }*/
-#crowndown { float:left; margin-left:-28px; margin-right:16px; padding-left:0px; }
+#crowndown { float:left; /*margin-left:-28px;*/ margin-right:16px; padding-left:0px; }
 #crowndown li.menu{ padding-right:0; padding-left:0; }
 #crowndown a.menu { padding-right:4px; padding-left:4px; }
 #crowndown img { /*float:left;*/ margin-top:-7px; margin-right:0; padding-right:0; }
