@@ -52,8 +52,8 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                               'contentBody',
-                               'contentTitle',
+                               'contents',
+                               'title',
                                'originalUrl',
                                ],
           :'hl.usePhraseHighlighter' => true,
@@ -61,8 +61,8 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           :'hl.simple.post' => '</code>',
           :'q.alt'          => "*:*",
           :qf               => [
-                                'contentBody^1',
-                                'contentTitle^1',
+                                'contents^1',
+                                'title^1',
                                 'originalUrl^1',
                                ],
           :rows             => 10,
@@ -89,7 +89,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     end
 
     it 'sets Blacklight::Configuration.index.* stuff correctly' do
-      @blacklight_config.index.show_link.should           == 'contentTitle'
+      @blacklight_config.index.show_link.should           == 'title'
       @blacklight_config.index.record_display_type.should == ''
     end
 
@@ -241,8 +241,8 @@ describe 'HRWA::ArchiveSearchConfigurator' do
 
   describe '#set_solr_field_boost_levels' do
     before :all do
-      @default_qf   = [ 'contentTitle^1', 'contentBody^1', 'originalUrl^1' ]
-      @valid_params = [ 'contentTitle^3', 'contentBody^2', 'originalUrl^4' ]
+      @default_qf   = [ 'title^1', 'contents^1', 'originalUrl^1' ]
+      @valid_params = [ 'title^3', 'contents^2', 'originalUrl^4' ]
       @bad_params   = [ 'title^5', 'body^3' ]
     end
 
@@ -278,7 +278,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
           expect{
             @configurator.set_solr_field_boost_levels(
               {},
-              { :field => [ "contentTitle^#{ value }" ] }
+              { :field => [ "title^#{ value }" ] }
             )
           }.to raise_error( ArgumentError )
         end

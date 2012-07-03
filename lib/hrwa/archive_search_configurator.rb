@@ -16,8 +16,8 @@ class HRWA::ArchiveSearchConfigurator
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                               'contentBody',
-                               'contentTitle',
+                               'contents',
+                               'title',
                                'originalUrl',
                                ],
           :'hl.usePhraseHighlighter' => true,
@@ -25,8 +25,8 @@ class HRWA::ArchiveSearchConfigurator
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
           :qf               => [
-                                'contentBody^1',
-                                'contentTitle^1',
+                                'contents^1',
+                                'title^1',
                                 'originalUrl^1',
                                ],
           :rows             => 10,
@@ -35,12 +35,12 @@ class HRWA::ArchiveSearchConfigurator
         config.unique_key = 'recordIdentifier'
 
         # solr field configuration for search results/index views
-        config.index.show_link           = 'contentTitle'
+        config.index.show_link           = 'title'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
-        config.show.html_title   = 'contentTitle'
-        config.show.heading      = 'contentTitle'
+        config.show.html_title   = 'title'
+        config.show.heading      = 'title'
         config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
@@ -242,8 +242,8 @@ class HRWA::ArchiveSearchConfigurator
   def prioritized_highlight_field_list
     return [
             'originalUrl',
-            'contentTitle',
-            'contentBody',
+            'title',
+            'contents',
             ]
   end
 
@@ -258,7 +258,7 @@ class HRWA::ArchiveSearchConfigurator
   def set_solr_field_boost_levels( solr_parameters, user_params )
     return if ! user_params.has_key?( :field )
 
-    valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl', ]
+    valid_solr_fields = [ 'contents', 'title', 'originalUrl', ]
 
     qf = []
     user_params[ :field ].each { | field_boost |
