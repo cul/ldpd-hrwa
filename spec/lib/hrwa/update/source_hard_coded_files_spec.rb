@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-require 'hrwa/update/source_hard_coded_files.rb'
-
+require 'hrwa/update/source_hard_coded_files.rb' 
 describe 'hard coded options and browse lists file updater' do
   before :all do
     @filter_options_expected_file = 'spec/lib/fixtures/filter_options_source_hardcoded.rb'
@@ -10,7 +9,7 @@ describe 'hard coded options and browse lists file updater' do
     @collection_browse_lists_expected_file = 'spec/lib/fixtures/collection_browse_lists_source_hardcoded.rb'
     @collection_browse_lists_got_file      = 'spec/lib/fixtures/collection_browse_lists_source_hardcoded_got.rb'
 
-    solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/hrwa_blacklight-fsf-unit-test'
+    solr_url = YAML.load_file( 'config/solr.yml' )[ Rails.env ][ 'fsf' ][ 'url' ]
 
     FileUtils.rm [ @collection_browse_lists_got_file, @filter_options_got_file ], :force => true
 
