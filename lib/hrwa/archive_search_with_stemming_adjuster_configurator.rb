@@ -16,10 +16,10 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
           :hl               => true,
           :'hl.fragsize'    => 1000,
           :'hl.fl'          => [
-                               'contentBody',
-                               'contentBody__no_stemming',
-                               'contentTitle',
-                               'contentTitle__no_stemming',
+                               'contents',
+                               'contents__no_stemming',
+                               'title',
+                               'title__no_stemming',
                                'originalUrl',
                                'originalUrl__no_stemming_balancing_field',
                                ],
@@ -28,10 +28,10 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
           :qf               => [
-                                'contentBody^1',
-                                'contentBody__no_stemming^1',
-                                'contentTitle^1',
-                                'contentTitle__no_stemming^1',
+                                'contents^1',
+                                'contents__no_stemming^1',
+                                'title^1',
+                                'title__no_stemming^1',
                                 'originalUrl^1',
                                 'originalUrl__no_stemming_balancing_field^1',
                                ],
@@ -41,12 +41,12 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
         config.unique_key = 'recordIdentifier'
 
         # solr field configuration for search results/index views
-        config.index.show_link           = 'contentTitle'
+        config.index.show_link           = 'title'
         config.index.record_display_type = ''
 
         # solr field configuration for document/show views
-        config.show.html_title   = 'contentTitle'
-        config.show.heading      = 'contentTitle'
+        config.show.html_title   = 'title'
+        config.show.heading      = 'title'
         config.show.display_type = ''
 
         # solr fields that will be treated as facets by the blacklight application
@@ -248,11 +248,11 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
   def prioritized_highlight_field_list
     return [
             'originalUrl__no_stemming_balancing_field',
-            'contentTitle__no_stemming',
-            'contentBody__no_stemming',
+            'title__no_stemming',
+            'contents__no_stemming',
             'originalUrl',
-            'contentTitle',
-            'contentBody',
+            'title',
+            'contents',
             ]
   end
 
@@ -267,8 +267,8 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
   def set_solr_field_boost_levels( solr_parameters, user_params )
     return if ! user_params.has_key?( :field )
 
-    valid_solr_fields = [ 'contentBody', 'contentTitle', 'originalUrl',
-                          'contentBody__no_stemming', 'contentTitle__no_stemming',
+    valid_solr_fields = [ 'contents', 'title', 'originalUrl',
+                          'contents__no_stemming', 'title__no_stemming',
                           'originalUrl__no_stemming_balancing_field', ]
 
     qf = []
