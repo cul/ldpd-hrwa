@@ -177,27 +177,27 @@
 			<div class="span12 nomar">
 				<div class="control-group span10">
 					<label id="page_title_weight_label" class="span3 control-label">Page Title: 1</label>
-					<% contentTitleWeighting = (params[:field].nil? || params[:field].join('').index('contentTitle') == nil) ? '1' : get_specific_search_weight_from_weighting_string('contentTitle', params[:field].join('')) %>
+					<% contentTitleWeighting = (params[:field].nil? || params[:field].join('').index('title') == nil) ? '1' : get_specific_search_weight_from_weighting_string('title', params[:field].join('')) %>
 					<div id="page_title_weight_slider" data-val-from-url="<%= contentTitleWeighting %>" class="clearfix"></div>
-					<input type="hidden" id="page_title_weight" name="field[]" value="contentTitle^1"/>
+					<input type="hidden" id="page_title_weight" name="field[]" value="title^1"/>
 				</div>
 			</div>
 			<div class="span12 nomar">
 				<div class="control-group span10">
 						<label id="page_content_weight_label" class="span3 control-label">Page Content: 1</label>
-						<% pageContentWeighting = (params[:field].nil? || params[:field].join('').index('contentBody') == nil) ? '1' : get_specific_search_weight_from_weighting_string('contentBody', params[:field].join('')) %>
+						<% pageContentWeighting = (params[:field].nil? || params[:field].join('').index('contents') == nil) ? '1' : get_specific_search_weight_from_weighting_string('contents', params[:field].join('')) %>
 						<div id="page_content_weight_slider" data-val-from-url="<%= pageContentWeighting %>" class="clearfix"></div>
-						<input type="hidden" id="page_content_weight" name="field[]" value="contentBody^1"/>
+						<input type="hidden" id="page_content_weight" name="field[]" value="contents^1"/>
 				 </div>
 			</div>
       <div id="asf_ns_boost_items_container" class="span12 nomar">
 				<div class="control-group span10">
 						<input type="checkbox" class="pull-left" id="enable_ns_boost_checkbox" <%= (params[:hrwa_core] && params[:hrwa_host] && params[:hrwa_core] == 'asf-hrwa-278' && params[:hrwa_host] == 'test') ? ' checked="checked"' : '' %> /> <label id="no_stemming_boost_weight_label" class="span3 control-label">Non-Stemming Boost: 1</label>
-						<% noStemmingBoostWeighting = (params[:field].nil?) ? '1' : calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle', params[:field].join('')) %>
+						<% noStemmingBoostWeighting = (params[:field].nil?) ? '1' : calculate_no_stemming_boost_weighting_from_weighting_string('title', params[:field].join('')) %>
 						<div id="no_stemming_boost_weight_slider" data-val-from-url="<%= noStemmingBoostWeighting %>" class="clearfix"></div>
 						<input type="hidden" id="url_weight__no_stemming" name="field[]" value="originalUrl__no_stemming_balancing_field^1"/>
-						<input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="contentTitle__no_stemming^1"/>
-						<input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contentBody__no_stemming^1"/>
+						<input type="hidden" id="page_title_weight__no_stemming" name="field[]" value="title__no_stemming^1"/>
+						<input type="hidden" id="page_content_weight__no_stemming" name="field[]" value="contents__no_stemming^1"/>
 				 </div>
 			</div>
     </div>

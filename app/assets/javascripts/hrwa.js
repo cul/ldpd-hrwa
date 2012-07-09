@@ -662,7 +662,7 @@ jQuery(function($) {
 		slide: function( event, ui ) {
             $(this).attr('data-val-from-url', ui.value);
 			$( "#page_title_weight_label" ).html( "Page Title: " + ui.value );
-			$( "#page_title_weight" ).val( "contentTitle^" + ui.value );
+			$( "#page_title_weight" ).val( "title^" + ui.value );
             updateNoStemmingHiddenFields();
 		}
   });
@@ -674,7 +674,7 @@ jQuery(function($) {
 		slide: function( event, ui ) {
             $(this).attr('data-val-from-url', ui.value);
 			$( "#page_content_weight_label" ).html( "Page Content: " + ui.value );
-			$( "#page_content_weight" ).val( "contentBody^" + ui.value );
+			$( "#page_content_weight" ).val( "contents^" + ui.value );
             updateNoStemmingHiddenFields();
 		}
   });
@@ -696,8 +696,8 @@ jQuery(function($) {
   $( "#no_stemming_boost_weight_label" ).html( "Non-Stemming Boost: " + $( "#no_stemming_boost_weight_slider" ).slider( "value" ) );
 
   $( "#url_weight" ).val( 'originalUrl^' + $( "#url_weight_slider" ).slider( "value" ) );
-  $( "#page_title_weight" ).val( 'contentTitle^' + $( "#page_title_weight_slider" ).slider( "value" ) );
-  $( "#page_content_weight" ).val( 'contentBody^' + $( "#page_content_weight_slider" ).slider( "value" ) );
+  $( "#page_title_weight" ).val( 'title^' + $( "#page_title_weight_slider" ).slider( "value" ) );
+  $( "#page_content_weight" ).val( 'contents^' + $( "#page_content_weight_slider" ).slider( "value" ) );
 
   //If a boost is currently applied, update the interface to show this.
   if($('#no_stemming_boost_weight_slider').attr('data-val-from-url') > 1)
@@ -710,8 +710,8 @@ jQuery(function($) {
     var current_boost = $('#no_stemming_boost_weight_slider').attr('data-val-from-url');
 
     $( "#url_weight__no_stemming" ).val( "originalUrl__no_stemming_balancing_field^" + (current_boost* parseInt($('#url_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_title_weight__no_stemming" ).val( "contentTitle__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
-    $( "#page_content_weight__no_stemming" ).val( "contentBody__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_title_weight__no_stemming" ).val( "title__no_stemming^" + (current_boost* parseInt($('#page_title_weight_slider').attr('data-val-from-url')) ) );
+    $( "#page_content_weight__no_stemming" ).val( "contents__no_stemming^" + (current_boost* parseInt($('#page_content_weight_slider').attr('data-val-from-url')) ) );
   }
 
   //When the #enable_ns_boost_checkbox is checked, force core/host switching.  When it's unchecked, change back.
