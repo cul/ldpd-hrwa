@@ -53,17 +53,8 @@ Spork.prefork do
        "f.creator_name__facet.facet.limit"=>"11",
        "facet.mincount"=>"1",
        "qf"=>
-        ["contentTitle^1",
-         "contntBody^1",
-         "contentMetaDescription^1",
-         "contentMetaKeywords^1",
-         "contentMetaLanguage^1",
-         "contentBodyHeading1^1",
-         "contentBodyHeading2^1",
-         "contentBodyHeading3^1",
-         "contentBodyHeading4^1",
-         "contentBodyHeading5^1",
-         "contentBodyHeading6^1"],
+        ["title^1",
+         "contents^1",
        "wt"=>"ruby",
        "f.geographic_focus__facet.facet.limit"=>"11",
        "defType"=>"dismax",
@@ -82,7 +73,7 @@ Spork.prefork do
            {"numFound"=>1,
             "start"=>0,
             "docs"=>
-             [{"contentTitle"=>"Taxonomy | Human Rights Watch",
+             [{"title"=>"Taxonomy | Human Rights Watch",
                "originalUrl"=>"http://www.hrw.org/he/keywords/women",
                "dateOfCaptureYYYY"=>"2011",
                "statusCode"=>"200",
@@ -128,7 +119,7 @@ Spork.prefork do
            {"numFound"=>1,
             "start"=>0,
             "docs"=>
-             [{"contentTitle"=>"Taxonomy | Human Rights Watch",
+             [{"title"=>"Taxonomy | Human Rights Watch",
                "originalUrl"=>"http://www.hrw.org/es/keywords/women",
                "dateOfCaptureYYYY"=>"2011",
                "statusCode"=>"200",
@@ -174,7 +165,7 @@ Spork.prefork do
            {"numFound"=>1,
             "start"=>0,
             "docs"=>
-             [{"contentTitle"=>"women | Human Rights Watch",
+             [{"title"=>"women | Human Rights Watch",
                "originalUrl"=>"http://www.hrw.org/en/keywords/women",
                "dateOfCaptureYYYY"=>"2011",
                "statusCode"=>"200",
@@ -220,7 +211,7 @@ Spork.prefork do
            {"numFound"=>1,
             "start"=>0,
             "docs"=>
-             [{"contentTitle"=>"Taxonomy | Human Rights Watch",
+             [{"title"=>"Taxonomy | Human Rights Watch",
                "originalUrl"=>"http://www.hrw.org/fr/keywords/women",
                "dateOfCaptureYYYY"=>"2011",
                "statusCode"=>"200",
@@ -286,7 +277,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153026/http://khpg.org/en/index.php?do=print&id=1272455398",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T17:55:06.78Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["Women's rights"],
@@ -321,7 +312,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153107/http://khpg.org/en/index.php?do=print&id=1270822714",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T17:55:10.461Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["This is a heading."],
@@ -356,7 +347,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153148/http://khpg.org/en/index.php?do=print&id=1270551304",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T17:55:14.853Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["This is a heading."],
@@ -390,7 +381,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153228/http://khpg.org/en/index.php?do=print&id=1270203432",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T17:55:22.715Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["This is a heading."],
@@ -425,7 +416,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153309/http://khpg.org/en/index.php?do=print&id=1269350026",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T17:55:26.097Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["This is a heading."],
@@ -460,7 +451,7 @@ Spork.prefork do
                 "http://wayback.archive-it.org/1068/20100904153350/http://khpg.org/en/index.php?do=print&id=1269043679",
                "contentBody"=>
                 "This is a doc.",
-               "contentTitle"=>"",
+               "title"=>"",
                "timestamp"=>"2011-09-30T19:48:27.485Z",
                "contentBodyHeading6"=>[""],
                "contentBodyHeading5"=>["This is a heading."],
