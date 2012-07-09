@@ -182,57 +182,57 @@ Sign in</a>
 </script>
         <tr>
         <td>
-            <input id="contentTitle" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentTitle^1"/>
+            <input id="title" name="field[]" type="checkbox"
+                defaultChecked="no" value="title^1"/>
                 Page Title
         </td>
         <td>&nbsp;</td>
         <td>
-            <div id="contentTitle_spinnerContainer"></div>
+            <div id="title_spinnerContainer"></div>
         </td>
     </tr>
     <script type="text/javascript">
     // Spin Control for Page Title
-    var spinCtrl_contentTitle = new SpinControl();
-    spinCtrl_contentTitle.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentTitle.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentTitle.Tag = 'contentTitle';
-    spinCtrl_contentTitle.SetMaxValue(500);
-    spinCtrl_contentTitle.SetMinValue(0);
-    spinCtrl_contentTitle.SetCurrentValue( 1 );
-    spinCtrl_contentTitle.AttachValueChangedListener( spinControlListener );
+    var spinCtrl_title = new SpinControl();
+    spinCtrl_title.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_title.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_title.Tag = 'title';
+    spinCtrl_title.SetMaxValue(500);
+    spinCtrl_title.SetMinValue(0);
+    spinCtrl_title.SetCurrentValue( 1 );
+    spinCtrl_title.AttachValueChangedListener( spinControlListener );
 
-    document.getElementById( 'contentTitle_spinnerContainer' ).appendChild(
-      spinCtrl_contentTitle.GetContainer() );
+    document.getElementById( 'title_spinnerContainer' ).appendChild(
+      spinCtrl_title.GetContainer() );
 
-    spinCtrl_contentTitle.StartListening();
+    spinCtrl_title.StartListening();
 </script>
         <tr>
         <td>
-            <input id="contentBody" name="field[]" type="checkbox"
-                defaultChecked="no" value="contentBody^1"/>
+            <input id="contents" name="field[]" type="checkbox"
+                defaultChecked="no" value="contents^1"/>
                 Page Content
         </td>
         <td>&nbsp;</td>
         <td>
-            <div id="contentBody_spinnerContainer"></div>
+            <div id="contents_spinnerContainer"></div>
         </td>
     </tr>
     <script type="text/javascript">
     // Spin Control for Page Content
-    var spinCtrl_contentBody = new SpinControl();
-    spinCtrl_contentBody.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
-    spinCtrl_contentBody.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
-    spinCtrl_contentBody.Tag = 'contentBody';
-    spinCtrl_contentBody.SetMaxValue(500);
-    spinCtrl_contentBody.SetMinValue(0);
-    spinCtrl_contentBody.SetCurrentValue( 1 );
-    spinCtrl_contentBody.AttachValueChangedListener( spinControlListener );
+    var spinCtrl_contents = new SpinControl();
+    spinCtrl_contents.GetAccelerationCollection().Add(new SpinControlAcceleration(1, 500));
+    spinCtrl_contents.GetAccelerationCollection().Add(new SpinControlAcceleration(5, 1750));
+    spinCtrl_contents.Tag = 'contents';
+    spinCtrl_contents.SetMaxValue(500);
+    spinCtrl_contents.SetMinValue(0);
+    spinCtrl_contents.SetCurrentValue( 1 );
+    spinCtrl_contents.AttachValueChangedListener( spinControlListener );
 
-    document.getElementById( 'contentBody_spinnerContainer' ).appendChild(
-      spinCtrl_contentBody.GetContainer() );
+    document.getElementById( 'contents_spinnerContainer' ).appendChild(
+      spinCtrl_contents.GetContainer() );
 
-    spinCtrl_contentBody.StartListening();
+    spinCtrl_contents.StartListening();
 </script>
                                         <tr>
                                             <td><br />
@@ -1498,8 +1498,8 @@ Sign in</a>
                                             <td>
                                             <select name="sort">
                                             <option value="score desc" >relevance</option>
-<option value="contentTitle asc" >title ascending</option>
-<option value="contentTitle desc" >title descending</option>
+<option value="title asc" >title ascending</option>
+<option value="title desc" >title descending</option>
 
                                             </select>
                                            </td>
