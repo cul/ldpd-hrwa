@@ -146,21 +146,21 @@ describe 'archive search' do
   # that the sliders preserve the query string values and properly resubmit
   # them with the other new form values.
   describe 'SOLR field boost level overriding' do
-    it 'correctly sets new weights for contentBody, contentTitle, and originalUrl', :js => true do
+    it 'correctly sets new weights for contents, title, and originalUrl', :js => true do
 
-      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&hrwa_debug=true'
+      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=title%5E3&field%5B%5D=contents%5E4&hrwa_debug=true'
       choose 'asfsearch'
       click_link 'advo_link'
       click_link 'top_form_submit'
-      page.should have_content( %q{:qf=>["originalUrl^2", "contentTitle^3", "contentBody^4"]} )
+      page.should have_content( %q{:qf=>["originalUrl^2", "title^3", "contents^4"]} )
     end
 
-    it 'correctly sets new weights for contentBody, contentTitle and originalUrl, with originalUrl omitted in form submission', :js => true do
-      visit '/search?field%5B%5D=contentTitle%5E3&field%5B%5D=contentBody%5E4&hrwa_debug=true'
+    it 'correctly sets new weights for contents, title and originalUrl, with originalUrl omitted in form submission', :js => true do
+      visit '/search?field%5B%5D=title%5E3&field%5B%5D=contents%5E4&hrwa_debug=true'
       choose 'asfsearch'
       click_link 'advo_link'
       click_link 'top_form_submit'
-      page.should have_content( %q{:qf=>["originalUrl^1", "contentTitle^3", "contentBody^4"]} )
+      page.should have_content( %q{:qf=>["originalUrl^1", "title^3", "contents^4"]} )
     end
   end
 
@@ -218,7 +218,7 @@ describe 'archive search' do
       click_link 'advo_link'
       click_link 'top_form_submit'
 
-      page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1' )
+      page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=title%5E1&field%5B%5D=contents%5E1' )
     end
 
     describe 'archive search hrwa_host override dropdown' do
@@ -262,7 +262,7 @@ describe 'archive search' do
     describe 'non-stemmed search boosting' do
 
         it 'enables boosting when the boost checkbox is checked, and debug mode indicates that it is using the correct core', :js => true do
-          visit '/search?&field%5B%5D=originalUrl%5E1&field%5B%5D=contentTitle%5E1&field%5B%5D=contentBody%5E1&field%5B%5D=originalUrl__no_stemming_balancing_field%5E23&field%5B%5D=contentTitle__no_stemming%5E23&field%5B%5D=contentBody__no_stemming%5E23'
+          visit '/search?&field%5B%5D=originalUrl%5E1&field%5B%5D=title%5E1&field%5B%5D=contents%5E1&field%5B%5D=originalUrl__no_stemming_balancing_field%5E23&field%5B%5D=title__no_stemming%5E23&field%5B%5D=contents__no_stemming%5E23'
           click_link 'Menu'
           click_link 'Turn debug on'
           choose 'asfsearch'
@@ -274,7 +274,7 @@ describe 'archive search' do
         end
 
         it 'uses the boost values that are set in the advanced search form', :js => true do
-          visit '/search?field%5B%5D=originalUrl%5E10&field%5B%5D=contentTitle%5E20&field%5B%5D=contentBody%5E30&field%5B%5D=originalUrl__no_stemming_balancing_field%5E20&field%5B%5D=contentTitle__no_stemming%5E40&field%5B%5D=contentBody__no_stemming%5E60'
+          visit '/search?field%5B%5D=originalUrl%5E10&field%5B%5D=title%5E20&field%5B%5D=contents%5E30&field%5B%5D=originalUrl__no_stemming_balancing_field%5E20&field%5B%5D=title__no_stemming%5E40&field%5B%5D=contents__no_stemming%5E60'
           click_link 'Menu'
           click_link 'Turn debug on'
           choose 'asfsearch'
@@ -282,7 +282,7 @@ describe 'archive search' do
           fill_in 'q_and', :with => 'women'
           check('enable_ns_boost_checkbox')
           click_link 'top_form_submit'
-          page.should have_content( %q{field = ["originalUrl^10", "contentTitle^20", "contentBody^30", "originalUrl__no_stemming_balancing_field^20", "contentTitle__no_stemming^40", "contentBody__no_stemming^60"]} )
+          page.should have_content( %q{field = ["originalUrl^10", "title^20", "contents^30", "originalUrl__no_stemming_balancing_field^20", "title__no_stemming^40", "contents__no_stemming^60"]} )
         end
 
         it 'displays a notice to users when they are performing a non-stemmed search', :js => true do
