@@ -143,11 +143,11 @@ end
 
 describe 'get_specific_search_weight_from_weighting_string' do
   it 'works as expected' do
-    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 100
-    get_specific_search_weight_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 200
-    get_specific_search_weight_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 300
+    get_specific_search_weight_from_weighting_string('originalUrl','originalUrl^100title^200contents^300').should == 100
+    get_specific_search_weight_from_weighting_string('title','originalUrl^100title^200contents^300').should == 200
+    get_specific_search_weight_from_weighting_string('contents','originalUrl^100title^200contents^300').should == 300
 
-    get_specific_search_weight_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == nil
+    get_specific_search_weight_from_weighting_string('zzzzzzzzz','originalUrl^100title^200contents^300').should == nil
 
     get_specific_search_weight_from_weighting_string('originalUrl','originalUrl').should == nil
     get_specific_search_weight_from_weighting_string('originalUrl','nothingAtAll').should == nil
@@ -159,17 +159,17 @@ end
 
 describe 'calculate_no_stemming_boost_weighting_from_weighting_string' do
   it 'works as expected' do
-    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
-    calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
-    calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 3
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^10title^20contents^30originalUrl__no_stemming_balancing_field^30title__no_stemming^60contents__no_stemming^90').should == 3
+    calculate_no_stemming_boost_weighting_from_weighting_string('title','originalUrl^10title^20contents^30originalUrl__no_stemming_balancing_field^30title__no_stemming^60contents__no_stemming^90').should == 3
+    calculate_no_stemming_boost_weighting_from_weighting_string('contents','originalUrl^10title^20contents^30originalUrl__no_stemming_balancing_field^30title__no_stemming^60contents__no_stemming^90').should == 3
 
-    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^10contentTitle^20contentBody^30originalUrl__no_stemming_balancing_field^30contentTitle__no_stemming^60contentBody__no_stemming^90').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^10title^20contents^30originalUrl__no_stemming_balancing_field^30title__no_stemming^60contents__no_stemming^90').should == 1
 
-    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^100contentTitle^200contentBody^300').should == 1
-    calculate_no_stemming_boost_weighting_from_weighting_string('contentTitle','originalUrl^100contentTitle^200contentBody^300').should == 1
-    calculate_no_stemming_boost_weighting_from_weighting_string('contentBody','originalUrl^100contentTitle^200contentBody^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^100title^200contents^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('title','originalUrl^100title^200contents^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('contents','originalUrl^100title^200contents^300').should == 1
 
-    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^100contentTitle^200contentBody^300').should == 1
+    calculate_no_stemming_boost_weighting_from_weighting_string('zzzzzzzzz','originalUrl^100title^200contents^300').should == 1
 
     calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl').should == 1
     calculate_no_stemming_boost_weighting_from_weighting_string('originalUrl','originalUrl^').should == 1
