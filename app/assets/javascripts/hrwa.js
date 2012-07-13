@@ -14,6 +14,7 @@ jQuery(function($) {
 
   $('.back_button_link').bind('click', function(){
     window.history.go(-2);
+		return false;
   });
 
   $('.tabs').tab()
@@ -627,7 +628,7 @@ jQuery(function($) {
 				{
 				  month_select_value = '01';
 				}
-			  
+
                 $(this).parent().parent().children('input').val(year_select_value+'-'+month_select_value);
             }
 
