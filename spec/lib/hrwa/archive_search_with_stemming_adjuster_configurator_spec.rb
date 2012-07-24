@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'blacklight/configuration'
 
+require_relative 'mock_archive_search_response'
+
 describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
   before ( :all ) do
     @advanced_search_with_stemming_adjuster_q_and_women_params = { 
