@@ -31,7 +31,7 @@ class CatalogController < ApplicationController
         Rails.logger.error( @error )
 
         # We are categorizing user errors into :user and :system
-        if ! ex.to_s.match( /org\.apache\.lucene\.queryParser\.ParseException/).nil?
+        if _user_query_has_bad_syntax( @error ) 
           # Get query text if there is any
           user_q_text    = ex.request[ :params ][ :q ]
           user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
@@ -190,6 +190,13 @@ class CatalogController < ApplicationController
     # or our application.
     params.delete :f_add
 
+  end
+
+  # Cover all Solr version error responses we currently know of
+  def _user_query_has_bad_syntax( error_message )
+    # Covers Solr 3.6 and Solr 4
+    return error_message.match( /org\.apache\.lucene\.queryParser\.ParseException/) ||
+           error_message.match( /The request sent by the client was syntactically incorrect/)
   end
 
   def crawl_calendar
