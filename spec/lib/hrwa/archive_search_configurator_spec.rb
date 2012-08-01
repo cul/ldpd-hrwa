@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'blacklight/configuration'
 
+require_relative 'mock_archive_search_response'
+
 describe 'HRWA::ArchiveSearchConfigurator' do
   before ( :all ) do
     @advanced_search_q_and_women_params = {
@@ -243,7 +245,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
     before :all do
       @default_qf   = [ 'title^1', 'contents^1', 'originalUrl^1' ]
       @valid_params = [ 'title^3', 'contents^2', 'originalUrl^4' ]
-      @bad_params   = [ 'title^5', 'body^3' ]
+      @bad_params   = [ 'subject^5', 'body^3' ]
     end
 
     before :each do

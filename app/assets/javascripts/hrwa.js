@@ -14,6 +14,7 @@ jQuery(function($) {
 
   $('.back_button_link').bind('click', function(){
     window.history.go(-2);
+		return false;
   });
 
   $('.tabs').tab()
@@ -621,8 +622,13 @@ jQuery(function($) {
             var year_select_value = $(this).parent().children('select.year').val();
             var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
 
-            if(year_select_value != 'YYYY' && month_select_value != 'MM')
+            if(year_select_value != 'YYYY')
             {
+				if(month_select_value == 'MM')
+				{
+				  month_select_value = '01';
+				}
+
                 $(this).parent().parent().children('input').val(year_select_value+'-'+month_select_value);
             }
 
@@ -792,16 +798,19 @@ jQuery(function($) {
   $('#date_of_cap_custom_range_link').bind('click', function(){
 	$('#date_of_cap_custom_range_link').addClass('invisible');
 	$('#date_of_cap_custom_range_input_container').removeClass('invisible');
+	return false;
   });
   $('#date_of_cap_custom_range_input_container').find('.btn.cancel').bind('click', function(){
     $('#date_of_cap_custom_range_link').removeClass('invisible');
 	$('#date_of_cap_custom_range_input_container').addClass('invisible');
 	$(this).parent().children('input').val('');
+	return false;
   });
   $('#date_of_cap_custom_range_input_container').find('.btn.submit').bind('click', function(){
     window.location = HRWA.current_url_without_capture_date_params +
-		'&capture_start_date=' + $(this).parent().find('input[name="capture_start_date_sidebar"]').val() +
-		'&capture_end_date=' + $(this).parent().find('input[name="capture_end_date_sidebar"]').val();
+		'&capture_start_date=' + $('#date_of_cap_custom_range_input_container').find('#capture_start_date_sidebar').val() +
+		'&capture_end_date=' + $('#date_of_cap_custom_range_input_container').find('#capture_end_date_sidebar').val();
+		return false;
   });
   //Add hrwa datepickers to the two sidebar capture date inputs
   $("#capture_start_date_sidebar").hrwadatepicker({
