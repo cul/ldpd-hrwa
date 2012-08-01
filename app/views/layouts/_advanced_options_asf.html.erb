@@ -192,7 +192,10 @@
 			</div>
       <div id="asf_ns_boost_items_container" class="span12 nomar">
 				<div class="control-group span10">
-						<input type="checkbox" class="pull-left" id="enable_ns_boost_checkbox" <%= (params[:hrwa_core] && params[:hrwa_host] && params[:hrwa_core] == 'asf-hrwa-278' && params[:hrwa_host] == 'test') ? ' checked="checked"' : '' %> /> <label id="no_stemming_boost_weight_label" class="span3 control-label">Non-Stemming Boost: 1</label>
+				  <!-- We don't have time to down-migrate the asf-hrwa-278 to Solr 3.6.
+				       Leaving it visible though so it's not forgotten about.  Maybe Eric can
+				       Re-enable this feature later. -->
+						<input type="checkbox" disabled="disabled" class="pull-left" id="enable_ns_boost_checkbox" <%= (params[:hrwa_core] && params[:hrwa_host] && params[:hrwa_core] == 'asf-hrwa-278' && params[:hrwa_host] == 'test') ? ' checked="checked"' : '' %> /> <label id="no_stemming_boost_weight_label" class="span3 control-label">Non-Stemming Boost: 1</label>
 						<% noStemmingBoostWeighting = (params[:field].nil?) ? '1' : calculate_no_stemming_boost_weighting_from_weighting_string('title', params[:field].join('')) %>
 						<div id="no_stemming_boost_weight_slider" data-val-from-url="<%= noStemmingBoostWeighting %>" class="clearfix"></div>
 						<input type="hidden" id="url_weight__no_stemming" name="field[]" value="originalUrl__no_stemming_balancing_field^1"/>
