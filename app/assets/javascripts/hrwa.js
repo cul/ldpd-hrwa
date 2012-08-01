@@ -690,6 +690,11 @@ jQuery(function($) {
             updateNoStemmingHiddenFields();
 		}
   });
+  
+  // We don't have time to down-migrate asf-hrwa-278 core.  Leaving it
+  // visible so that it's not forgotten about.  Maybe Eric can re-enable it one day.
+  $('#no_stemming_boost_weight_slider').slider( "disable" );
+  
   $( "#url_weight_label" ).html( "URL: " + $( "#url_weight_slider" ).slider( "value" ) );
   $( "#page_title_weight_label" ).html( "Page Title: " + $( "#page_title_weight_slider" ).slider( "value" ) );
   $( "#page_content_weight_label" ).html( "Page Content: " + $( "#page_content_weight_slider" ).slider( "value" ) );
