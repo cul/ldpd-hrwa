@@ -235,7 +235,7 @@ class HRWA::FindSiteSearchConfigurator
 
 		# Set a new solr url for this configurator
 		def self.override_solr_url(new_solr_url)
-			@@solr_url = new_solr_url + '/solr-4/fsf'
+			@@solr_url = new_solr_url + '/solr-3.6/fsf'
 		end
 
     # Did Blacklight give us everything we need in SOLR response and

@@ -292,7 +292,7 @@ class HRWA::ArchiveSearchConfigurator
 
     # Set a new solr url for this configurator
     def self.override_solr_url(new_solr_url)
-      @@solr_url = new_solr_url + '/solr-4/asf'
+      @@solr_url = new_solr_url + '/solr-3.6/asf'
     end
 
 end

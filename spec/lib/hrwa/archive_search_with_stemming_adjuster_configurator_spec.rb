@@ -372,20 +372,20 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
     end
 
     it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
+      @configurator.class.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "test"' do
       # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
+      @configurator.class.solr_url().should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
+      @configurator.class.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
     end
 
     it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-4/asf-hrwa-278'
+      @configurator.class.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
     end
 
   end

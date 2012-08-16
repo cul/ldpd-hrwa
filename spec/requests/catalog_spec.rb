@@ -238,7 +238,7 @@ describe 'archive search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_asf').select('Dev')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/asf} )
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/asf} )
         end
 
         it 'correctly selects the Test override server', :js => true do
@@ -250,7 +250,7 @@ describe 'archive search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_asf').select('Test')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-4/asf} )
+          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-3.6/asf} )
         end
 
         it 'correctly selects the Prod override server', :js => true do
@@ -262,7 +262,7 @@ describe 'archive search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_asf').select('Prod')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/asf} )
+          page.should have_content( %q{solr_url = http://vorpal.cul.columbia.edu:8080/solr-3.6/asf} )
         end
     end
 
@@ -278,7 +278,7 @@ describe 'archive search' do
           fill_in 'q_and', :with => 'women'
           check('enable_ns_boost_checkbox')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/asf-hrwa-278} )
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278} )
         end
 
         it 'uses the boost values that are set in the advanced search form', :js => true do
@@ -353,7 +353,7 @@ describe 'find site search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_fsf').select('Dev')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-4/fsf} )
+          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/fsf} )
         end
 
         it 'correctly selects the Test override server', :js => true do
@@ -365,7 +365,7 @@ describe 'find site search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_fsf').select('Test')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-4/fsf} )
+          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-3.6/fsf} )
         end
 
         it 'correctly selects the Prod override server', :js => true do
@@ -377,7 +377,7 @@ describe 'find site search' do
           fill_in 'q_and', :with => 'women'
           find('#hrwa_host_fsf').select('Prod')
           click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://machete.cul.columbia.edu:8181/solr-4/fsf} )
+          page.should have_content( %q{solr_url = http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf} )
         end
     end
 

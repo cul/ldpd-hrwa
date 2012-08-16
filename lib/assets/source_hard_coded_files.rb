@@ -8,7 +8,7 @@ class HRWA::Update::SourceHardCodedFiles
 
   def initialize( browse_list_file =  'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
                   filter_options_file = 'app/helpers/hrwa/filter_options_source_hardcoded.rb',
-                  solr_url = 'http://carter.cul.columbia.edu:8080/solr-4/fsf')
+                  solr_url = 'http://carter.cul.columbia.edu:8080/solr-3.6/fsf')
 
     @browse_list_for    = {}
     @filter_options_for = {}

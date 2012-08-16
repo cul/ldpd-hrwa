@@ -51,7 +51,7 @@ def params
               :rows => '10',
               :sort => 'score desc',
               :solr_host => 'harding.cul.columbia.edu',
-              :path => '/solr-4/asf',
+              :path => '/solr-3.6/asf',
               :submit_search => 'Advanced Search',
          }
   end
@@ -69,5 +69,5 @@ def params
   end
 
   def params_list_expected_html
-    return %q{<strong>action</strong> = index <br/><strong>capture_end_date</strong> = 2012-02 <br/><strong>capture_start_date</strong> = 2012-02 <br/><strong>controller</strong> = catalog <br/><strong>path</strong> = /solr-4/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>solr_host</strong> = harding.cul.columbia.edu <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
+    return %q{<strong>action</strong> = index <br/><strong>capture_end_date</strong> = 2012-02 <br/><strong>capture_start_date</strong> = 2012-02 <br/><strong>controller</strong> = catalog <br/><strong>path</strong> = /solr-3.6/asf <br/><strong>rows</strong> = 10 <br/><strong>search_mode</strong> = advanced <br/><strong>solr_host</strong> = harding.cul.columbia.edu <br/><strong>sort</strong> = score desc <br/><strong>submit_search</strong> = Advanced Search <br/><strong>type</strong> = archive <br/>}.html_safe
   end
