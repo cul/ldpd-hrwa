@@ -383,17 +383,19 @@ describe 'find site search' do
 
 end
 
-describe 'site detail pages', :focus => true do
+describe 'site detail pages' do
   configurator        = HRWA::SiteDetailConfigurator.new
   blacklight_config   = Blacklight::Configuration.new
   config_proc         = configurator.config_proc
   blacklight_config.configure &config_proc
 
+  # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
   it 'can properly load the amnesty.org site detail page', :js => true do
     visit '/site_detail/5421151'
     page.should have_content('Amnesty International')
   end
 
+  # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
   it 'can properly load the safhr.org site detail page', :js => true do
     visit '/site_detail/5533251'
     page.should have_content('South Asia Forum for Human Rights')
