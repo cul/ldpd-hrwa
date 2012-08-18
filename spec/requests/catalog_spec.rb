@@ -383,6 +383,24 @@ describe 'find site search' do
 
 end
 
+describe 'site detail pages', :focus => true do
+  configurator        = HRWA::SiteDetailConfigurator.new
+  blacklight_config   = Blacklight::Configuration.new
+  config_proc         = configurator.config_proc
+  blacklight_config.configure &config_proc
+
+  it 'can properly load the amnesty.org site detail page', :js => true do
+    visit '/site_detail/5421151'
+    page.should have_content('Amnesty International')
+  end
+
+  it 'can properly load the safhr.org site detail page', :js => true do
+    visit '/site_detail/5533251'
+    page.should have_content('South Asia Forum for Human Rights')
+  end
+
+end
+
 describe 'javascript two-way query conversion' do
 
   describe 'proper multi q to single q conversion', :js => true do

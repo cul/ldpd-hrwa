@@ -39,6 +39,8 @@ class HRWA::SiteDetailConfigurator
           :rows             => 10,
         }
 
+        config.document_solr_request_handler = 'document'
+
         config.unique_key = "id"
 
         # solr field configuration for search results/index views

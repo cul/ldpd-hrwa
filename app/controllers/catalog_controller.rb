@@ -31,7 +31,7 @@ class CatalogController < ApplicationController
         Rails.logger.error( @error )
 
         # We are categorizing user errors into :user and :system
-        if _user_query_has_bad_syntax( @error ) 
+        if _user_query_has_bad_syntax( @error )
           # Get query text if there is any
           user_q_text    = ex.request[ :params ][ :q ]
           user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
@@ -101,7 +101,7 @@ class CatalogController < ApplicationController
 
   def _configure_by_search_type(search_type = params[:search_type])
     @debug = ''.html_safe
-    
+
     # Backend method of reselecting search_type based on hrwa_core if hrwa_core is the no-stemming core
     if ( params[ :hrwa_core ] == 'asf-hrwa-278' )
       @search_type = :archive_ns
@@ -117,7 +117,7 @@ class CatalogController < ApplicationController
     # CatalogController.configure_blacklight yields a Blacklight::Configuration object
     # that expects a block/proc which sets its attributes accordingly
     CatalogController.configure_blacklight( &@configurator.config_proc )
-    
+
     if(@search_type == :archive_ns || !params[:hrwa_host] || params[:hrwa_host].blank?)
         @solr_url = @configurator.solr_url
     else
