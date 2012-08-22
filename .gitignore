@@ -4,7 +4,7 @@ config/*.sphinx.conf
 config/s3_credentials.yml
 config/initializers/computer_specific_config.rb
 *~
-#*#
+\#*\#
 *.cache
 *.log
 *.log.*
