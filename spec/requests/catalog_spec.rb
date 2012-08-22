@@ -401,6 +401,12 @@ describe 'site detail pages' do
     page.should have_content('South Asia Forum for Human Rights')
   end
 
+  # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
+  it 'checks the find_site radio button when on a site_detail page', :js => true do
+    visit '/site_detail/5533251'
+    find("#fsfsearch").should be_checked
+  end
+
 end
 
 describe 'javascript two-way query conversion' do
