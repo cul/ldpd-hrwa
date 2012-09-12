@@ -95,6 +95,11 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (3.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (3.2.0)
+      factory_girl (~> 3.2.0)
+      railties (>= 3.0.0)
     ffi (1.1.5)
     fssm (0.2.9)
     growl (1.0.3)
@@ -173,6 +178,7 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rake (0.9.2.2)
     rb-appscript (0.6.1)
+    rb-fsevent (0.9.1)
     rdoc (3.12)
       json (~> 1.4)
     rsolr (1.0.7)
@@ -242,6 +248,7 @@ DEPENDENCIES
   devise
   devise-encryptable
   devise_wind
+  factory_girl_rails (= 3.2.0)
   growl
   growl_notify
   guard
@@ -255,6 +262,7 @@ DEPENDENCIES
   net-ssh (~> 2.4.0)
   nokogiri (~> 1.5.2)
   rails (~> 3.2.3)
+  rb-fsevent (~> 0.9.1)
   rspec-rails (~> 2.9.0)
   ruby_gntp
   sass-rails (~> 3.2.3)
