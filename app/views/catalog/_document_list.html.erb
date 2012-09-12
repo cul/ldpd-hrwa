@@ -1,0 +1,5 @@
+<% # container for all documents in index view -%>
+<ul data-toggle="modal-gallery" data-target="#modal-gallery" class="thumbnails tab-thumbnails no-cols">
+  <%= render :partial => 'document', :collection => @document_list, :as => :document %>
+</ul>
+

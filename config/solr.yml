@@ -10,64 +10,16 @@
 # jetty_path is only required for rake tasks that need to know
 # how to start up solr, generally for automated testing. 
 
-development: &development
-  asf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf"
-  asf-hrwa-278:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-  fsf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
+test_solr: &test_solr
+  url: "http://katana.cul.columbia.edu:8080/solr-3.6/lindquist_test"
   
-test:
-  asf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-asf-unit-test"
-  asf-hrwa-278:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-  fsf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
-  site_detail:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
+prod_solr: &prod_solr
+  url: "http://macana.cul.columbia.edu:8080/solr-3.6/lindquist"
 
-hrwa_dev: *development
+development: *test_solr
+test: *test_solr
+production: *prod_solr
 
-hrwa_staging:
-  asf:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf"
-  asf-hrwa-278:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-  fsf:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
-    
-hrwa_test:
-  asf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/asf"
-  asf-hrwa-278:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-  fsf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-
-# TODO: This is temporary until we have our dedicated SOLR server
-# Please note the port is 8080 and not 8080, which currently is the
-# SOLR service for CLIOBeta
-hrwa_prod:
-  asf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/asf"
-  asf-hrwa-278:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-  fsf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-    
-# The following valid_overrides section is for changing solr servers after deployment
-valid_overrides:
-  carter:   "http://carter.cul.columbia.edu:8080"
-  coolidge: "http://coolidge.cul.columbia.edu:8080"
-  harding:  "http://harding.cul.columbia.edu:8080"
-  vorpal:   "http://vorpal.cul.columbia.edu:8080"
+lindquist_dev: *test_solr
+lindquist_test: *prod_solr
+lindquist_prod: *prod_solr

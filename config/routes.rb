@@ -1,46 +1,30 @@
 Hrwa::Application.routes.draw do
 
-  devise_for :admins
+  DeviseWind.add_routes(self)
 
   # Our Blacklight stuff (before Blacklight adds its own routes)
-  match '/search'  => 'catalog#index'
-  match '/site_detail/:bib_key'  => 'catalog#site_detail'
-  match '/crawl_calendar/:archived_url'  => 'catalog#crawl_calendar', :constraints => {:archived_url => /.+/}
+  # match '/search'  => 'catalog#index'
+  match '/catalog/home'  => 'catalog#home'
 
   Blacklight.add_routes(self)
 
-  # Static pages - no dynamic content at all
-  match '/about'             => 'static#about'
-  match '/faq'               => 'static#faq'
-  match '/browse'            => 'static#collection_browse'
-  match '/owner_nomination'  => 'static#owner_nomination'
-  match '/public_nomination' => 'static#public_nomination'
-  match '/public_feedback'   => 'static#public_feedback'
-  match '/public_bugreports' => 'static#public_bugreports'
+  # Pages controller
+  match '/about_the_collection'   => 'pages#about_the_collection'
+  match '/about_gee_lindquist'    => 'pages#about_gee_lindquist'
+  match '/contact'                => 'pages#contact'
+  match '/problem_report'         => 'pages#problem_report'
+  match '/terms_of_use'           => 'pages#terms_of_use'
+
+  # Images controller
+  match '/images/:pid/:size/:disposition' => 'images#get', :as => :images
 
   # Admin controller
-  match '/admin'      => 'admin#index'
-  match '/refresh_browse_and_option_lists'      => 'admin#refresh_browse_and_option_lists'
+  match '/admin'                    => 'admin#index'
+  # match '/admin/clear_solr_index'   => 'admin#clear_solr_index'
+  match '/admin/reindex_solr_from_xml_file'   => 'admin#reindex_solr_from_xml_file'
+  match '/admin/update_hardcoded_browse_lists'   => 'admin#update_hardcoded_browse_lists'
 
-  # Internal controller
-  match '/internal/feedback'        => 'internal#feedback_form'
-  match '/internal/feedback_submit' => 'internal#feedback_submit'
-
-  # TODO: TEMPORARY STUFF FOR DEV; REMOVE LATER
-  match '/advanced_asf',      :to => redirect( '/advanced_asf.html' )
-  match '/advanced_fsf',      :to => redirect( '/advanced_fsf.html' )
-
-  resources :catalog, :only => [:index, :show, :update], :id => /.+/
-
-  root :to => "static#index"
-
-  # Devise Login Options
-  #devise_for :users
-  devise_for :admins, :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout'}
-  as :admin do
-    get 'admin/login'  => 'devise/sessions#new', :as => :admin_login
-    get 'admin/logout' => 'devise/sessions#destroy', :as => :admin_logout
-  end
+  root :to => "catalog#hrwa_home"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -97,5 +81,5 @@ Hrwa::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id))(.:format)'
 end

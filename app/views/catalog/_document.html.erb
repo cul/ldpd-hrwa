@@ -1,11 +1,48 @@
-    <% item_count_id = document_counter + 1 + @response.params[:start].to_i %>
+<% performing_a_search = (params[:controller] == 'catalog' && params[:action] == 'index') || (params[:controller] == 'catalog' && params[:action] == 'hrwa_home') %>
+<% folder_view = (params[:controller] == 'folder' && params[:action] == 'index') %>
+<%
+  #TODO: Remove this temporary fix for 55 missing Solr non-indexed images
 
-    <% # container for a single doc -%>
-    <article id="a_<%= item_count_id %>" class="fsf post">
+  if(document.get('recto_image_s').nil?)
+    thumbnail = '<img src="missing_image" />'
+  else
+    thumbnail = image_tag(get_image_uri(document, 'recto', 'thumb'), {:'data-info' => document.get('item_title'), :alt => document.get('item_title')})
+  end
 
-        <% # main container for doc partial view -%>
-        <%= render_document_partial document, :index %>
+  doc_text_link_html = link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i), :results_view => performing_a_search, :folder_view => folder_view
+  doc_button_link_html = link_to_document document, :label=>'View Item <i class="icon-circle-arrow-right icon-white"></i>'.html_safe, :counter => (document_counter + 1 + @response.params[:start].to_i), :class => 'item-link btn btn-mini btn-inverse', :rel => 'tooltip', :'data-original-title' => document.get('item_title'), :results_view => performing_a_search, :folder_view => folder_view
+  thumbnail_link_html = link_to_document document, :label=>thumbnail.html_safe, :counter => (document_counter + 1 + @response.params[:start].to_i), :class => 'thumbnail thumb_link', :results_view => performing_a_search, :folder_view => folder_view
+%>
 
-    </article>
+<li class="span3">
+  <% # container for a single doc -%>
+  <article class="post thumbnail document <%= render_document_class document %>">
+    <%= thumbnail_link_html %>
+    <div class="caption">
+      <% # header bar for doc items in index view -%>
+      <div class="documentHeader">
+          <% if(document.get('recto_image_s').nil?) %>
+            <% #TODO: Remove this temporary fix for the 55 images that weren't indexed into Solr %>
+          <% elsif( document.get('verso_image_s').blank? ) %>
+            <a href="<%= get_image_uri(document, 'recto', 'medium') %>" class="hidden-phone btn btn-mini pull-right" rel="gallery" title="<%= document.get('item_title') %>" data-original-title="Preview this image"><i class="icon-zoom-in"></i></a>
+          <% else %>
+            <a href="<%= get_image_uri(document, 'recto', 'medium') %>" class="hidden-phone btn btn-mini pull-right" rel="gallery" title="<%= document.get('item_title') %>" data-original-title="Preview this image" data-flipside="<%= get_image_uri(document, 'verso', 'medium') %>"><i class="icon-zoom-in"></i></a>
+            <!--<a href="#" class="see_back_of_img_btn btn btn-mini pull-right" rel="tooltip" data-flipside="<%= get_image_uri(document, 'verso', 'thumb') %>" data-original-title="See back of image"><i class="icon-share"></i></a>-->
+          <% end %>
+          <% # bookmark/folder functions for items/docs -%>
+          <%= render_index_doc_actions document %>
 
-<!-- REQUEST_TEST_STRING: HRWA::CATALOG::DOCUMENT::RENDER_SUCCESS -->
+          <% # main title container for doc partial view -%>
+          <h5 class="index_title"><%= ((document_counter + 1 + @response.params[:start].to_i).to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc_text_link_html %></h5>
+      </div>
+
+      <p>Item Number: <%= document.get('item_number') %></p>
+      <p>
+        <%= doc_button_link_html %>
+      </p>
+    </div> <!-- /.caption -->
+
+    <%# OpenURL Coins Info (for Zotero compatibility) -%>
+    <%= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => document} %>
+  </article>
+</li>

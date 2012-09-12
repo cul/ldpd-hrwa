@@ -1,3 +1,4 @@
 module FacetsHelper
-  include HRWA::FacetsHelperBehavior
+  include Blacklight::FacetsHelperBehavior
+  include Hrwa::FacetsHelperBehavior
 end

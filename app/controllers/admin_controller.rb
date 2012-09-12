@@ -1,92 +1,68 @@
-require 'hrwa/update/source_hard_coded_files.rb'
-require 'hrwa/configurator.rb'
-require 'hrwa/archive_search_configurator.rb'
-require 'hrwa/find_site_search_configurator.rb'
-require 'hrwa/site_detail_configurator.rb'
+require 'hrwa/admin/solr_task_handler.rb'
 
 # This controller handles administrative stuff
 class AdminController < ApplicationController
 
-  before_filter :authenticate_admin!
+  include Hrwa::MailHelper
 
-  # Note: There is no view associated with refresh_browse_and_option_lists
-  # We do a redirect at the end of this actions
-  def refresh_browse_and_option_lists
+  before_filter :authenticate_user!, :check_for_allowed_users
 
-    sourceHardCodedFilesUpdater = HRWA::Update::SourceHardCodedFiles.new(
-      'app/helpers/hrwa/collection_browse_lists_source_hardcoded.rb',
-      'app/helpers/hrwa/filter_options_source_hardcoded.rb',
-      HRWA::FindSiteSearchConfigurator.solr_url,
-    )
+  def check_for_allowed_users
 
-  begin
-    sourceHardCodedFilesUpdater.update_rails_file( :browse_lists  )
-    sourceHardCodedFilesUpdater.update_rails_file( :filter_options )
+    allowed_users = ['elo2112', 'er2576', 'ba2213']
 
-    HRWA::CollectionBrowseLists.load_browse_lists
-    HRWA::FilterOptions.load_filter_options
-
-    flash[:notice] = 'The browse_lists and filter_options files have been updated.'
-    # Sucess/fail response for cron job
-    @refresh_browse_and_option_lists_status = 'HRWA::ADMIN::REFRESH_BROWSE_AND_OPTION_LISTS::UPDATE_SUCCESS'
-    
-  rescue UpdateException => et
-      flash[:error] = "Update of collection browse and advanced filter options aborted with error: #{ e }"
-      # Sucess/fail response for cron job
-      @refresh_browse_and_option_lists_status = 'HRWA::ADMIN::REFRESH_BROWSE_AND_OPTION_LISTS::UPDATE_FAILURE'
+    if( ! allowed_users.include?(current_user.login) )
+      # Then log this user out
+      redirect_to destroy_user_session_path
     end
-
-    redirect_to admin_path( :status => @refresh_browse_and_option_lists_status )
   end
 
-  def index
+  def index()
 
-    @solr_yaml = YAML.load_file('config/solr.yml')
+  end
 
-    # Dev note: Solr server swithch functionality relies on config.cache_classes = true because we're storing the server info in class variables.
-    # For more info on class caching, see:
-    # http://stackoverflow.com/questions/2919988/rails-what-is-cached-when-using-config-cache-classes-true
-    # or
-    # http://stackoverflow.com/questions/2879891/config-cache-classes-true-in-production-mode-has-problems-in-ie
+  # Hrwa Note: No need to clear the solr indexes, so I'm commenting this out for now.
+  #def clear_solr_index()
+  #  solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new(YAML.load_file('config/solr.yml')[Rails.env]['url'])
+  #  result = solrTaskHandler.clear_solr_index
+  #
+  #  if (result)
+  #    flash[:notice] = 'Your solr index has been cleared.'
+  #  else
+  #    flash[:error] = "An error occurred and your solr index could not be cleared. Please check your log output for details."
+  #  end
+  #
+  #  redirect_to admin_path
+  #end
 
-    @disable_solr_core_switch_forms = ! Rails.application.config.cache_classes &&
-                                      ! ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A HRWA::.*Configurator \Z/x }.empty?
+  def reindex_solr_from_xml_file()
 
-    @disable_solr_core_switch_forms_error_message = 'Warning! Solr server switching will not work!<br /><br />' +
-                                                    "Rails.application.config.cache_classes = #{Rails.application.config.cache_classes}<br /><br />".html_safe +
-                                                    "ActiveSupport::Dependencies.explicitly_unloadable_constants =<br />#{ActiveSupport::Dependencies.explicitly_unloadable_constants.to_s}".html_safe +
-                                                    "<br /><br />Whenever config.cache_classes is false AND one or more of the configurators are unloadable, you cannot change Solr servers because any source code change will clear out the configurator class variables that store their currently associated Solr servers.".html_safe
+    solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new(YAML.load_file('config/solr.yml')[Rails.env]['url'])
 
-    #Checking to see if class caching is off and if
-    if( ! @disable_solr_core_switch_forms )
+    result = solrTaskHandler.reindex_solr_from_xml_file('extras/lindquist.xml')
 
-      if(params[:reset_primary_solr_server])
-        # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
-        HRWA::Configurator.reset_solr_config
-        flash[:notice] = 'Your solr servers have been reset to their default settings.'.html_safe;
-      end
-
-      if(params[:new_primary_solr_server])
-        # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
-        HRWA::Configurator.override_solr_url(@solr_yaml['valid_overrides'][params[:new_primary_solr_server]])
-        flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
-      end
-
+    if(result)
+      flash[:notice] = 'Your solr index has been reindexed.'
+    else
+      flash[:notice] = 'An error occurred while attempting to reindex. Please check your log output for details.'
     end
 
-    archive_solr_url = HRWA::ArchiveSearchConfigurator.solr_url
-    find_site_solr_url = HRWA::FindSiteSearchConfigurator.solr_url
-    site_detail_solr_url = HRWA::SiteDetailConfigurator.solr_url
+    redirect_to admin_path
 
-    @solr_urls =   {
-                    :archive      => archive_solr_url,
-                    :find_site    => find_site_solr_url,
-                    :site_detail  => site_detail_solr_url,
-                  }
+  end
 
-    # Sucess/fail response for cron jobs and request tests
-    @request_test_string = params[ :status ]
-    
+  # This method updates the hardcoded browse list files using live data from the Solr index
+  def update_hardcoded_browse_lists()
+    solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new
+    result = solrTaskHandler.update_hardcoded_browse_lists
+
+    if (result)
+      flash[:notice] = 'Your browse lists have been updated.'
+    else
+      flash[:error] = "An error occurred and your browse lists could not be updated. Please check your log output for details."
+    end
+
+    redirect_to admin_path
   end
 
 end

@@ -1,58 +1,71 @@
-<div class="container">
+<% unless has_search_parameters? %>
 
-  <% unless has_search_parameters? %>
-    <%# if there are no input/search related params, display the "search_home" partial -%>
-    <%= render :partial=>'search_home' %>
+	<%# if there are no input/search related params, display the "home" partial -%>
+	<%= render 'search_home' %>
 
-  <% else %>
+<% else %>
 
+  <% @page_title = application_name + " Search Results" %>
+  <% extra_head_content << render_opensearch_response_metadata.html_safe %>
+
+  <div id="primary_container" class="container no-hero-mobile">
     <div class="row">
+
       <div id="primary" class="span9">
-	    <div class="pageEntriesInfo">
-    	  <%= render_pagination_info @response, :entry_name=>'result' %><span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span> for: <span id="q_echo" class="big lime strong"><%= q_text = params[ :q ] %></span>
-    	</div>
+        <div class="pageEntriesInfo">
+          <%= render_pagination_info @response, :entry_name=>'item' %>
+            <%#=link_to 'Start Over', catalog_index_path, :class=>'btn btn-mini pull-right' %>
+            <span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span>
 
-<div class="">
-<%= render 'constraints', :localized_params=>params %>
-        <div class="clear"></div>
-</div>
+            <form id="edit_query_form">
+              <div class="pull-right">
+                <button id="edit_query_confirm" class="btn btn-mini pull-right" data-original-title="Update your search query" type="submit"><i class="icon-ok"></i></button>
+                <button id="edit_query_cancel" class="btn btn-mini pull-right" ><i class="icon-remove"></i></button>
+              </div>
+              <div id="edit_query_input_wrapper">
+                <%= text_field_tag :q, params[:q], :class => '', :placeholder => 'Add some search terms to your current search&hellip;'.html_safe, :id => 'edit_query_input' %>
+              </div>
 
-	    <%= '<p class="alert alert-error">Note: You are currently performing a limited-result search that favors <strong>non-stemmed</strong> field searching.<br />The results below represent only a small subset of your true result set.</p>'.html_safe if @search_type == :archive_ns %>
+              <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
+            </form>
 
-    	<%= render 'results_pagination' %>
-
-        <div class="clear"></div>
-
-        <%= render :partial => 'result_list' %>
-
-        <%= render 'results_pagination' %>
-
-      </div><!--/primary-->
+            <span id="echo_query">
+              <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="red strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
+            </span>
+        </div>
+        <div class="row">
+          <div class="span9">
+            <%= render 'constraints', :localized_params=>params %>
+          </div>
+        </div><!--/row-->
+        <%# Only show the did_you_mean partial when there are NO facets applied. Otherwise it's confusing %>
+        <%= render :partial => 'did_you_mean' if params[:f].nil? %>
+        <div class="row">
+          <div class="span5 nomar">
+            <%= render 'results_pagination' %>
+          </div>
+          <div class="span4 pull-right">
+               <%= render 'sort_and_per_page' %>
+          </div>
+        </div>
+        <div id="search_results">
+          <%= render :partial => 'document_list' %>
+        </div>
+        <div class="row">
+          <%= render 'results_pagination' %>
+        </div>
+      </div><!--/#primary-->
 
       <div id="secondary" class="span3">
-      <%# Script below used for custom date range in sidebar %>
-      <script type="text/javascript">HRWA.current_url_without_capture_date_params = decodeURIComponent("<%= CGI.escape(url_for_without_capture_date_params).gsub('+','%20') %>");</script>
-
-	<% sidebar_items << capture do %>
-	  <%= render :partial=>'facets' %>
-	<% end %>
-	<%= sidebar_items.join('').html_safe %>
+        <div id="facets" class="find_site facets">
+          <% sidebar_items << capture do %>
+            <%= render :partial=>'facets' %>
+          <% end %>
+          <%= sidebar_items.join('').html_safe %>
+        </div>
       </div>
-    </div>
 
+    </div><!--/.row-->
+  </div><!--/#primary_container-->
 
-  <% end %>
-
-</div>
-
-<!-- TODO: TAKE THIS OUT OF PROD -->
-<% if Rails.env != "hrwa_prod" %>
-  <% #Only show the box (with a border) if the hrwa_debug param value == "true" %>
-  <% if params[:hrwa_debug] == "true" %>
-    <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
-      <%= @debug %>
-    </div>
-  <% end %>
 <% end %>
-
-<!-- REQUEST_TEST_STRING: HRWA::CATALOG::INDEX::RENDER_SUCCESS -->

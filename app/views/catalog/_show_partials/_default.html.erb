@@ -1,0 +1,127 @@
+<%# default partial to display solr document fields in catalog show view -%>
+<%# Hrwa Note: We can't use Blacklight's default rendering of show fields because we have specific, customized needs %>
+<dl class="defList">
+
+  <% if( ! @document.get('item_title').blank? ) %>
+    <dt>Title</dt>
+    <dd><%=@document.get('item_title')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('display_date_free_text').blank? )%>
+    <dt>Date</dt>
+    <dd><%=@document.get('display_date_free_text')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('date_source_note').blank? ) %>
+    <dt>Date Note</dt>
+    <dd><%=@document.get('date_source_note')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('item_size').blank? ) %>
+    <dt>Measurements</dt>
+    <dd><%=@document.get('item_size')%> in.</dd>
+  <% end %>
+
+  <% if( ! @document.get('item_number').blank? ) %>
+    <dt>Item Number</dt>
+    <dd><%=@document.get('item_number')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('format').blank? ) %>
+    <dt>Format</dt>
+    <dd><%=@document.get('format')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('item_annotation_original_recto').blank? ) %>
+    <dt>Annotation on Front</dt>
+    <dd><%=@document.get('item_annotation_original_recto')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('item_annotation_original_verso').blank? ) %>
+    <dt>Annotation on Back</dt>
+    <dd><%=@document.get('item_annotation_original_verso')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('public_note').blank? ) %>
+    <dt>Note</dt>
+    <dd><%=@document.get('public_note')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('subject_geographic').blank? ) %>
+    <dt>Places</dt><%# <- Multivalued %>
+    <dd><%=facet_array_to_delimited_list_with_links('subject_geographic__facet', @document.get('subject_geographic', {:sep => nil}))%></dd>     <%# <- Multivalued, using :sep => nil to get back an Array object %>
+  <% end %>
+
+  <% if( ! @document.get('state_or_province').blank? ) %>
+    <dt>States & Provinces</dt>
+    <dd><%=@document.get('state_or_province')%></dd>
+  <% end %>
+
+  <% if( ! @document.get('topic_subject').blank? ) %>
+    <dt>Topics</dt><%# <- Multivalued %>
+    <dd><%=facet_array_to_delimited_list_with_links('topic_subject__facet', @document.get('topic_subject', {:sep => nil}))%></dd>          <%# <- Multivalued, using :sep => nil to get back an Array object %>
+  <% end %>
+
+  <% if( ! @document.get('subject_name').blank? ) %>
+    <dt>Names</dt>
+    <dd><%=facet_array_to_delimited_list_with_links('subject_name__facet', @document.get('subject_name', {:sep => nil}))%></dd>           <%# <- Multivalued, using :sep => nil to get back an Array object %>
+  <% end %>
+
+  <% if( ! @document.get('associated_name').blank? ) %>
+    <dt>Creators</dt><%# <- Multivalued %>
+    <dd><%=facet_array_to_delimited_list_with_links('associated__name_facet', @document.get('associated_name', {:sep => nil}))%></dd>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+  <% end %>
+
+  <% if( (! @document.get('folder_title').blank?) || (! @document.get('group_title').blank?) ) %>
+    <%
+    folder_and_group_title_string = ''
+    folder_and_group_value_string = ''
+
+    unless @document.get('folder_title').blank?
+      folder_and_group_title_string += 'Folder'
+      folder_and_group_value_string += @document.get('folder_title')
+    end
+
+    if ( ! @document.get('folder_title').blank? && ! @document.get('group_title').blank?)
+      folder_and_group_title_string += ' and '
+      folder_and_group_value_string += '; '
+    end
+
+    unless @document.get('group_title').blank?
+      folder_and_group_title_string += 'Group'
+      folder_and_group_value_string += @document.get('group_title')
+    end
+
+    folder_and_group_title_string += ' Title'
+    %>
+    <dt><%=folder_and_group_title_string%></dt>
+    <dd><%=folder_and_group_value_string%></dd>
+  <% end %>
+
+  <% if( (! @document.get('box_number').blank?) || (! @document.get('folder_number').blank?) ) %>
+    <%
+    box_and_folder_number_string = ''
+    box_and_folder_value_string = ''
+
+    unless @document.get('box_number').blank?
+      box_and_folder_number_string += 'Box'
+      box_and_folder_value_string += @document.get('box_number').to_s
+    end
+
+    if ( ! @document.get('box_number').blank? && ! @document.get('folder_number').blank?)
+      box_and_folder_number_string += ' and '
+      box_and_folder_value_string += ': '
+    end
+
+    unless @document.get('folder_number').blank?
+      box_and_folder_number_string += 'Folder'
+      box_and_folder_value_string += @document.get('folder_number').to_s
+    end
+
+    box_and_folder_number_string += ' Number'
+    %>
+    <dt><%=box_and_folder_number_string%></dt>
+    <dd><%=box_and_folder_value_string%></dd>
+  <% end %>
+
+</dl>

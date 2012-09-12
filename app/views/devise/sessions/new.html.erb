@@ -1,31 +1,18 @@
-<div class="container no-hero-mobile">
+<h2>Sign in</h2>
 
-    <div class="content">
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <br />
+  <div><%= f.label :email %>
+  <%= f.email_field :email %></div>
 
-        <div class="row">
-			<div class="span12 columns">
-                <article class="entry">
-                    <h2>Sign in</h2>
-                    <%= form_for(resource, :as => resource_name, :url => session_url(resource_name, :protocol => !(Rails.env.development? || Rails.env.test?) ? 'https://' : 'http://')) do |f| %>
+  <div><%= f.label :password %>
+  <%= f.password_field :password %></div>
 
-                        <div><%= f.label :username %>
-                        <%= f.text_field :username %></div>
+  <% if devise_mapping.rememberable? -%>
+    <div><%= f.check_box :remember_me %><%= f.label :remember_me %></div>
+  <% end -%>
 
-                        <div><%= f.label :password %>
-                        <%= f.password_field :password %></div>
+  <div><%= f.submit "Sign in", :class => 'btn' %></div>
+<% end %>
 
-                        <% if devise_mapping.rememberable? -%>
-                          <div><%= f.label :remember_me, (f.check_box :remember_me) + 'Remember me', :class => 'checkbox' %></div>
-                        <% end -%>
-
-                        <div><%= f.submit "Sign in", :class => 'btn' %></div>
-                    <% end %>
-
-                    <%= render :partial => "devise/shared/links" %>
-                </article>
-            </div>
-		</div>
-
-	</div> <!--//content-->
-
-</div>
+<%= render "links" %>

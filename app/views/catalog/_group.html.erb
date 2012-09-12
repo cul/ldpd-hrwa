@@ -1,9 +1,0 @@
-<% item_count_id = group_counter + 1 + @response.params[:start].to_i %>
-
-    <% # container for a single doc -%>
-    <article id="a_<%= item_count_id %>" class="asf post">
-
-        <% # main container for group partial view -%>
-        <%= render :partial => 'index_group_default', :locals => {:group => group} %>
-
-    </article>

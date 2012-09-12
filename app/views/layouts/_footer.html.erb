@@ -1,0 +1,71 @@
+    </div> <!-- /container -->
+
+
+    <div id="ft">
+      <div id="footnotes_holder"></div>
+    </div>
+
+
+    <div class="container">
+      <footer id="site_footer">
+        <p class="alignright"><%= link_to('Contact', contact_path) %> &bull; <%= link_to('Problem Report', problem_report_path) %> &bull; <%= link_to('Terms of Use', terms_of_use_path) %></p>
+        <p id="culcul"><span class="floatright">&copy; Columbia University Libraries 2012</span></p>
+      </footer>
+    </div> <!-- /container -->
+
+    <div id="js_warn">
+      <noscript><div class="alert alert-danger">Javascript is required to view this website. Please enable it in your browser.</div></noscript>
+    </div>
+
+    <!-- modal-gallery is the modal dialog used for the image gallery -->
+    <div id="modal-gallery" class="modal modal-gallery hide fade">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3 class="modal-title"></h3>
+        </div>
+        <div class="modal-body"><div class="modal-image"></div></div>
+        <div class="modal-footer">
+            <a id="view_item_btn" class="btn btn-inverse modal-view-item pull-left" href="#">
+                <span>View Item</span>
+                <i class="icon-circle-arrow-right icon-white"></i>
+            </a>
+
+            <div id="modal-download-btn-group" class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Download
+                <span class="caret"></span>
+              </a>
+              <ul id="modal-download-options" class="dropdown-menu">
+                <li><a class="thumb_download" href="#" alt=""><i class="icon-download"></i> Small (200px)</a></li>
+                <li><a class="medium_download" href="#" alt=""><i class="icon-download"></i> Medium (850px)</a></li>
+                <li><a class="large_download" href="#" alt=""><i class="icon-download"></i> Large (1500px)</a></li>
+              </ul>
+            </div>
+
+            <a class="btn invisible" id="modal-flip-image-button">
+                <i class="icon-share"></i>
+            </a>
+
+            <a class="btn btn-success modal-play modal-slideshow" data-slideshow="3000">
+                <i class="icon-play icon-white"></i>
+            </a>
+            <a class="btn btn-info modal-prev">
+                <i class="icon-arrow-left icon-white"></i>
+            </a>
+            <a class="btn btn-primary modal-next">
+                <i class="icon-arrow-right icon-white"></i>
+            </a>
+        </div>
+    </div>
+
+  </div>
+
+  <% if @debug_mode %>
+    <pre style="background-color:white;border:1px solid black;margin:10px;padding:10px;">Debug:
+
+<%= @debug_printout %>
+    </pre>
+  <% end %>
+
+  </body>
+</html>

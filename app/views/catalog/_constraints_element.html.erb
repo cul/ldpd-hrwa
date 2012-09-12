@@ -13,14 +13,20 @@
 -%>
 
 <span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
-      <%
-      if ! label.blank? && ! options[:remove].blank?
-	removal_link_body = "[x] #{processed_label}: #{processed_value}"
-	%>
-        <%= link_to(removal_link_body,
-		    options[:remove],
-		    :rel=>'tooltip', :title=>'Remove this filter', :class=>'delfq btn small ' + (options[:classes].join(" ") if options[:classes])) %>
-	<%
-      end
-      %>
+      <%- unless options[:remove].blank? -%>
+        <% accessible_remove_label = '<i class="icon-remove icon-white"></i>'.html_safe + 
+                if label.blank?
+                  processed_value
+                else
+                  '<span class="opacity_75">'.html_safe + processed_label + '</span>: '.html_safe + processed_value
+                end
+        %>
+        <%= link_to(accessible_remove_label,
+					options[:remove],
+					:class => 'btn btn-danger btn-small facet-pill',
+					:rel => 'tooltip',
+					:'data-original-title' => 'Remove this facet',
+          :alt => 'remove'
+				) %>
+      <%- end -%>
 </span>

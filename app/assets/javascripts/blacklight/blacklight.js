@@ -46,21 +46,21 @@ Blacklight = {};
 
 
 $(document).ready(function() {
-  //Blacklight.do_zebra_stripe();
+  Blacklight.do_zebra_stripe();
 
-  //Blacklight.do_select_submit();
+  Blacklight.do_select_submit();
 
   Blacklight.do_more_facets_behavior();
 
-  //Blacklight.do_lightbox_dialog();
+  Blacklight.do_lightbox_dialog();
 
-  //Blacklight.do_bookmark_toggle_behavior();
+  Blacklight.do_bookmark_toggle_behavior();
 
-  //Blacklight.do_folder_toggle_behavior();
+  Blacklight.do_folder_toggle_behavior();
 
-  //Blacklight.do_facet_expand_contract_behavior();
+  Blacklight.do_facet_expand_contract_behavior();
 
-  //Blacklight.do_search_context_behavior();
+  Blacklight.do_search_context_behavior();
 });
 
 
@@ -69,7 +69,7 @@ $(document).ready(function() {
 //page load, and later called on document ready.
 (function($) {
     Blacklight.do_search_context_behavior = function() {
-      $('a[data-counter]').click(function() {
+      $('a[data-counter]').click(function(event) {
       var f = document.createElement('form'); f.style.display = 'none';
       this.parentNode.appendChild(f);
       f.method = 'POST';
@@ -77,6 +77,14 @@ $(document).ready(function() {
       if(event.metaKey || event.ctrlKey){f.target = '_blank';};
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'counter'); d.setAttribute('value', $(this).data('counter')); f.appendChild(d);
+      //START Lindquist additions
+      var d = document.createElement('input'); d.setAttribute('type', 'hidden');
+      d.setAttribute('name', 'results_view'); d.setAttribute('value', $(this).data('results_view')); f.appendChild(d);
+      var d = document.createElement('input'); d.setAttribute('type', 'hidden');
+      d.setAttribute('name', 'folder_view'); d.setAttribute('value', $(this).data('folder_view')); f.appendChild(d);
+      var d = document.createElement('input'); d.setAttribute('type', 'hidden');
+      d.setAttribute('name', 'last_known_s_search_json_string'); d.setAttribute('value', LIND.last_known_s_search_json_string); f.appendChild(d);
+      //END Lindquist additions
       var m = document.createElement('input'); m.setAttribute('type', 'hidden');
       m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);
       var m = document.createElement('input'); m.setAttribute('type', 'hidden');
@@ -255,7 +263,7 @@ $(document).ready(function() {
         var label = $('<label>')
           .addClass( options.css_class )
           .attr("for", options.css_class + '_' + unique_id)
-          .attr("title", form.attr("title"));
+          .attr("title", form.attr("title") || "");
 
 
         function update_state_for(state) {

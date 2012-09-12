@@ -1,0 +1,28 @@
+<%# Only show per_page and sort_by controls if there are two or more results. %>
+  <% if @response.response['numFound'] >= 2 %>
+    <% default_per_page_sting = '30' %>
+
+    <div class="results_control pull-right">
+      <div id="result_handling_options" class="btn-toolbar">
+
+          <div class="btn-group per_page pull-left">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" data-original-title="">
+                Results per page <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <!-- dropdown menu links -->
+                <li <% if (!params[:per_page] || params[:per_page] == default_per_page_sting) %> class="active"<% end %>><%= link_to default_per_page_sting, catalog_index_path(params.merge({:per_page => default_per_page_sting})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == '60') %> class="active"<% end %>><%= link_to '60', catalog_index_path(params.merge({:per_page => '60'})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == '90') %> class="active"<% end %>><%= link_to '90', catalog_index_path(params.merge({:per_page => '90'})) %></li>
+            </ul>
+          </div>
+          <div class="btn-group sort_by pull-left">
+            <%= link_to 'Relevance', catalog_index_path(params.merge({:sort => 'score desc'})), :class => 'btn' + ((!params[:sort] || params[:sort] == 'score desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Relevance' %>
+            <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'item_title__sort asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
+            <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'item_title__sort desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
+          </div>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+<% end %>

@@ -1,0 +1,9 @@
+<div id="search_results">
+  <%= render :partial => 'document_list' %>
+  <a id="home_gallery_see_more_btn" href="<%=
+
+    '/catalog?f%5B'.html_safe + 'topic_subject__facet'.html_safe + '%5D%5B%5D='.html_safe + @featured_home_page_topic.html_safe
+
+    %>" class="btn btn-mini pull-right">See More &raquo;</a>
+  <div class="clear"></div>
+</div>

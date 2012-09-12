@@ -1,3 +1,4 @@
 module RenderConstraintsHelper
-  include HRWA::RenderConstraintsHelperBehavior
+  include Blacklight::RenderConstraintsHelperBehavior
+  include Hrwa::RenderConstraintsHelperBehavior
 end

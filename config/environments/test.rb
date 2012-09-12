@@ -2,13 +2,9 @@ Hrwa::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
-  # test suite.  You never need to work with it otherwise.  Remember that
+  # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
-  # and recreated between test runs.  Don't rely on the data there!
-
-  # Warning: If you turn off config.cache_classes, this will disable solr server
-  # switching in the HRWA admin control panel, since it relies on cached class
-  # variables.
+  # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
@@ -33,14 +29,9 @@ Hrwa::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-
-  # Raise exception on mass assignment protection for Active Record models
-	config.active_record.mass_assignment_sanitizer = :strict
 end

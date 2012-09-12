@@ -1,0 +1,69 @@
+<ul data-tabs="tabs" class="nav nav-tabs tabs">
+  <li class="active"><a data-toggle="tab" href="#t1"><span class="hidden-phone">Featured Topics</span><span class="visible-phone">Featured</span></a></li>
+  <li><a data-toggle="tab" href="#t2">Places</a></li>
+  <li><a data-toggle="tab" href="#t3">Topics</a></li>
+  <li><a data-toggle="tab" href="#t4">Names</a></li>
+  <li><a data-toggle="tab" href="#t5">Creators</a></li>
+</ul>
+
+<div id="home-tab-content" class="tab-content">
+
+  <div class="results_control alignright">
+
+    <div class="tab-description pull-left alignleft span6 nomar"></div>
+    <div class="span3 pull-right nomar">
+      <a class="sort_default btn btn-small" data-original-title="Sort by Count">#</a> <a class="sort_a-z btn btn-small" data-original-title="Sort by A-Z">A-Z</a> <a class="sort_z-a btn btn-small" data-original-title="Sort by Z-A">Z-A</a>
+      <div id="col_control" class="btn-group pull-right">
+        <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" data-original-title="Set Columns"><i class="icon-th"></i></a>
+        <ul class="dropdown-menu alignleft">
+          <li><a class="sort_col sort_col-1">1 column</a></li>
+          <li class="active"><a class="sort_col sort_col-2">2 columns</a></li>
+          <li><a class="sort_col sort_col-3">3 columns</a></li>
+        </ul>
+      </div>
+      <div id="featured_image_control">
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            Featured Topics
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <% @random_topics_to_choose_from.each{ |item|
+                %><%= '<li'.html_safe + ((@featured_home_page_topic == item) ? ' class="active"' : '').html_safe + '><a href="/?topic='.html_safe + item + '">'.html_safe + item + '</a></li>'.html_safe %><%
+            }
+            %>
+          </ul>
+        </div>
+        <%= link_to '<i class="icon-refresh"></i>'.html_safe, root_path, :class=>'pull-right btn btn-small', :'data-original-title'=>'Select a Random Topic' %>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+	<div id="t1" class="tab-pane active no-count no-cols no-sort yes-featured_image_control" data-description="A selection of items relating to the topic <strong><%= @featured_home_page_topic %></strong>.">
+    <%= render :partial => 'random_home_results' %>
+	</div>
+
+	<div id="t2" class="tab-pane" data-description="Geographical location such as a city, state, province, or reservation associated with the item.">
+		<ul class="zebra cols-two">
+      <%= render_browse_list('subject_geographic__facet') %>
+    </ul>
+	</div>
+
+  <div id="t3" class="tab-pane" data-description="Term describing what the item is of or about.">
+    <ul class="zebra cols-two">
+      <%= render_browse_list('topic_subject__facet') %>
+		</ul>
+	</div>
+	<div id="t4" class="tab-pane" data-description="Person, corporate body (such as a church), or event (such as a conference) that is represented in or by the item.">
+		<ul class="zebra cols-two">
+      <%= render_browse_list('subject_name__facet') %>
+    </ul>
+  </div>
+	<div id="t5" class="tab-pane" data-description="Person or corporate body (such as the publisher of a postcard) that is in some way responsible for the creation of the item.">
+    <ul class="zebra cols-two">
+      <%= render_browse_list('associated_name__facet') %>
+    </ul>
+  </div>
+</div>

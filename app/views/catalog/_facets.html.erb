@@ -1,4 +1,7 @@
 <% # main container for facets/limits menu -%>
-<div id="facets" class="<%= @configurator.name %> facets">
-  <%= render_facet_partials %>
-</div>
+<%
+if @document_list.length > 0
+  %><h4>Narrow These Results</h4><%
+end
+%>
+<%= render_facet_partials %>

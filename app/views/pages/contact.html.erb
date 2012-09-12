@@ -1,0 +1,43 @@
+<div class="container no-hero-mobile">
+  <div class="content">
+
+    <div class="row">
+      <div class="span12 columns">
+        <article class="entry">
+
+          <h2>Contact</h2>
+
+          <p>Viewers of the images in the collection may have many insights about their origins and their significance. We invite anyone to to share their comments and thoughts with the collection curators.</p>
+
+          <%= form_tag '#', :class => 'form-horizontal', :id => 'commentForm', :action => '#', :method => 'post' do %>
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label">Message</label>
+                <div class="controls">
+                <textarea class="span9" id="txtFeedback" name="contact[message]" cols="70" rows="6" required="required"></textarea>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Name (Optional)</label>
+                <div class="controls">
+                  <input class="span9" id="inpContactName" name="contact[name]" type="text" size="40">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Email (Optional)</label>
+                <div class="controls">
+                  <input class="span9" id="inpContactEmail" name="contact[email]" type="text" size="40">
+                </div>
+              </div>
+            </fieldset>
+            <p class="submit span11 alignright">
+            <input type="submit" value="Submit" class="btn btn-primary">
+            </p>
+          <% end %>
+
+        </article>
+      </div>
+    </div>
+
+  </div> <!--//content-->
+</div> <!-- /container -->
