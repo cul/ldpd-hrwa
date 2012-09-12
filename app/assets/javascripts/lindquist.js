@@ -181,7 +181,7 @@ jQuery(function($) {
 
     //Home page cycling image
       var images = ['0001.jpg', '0002.jpg', '0003.jpg', '0004.jpg', '0005.jpg', '0006.jpg', '0007.jpg', '0010.jpg', '0011.jpg'];
-      $('#inner-headline-outer').css({'background-image': 'url(/assets/slides/' + images[Math.floor(Math.random() * images.length)] + ')'});
+      //$('#inner-headline-outer').css({'background-image': 'url(/assets/slides/' + images[Math.floor(Math.random() * images.length)] + ')'});
 
     //Site-wide Modals
     $('#modal-gallery').on('load', function () {

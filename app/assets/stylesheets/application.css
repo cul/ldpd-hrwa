@@ -19,6 +19,7 @@
  *= require bootstrap.min
  *= require bootstrap-image-gallery.min
  *= require bootstrap-responsive
- *= require lindquist
+ *= require culcommon
+ *= require hrwa
  * removed: = require_tree .
 */
