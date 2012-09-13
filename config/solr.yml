@@ -10,16 +10,51 @@
 # jetty_path is only required for rake tasks that need to know
 # how to start up solr, generally for automated testing. 
 
+
+asf-hrwa-278: &asf-hrwa-278
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
+
 test_solr: &test_solr
-  url: "http://katana.cul.columbia.edu:8080/solr-3.6/lindquist_test"
-  
-prod_solr: &prod_solr
-  url: "http://macana.cul.columbia.edu:8080/solr-3.6/lindquist"
+  asf:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-asf-unit-test"
+  fsf:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
+  site_detail:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
+  asf-hrwa-278: *asf-hrwa-278
 
-development: *test_solr
+carter_solr: &carter_solr
+  asf:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf"
+  fsf:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
+  site_detail:
+    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
+  asf-hrwa-278: *asf-hrwa-278
+    
+harding_solr: &harding_solr
+  asf:
+    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf"
+  fsf:
+    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
+  site_detail:
+    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
+  asf-hrwa-278: *asf-hrwa-278
+
+vorpal_solr: &vorpal_solr
+  asf:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/asf"
+  fsf:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
+  site_detail:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
+  asf-hrwa-278: *asf-hrwa-278
+
+development: *carter_solr
 test: *test_solr
-production: *prod_solr
+production: *vorpal_solr
 
-lindquist_dev: *test_solr
-lindquist_test: *prod_solr
-lindquist_prod: *prod_solr
+hrwa_dev: *carter_solr
+hrwa_staging: *harding_solr
+hrwa_test: *vorpal_solr
+hrwa_prod: *vorpal_solr

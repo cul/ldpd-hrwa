@@ -5,12 +5,11 @@
   'rfr_id=info:sid/ocoins.info:generator&amp;' +
 
   'rft.url=' + CGI::escape(request.host + '/' + document.get('id')) + '&amp;' +
-  'rft.title=' + CGI::escape(document.get('item_title')) + '&amp;' +
+  'rft.title=' + CGI::escape(document.get('title')) + '&amp;' +
   'rft.type=' + CGI::escape('Web Page') + '&amp;' +
-  'rft.format=' + CGI::escape(document.get('format')) + '&amp;' +
-  'rft.source=' + CGI::escape('G.E.E. Lindquist American Photographs') + '&amp;' +
+  'rft.format=' + CGI::escape('Web Page') + '&amp;' +
+  'rft.source=' + CGI::escape('Human Rights Web Archive @ Columbia University') + '&amp;' +
   'rft.identifier=' + CGI::escape(document.get('id')) + '&amp;' +
-  'rft.date=' + CGI::escape(document.get('display_date_free_text')) + '&amp;' +
   'rft.language=English'
 
 %><span class="Z3988" title="<%= coins_data_to_print.html_safe %>"></span>
