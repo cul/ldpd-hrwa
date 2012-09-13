@@ -1,12 +1,36 @@
 <%= form_tag catalog_index_path, :method => :get, :id => 'topsearchform', :class => 'searchform' do %>
+<!--
   <input type="hidden" name="search" value="true" />
   <div class="input-append">
     <div id="top_q_wrapper" class="pull-left">
-      <%= text_field_tag :q, '', :class => 'span6 pull-left', :placeholder => 'Start a new search&hellip;'.html_safe, :id => 'q', :'data-original-title' => 'Search Lindquist', :'data-content' => 'Enter your search terms.', :rel => 'popover' %>
+      <%#= text_field_tag :q, '', :class => 'span6 pull-left', :placeholder => 'Start a new search&hellip;'.html_safe, :id => 'q', :'data-original-title' => 'Search Lindquist', :'data-content' => 'Enter your search terms.', :rel => 'popover' %>
     </div>
     <label class="pull-left add-on btn-inverse" id="top_form_submit_label" title="Submit your search." rel="tooltip">
       <a href="#" id="top_form_submit" class="submitss white"> <i class="icon-search icon-white"></i></a>
       <input type="submit" class="hidden invisible" />
     </label>
   </div>
+-->
+                                <input type="hidden" value="true" name="search">
+                                <div class="input-append">
+                                    <div id="top_q_wrapper" class="pull-left">
+                                        <div class="pull-right span1 btn-group nomar nopad">
+                                            <a data-original-title="Search Sources" title="Select Your Search Source" rel="tooltip" class="span1 pull-right btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown" id="advo_link" href="#"><span>Sites</span> <b class="caret"></b></a>
+                                            <div class="dropdown-menu">
+                                                <strong>Search:</strong>
+                                                <ul id="top_datasource" class="unstyled">
+                                                    <li><label class="radio"><input checked="checked" name="datasource" type="radio"><span>Sites</span></label></li>
+                                                    <li><label class="radio"><input name="datasource" type="radio"><span>Pages</span></label></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="span5 pull-left" data-content="Enter your search terms." data-original-title="Search the Libraries" id="q" name="q" placeholder="Start a new search&hellip;" value="">
+                                    </div>
+                                    <label data-original-title="Submit Your Search" rel="tooltip" id="top_form_submit_label" class="pull-left add-on btn-primary">
+                                        <a class="submitss white" id="top_form_submit" href="#"><i class="icon-search icon-white"></i></a>
+                                        <input type="submit" class="hidden invisible">
+                                    </label>
+                                </div>
+                                <input type="hidden" value="✓" name="utf8">
+                                <input type="hidden" value="true" name="search">
 <% end %>
