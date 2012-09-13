@@ -1,9 +1,9 @@
 body { padding-top:63px; color:#505050;
-  background-image: url('/main-bg.jpg');
-  background-attachment:fixed;
-  background-repeat: no-repeat;
+  background-image: url('map-dark-150.png');
+  background-attachment:absolute;
+  background-repeat: repeat-x;
   background-position:center top;
-  background-size: cover;
+  background-size: auto;
 }
 h6 { color:#777; }
 a, a.visited { color:rgb(165, 42, 42); }
@@ -196,7 +196,7 @@ margin-right: -10px;
 padding: 28px 10px;
 }
 #inner-headline h1, #inner-headline h1 a { color: white;
-font-size: 42px;
+font-size: 45px;
 letter-spacing: 9px;
 font-weight: normal;
 text-shadow: 1px 1px 1px #174785;
@@ -761,7 +761,7 @@ and (orientation: portrait) {
   #topbarformdiv { border:0!important; }
   .navbar-fixed-top .navbar-inner.fill { padding:0 10px 0px; margin-left:-10px;margin-right:-10px;}
   #inner-headline-outer  {margin-top:-1.4em; padding-top:0; }
-  #inner-headline { background:rgba(0,0,0,.3); text-align:center; }
+  #inner-headline { background:rgba(255,255,255,.3); text-align:center; }
   #inner-headline h1 { line-height:.8em; }
   #inner-headline h2 { line-height:1.0em; }
   #user_util_links {margin-top:2px;margin-bottom:5px; width:auto;width:120px;text-align:left;border:1px solid #AAAAAA;border-width:0px 1px;background-color:#F2F2F0;}
