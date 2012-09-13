@@ -1,16 +1,16 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-include HRWA::CollectionBrowseLists
+include Hrwa::CollectionBrowseLists
 
 def setup_unit_test_collection_browse_lists
   require_relative 'fixtures/collection_browse_lists_source_hardcoded'
-  include HRWA::CollectionBrowseListsSourceHardcoded
+  include Hrwa::CollectionBrowseListsSourceHardcoded
 end
 
 def load_tiny_collection_browse_lists
   # Load different fixture file with browse lists of short length for quick test of load
-  HRWA::CollectionBrowseLists.load_browse_lists( 'helpers/fixtures/collection_browse_lists_source_hardcoded_reload.rb' )  
+  Hrwa::CollectionBrowseLists.load_browse_lists( 'helpers/fixtures/collection_browse_lists_source_hardcoded_reload.rb' )
 end
 
 def expected_reloaded_browse_list_length
@@ -28,11 +28,11 @@ def browse_categories
          }
 end
 
-describe 'HRWA::CollectionBrowseLists' do
+describe 'Hrwa::CollectionBrowseLists' do
   before :all do
     setup_unit_test_collection_browse_lists
   end
-  
+
   describe '#*_browse_list methods' do
     browse_categories.each { | browse_category, count |
       it "retrieves full #{ browse_category } browse list" do
@@ -47,13 +47,13 @@ describe 'HRWA::CollectionBrowseLists' do
       expect{ browse_list( 'xxx' ) }.to raise_error( ArgumentError )
     end
   end
-  
+
   # Regression test for https://issues.cul.columbia.edu/browse/HRWA-290
   describe 'title_browse_list' do
     before :all do
       setup_unit_test_collection_browse_lists
     end
-    
+
     it 'returns list ordered by title__sort field' do
       titles = title_browse_list.keys
       titles[ 102 ].should == 'The Burma Campaign UK'
@@ -77,5 +77,5 @@ describe 'HRWA::CollectionBrowseLists' do
     }
 
   end
-  
+
 end

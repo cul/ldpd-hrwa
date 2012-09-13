@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module HRWA::CollectionBrowseListsSourceHardcoded
+module Hrwa::CollectionBrowseListsSourceHardcoded
   def geographic_focus_browse_list_items
     return {
               %q{[Global focus]} => 45,

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require 'hrwa/update/source_hard_coded_files.rb' 
+require 'hrwa/update/source_hard_coded_files.rb'
 describe 'hard coded options and browse lists file updater' do
   before :all do
     @filter_options_expected_file = 'spec/lib/fixtures/filter_options_source_hardcoded.rb'
@@ -13,7 +13,7 @@ describe 'hard coded options and browse lists file updater' do
 
     FileUtils.rm [ @collection_browse_lists_got_file, @filter_options_got_file ], :force => true
 
-    @sourceHardCodedFilesUpdater = HRWA::Update::SourceHardCodedFiles.new( @collection_browse_lists_got_file,
+    @sourceHardCodedFilesUpdater = Hrwa::Update::SourceHardCodedFiles.new( @collection_browse_lists_got_file,
                            @filter_options_got_file,
                            solr_url,
                          )
@@ -38,7 +38,7 @@ describe 'hard coded options and browse lists file updater' do
 
     FileUtils.compare_file( @filter_options_got_file, @filter_options_expected_file ).should == true
   end
-  
+
   it 'raises an ArgumentError when a invalid component is passed to update_rails_file()' do
     begin
       @sourceHardCodedFilesUpdater.update_rails_file( :invalid_component )

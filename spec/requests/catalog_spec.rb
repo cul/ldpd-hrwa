@@ -133,7 +133,7 @@ describe 'archive search' do
   end
 
   describe 'facets' do
-    configurator        = HRWA::ArchiveSearchConfigurator.new
+    configurator        = Hrwa::ArchiveSearchConfigurator.new
     blacklight_config   = Blacklight::Configuration.new
     config_proc         = configurator.config_proc
     blacklight_config.configure &config_proc
@@ -309,7 +309,7 @@ describe 'archive search' do
 end
 
 describe 'find site search' do
-  configurator        = HRWA::FindSiteSearchConfigurator.new
+  configurator        = Hrwa::FindSiteSearchConfigurator.new
   blacklight_config   = Blacklight::Configuration.new
   config_proc         = configurator.config_proc
   blacklight_config.configure &config_proc
@@ -384,7 +384,7 @@ describe 'find site search' do
 end
 
 describe 'site detail pages' do
-  configurator        = HRWA::SiteDetailConfigurator.new
+  configurator        = Hrwa::SiteDetailConfigurator.new
   blacklight_config   = Blacklight::Configuration.new
   config_proc         = configurator.config_proc
   blacklight_config.configure &config_proc
