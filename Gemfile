@@ -5,6 +5,8 @@ gem 'rails', '~> 3.2.3'
 gem 'sqlite3'
 gem 'mysql2', '0.3.11'
 gem 'nokogiri', '~> 1.5.2'
+gem 'rb-fsevent', '~> 0.9.1'
+gem 'factory_girl_rails', '3.2.0'
 
 # For Blacklight
 gem 'blacklight', '~> 3.4.0'
