@@ -18,8 +18,9 @@
  *= require_self
  *= require bootstrap.min
  *= require bootstrap-image-gallery.min
- *= require bootstrap-responsive
  *= require culcommon
+ *= require railssux
+ *= require bootstrap-responsive
  *= require hrwa
  * removed: = require_tree .
 */

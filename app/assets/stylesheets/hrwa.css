@@ -1,4 +1,4 @@
-body { padding-top:63px; color:#505050;
+body { color:#505050;
   background-image: url('map-dark-150.png');
   background-attachment:absolute;
   background-repeat: repeat-x;
@@ -174,7 +174,7 @@ background-repeat: none;
 background-position: center;
 background-size: 100% auto;
 padding: 2.0em 10px 1.0em 10px;
-margin-top: -0.6em;
+margin-top: .5em;
 margin-left: -10px;
 margin-right: -10px;
 margin-bottom: 0;
@@ -757,7 +757,7 @@ and (orientation: portrait) {
   #top_form_submit_label {display:none;}
   #topbarformdiv { border:0!important; }
   .navbar-fixed-top .navbar-inner.fill { padding:0 10px 0px; margin-left:-10px;margin-right:-10px;}
-  #inner-headline-outer  {margin-top:-1.4em; padding-top:0; }
+  #inner-headline-outer  {margin-top:0; padding-top:0.5em; }
   #inner-headline { background:rgba(255,255,255,.3); text-align:center; }
   #inner-headline h1 { line-height:.8em; }
   #inner-headline h2 { line-height:1.0em; }
