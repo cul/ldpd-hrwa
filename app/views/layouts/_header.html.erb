@@ -64,39 +64,72 @@
   <div class="container" id="outer-container">
 
 
-	  <div class="navbar navbar-fixed-top">
-		<div class="navbar-inner fill">
-		  <div class="container" id="navbar-container">
-		  <a class="btn btn-navbar" data-toggle="collapse" data-target="#search-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-         <div id="cul_top" class="span4">
-			<ul id="crowndown" class="nav pull-left">
-			  <li class="dropdown menu">
-				<% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
-        <%= link_to crown_img + ' Columbia University Libraries' + '<b class="caret"></b>'.html_safe, '#', :'data-toggle' => 'dropdown', :title => 'External Links @ Columbia', :class => 'dropdown-toggle menu' %>
-				<ul class="dropdown-menu menu-dropdown">
-				  <li><a href="http://columbia.edu">Columbia University - Home</a></li>
-				  <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
-				  <li><a title="Columbia University Libraries - Burke" href="http://library.columbia.edu/indiv/burke.html">The Burke Library</a></li>
-				</ul>
-			  </li>
-			</ul>
-         </div><!-- /cul_top -->
-			<h3 class='topbarlogo'>
-        <%= link_to 'HRWA', root_path, :title => 'Human Rights Web Archive at Columbia University', :rel => 'tooltip', :class => 'brand' %>
-      </h3>
+    <header>
+        <h1 class="hide">CUL - Header</h1>
+        <div id="topnavbar" class="navbar navbar-fixed-top">
+            <div class="navbar-inner fill">
+                <div id="navbar-container" class="container">
+                    <div id="user_profile_tablet" class="hidden-desktop pull-right btn-group">
+                        <a class="btn btn-inverse pull-right dropdown-toggle btn-navbar" rel="" data-original-title="User Settings" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="icon-user"></i> My Library Account</a></li>
+                            <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
+                            <li><a href="#"><i class="icon-off"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    <a data-target="#topnav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <nav>
+                        <div class="span4" id="cul_top">
+                            <ul class="nav pull-left" id="crowndown">
+                                <li class="dropdown menu">
+		<% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
+        <%= link_to crown_img + ' <span class="topbarlogo">Columbia University Libraries</span>'.html_safe + '<b class="caret"></b>'.html_safe, '#', :'data-toggle' => 'dropdown', :title => 'External Links @ Columbia', :class => 'dropdown-toggle menu' %>
+                                    <ul class="dropdown-menu menu-dropdown">
+                                        <li><a href="http://columbia.edu">Columbia University - Home</a></li>
+                                        <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="icon-time icon-white"></i> Library Hours</a></li>
+                                        <li><a href="#"><i class="icon-question-sign icon-white"></i> Ask a Librarian</a></li>
+                                        <li><a href="#"><i class="icon-heart icon-white"></i> Alumni &amp; Friends</a></li>
+                                        <li><a href="#"><i class="icon-briefcase icon-white"></i> Job Seekers</a></li>
+                                        <li><a href="#"><i class="icon-plane icon-white"></i> Visitors</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="icon-info-sign icon-white"></i> FAQ</a></li>
+                                        <li><a href="#"><i class="icon-flag icon-white"></i> Help</a></li>
+                                        <li class="divider"></li>
+                                        <li><a title="Columbia University Libraries - Avery" href="http://library.columbia.edu/indiv/avery.html">The Avery Library</a></li>
+                                        <li><a title="Columbia University Libraries - Burke" href="http://library.columbia.edu/indiv/burke.html">The Burke Library</a></li>
+                                        <li><a title="Columbia University Libraries - CCOH" href="http://library.columbia.edu/indiv/ccoh.html">Oral History</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /cul_top -->
+					<h3 class='topbarlogo'>
+        <%= link_to 'HRWA', root_path, :title => 'Human Rights Web Archive at Columbia University', :rel => 'tooltip', :class => 'brand hidden-tablet' %>
+        <%= link_to 'Human Rights Web Archive', root_path, :title => 'Human Rights Web Archive at Columbia University', :rel => 'tooltip', :class => 'brand visible-tablet' %>
+					</h3>
+<!--
+                    <h1 class="topbarlogo">
+                        <a data-original-title="Columbia University Libraries" rel="" class="brand visible-tablet" href="/">Columbia University Libraries</a>
+                        <a data-original-title="Columbia University Libraries" rel="" class="brand visible-phone" href="/">LibraryWeb</a>
+                    </h1>
+-->
+                    </nav>
 
-		<div id="search-collapse" class="nav-collapse collapse">
-			<div id="topbarformdiv" class="navbar-search pull-right">
+                    <div id="topnav-collapse" class="nav-collapse collapse">
+                        <!-- TODO: Clean up unnecessary classes.-->
+                        <div class="navbar-search pull-right" id="topbarformdiv">
 				<%= render :partial=>'/layouts/search_form' %>
-			</div>
-		</div> <!-- //.nav-collapse collapse -->
-		  </div>
-		</div>
-	  </div> <!-- //.navbar -->
+                        </div>
+                    </div> <!-- //.nav-collapse collapse -->
+                </div>
+            </div>
+        </div> <!-- /#topnavbar.navbar-fixed-top -->
+    </header>
 
 
 
