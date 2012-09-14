@@ -72,32 +72,42 @@ jQuery(function($) {
     return false;
   });
 
-  /* keep sources dropdown open even after radio click */ /* NOT WORKING */
+
+  /* #q keydown */
+	if ($(window).width() > 767 || $(window).height() > 767) {
+	  $('#q').bind('keydown', function(){
+	    $('#advo_link').parent().addClass('open');
+	  });
+	  $('#q_home').bind('keydown', function(){
+	    $('#home_advo_link').parent().addClass('open');
+	  });
+	}
+  /* keep sources dropdown open even after radio click */ 
   $('#top_q_wrapper .dropdown-menu input, #top_q_wrapper .dropdown-menu label, #home_q_wrapper .dropdown-menu input, #home_q_wrapper .dropdown-menu label').click(function(e) {
     e.stopPropagation();
   });
 
   /***** search datasource switcher *****/
   var hcurrentradio= $("#clio_home_search input[name='datasource']:checked")[0];
-        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').text()); //for firefox
+        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').attr('data-shorttitle')); //for firefox
   $('#clio_home_search input[name=datasource]').change(function() {
     var hnewradio= $("#clio_home_search input[name='datasource']:checked")[0];
     if (hnewradio===hcurrentradio) {
         return;
     } else {
-        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').text());
+        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').attr('data-shorttitle'));
         hcurrentradio= hnewradio;
         hcurrentradio.checked= true;
     }
   });
   var currentradio= $("input[name='datasource']:checked")[0];
-        $('#advo_link span').text($("input[name='datasource']:checked").next('span').text()); //for firefox
+        $('#advo_link span').text($("input[name='datasource']:checked").next('span').attr('data-shorttitle')); //for firefox
   $('input[name=datasource]').change(function() {
     var newradio= $("input[name='datasource']:checked")[0];
     if (newradio===currentradio) {
         return;
     } else {
-        $('#advo_link span').text($("input[name='datasource']:checked").next('span').text());
+        $('#advo_link span').text($("input[name='datasource']:checked").next('span').attr('data-shorttitle'));
         currentradio= newradio;
         currentradio.checked= true;
     }
