@@ -25,6 +25,9 @@ gem 'sass-rails', '3.2.5'
 gem 'spreadsheet', '0.6.8'
 gem 'sqlite3', '1.3.6'
 gem 'therubyracer', '0.10.1'
+
+gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git" # soap gem to interface with hrwa jira project
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
