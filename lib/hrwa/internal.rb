@@ -8,7 +8,7 @@ module HRWA::Internal
   FEEDBACK_FORM_URL       = '/internal_feedback'
   SEPARATOR               =
     '=========================================================='    
-  
+
   def feedback_submit( user_params = params )
     debugger
     @submission_response = ''

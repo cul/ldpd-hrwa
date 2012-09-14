@@ -52,19 +52,18 @@ class InternalController < ApplicationController
         @submission_response << %Q{<a href="#{ FEEDBACK_FORM_URL }">#{ FEEDBACK_FORM_URL }"</a><br/>}
       end
     }
-    
-    # Construct header
-    email_header              = {}
-    email_header[ 'to' ]      = HRWA_JIRA_EMAIL_ADDRESS
-    email_header[ 'cc' ]      = CC_EMAIL_ADDRESS
-    email_header[ 'subject' ] = "BUG: #{ params[ :summary ] }"
-    # Send the email
-    email_sent_successfully = send_jira_email( jira_email_content,
-                                               email_header )
+
+
+    # setup JIRA soap instance
+    server = JIRA::JIRAService.new APP_CONFIG["jira"]["host"]
+    server.login(APP_CONFIG["jira"]["username"], APP_CONFIG["jira"]["password"])
+
+    # create the ticket
+    jira_ticket_create = send_ticket_to_jira(server, params, environment_message)
                                                
     # Report to user
-    if email_sent_successfully
-      @submission_status   = 'Jira issue created'
+    if jira_ticket_create
+      @submission_status   = "Jira issue [#{jira_ticket_create.key}] created"
       @submission_response = jira_email_content
     else
       @submission_status = 'Creation of Jira issue failed'
@@ -140,4 +139,37 @@ class InternalController < ApplicationController
     }
     mail.deliver!
   end
+
+private
+
+  def send_ticket_to_jira(server,params,environment_message)
+    project_id = server.project_with_key(APP_CONFIG["jira"]["project"]).id
+    issue_type = server.issue_types_for_project_with_id(project_id).detect { |it| it.name == params['issueType']} # find issue type
+    priority   = server.priorities.detect { |pr| pr.name == params['priority']} # find priority
+
+    found_component = server.components_for_project_with_key(APP_CONFIG["jira"]["project"]).select { |cmp| cmp.name == params['components']} # find component
+
+    issue = JIRA::Issue.new()
+    issue.priority_id = priority.id
+    issue.summary = params["summary"] # set summary
+    issue.project_name = APP_CONFIG["jira"]["project"]
+    issue.reporter = params['reporter'] #set reporter
+    issue.assignee = params['assignee'] unless params['assignee'].match(/unassigned/i)  # set assignee if the parameter points to an user, otherwise don't
+    issue.components = found_component if found_component # set component
+
+    # set custom fields (just environment in this case)
+    custom_fields = server.custom_fields
+    custom_fields.each do |cf|
+      if cf.name.match(/environment/)
+        environment_field = JIRA::CustomFieldValue.new()
+        environment_field.id = cf.id
+        environment_field.values.push(environment_message)
+        issue.custom_field_values.push(environment_field)
+      end
+    end
+    returned_issue = server.create_issue_with_issue(issue)
+  end
+
+
+
 end
