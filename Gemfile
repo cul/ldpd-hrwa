@@ -63,5 +63,6 @@ group :test, :development do
   # To use debugger
   # ruby-debug19 is tricky to install.  Follow instructions from here:
   # https://issues.cul.columbia.edu/browse/HRWA-320
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'linecache19', :git => 'https://github.com/mark-moseley/linecache.git' 
+  gem 'ruby-debug-base19', :git => 'https://github.com/mark-moseley/ruby-debug.git'
 end
