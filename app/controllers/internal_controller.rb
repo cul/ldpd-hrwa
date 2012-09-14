@@ -3,6 +3,7 @@ require 'mail'
 require 'pp'
 
 class InternalController < ApplicationController
+
   HRWA_JIRA_EMAIL_ADDRESS = 'hrwa_portal@libraries.cul.columbia.edu'
   CC_EMAIL_ADDRESS        = 'da217@columbia.edu'
   FEEDBACK_FORM_URL       = '/internal_feedback'
@@ -142,32 +143,20 @@ class InternalController < ApplicationController
 
 private
 
+  # creates an issue based on the parameters supplied and pushes it to the server
   def send_ticket_to_jira(server,params,environment_message)
-    project_id = server.project_with_key(APP_CONFIG["jira"]["project"]).id
-    issue_type = server.issue_types_for_project_with_id(project_id).detect { |it| it.name == params['issueType']} # find issue type
-    priority   = server.priorities.detect { |pr| pr.name == params['priority']} # find priority
-
     found_component = server.components_for_project_with_key(APP_CONFIG["jira"]["project"]).select { |cmp| cmp.name == params['components']} # find component
-
     issue = JIRA::Issue.new()
-    issue.priority_id = priority.id
+    issue.type_id = params['issueType'] # set issue type
+    issue.priority_id = params['priority'] # set priority
     issue.summary = params["summary"] # set summary
-    issue.project_name = APP_CONFIG["jira"]["project"]
-    issue.reporter = params['reporter'] #set reporter
-    issue.assignee = params['assignee'] unless params['assignee'].match(/unassigned/i)  # set assignee if the parameter points to an user, otherwise don't
+    issue.project_name = APP_CONFIG["jira"]["project"] # set the project
+    issue.reporter_username = params['reporter'] # set reporter
+    issue.assignee_username = params['assignee'] unless params['assignee'].match(/unassigned/i)  # set assignee if the parameter points to an user, otherwise don't
     issue.components = found_component if found_component # set component
-
-    # set custom fields (just environment in this case)
-    custom_fields = server.custom_fields
-    custom_fields.each do |cf|
-      if cf.name.match(/environment/)
-        environment_field = JIRA::CustomFieldValue.new()
-        environment_field.id = cf.id
-        environment_field.values.push(environment_message)
-        issue.custom_field_values.push(environment_field)
-      end
-    end
-    returned_issue = server.create_issue_with_issue(issue)
+    issue.description = params['description'] if !params['description'].nil? # set the description, unless it's empty
+    issue.environment = environment_message # might want to fix this later to map to several custom fields rather than one, seems a bit messy
+    returned_issue = server.create_issue_with_issue(issue) # create the issue on the server
   end
 
 
