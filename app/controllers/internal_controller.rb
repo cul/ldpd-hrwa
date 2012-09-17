@@ -145,7 +145,7 @@ private
 
   # creates an issue based on the parameters supplied and pushes it to the server
   def send_ticket_to_jira(server,params,environment_message)
-    found_component = server.components_for_project_with_key(APP_CONFIG["jira"]["project"]).select { |cmp| cmp.name == params['components']} # find component
+    found_component = server.components_for_project_with_key(APP_CONFIG["jira"]["project"]).select { |cmp| cmp.id == params['components']} # find component
     issue = JIRA::Issue.new()
     issue.type_id = params['issueType'] # set issue type
     issue.priority_id = params['priority'] # set priority
