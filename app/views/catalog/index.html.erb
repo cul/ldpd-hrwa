@@ -30,7 +30,7 @@
             </form>
 
             <span id="echo_query">
-              <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="red strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
+              <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="green strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
             </span>
         </div>
         <div class="row">
