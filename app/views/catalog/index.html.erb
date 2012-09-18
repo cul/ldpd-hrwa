@@ -13,7 +13,13 @@
 
       <div id="primary" class="span9">
         <div class="pageEntriesInfo">
-          <%= render_pagination_info @response, :entry_name=>'item' %>
+          <%#= render_pagination_info @response, :entry_name=>'item' %>
+		  <% if(@search_type == 'archive') %>
+		    <%= render_pagination_info @response, :entry_name=>'Pages' %>  
+		  <% else %>
+		    <%= render_pagination_info @response, :entry_name=>'Sites' %>
+		  <% end %>
+
             <%#=link_to 'Start Over', catalog_index_path, :class=>'btn btn-mini pull-right' %>
             <span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span>
 
