@@ -12,16 +12,29 @@
         <%# Note from Blacklight people: this should be in a partial -%>
         <%# Hrwa note: Keeping code below in this file to better-maintain blacklight upgrade ability. Will move this to a partial when Blacklight does. %>
         <div id="document" class="<%= render_document_class %>">
-          <div id="doc_<%= @document.id.to_s.parameterize %>" data-toggle="modal-gallery" data-target="#modal-gallery">
+
+			<h3><%= @document.get('title') %></h3>
+
             <%= item_page_entry_info if results_view && ! folder_view %>
-            <%= render_document_heading.html_safe %>
-            <div id="item_level_back_prev_next_select_wrapper">
+
+			<div class="clearfix"></div>
+
               <% if ! folder_view %>
                 <%= link_back_to_catalog(:label=>'<i class="icon-backward"></i>'.html_safe, :link_to_opts => {:rel => 'tooltip', :title => 'Back to Search Results', :class => 'btn btn-mini'}) if results_view %>
                 <%= render 'previous_next_doc' if results_view %>
               <% else %>
                 <%= link_to('<i class="icon-backward"></i>'.html_safe, folder_index_path, {:rel => 'tooltip', :title => 'Back to Selected Items', :class => 'btn btn-mini'}) %>
               <% end %>
+
+          <%= render_document_partial @document, :show %>
+        </div><!--/#document-->
+
+      </div><!--/#primary-->
+
+      <div id="secondary" class="span4">
+        <div class="document">
+          <div id="doc_<%= @document.id.to_s.parameterize %>" data-toggle="modal-gallery" data-target="#modal-gallery">
+            <div id="item_level_back_prev_next_select_wrapper">
 
               <% # bookmark/folder functions -%>
               <%= render_show_doc_actions @document %>
@@ -32,17 +45,6 @@
             <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
 
           </div>
-        </div><!--/#document-->
-
-      </div><!--/#primary-->
-
-      <div id="secondary" class="span4">
-        <div class="document">
-
-          <h6 id="show_item_information_title">Site Information</h6>
-
-
-          <%= render_document_partial @document, :show %>
 
         </div>
         <div class="tools"><%= render :partial => 'show_tools' %></div>

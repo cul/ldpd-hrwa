@@ -576,6 +576,9 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
   list-style:none;
 }
 
+ul#previousNextDocument {
+  list-style:none;
+}
 #item_level_back_prev_next_select_wrapper #previousNextDocument a {
   margin-right:0px;
   margin-left:10px;
