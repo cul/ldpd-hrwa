@@ -3,7 +3,7 @@
 <div class="row single_citation">
   <div class="span2">
     <a href="<%= catalog_path({:id => document.get('id'), 'from_search' => false}) %>">
-      <img class="thumbnail" alt="<%= document.get('item_title') %>" data-info="<%= document.get('item_title') %>" src="<%= get_image_uri(document, 'recto', 'thumb') %>"/>
+      <img class="thumbnail" alt="<%= document.get('item_title') %>" data-info="<%= document.get('item_title') %>" src="<%= get_image_uri(document, 640) %>"/>
     </a>
   </div>
   <div class="span10">

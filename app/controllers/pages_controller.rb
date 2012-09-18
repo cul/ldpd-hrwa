@@ -5,10 +5,7 @@ class PagesController < ApplicationController
 
   include Hrwa::MailHelper
 
-  def about_the_collection
-  end
-
-  def about_gee_lindquist
+  def about
   end
 
   def terms_of_use

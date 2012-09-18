@@ -29,7 +29,7 @@
               <div class="clear"></div>
             </div>
 
-            <div class="thumbnail"><img src="<%= get_image_uri(@document, 'recto', 'medium') %>" alt="<%= @document.get('item_title') %>" /></div>
+            <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
 
             <div id="show_image_download_btns">
               <div id="download_front_image_button_group" class="btn-group">
@@ -63,17 +63,17 @@
               </div>
               <% end %>
               <div class="btn-group view_full_size_image_btn_wrapper">
-                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 'recto', 'large') %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Front</a>
+                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Front</a>
               </div>
               <% unless @document.get('verso_image_s').blank? %>
               <div class="btn-group view_full_size_image_btn_wrapper">
-                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 'verso', 'large') %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Back</a>
+                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Back</a>
               </div>
               <% end %>
 
-              <!-- <a id="view_full_size_image_btn" class="btn btn-mini" href="<%= get_image_uri(@document, 'recto', 'large') %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full Size Image</a> -->
+              <!-- <a id="view_full_size_image_btn" class="btn btn-mini" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full Size Image</a> -->
               <!--
-              <a href="<%= get_image_uri(@document, 'recto', 'large') %>" rel="gallery" class="hidden-phone btn btn-mini current_image_link" title="<%=  @document.get('item_title') %>" <% if( ! @document.get('verso_image_s').blank? ) %>data-flipside="<%= get_image_uri(@document, 'verso', 'medium') %><% end%>">
+              <a href="<%= get_image_uri(@document, 640) %>" rel="gallery" class="hidden-phone btn btn-mini current_image_link" title="<%=  @document.get('item_title') %>" <% if( ! @document.get('verso_image_s').blank? ) %>data-flipside="<%= get_image_uri(@document, 640) %><% end%>">
                 <i class="icon-zoom-in"></i>
               </a>
               -->
@@ -91,14 +91,14 @@
 
           <div class="row">
             <div class="span2 pull-left">
-              <a class="thumbnail thumbnail-active sb_thumb" href="<%= get_image_uri(@document, 'recto', 'large') %>" />
-                <img src="<%= get_image_uri(@document, 'recto', 'thumb') %>" alt="<%= @document.get('item_title') %>" />
+              <a class="thumbnail thumbnail-active sb_thumb" href="<%= get_image_uri(@document, 640) %>" />
+                <img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" />
               </a>
             </div>
             <div class="span2 pull-right nomar">
               <% unless @document.get('verso_image_s').blank? %>
-              <a class="thumbnail sb_thumb" href="<%= get_image_uri(@document, 'verso', 'large') %>" />
-                <img src="<%= get_image_uri(@document, 'verso', 'thumb') %>" alt="<%= @document.get('item_title') %>" />
+              <a class="thumbnail sb_thumb" href="<%= get_image_uri(@document, 640) %>" />
+                <img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" />
               </a>
               <% end %>
             </div>

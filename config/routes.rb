@@ -9,8 +9,8 @@ Hrwa::Application.routes.draw do
   Blacklight.add_routes(self)
 
   # Pages controller
-  match '/about_the_collection'   => 'pages#about_the_collection'
-  match '/about_gee_lindquist'    => 'pages#about_gee_lindquist'
+  match '/about'                  => 'pages#about'
+  match '/faq'                    => 'pages#faq'
   match '/contact'                => 'pages#contact'
   match '/problem_report'         => 'pages#problem_report'
   match '/terms_of_use'           => 'pages#terms_of_use'

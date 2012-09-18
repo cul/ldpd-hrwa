@@ -1,9 +1,10 @@
 <ul data-tabs="tabs" class="nav nav-tabs tabs">
-  <li class="active"><a data-toggle="tab" href="#t1"><span class="hidden-phone">Featured Topics</span><span class="visible-phone">Featured</span></a></li>
-  <li><a data-toggle="tab" href="#t2">Places</a></li>
-  <li><a data-toggle="tab" href="#t3">Topics</a></li>
-  <li><a data-toggle="tab" href="#t4">Names</a></li>
-  <li><a data-toggle="tab" href="#t5">Creators</a></li>
+  <li class="active"><a data-toggle="tab" href="#t1"><span class="hidden-phone">Featured Subjects</span><span class="visible-phone">Featured</span></a></li>
+  <li><a data-toggle="tab" href="#t2">Titles</a></li>
+  <li><a data-toggle="tab" href="#t3">URLs</a></li>
+  <li><a data-toggle="tab" href="#t4">Subjects</a></li>
+  <li><a data-toggle="tab" href="#t5">Places</a></li>
+	<li><a data-toggle="tab" href="#t6">Languages</a></li>
 </ul>
 
 <div id="home-tab-content" class="tab-content">
@@ -24,46 +25,51 @@
       <div id="featured_image_control">
         <div class="btn-group pull-right">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            Featured Topics
+            Featured Subjects
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <% @random_topics_to_choose_from.each{ |item|
-                %><%= '<li'.html_safe + ((@featured_home_page_topic == item) ? ' class="active"' : '').html_safe + '><a href="/?topic='.html_safe + item + '">'.html_safe + item + '</a></li>'.html_safe %><%
+            <% @random_subjects_to_choose_from.each{ |item|
+                %><%= '<li'.html_safe + ((@featured_home_page_subject == item) ? ' class="active"' : '').html_safe + '><a href="/?subject='.html_safe + item + '">'.html_safe + item + '</a></li>'.html_safe %><%
             }
             %>
           </ul>
         </div>
-        <%= link_to '<i class="icon-refresh"></i>'.html_safe, root_path, :class=>'pull-right btn btn-small', :'data-original-title'=>'Select a Random Topic' %>
+        <%= link_to '<i class="icon-refresh"></i>'.html_safe, root_path, :class=>'pull-right btn btn-small', :'data-original-title'=>'Select a Random Subject' %>
       </div>
     </div>
 
     <div class="clear"></div>
   </div>
 
-	<div id="t1" class="tab-pane active no-count no-cols no-sort yes-featured_image_control" data-description="A selection of items relating to the topic <strong><%= @featured_home_page_topic %></strong>.">
+	<div id="t1" class="tab-pane active no-count no-cols no-sort yes-featured_image_control" data-description="A selection of items relating to the subject <strong><%= @featured_home_page_subject %></strong>.">
     <%= render :partial => 'random_home_results' %>
 	</div>
 
-	<div id="t2" class="tab-pane" data-description="Geographical location such as a city, state, province, or reservation associated with the item.">
+	<div id="t2" class="tab-pane" data-description="Website titles.">
 		<ul class="zebra cols-two">
-      <%= render_browse_list('subject_geographic__facet') %>
+      <%= render_browse_list('title__facet') %>
     </ul>
 	</div>
 
-  <div id="t3" class="tab-pane" data-description="Term describing what the item is of or about.">
+  <div id="t3" class="tab-pane" data-description="Website URLs.">
     <ul class="zebra cols-two">
-      <%= render_browse_list('topic_subject__facet') %>
+      <%= render_browse_list('original_urls') %>
 		</ul>
 	</div>
-	<div id="t4" class="tab-pane" data-description="Person, corporate body (such as a church), or event (such as a conference) that is represented in or by the item.">
+	<div id="t4" class="tab-pane" data-description="Subjects.">
 		<ul class="zebra cols-two">
-      <%= render_browse_list('subject_name__facet') %>
+      <%= render_browse_list('subject__facet') %>
     </ul>
   </div>
-	<div id="t5" class="tab-pane" data-description="Person or corporate body (such as the publisher of a postcard) that is in some way responsible for the creation of the item.">
+	<div id="t5" class="tab-pane" data-description="Geographic focus.">
     <ul class="zebra cols-two">
-      <%= render_browse_list('associated_name__facet') %>
+      <%= render_browse_list('geographic_focus__facet') %>
+    </ul>
+  </div>
+	<div id="t6" class="tab-pane" data-description="Language of website.">
+    <ul class="zebra cols-two">
+      <%= render_browse_list('language__facet') %>
     </ul>
   </div>
 </div>

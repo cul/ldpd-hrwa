@@ -5,7 +5,11 @@ module Hrwa::BrowseListRenderHelper
 
   def render_browse_list(field_name)
 
-    valid_field_types = ['subject_geographic__facet', 'topic_subject__facet', 'associated_name__facet', 'subject_name__facet']
+    valid_field_types = [ 'title__facet',
+                          'original_urls',
+                          'subject__facet',
+                          'geographic_focus__facet',
+                          'language__facet' ]
     if( ! valid_field_types.include?(field_name) )
       Rails.logger.debug('Invalid field given to render_browse_list')
       return 'Invalid field'

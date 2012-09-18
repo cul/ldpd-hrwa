@@ -5,17 +5,32 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
 
-  before_filter :_check_for_debug_mode
+  before_filter :_check_for_debug_mode, :_configure_by_controller_action
+
+  def _configure_by_controller_action
+
+    case params[:action]
+    when 'index'
+    when 'advanced'
+      _configure_by_search_type
+    when 'show'
+    when 'update'
+      _configure_by_search_type('site_detail')
+    when 'hrwa_home'
+      _configure_by_search_type('find_site')
+    else
+      # We don't ever want this code to run
+      raise 'Search type should not be nil! _configure_by_search_type is not being called for this catalog controller action.'
+    end
+
+  end
 
   # get search results from the solr index
   def index
-    # TODO: Remove hard-coded 'find_site' search_type below and use the no-argument version of _configure_by_search_type instead
-    _configure_by_search_type('find_site')
     _do_search
   end
 
   def advanced
-    _configure_by_search_type
     _do_advanced_search_preprocessing
     _do_search
   end
@@ -23,40 +38,35 @@ class CatalogController < ApplicationController
   # display hrwa_home page, and grab 12 random results from Solr
   def hrwa_home
 
-    _configure_by_search_type(:find_site)
-
     number_of_items_to_show = 12
 
-    # add a new solr facet query ('fq') parameter that performs a radom topic facet search
-    @random_topics_to_choose_from =  [ 'School buildings',
-                                      'Indian women',
-                                      'Indian men',
-                                      'Indian students',
-                                      'Automobiles',
-                                      'Winter',
-                                      'Missionaries',
-                                      'Tipis',
-                                      'Lakes',
-                                      'Sports',
-                                      'Horses' ]
+    # add a new solr facet query ('fq') parameter that performs a radom subject facet search
+    @random_subjects_to_choose_from =  [ 'Civil rights',
+                                      'Democracy',
+                                      'Ombudspersons',
+                                      'Civil society',
+                                      'Transitional justice',
+                                      'Indigenous peoples',
+                                      'Torture',
+                                      'Truth commissions']
 
-    # If a topic has been specified in the query string, use it.  Otherwise choose something random.
-    if(params[:topic] && @random_topics_to_choose_from.include?(params[:topic]))
-       @featured_home_page_topic = params[:topic]
+    # If a subject has been specified in the query string, use it.  Otherwise choose something random.
+    if(params[:subject] && @random_subjects_to_choose_from.include?(params[:subject]))
+       @featured_home_page_subject = params[:subject]
     else
-      @featured_home_page_topic = (@random_topics_to_choose_from.shuffle)[0] # Get random item without reordering the hash
+      @featured_home_page_subject = (@random_subjects_to_choose_from.shuffle)[0] # Get random item without reordering the hash
     end
 
     custom_solr_search_params =  {
                                     :rows => number_of_items_to_show,
-                                    :fq => '{!raw f=topic_subject__facet}' + @featured_home_page_topic
+                                    :fq => '{!raw f=subject__facet}' + @featured_home_page_subject
                                   }
 
     (@response, @document_list) = get_search_results(params, custom_solr_search_params)
 
     custom_blacklight_search_params = {
                                         :per_page => number_of_items_to_show,
-                                        :f=>{"topic_subject__facet"=>[@featured_home_page_topic]},
+                                        :f=>{"subject__facet"=>[@featured_home_page_subject]},
                                         :total => @response.total
                                       }
 

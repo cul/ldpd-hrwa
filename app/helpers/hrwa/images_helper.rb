@@ -1,11 +1,13 @@
 # -*- encoding : utf-8 -*-
 module Hrwa::ImagesHelper
 
-  #Valid size values: 'thumb', 'medium', 'large'
-  #Valid recto_or_verso values: 'recto', 'verso'
-  #Valid disposition values: 'view', 'download'
-  def get_image_uri(document, recto_or_verso, size, disposition='view')
-    return images_path(:pid=>document.get(recto_or_verso + '_image_s'), :size=>size, :disposition=>disposition) + '.png'
+  #Valid size values: 140, 640
+  def get_image_uri(document, size)
+    if(request.host == 'localhost')
+      return 'http://hrwa-test.cul.columbia.edu/hrwa_images/website_screenshots/' + size.to_s + 'px/' + document.get('id') + '.jpeg'
+    else
+      return '/hrwa_images/website_screenshots/' + size.to_s + 'px/' + document.get('id') + '.jpeg'
+    end
   end
 
 end
