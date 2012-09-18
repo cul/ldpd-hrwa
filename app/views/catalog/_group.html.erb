@@ -44,7 +44,8 @@
     %>
       </dd>
 
-      <dd class="asf hl_snippet invisible">
+      <%# <dd class="asf hl_snippet invisible"> %>
+      <dd class="asf hl_snippet">
     <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
       </dd>
 
