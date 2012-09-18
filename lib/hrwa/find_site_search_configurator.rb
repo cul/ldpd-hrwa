@@ -87,7 +87,7 @@ class HRWA::FindSiteSearchConfigurator
 
         config.add_facet_field 'subject__facet',
                                :label => 'Subject',
-                               :limit => 10
+                               :limit => 5
 
         # Have BL send all facet field names to Solr, which has been the default
         # previously. Simply remove these lines if you'd rather use Solr request
