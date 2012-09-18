@@ -6,8 +6,15 @@
               <div class="dropdown-menu">
                   <strong>Search:</strong>
                   <ul id="top_datasource" class="unstyled">
-                      <li><label class="radio"><input checked="checked" type="radio" name="search_type" value="find_site"><span data-shorttitle="Sites">Find a Site</span></label></li>
-                      <li><label class="radio"><input type="radio" name="search_type" value="archive"><span data-shorttitle="Pages">Search Through Archived Pages</span></label></li>
+                      <%
+                        if params[:search_type] && params[:search_type] == 'archive'
+                          checked_radio_button = 'archive'
+                        else
+                          checked_radio_button = 'find_site'
+                        end
+                      %>
+                      <li><label class="radio"><input type="radio" name="search_type" value="find_site" <%= 'checked="checked"' if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Find a Site</span></label></li>
+                      <li><label class="radio"><input type="radio" name="search_type" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Search Through Archived Pages</span></label></li>
                       <li class="divider"></li>
                   </ul>
                   <p><a id="cliobeta_exit" href="http://cliobeta.columbia.edu" rel="tooltip" title="Goto CLIObeta"><img src="http://library.columbia.edu/content/libraryweb/index/jcr%3acontent/bottomCell/textimage/image.img.png/1332439303934.png" alt="cliobeta"><i class="icon-arrow-right"></i></a></p>

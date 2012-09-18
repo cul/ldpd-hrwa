@@ -78,36 +78,33 @@ jQuery(function($) {
 	  $('#q').bind('keydown', function(){
 	    $('#advo_link').parent().addClass('open');
 	  });
-	  $('#q_home').bind('keydown', function(){
-	    $('#home_advo_link').parent().addClass('open');
-	  });
 	}
-  /* keep sources dropdown open even after radio click */ 
+  /* keep sources dropdown open even after radio click */
   $('#top_q_wrapper .dropdown-menu input, #top_q_wrapper .dropdown-menu label, #home_q_wrapper .dropdown-menu input, #home_q_wrapper .dropdown-menu label').click(function(e) {
     e.stopPropagation();
   });
 
-  /***** search datasource switcher *****/
-  var hcurrentradio= $("#clio_home_search input[name='datasource']:checked")[0];
-        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').attr('data-shorttitle')); //for firefox
-  $('#clio_home_search input[name=datasource]').change(function() {
-    var hnewradio= $("#clio_home_search input[name='datasource']:checked")[0];
+  /***** search search_type switcher *****/
+  var hcurrentradio= $("#clio_home_search input[name='search_type']:checked")[0];
+        $('#advo_link span').text($("#clio_home_search input[name='search_type']:checked").next('span').attr('data-shorttitle')); //for firefox
+  $('#clio_home_search input[name=search_type]').change(function() {
+    var hnewradio= $("#clio_home_search input[name='search_type']:checked")[0];
     if (hnewradio===hcurrentradio) {
         return;
     } else {
-        $('#home_advo_link span').text($("#clio_home_search input[name='datasource']:checked").next('span').attr('data-shorttitle'));
+        $('#advo_link span').text($("#clio_home_search input[name='search_type']:checked").next('span').attr('data-shorttitle'));
         hcurrentradio= hnewradio;
         hcurrentradio.checked= true;
     }
   });
-  var currentradio= $("input[name='datasource']:checked")[0];
-        $('#advo_link span').text($("input[name='datasource']:checked").next('span').attr('data-shorttitle')); //for firefox
-  $('input[name=datasource]').change(function() {
-    var newradio= $("input[name='datasource']:checked")[0];
+  var currentradio= $("input[name='search_type']:checked")[0];
+        $('#advo_link span').text($("input[name='search_type']:checked").next('span').attr('data-shorttitle')); //for firefox
+  $('input[name=search_type]').change(function() {
+    var newradio= $("input[name='search_type']:checked")[0];
     if (newradio===currentradio) {
         return;
     } else {
-        $('#advo_link span').text($("input[name='datasource']:checked").next('span').attr('data-shorttitle'));
+        $('#advo_link span').text($("input[name='search_type']:checked").next('span').attr('data-shorttitle'));
         currentradio= newradio;
         currentradio.checked= true;
     }
