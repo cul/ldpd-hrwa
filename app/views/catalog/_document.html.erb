@@ -1,3 +1,5 @@
+<% item_count_id = document_counter + 1 + @response.params[:start].to_i %>
+
 <% performing_a_search = (params[:controller] == 'catalog' && params[:action] == 'index') || (params[:controller] == 'catalog' && params[:action] == 'hrwa_home') %>
 <% folder_view = (params[:controller] == 'folder' && params[:action] == 'index') %>
 <%
@@ -8,25 +10,31 @@
   thumbnail_link_html = link_to_document document, :label=>thumbnail.html_safe, :counter => (document_counter + 1 + @response.params[:start].to_i), :class => 'thumbnail thumb_link', :results_view => performing_a_search, :folder_view => folder_view
 %>
 
-<li class="span3">
-  <% # container for a single doc -%>
-  <article class="post thumbnail document <%= render_document_class document %>">
-    <%= thumbnail_link_html %>
-    <div class="caption">
-      <% # header bar for doc items in index view -%>
-      <div class="documentHeader">
-          <% # bookmark/folder functions for items/docs -%>
-          <%= render_index_doc_actions document %>
-          <% # main title container for doc partial view -%>
-          <h5 class="index_title"><%= ((document_counter + 1 + @response.params[:start].to_i).to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc_text_link_html %></h5>
-      </div>
+<% # container for a single doc -%>
 
-      <p>
-        <%= doc_button_link_html %>
-      </p>
-    </div> <!-- /.caption -->
 
-    <%# OpenURL Coins Info (for Zotero compatibility) -%>
-    <%= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => document} %>
-  </article>
-</li>
+  <li class="span3">
+    <% # container for a single doc -%>
+    <article id="a_<%= item_count_id %>" class="post thumbnail document <%= render_document_class document %>">
+      <%= thumbnail_link_html %>
+      <div class="caption">
+        <% # header bar for doc items in index view -%>
+        <div class="documentHeader">
+            <% # bookmark/folder functions for items/docs -%>
+            <%= render_index_doc_actions document %>
+            <% # main title container for doc partial view -%>
+            <h5 class="index_title"><%= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc_text_link_html %></h5>
+        </div>
+
+        <p>
+          <%= doc_button_link_html %>
+        </p>
+      </div> <!-- /.caption -->
+
+      <%# OpenURL Coins Info (for Zotero compatibility) -%>
+      <%= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => document} %>
+    </article>
+  </li>
+
+
+<!-- REQUEST_TEST_STRING: HRWA::CATALOG::DOCUMENT::RENDER_SUCCESS -->

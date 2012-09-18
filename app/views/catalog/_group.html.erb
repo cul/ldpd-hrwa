@@ -1,0 +1,29 @@
+<% item_count_id = group_counter + 1 + @response.params[:start].to_i %>
+
+<% performing_a_search = (params[:controller] == 'catalog' && params[:action] == 'index') || (params[:controller] == 'catalog' && params[:action] == 'hrwa_home') %>
+<% folder_view = (params[:controller] == 'folder' && params[:action] == 'index') %>
+
+<% # The top doc for the group will be displayed in full as a hit %>
+<% doc = group[ :doclist ][ :docs ].shift %>
+
+  <% # container for a single doc -%>
+
+  <li class="span3">
+    <% # container for a single doc -%>
+    <article id="a_<%= item_count_id %>" class="post thumbnail document <%= render_document_class doc %>">
+      <div class="caption">
+        <% # header bar for doc items in index view -%>
+        <div class="documentHeader">
+            <% # main title container for doc partial view -%>
+            <h5 class="index_title"><%= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc[:title] %></h5>
+        </div>
+
+      </div> <!-- /.caption -->
+
+      <%# OpenURL Coins Info (for Zotero compatibility) -%>
+      <%#= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => doc} %>
+    </article>
+  </li>
+
+
+<!-- REQUEST_TEST_STRING: HRWA::CATALOG::GROUP::RENDER_SUCCESS -->

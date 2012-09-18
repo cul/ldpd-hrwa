@@ -18,14 +18,11 @@ class CatalogController < ApplicationController
       _configure_by_search_type('site_detail')
     when 'update'
       _configure_by_search_type('site_detail')
-      puts 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
     when 'hrwa_home'
       _configure_by_search_type('find_site')
-      puts 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'
     else
       # We don't ever want this code to run
       raise 'Search type should not be nil! _configure_by_search_type is not being called for this catalog controller action.'
-      puts 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'
     end
 
   end
