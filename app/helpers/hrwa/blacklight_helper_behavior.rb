@@ -30,7 +30,10 @@ module Hrwa::BlacklightHelperBehavior
     query_params = session[:search] ? session[:search].dup : {}
     query_params.delete :counter
     query_params.delete :total
-    query_params[:search_type] = 'find_site' # We're always adding find_site here as the search_type because archive records do not have item level view pages
+    # HRWA Note: We're always adding find_site (below) as a query string
+    # search_type value because archive records do not have item level view
+    # pages and it only makes sense to use this method in a find_site context
+    query_params[:search_type] = 'find_site'
     link_url = catalog_index_path + "?" + query_params.to_query
     link_to opts[:label], link_url, opts[:link_to_opts]
   end

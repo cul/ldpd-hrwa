@@ -7,23 +7,95 @@
 <% doc = group[ :doclist ][ :docs ].shift %>
 
   <% # container for a single doc -%>
+  <% custom_string_time_format = '%b %-d, %Y at %l:%M%p %Z' %>
 
-  <li class="span3">
-    <% # container for a single doc -%>
-    <article id="a_<%= item_count_id %>" class="post thumbnail document <%= render_document_class doc %>">
-      <div class="caption">
-        <% # header bar for doc items in index view -%>
-        <div class="documentHeader">
-            <% # main title container for doc partial view -%>
-            <h5 class="index_title"><%= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc[:title] %></h5>
+  <dl id="a_<%= item_count_id %>" class="defList document <%= render_document_class group %>">
+
+      <!-- CAPTURE DATE FOR THE PAGE -->
+      <span class="capture_date" rel="tooltip" title="Captured on <%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %>"><%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %></span>
+
+      <% # bookmark/folder functions for items/docs -%>
+      <%#= render_index_doc_actions group %>
+
+      <% # main title container for group partial view -%>
+
+      <!-- TITLE LINK DATA -->
+      <dt>
+                 <a href="<%= doc[ :archivedUrl ] %>">
+                 <%= ( ! doc[ :title ].blank? ) ?
+                       doc[ :title ] :
+                       '[Untitled]' %>
+                 </a>
+      </dt>
+
+
+      <% # main title container for group partial view -%>
+      <dd class="result_url">
+          <%= doc[ :originalUrl ] %>
+      </dd>
+
+      <dd>
+    <!-- HIGHLIGHTED SNIPPETS -->
+    <% snippets = @response[ :highlighting ][ doc[ :recordIdentifier ] ]
+       highlighted_snippet_full  = formatted_highlighted_snippet( snippets, @configurator.prioritized_highlight_field_list )
+       highlighted_snippet_brief = truncate_html( highlighted_snippet_full,
+                    355,
+                    %q{&hellip;} ).html_safe
+    %>
+      </dd>
+
+      <dd class="asf hl_snippet invisible">
+    <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
+      </dd>
+
+      <dd>
+        <div class='toggler invisible'>
+            <span class="inner_toggler_wrapper">
+                 <div class="file_tech_info">
+                   <!-- SIZE -->
+                   <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
+                   <!-- MIMETYPE -->
+                   <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
+                 </div>
+            </span>
         </div>
+        <div>
 
-      </div> <!-- /.caption -->
+        </div>
+        <a href='#' class='btn small toggle_section moreless'>Show More+</a>
+
+        <!-- OTHER CAPTURE INSTANCES -->
+    <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+       other_capture_instances = []
+       remaining_docs_in_group.each { | doc |
+         capture_instance = { :url           => doc[ :archivedUrl ],
+            :instance_date => doc[ :recordDate  ].to_time.strftime(custom_string_time_format),
+            :size          => number_to_human_size( doc[ :length ] )
+          }
+         other_capture_instances << capture_instance
+       }
+    %>
+
+    <% if ! other_capture_instances.empty? %>
+          <div class="other_capture_instances well">
+          <%
+          other_instance_date_hits_html = '<strong>Other capture instances (sorted by relevance):</strong><ul>'
+          other_capture_instances.each { | instance |
+        other_instance_date_hits_html <<
+         %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
+          }
+          other_instance_date_hits_html << '</ul>'
+      %>
+      <%= other_instance_date_hits_html.html_safe %>
+      </div>
+      <% end %>
+
+      </dd>
 
       <%# OpenURL Coins Info (for Zotero compatibility) -%>
       <%#= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => doc} %>
-    </article>
-  </li>
+
+  </dl>
 
 
 <!-- REQUEST_TEST_STRING: HRWA::CATALOG::GROUP::RENDER_SUCCESS -->
