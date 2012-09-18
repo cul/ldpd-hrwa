@@ -34,15 +34,15 @@
       <div id="secondary" class="span4">
         <div class="document">
           <div id="doc_<%= @document.id.to_s.parameterize %>" data-toggle="modal-gallery" data-target="#modal-gallery">
+
+            <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
+
             <div id="item_level_back_prev_next_select_wrapper">
 
               <% # bookmark/folder functions -%>
               <%= render_show_doc_actions @document %>
-
               <div class="clear"></div>
             </div>
-
-            <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
 
           </div>
 
