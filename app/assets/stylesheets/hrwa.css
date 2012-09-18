@@ -42,7 +42,7 @@ h6 { color:#777; }
 #navbar-container { /*min-width:960px;*/ }
 .navbar { z-index: 1000; }
 .navbar .fill { border-top:4px solid #444; }
-.navbar .fill { 
+.navbar .fill {
 	min-height:44px;
 	border-top: 5px solid #002B7F;
   border-bottom:1px solid #000;
@@ -97,7 +97,7 @@ a.thumbnail:hover {
 .navbar .add-on a { text-decoration:none; }
 .navbar .add-on a:hover { color: #fff; }
 .navbar #top_form_submit { padding-left:13px; padding-right:13px; }
-#cul_top { 
+#cul_top {
 	background: #002B7F;
 	background-color: #002b7f;
 	background-image: -moz-linear-gradient(top, #002b7f, #002baa);
@@ -117,7 +117,7 @@ a.thumbnail:hover {
 #cul_inner { /*width:960px;*/ margin-right:auto;margin-left:auto; background:transparent url('crown-bts-24x24.png') no-repeat left top; color:#aaa; font-size:9px; padding:4px 5px 1px 28px; /*-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;*/ /*border:1px solid #555;*/ }
 #cul_right { float:right; color:#ccc; }
 #cul_top a { color:#ddd; }
-#crowndown { 
+#crowndown {
 	background: #002B7F;
 	background-color: #002b7f;
 	background-image: -moz-linear-gradient(top, #002b7f, #002baa);
@@ -199,7 +199,7 @@ letter-spacing: 8px;
 font-weight: normal;
 text-shadow: 1px 1px 1px #174785;
 text-decoration: none;
-} 
+}
 #inner-headline h2 { font-weight: normal!important;
 color: #EEE;
 font-family: TrajanProRegular, trajan, georgia, serif;
@@ -510,6 +510,10 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 
 #search_query_echo {word-break:break-all;}
 
+/* FAQ Page */
+article#faq dt { margin-top:1em; font-size:110%; }
+article#faq dd { margin:.5em 0; }
+
 /* --- result pagination */
 .pagination a {padding-left:7px;padding-right:7px;line-height:24px;}
 
@@ -538,27 +542,6 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 
 #item_level_back_prev_next_select_wrapper form {
   margin-bottom:0px;
-}
-
-.hidden_citation.well {
-  margin: 10px;
-  word-break: break-word;
-  overflow:hidden;
-}
-
-/* Explore Faces Gallery */
-.faces_item {
-  margin-bottom:20px;
-}
-
-.faces_item a {
-  display:block;
-  width:100%;
-  text-align: center;
-}
-
-.faces_item img {
-  display:inline-block;
 }
 
 #item_level_back_prev_next_select_wrapper a.btn {

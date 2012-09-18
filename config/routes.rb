@@ -15,6 +15,9 @@ Hrwa::Application.routes.draw do
   match '/problem_report'         => 'pages#problem_report'
   match '/terms_of_use'           => 'pages#terms_of_use'
 
+  match '/owner_nomination'  => 'pages#owner_nomination'
+  match '/public_nomination' => 'pages#public_nomination'
+
   # Images controller
   match '/images/:pid/:size/:disposition' => 'images#get', :as => :images
 

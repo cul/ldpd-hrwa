@@ -8,6 +8,15 @@ class PagesController < ApplicationController
   def about
   end
 
+  def faq
+  end
+
+  def owner_nomination
+  end
+
+  def public_nomination
+  end
+
   def terms_of_use
   end
 
@@ -23,9 +32,6 @@ class PagesController < ApplicationController
       send_mail_problem_report( 'lindquist_problem_report@libraries.cul.columbia.edu' )
       flash.now[:notice] = 'Thank you.  Your problem report has been submitted.'
 		end
-  end
-
-  def faces
   end
 
 end
