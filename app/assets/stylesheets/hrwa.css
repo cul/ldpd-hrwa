@@ -138,7 +138,7 @@ a.thumbnail:hover {
 #crowndown li.menu{ padding-right:0; padding-left:0; }
 #crowndown a.menu { padding-right:4px; padding-left:4px; font-family: TrajanProRegular, trajan, serif; margin-top:2px; }
 #crowndown img { /*float:left;*/ margin-top:-8px; margin-right:0; padding-right:0; }
-#crowndown .dropdown-menu { margin-top:-2px; border-color:#000; }
+#crowndown .dropdown-menu { margin-top:-2px; border-color:#002B7F; border-top:0; }
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
 /*.navbar li.dropdown.menu:hover,*/ .navbar a.brand:hover { background:rgba(255,255,255,0.09); }
 .navbar a.brand { font-size:125%; font-family: TrajanProRegular, trajan, georgia, serif; font-weight:normal; /*font-size:140%;*/ letter-spacing:1px; text-shadow:1px 1px 3px #222; }
