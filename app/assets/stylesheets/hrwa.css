@@ -766,7 +766,7 @@ and (orientation: portrait) {
 @media (min-width: 1200px) {
 #primary div.pagination { padding-left:10px; }
 #inner-headline h1, #inner-headline h1 a { 
-font-size:50px;
-letter-spacing:16px;
+font-size:56px;
+letter-spacing:12px;
 }
 }
