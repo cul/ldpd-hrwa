@@ -775,3 +775,7 @@ and (orientation: portrait) {
 
 @media (min-width: 980px) {
 }
+
+@media (min-width: 1200px) {
+#primary div.pagination { padding-left:10px; }
+}
