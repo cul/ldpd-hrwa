@@ -194,8 +194,8 @@ margin-right: -10px;
 padding: 28px 10px;
 }
 #inner-headline h1, #inner-headline h1 a { color: white;
-font-size: 45px;
-letter-spacing: 8px;
+font-size: 46px;
+letter-spacing: 9px;
 font-weight: normal;
 text-shadow: 1px 1px 1px #174785;
 text-decoration: none;
@@ -765,4 +765,8 @@ and (orientation: portrait) {
 
 @media (min-width: 1200px) {
 #primary div.pagination { padding-left:10px; }
+#inner-headline h1, #inner-headline h1 a { 
+font-size:50px;
+letter-spacing:16px;
+}
 }
