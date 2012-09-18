@@ -31,54 +31,6 @@
 
             <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
 
-            <div id="show_image_download_btns">
-              <div id="download_front_image_button_group" class="btn-group">
-                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="icon-download"></i>
-                  <% if @document.get('verso_image_s').blank? %>
-                    Download Image
-                  <% else %>
-                  Download Front Image
-                  <% end %>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="<%= get_image_uri(@document, 'recto', 'thumb', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Small (200px)</a></li>
-                  <li><a href="<%= get_image_uri(@document, 'recto', 'medium', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Medium (850px)</a></li>
-                  <li><a href="<%= get_image_uri(@document, 'recto', 'large', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Large (1500px)</a></li>
-                </ul>
-              </div>
-              <% unless @document.get('verso_image_s').blank? %>
-              <div id="download_back_image_button_group" class="btn-group">
-                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="icon-download"></i>
-                  Download Back Image
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="<%= get_image_uri(@document, 'verso', 'thumb', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Small (200px)</a></li>
-                  <li><a href="<%= get_image_uri(@document, 'verso', 'medium', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Medium (850px)</a></li>
-                  <li><a href="<%= get_image_uri(@document, 'verso', 'large', 'download') %>" alt="<%= @document.get('item_title') %>"><i class="icon-download"></i> Large (1500px)</a></li>
-                </ul>
-              </div>
-              <% end %>
-              <div class="btn-group view_full_size_image_btn_wrapper">
-                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Front</a>
-              </div>
-              <% unless @document.get('verso_image_s').blank? %>
-              <div class="btn-group view_full_size_image_btn_wrapper">
-                <a id="view_full_size_image_btn" class="btn btn-mini target-blank" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full-Size Back</a>
-              </div>
-              <% end %>
-
-              <!-- <a id="view_full_size_image_btn" class="btn btn-mini" href="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>"><i class="icon-picture"></i> View Full Size Image</a> -->
-              <!--
-              <a href="<%= get_image_uri(@document, 640) %>" rel="gallery" class="hidden-phone btn btn-mini current_image_link" title="<%=  @document.get('item_title') %>" <% if( ! @document.get('verso_image_s').blank? ) %>data-flipside="<%= get_image_uri(@document, 640) %><% end%>">
-                <i class="icon-zoom-in"></i>
-              </a>
-              -->
-            </div>
-
           </div>
         </div><!--/#document-->
 
@@ -87,22 +39,8 @@
       <div id="secondary" class="span4">
         <div class="document">
 
-          <h6 id="show_item_information_title">Item Information</h6>
+          <h6 id="show_item_information_title">Site Information</h6>
 
-          <div class="row">
-            <div class="span2 pull-left">
-              <a class="thumbnail thumbnail-active sb_thumb" href="<%= get_image_uri(@document, 640) %>" />
-                <img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" />
-              </a>
-            </div>
-            <div class="span2 pull-right nomar">
-              <% unless @document.get('verso_image_s').blank? %>
-              <a class="thumbnail sb_thumb" href="<%= get_image_uri(@document, 640) %>" />
-                <img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" />
-              </a>
-              <% end %>
-            </div>
-          </div> <!-- /row -->
 
           <%= render_document_partial @document, :show %>
 

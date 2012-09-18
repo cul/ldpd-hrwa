@@ -14,9 +14,4 @@
       </li>
     <%- end -%>
 
-    <li class="hide_show_citation">
-      <%= link_to "Show Citation", '#', {:class => 'hide_show_link'} %>
-      <div class="invisible hidden_citation well"><%= get_chicago_citation_for_document(@document) %></div>
-    </li>
-
   </ul>

@@ -9,7 +9,9 @@ class CatalogController < ApplicationController
 
   def _configure_by_controller_action
 
-    case params[:action]
+    puts 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTION! ' + params[:action]
+
+    case params[:action].to_s
     when 'index'
     when 'advanced'
       _configure_by_search_type
@@ -149,6 +151,8 @@ class CatalogController < ApplicationController
     end
 
     @configurator = HRWA::Configurator.new( @search_type )
+
+    Rails.logger.debug("Search typeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: @search_type")
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324
     @configurator.reset_configuration( self.blacklight_config )
