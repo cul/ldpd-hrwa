@@ -44,18 +44,16 @@
             <%= render 'constraints', :localized_params=>params %>
           </div>
         </div><!--/row-->
-        <%# Only show the did_you_mean partial when there are NO facets applied. Otherwise it's confusing %>
-        <%= render :partial => 'did_you_mean' if params[:f].nil? %>
         <div class="row">
           <div class="span5 nomar">
             <%= render 'results_pagination' %>
           </div>
           <div class="span4 pull-right">
-               <%= render 'sort_and_per_page' %>
+            <%= render 'sort_and_per_page' %>
           </div>
         </div>
         <div id="search_results">
-          <%= render :partial => 'document_list' %>
+          <%= render :partial => 'result_list' %>
         </div>
         <div class="row">
           <%= render 'results_pagination' %>

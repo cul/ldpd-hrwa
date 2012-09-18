@@ -9,20 +9,23 @@ class CatalogController < ApplicationController
 
   def _configure_by_controller_action
 
-    puts 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTION! ' + params[:action]
-
     case params[:action].to_s
     when 'index'
+      _configure_by_search_type
     when 'advanced'
       _configure_by_search_type
     when 'show'
+      _configure_by_search_type('site_detail')
     when 'update'
       _configure_by_search_type('site_detail')
+      puts 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
     when 'hrwa_home'
       _configure_by_search_type('find_site')
+      puts 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'
     else
       # We don't ever want this code to run
       raise 'Search type should not be nil! _configure_by_search_type is not being called for this catalog controller action.'
+      puts 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'
     end
 
   end
@@ -33,7 +36,7 @@ class CatalogController < ApplicationController
   end
 
   def advanced
-    _do_advanced_search_preprocessing
+    _do_advanced_search_params_preprocessing
     _do_search
   end
 
@@ -64,7 +67,7 @@ class CatalogController < ApplicationController
                                     :fq => '{!raw f=subject__facet}' + @featured_home_page_subject
                                   }
 
-    (@response, @document_list) = get_search_results(params, custom_solr_search_params)
+    (@response, @result_list) = get_search_results(params, custom_solr_search_params)
 
     custom_blacklight_search_params = {
                                         :per_page => number_of_items_to_show,
@@ -91,7 +94,7 @@ class CatalogController < ApplicationController
 
     # Be ready to capture Solr errors
     begin
-      (@response, @document_list) = get_search_results
+      (@response, @result_list) = get_search_results
     rescue => ex
       @error = ex.to_s
       Rails.logger.error( @error )
@@ -111,6 +114,29 @@ class CatalogController < ApplicationController
       render :error and return
     end
 
+    # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
+    # Check for navigation to a nonexistent/invalid result page
+    # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
+    if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
+      @error_type = :invalid_result_page
+      @error_message = 'Sorry, but there are no results available on this search result page.'
+      Rails.logger.info('-------------------------------------------------------------------------------------')
+      Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
+      Rails.logger.info('-------------------------------------------------------------------------------------')
+      render :error and return
+    end
+
+    # Configurator might need to manipulate the @response and @result_list
+    # This is absolutely the case for an archive search
+    if @configurator.post_blacklight_processing_required?
+      @response, @result_list = @configurator.post_blacklight_processing( @response,
+                                                                          @result_list )
+    end
+
+    # Select appropriate partials
+    @result_partial = @configurator.result_partial
+    @result_type    = @configurator.result_type
+
     if(@debug_mode)
       @debug_printout << "session[:search]:\n"
       @debug_printout << session[:search].pretty_inspect
@@ -126,7 +152,7 @@ class CatalogController < ApplicationController
     end
   end
 
-  def _do_advanced_search_preprocessing
+  def _do_advanced_search_params_preprocessing
     @filters = params[:f] || []
   end
 
@@ -151,8 +177,6 @@ class CatalogController < ApplicationController
     end
 
     @configurator = HRWA::Configurator.new( @search_type )
-
-    Rails.logger.debug("Search typeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: @search_type")
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324
     @configurator.reset_configuration( self.blacklight_config )

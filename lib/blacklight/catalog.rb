@@ -34,7 +34,7 @@ module Blacklight::Catalog
       extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
       extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
 
-      (@response, @document_list) = get_search_results
+      (@response, @result_list) = get_search_results
       @filters = params[:f] || []
 
       respond_to do |format|
