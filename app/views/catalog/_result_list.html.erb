@@ -1,10 +1,8 @@
 <% # container for all documents in index view -%>
-<ul class="thumbnails tab-thumbnails no-cols">
-	<%
-	puts '@result_partial: ' + @result_partial
-	#puts '@result_list: ' + @result_list.inspect
-	puts '@result_type: ' + @result_type
-	%>
-
-  <%= render :partial => @result_partial, :collection => @result_list, :as => @result_type %>
-</ul>
+<% if(@configurator.name == 'find_site') %>
+	<ul class="thumbnails tab-thumbnails no-cols">
+		<%= render :partial => @result_partial, :collection => @result_list, :as => @result_type %>
+	</ul>
+<% else %>
+	<%= render :partial => @result_partial, :collection => @result_list, :as => @result_type %>
+<% end %>
