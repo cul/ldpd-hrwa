@@ -224,6 +224,12 @@ class HRWA::ArchiveSearchConfigurator
   # gives us.
   def post_blacklight_processing( solr_response, result_list )
     result_list = solr_response.groups
+
+    #Manually add hash field ['numFound'] to improve compatibility with other
+    # blacklight code, for example : the "did_you_mean" partial for spell
+    # checking (if we ever decide to use it)
+    solr_response.response['numFound'] = solr_response.total
+
     return solr_response, result_list
   end
 
