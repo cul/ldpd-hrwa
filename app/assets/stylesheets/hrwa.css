@@ -484,6 +484,8 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 #advo_link {padding:0 2px;margin-top:3px;margin-right:4px;-webkit-border-radius: 3px 3px 3px 3px;-moz-border-radius: 3px 3px 3px 3px;border-radius: 3px 3px 3px 3px; opacity:0.6; }
 #advo_link:hover { opacity:1.0; }
 
+#top_q_wrapper #search_type_dropdown_chooser {padding-right:15px;}
+
 /* Search results */
 
 #primary article.asf-result { margin-left:11px; margin-bottom:10px;}

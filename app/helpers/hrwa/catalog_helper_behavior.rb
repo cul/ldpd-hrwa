@@ -65,14 +65,27 @@ module Hrwa::CatalogHelperBehavior
         else;   "Displaying <b>all #{total_num}</b> #{entry_name.pluralize}".html_safe
         end
       else
-        "Displaying page #{current_page} of about <b>".html_safe + round_result_to_closest_hundred(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
+        "Displaying page #{current_page} of about <b>".html_safe + round_result_to_closest_vague_number(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
       end
   end
 
-  # Number converter that rounds any number to the closest hundred
+  # Number converter that rounds any number to a more vague number
   #
-  def round_result_to_closest_hundred(number_to_round)
-    number_with_delimiter((((number_to_round.gsub(',', '')).to_i/100).to_i)*100, :delimiter => ',')
+  def round_result_to_closest_vague_number(number_string_to_round)
+
+    # Remove any possibly present commas in this number string
+    real_number = number_string_to_round.gsub(',', '').to_i
+
+    if(real_number < 1000)
+      degree_of_rounding = 100
+    else
+      degree_of_rounding = 10**(real_number.to_s.length-2)
+      puts 'degree_of_roundingggggggggggggggggggggggggg: ' + degree_of_rounding.to_s
+    end
+
+    number_with_delimiter((((real_number).to_f/degree_of_rounding).to_f).round*degree_of_rounding, :delimiter => ',')
+
+
   end
 
   def has_search_parameters?

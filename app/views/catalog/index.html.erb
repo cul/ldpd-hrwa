@@ -15,7 +15,7 @@
         <div class="pageEntriesInfo">
           <%#= render_pagination_info @response, :entry_name=>'item' %>
 		  <% if(@search_type.to_s == 'archive') %>
-		    <%= render_archive_pagination_info @response, :entry_name=>'archived page result' %>
+		    <%= render_archive_pagination_info @response, :entry_name=>'archived web page result' %>
 		  <% else %>
 		    <%= render_pagination_info @response, :entry_name=>'sites' %>
 		  <% end %>

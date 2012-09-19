@@ -3,7 +3,7 @@
       <div id="top_q_wrapper" class="pull-left">
           <div class="pull-right span1 btn-group nomar nopad">
               <a data-original-title="Search Sources" title="Select Your Search Source" rel="tooltip" class="span1 pull-right btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown" id="advo_link" href="#"><span>Sites</span> <b class="caret"></b></a>
-              <div class="dropdown-menu">
+              <div id="search_type_dropdown_chooser" class="dropdown-menu">
                   <strong>Search:</strong>
                   <ul id="top_datasource" class="unstyled">
                       <%
@@ -14,7 +14,7 @@
                         end
                       %>
                       <li><label class="radio"><input type="radio" name="search_type" value="find_site" <%= 'checked="checked"' if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Find a Site</span></label></li>
-                      <li><label class="radio"><input type="radio" name="search_type" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Search Through Archived Pages</span></label></li>
+                      <li><label class="radio"><input type="radio" name="search_type" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Search Through Archived Web Pages</span></label></li>
                       <li class="divider"></li>
                   </ul>
                   <p><a id="cliobeta_exit" href="http://cliobeta.columbia.edu" rel="tooltip" title="Goto CLIObeta"><img src="http://library.columbia.edu/content/libraryweb/index/jcr%3acontent/bottomCell/textimage/image.img.png/1332439303934.png" alt="cliobeta"><i class="icon-arrow-right"></i></a></p>
