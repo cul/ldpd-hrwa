@@ -488,7 +488,11 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 
 #primary article.asf-result { margin-left:11px; }
 #primary article.asf-result dl { padding: 6px 8px; }
-#primary article.asf-result .other_capture_instances { margin-bottom: 0px; }
+#primary article.asf-result .file_tech_info { font-size:11px; color:#707070; font-style:italic; }
+#primary article.asf-result .other_capture_instances { margin-top:8px;margin-bottom:5px;padding:5px 8px; }
+#primary article.asf-result .other_capture_instances strong {font-size:11px;}
+#primary article.asf-result .other_capture_instances ul {margin-bottom:0px;margin-left:10px;list-style:none;}
+#primary article.asf-result .other_capture_instances ul.other_capture_list li {width:auto;}
 #primary article.asf-result .capture_date {font-size:11px;}
 
 #edit_query_form {

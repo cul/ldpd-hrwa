@@ -30,24 +30,19 @@
 
         <%# <dd class="asf hl_snippet invisible"> %>
         <dd class="asf hl_snippet">
-      <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
+        <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
         </dd>
 
         <dd>
-          <div class='toggler invisible'>
-              <span class="inner_toggler_wrapper">
-                   <div class="file_tech_info">
-                     <!-- SIZE -->
-                     <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
-                     <!-- MIMETYPE -->
-                     <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
-                   </div>
-              </span>
+          <div class="file_tech_info">
+            <!-- SIZE -->
+            <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
+            <!-- MIMETYPE -->
+            <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
           </div>
           <div>
 
           </div>
-          <a href='#' class='btn small toggle_section moreless'>Show More+</a>
 
           <!-- OTHER CAPTURE INSTANCES -->
       <% remaining_docs_in_group = group[ :doclist ][ :docs ]
@@ -64,7 +59,7 @@
       <% if ! other_capture_instances.empty? %>
             <div class="other_capture_instances well">
             <%
-            other_instance_date_hits_html = '<strong>Other capture instances (sorted by relevance):</strong><ul>'
+            other_instance_date_hits_html = '<strong>Other Relevant Captures</strong><ul class="other_capture_list">'
             other_capture_instances.each { | instance |
           other_instance_date_hits_html <<
            %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}

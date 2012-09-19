@@ -10,7 +10,7 @@ module Hrwa::HrwaCustomHelper
       end
     end
 
-    return properly_ordered_snippet_array.join('...').html_safe
+    return properly_ordered_snippet_array.join('...').html_safe + '...'.html_safe
   end
 
 end
