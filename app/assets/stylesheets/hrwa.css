@@ -485,6 +485,12 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 #advo_link:hover { opacity:1.0; }
 
 /* Search results */
+
+#primary article.asf-result { margin-left:11px; }
+#primary article.asf-result dl { padding: 6px 8px; }
+#primary article.asf-result .other_capture_instances { margin-bottom: 0px; }
+#primary article.asf-result .capture_date {font-size:11px;}
+
 #edit_query_form {
   display:none;
   margin-top:10px;
@@ -765,7 +771,7 @@ and (orientation: portrait) {
 
 @media (min-width: 1200px) {
 #primary div.pagination { padding-left:10px; }
-#inner-headline h1, #inner-headline h1 a { 
+#inner-headline h1, #inner-headline h1 a {
 font-size:56px;
 letter-spacing:12px;
 }
