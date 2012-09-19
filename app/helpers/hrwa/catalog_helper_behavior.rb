@@ -42,6 +42,39 @@ module Hrwa::CatalogHelperBehavior
       end
   end
 
+  # Custom HRWA variation of render_pagination_info for an unknown set of grouped archive results
+  # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
+  def render_archive_pagination_info(response, options = {})
+      start = response.start + 1
+      per_page = response.rows
+      current_page = (response.start / per_page).ceil + 1
+      num_pages = (response.total / per_page.to_f).ceil
+      total_hits = response.total
+
+      start_num = format_num(start)
+      end_num = format_num(start + response.docs.length - 1)
+      total_num = format_num(total_hits)
+
+      entry_name = options[:entry_name] ||
+        (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
+
+      if num_pages < 2
+        case response.docs.length
+        when 0; "No #{h(entry_name.pluralize)} found".html_safe
+        when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
+        else;   "Displaying <b>all #{total_num}</b> #{entry_name.pluralize}".html_safe
+        end
+      else
+        "Displaying page #{current_page} of about <b>".html_safe + round_result_to_closest_hundred(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
+      end
+  end
+
+  # Number converter that rounds any number to the closest hundred
+  #
+  def round_result_to_closest_hundred(number_to_round)
+    number_with_delimiter((((number_to_round.gsub(',', '')).to_i/100).to_i)*100, :delimiter => ',')
+  end
+
   def has_search_parameters?
     params[:q] or !params[:f].blank? or !params[:search_field].blank?
   end
