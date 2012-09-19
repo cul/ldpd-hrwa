@@ -9,7 +9,7 @@
   <% # container for a single doc -%>
   <% custom_string_time_format = '%b %-d, %Y at %l:%M%p %Z' %>
 
-  <article id="a_<%= item_count_id %>" class="asf-result <%= render_document_class group %>">
+  <article id="a_<%= item_count_id %>" class="archive-result <%= render_document_class group %>">
     <dl class="defList document">
 
         <!-- CAPTURE DATE FOR THE PAGE -->
@@ -40,35 +40,32 @@
             <!-- MIMETYPE -->
             <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
           </div>
-          <div>
-
-          </div>
 
           <!-- OTHER CAPTURE INSTANCES -->
-      <% remaining_docs_in_group = group[ :doclist ][ :docs ]
-         other_capture_instances = []
-         remaining_docs_in_group.each { | doc |
-           capture_instance = { :url           => doc[ :archivedUrl ],
-              :instance_date => doc[ :recordDate  ].to_time.strftime(custom_string_time_format),
-              :size          => number_to_human_size( doc[ :length ] )
-            }
-           other_capture_instances << capture_instance
-         }
-      %>
+          <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+             other_capture_instances = []
+             remaining_docs_in_group.each { | doc |
+               capture_instance = { :url           => doc[ :archivedUrl ],
+                  :instance_date => doc[ :recordDate  ].to_time.strftime(custom_string_time_format),
+                  :size          => number_to_human_size( doc[ :length ] )
+                }
+               other_capture_instances << capture_instance
+             }
+          %>
 
-      <% if ! other_capture_instances.empty? %>
-            <div class="other_capture_instances well">
-            <%
-            other_instance_date_hits_html = '<strong>Other Relevant Captures</strong><ul class="other_capture_list">'
-            other_capture_instances.each { | instance |
-          other_instance_date_hits_html <<
-           %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
-            }
-            other_instance_date_hits_html << '</ul>'
-        %>
-        <%= other_instance_date_hits_html.html_safe %>
-        </div>
-        <% end %>
+          <% if ! other_capture_instances.empty? %>
+              <div class="other_capture_instances well">
+              <%
+              other_instance_date_hits_html = '<strong>Other Relevant Captures</strong><ul class="other_capture_list">'
+              other_capture_instances.each { | instance |
+            other_instance_date_hits_html <<
+             %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
+              }
+              other_instance_date_hits_html << '</ul>'
+          %>
+          <%= other_instance_date_hits_html.html_safe %>
+          </div>
+          <% end %>
 
         </dd>
 
