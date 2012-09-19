@@ -62,7 +62,7 @@ module Hrwa::CatalogHelperBehavior
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
         when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
-        else;   "Displaying <b>all #{total_num}</b> #{entry_name.pluralize}".html_safe
+        else;   "Displaying <b>all</b> #{entry_name.pluralize}".html_safe
         end
       else
         "Displaying page #{current_page} of about <b>".html_safe + round_result_to_closest_vague_number(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
