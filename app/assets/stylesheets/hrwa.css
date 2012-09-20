@@ -775,6 +775,7 @@ and (orientation: portrait) {
 }
 
 @media (min-width: 980px) {
+    .navbar #q {padding-right:15px;}
 }
 
 @media (min-width: 1200px) {
