@@ -155,7 +155,9 @@
     <ul class="nav nav-pills pull-right nav-collapse" id="user_util_links">
       <%= render :partial=>'/user_util_links' %>
       <% if user_signed_in? %>
-      <li><%= link_to 'Sign Out', destroy_user_session_path %></li>
+				<li><%= link_to 'Sign Out', destroy_user_session_path %></li>
+      <% elsif service_user_signed_in? %>
+				<li><%= link_to 'Sign Out', destroy_service_user_session_path %></li>
       <% end %>
     </ul>
   </div>

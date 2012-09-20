@@ -1,5 +1,7 @@
 Hrwa::Application.routes.draw do
 
+  devise_for :service_users
+
   DeviseWind.add_routes(self)
 
   # Our Blacklight stuff (before Blacklight adds its own routes)
@@ -26,6 +28,7 @@ Hrwa::Application.routes.draw do
 
   # Admin controller
   match '/admin'                    => 'admin#index'
+  match '/admin/login_options'      => 'admin#login_options'
   # match '/admin/clear_solr_index'   => 'admin#clear_solr_index'
   match '/admin/reindex_solr_from_xml_file'   => 'admin#reindex_solr_from_xml_file'
   match '/admin/update_hardcoded_browse_lists'   => 'admin#update_hardcoded_browse_lists'

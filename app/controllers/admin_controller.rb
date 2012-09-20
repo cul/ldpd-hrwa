@@ -5,20 +5,35 @@ class AdminController < ApplicationController
 
   include Hrwa::MailHelper
 
-  before_filter :authenticate_user!, :check_for_allowed_users
+  before_filter :do_authentication_check, :_check_for_allowed_users, :except => :login_options
 
-  def check_for_allowed_users
-
-    allowed_users = ['elo2112', 'er2576', 'ba2213']
-
-    if( ! allowed_users.include?(current_user.login) )
-      # Then log this user out
-      redirect_to destroy_user_session_path
+  # THe do_authentication_check method below takes the place of devise's authenticate_service_user! and authenticate_user! methods.
+  def do_authentication_check
+    if !user_signed_in? && !service_user_signed_in?
+      redirect_to :action => 'login_options'
     end
   end
 
-  def index()
+  def login_options
 
+  end
+
+  def _check_for_allowed_users
+
+    if service_user_signed_in?
+      # That's fine
+    elseif user_signed_in?
+      # Need to check to see if this user is allowed to do anything
+      allowed_users = ['elo2112', 'er2576', 'ba2213']
+      if( ! allowed_users.include?(current_user.login) )
+        # If not on the allowed list, then log this user out
+        redirect_to destroy_user_session_path
+      end
+    end
+
+  end
+
+  def index
   end
 
   # This method updates the hardcoded browse list files using live data from the Solr index
