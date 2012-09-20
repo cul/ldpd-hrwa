@@ -21,36 +21,6 @@ class AdminController < ApplicationController
 
   end
 
-  # Hrwa Note: No need to clear the solr indexes, so I'm commenting this out for now.
-  #def clear_solr_index()
-  #  solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new(YAML.load_file('config/solr.yml')[Rails.env]['url'])
-  #  result = solrTaskHandler.clear_solr_index
-  #
-  #  if (result)
-  #    flash[:notice] = 'Your solr index has been cleared.'
-  #  else
-  #    flash[:error] = "An error occurred and your solr index could not be cleared. Please check your log output for details."
-  #  end
-  #
-  #  redirect_to admin_path
-  #end
-
-  def reindex_solr_from_xml_file()
-
-    solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new(YAML.load_file('config/solr.yml')[Rails.env]['url'])
-
-    result = solrTaskHandler.reindex_solr_from_xml_file('extras/lindquist.xml')
-
-    if(result)
-      flash[:notice] = 'Your solr index has been reindexed.'
-    else
-      flash[:notice] = 'An error occurred while attempting to reindex. Please check your log output for details.'
-    end
-
-    redirect_to admin_path
-
-  end
-
   # This method updates the hardcoded browse list files using live data from the Solr index
   def update_hardcoded_browse_lists()
     solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new
