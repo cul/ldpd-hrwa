@@ -13,18 +13,18 @@
         <%# Hrwa note: Keeping code below in this file to better-maintain blacklight upgrade ability. Will move this to a partial when Blacklight does. %>
         <div id="document" class="<%= render_document_class %>">
 
-			<h3><%= @document.get('title') %></h3>
+          <%= item_page_entry_info if results_view && ! folder_view %>
 
-            <%= item_page_entry_info if results_view && ! folder_view %>
+          <h3 id="show_fsf_record_title"><%= @document.get('title') %></h3>
 
-			<div class="clearfix"></div>
+          <div class="clearfix"></div>
 
-              <% if ! folder_view %>
-                <%= link_back_to_catalog(:label=>'<i class="icon-backward"></i>'.html_safe, :link_to_opts => {:rel => 'tooltip', :title => 'Back to Search Results', :class => 'btn btn-mini'}) if results_view %>
-                <%= render 'previous_next_doc' if results_view %>
-              <% else %>
-                <%= link_to('<i class="icon-backward"></i>'.html_safe, folder_index_path, {:rel => 'tooltip', :title => 'Back to Selected Items', :class => 'btn btn-mini'}) %>
-              <% end %>
+          <% if ! folder_view %>
+            <%= link_back_to_catalog(:label=>'<i class="icon-backward"></i>'.html_safe, :link_to_opts => {:rel => 'tooltip', :title => 'Back to Search Results', :class => 'btn btn-mini'}) if results_view %>
+            <%= render 'previous_next_doc' if results_view %>
+          <% else %>
+            <%= link_to('<i class="icon-backward"></i>'.html_safe, folder_index_path, {:rel => 'tooltip', :title => 'Back to Selected Items', :class => 'btn btn-mini'}) %>
+          <% end %>
 
           <%= render_document_partial @document, :show %>
         </div><!--/#document-->

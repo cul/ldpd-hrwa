@@ -3,12 +3,6 @@
 
 <article id='sdf_view' class="post">
   <table id='sdf_table' class='table table-bordered table-striped zebra-striped'>
-    <thead class="hide">
-      <tr>
-        <th class='sdf_snapshot'>Title</th>
-        <th><strong><%= @document.get('title') %></strong></th>
-      </tr>
-    </thead>
     <tbody>
       <%# Only show alternate title(s) if the field isn't empty %>
       <% if( ! @document.get('alternate_title').blank? ) %>

@@ -537,6 +537,10 @@ article#faq dd { margin:.5em 0; }
   margin-top:5px;
 }
 
+#show_fsf_record_title {
+    margin-bottom: 3px;
+}
+
 #show_item_back_prev_and_next_buttons .page_nav {
   margin-left:0px;
 }

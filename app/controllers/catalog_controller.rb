@@ -18,11 +18,11 @@ class CatalogController < ApplicationController
         _configure_by_search_type('site_detail')
       when 'update'
         _configure_by_search_type('site_detail')
-      when 'hrwa_home'
-        _configure_by_search_type('find_site')
+      when 'facet'
+        _configure_by_search_type
       else
-        # We don't ever want this code to run
-        raise 'Search type should not be nil! _configure_by_search_type is not being called for this catalog controller action.'
+      # In general, we use the find_site configuration, but there are certain exceptions (above)
+        _configure_by_search_type('find_site')
       end
     end
 
