@@ -1,6 +1,6 @@
 <h2>Admin Control Panel</h2>
 
-<% current_solr_core_url =  YAML.load_file('config/solr.yml')[Rails.env]['url'] %>
+<% current_solr_urls =  YAML.load_file('config/solr.yml')[Rails.env] %>
 
 <h3>Application Information</h3>
 <ul>
@@ -17,14 +17,6 @@
 				<%= Dir.getwd %>
 		</li>
     <li>
-				<strong>Solr:</strong>
-				<%= current_solr_core_url %>
-		</li>
-    <li>
-				<strong>Fedora:</strong>
-				<%= YAML.load_file('config/fedora.yml')[Rails.env]['url'] %>
-		</li>
-    <li>
 				<strong>Ruby Version:</strong>
 				<%= RUBY_VERSION %>
 		</li>
@@ -37,16 +29,22 @@
 <h3>Tools</h3>
 <ul>
 		<li>
-        <strong>Current Solr Core (<%= current_solr_core_url %>)</strong>
+        <strong>Current Solr Cores:</strong>
         <ul>
-          <li>
-            <%= link_to 'Reindex', {'controller' => 'admin', 'action' => 'reindex_solr_from_xml_file'} %>
-            <br />XML Source: extras/lindquist.xml (Note: Reindexing might take a while.)
-          </li>
+						<li><strong>asf:</strong> <%= current_solr_urls['asf']['url'] %></li>
+						<li><strong>fsf:</strong> <%= current_solr_urls['fsf']['url'] %></li>
+						<li><strong>site_detail:</strong> <%= current_solr_urls['site_detail']['url'] %></li>
+						<li><strong>asf-hrwa-278:</strong> <%= current_solr_urls['asf-hrwa-278']['url'] %></li>
+						<li><form class="form-inline"><select>
+								<option class="mini" value="vorpal">vorpal.cul.columbia.edu</option>
+								<option class="mini" value="harding">harding.cul.columbia.edu</option>
+								<option class="mini" value="carter">carter.cul.columbia.edu</option>
+								<option class="mini" value="test">unit test solr</option>
+						</select> <input type="submit" value="Do Manual Solr Override" class="btn"/></form></li>
         </ul>
 		</li>
     <li>
-				<strong>Update the hardcoded browse list files (for the home page):</strong>
-				<%= link_to 'Update!', {'controller' => 'admin', 'action' => 'update_hardcoded_browse_lists'} %>
+				<strong>Update the home page hardcoded browse list files:</strong>
+				<%= link_to 'Update!', {'controller' => 'admin', 'action' => 'update_hardcoded_browse_lists'}, :class => 'btn btn-mini' %>
 		</li>
 </ul>
