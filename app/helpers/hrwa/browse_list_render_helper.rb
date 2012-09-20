@@ -22,11 +22,11 @@ module Hrwa::BrowseListRenderHelper
 
     if show_count
       browse_list_hash.each_pair{|item, sort_field|
-        html_to_return += '<li><div><a href="/catalog?f%5B' + field_name + '%5D%5B%5D=' + item + '">' + h(item) +  '</a> <span class="count">' + sort_field.to_s + '</span></div></li>'
+        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + ' <span class="count">' + sort_field.to_s + '</span>' + '</div></li>'
       }
     else
       browse_list_hash.each_pair{|item, sort_field|
-        html_to_return += '<li><div><a href="/catalog?f%5B' + field_name + '%5D%5B%5D=' + item + '">' + h(item) +  '</a></div></li>'
+        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + '</div></li>'
       }
     end
 
