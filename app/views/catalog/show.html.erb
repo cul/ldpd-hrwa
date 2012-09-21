@@ -41,7 +41,40 @@
 
               <% # bookmark/folder functions -%>
               <%= render_show_doc_actions @document %>
+
               <div class="clear"></div>
+
+              <table class="table table-bordered table-striped zebra-striped">
+                <% if( ! @document.get('original_urls').blank? ) %>
+                  <% original_url_arr = @document.get('original_urls',{:sep => nil}) %>
+                  <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
+                  <% archived_url_arr = @document.get('archived_urls', {:sep => nil}) %>
+
+                  <%  # For now, we're assuming that there's a one-to-one link between
+                      # original_urls and archive_urls, but I'm still doing a check to
+                      # make sure that each original_url has a corresponding archive_url
+                      # value
+                  %>
+                  <tr>
+                    <td><%= ((@document.get('original_urls', {:sep => nil})).length == 1) ? 'View Site Capture' : 'View Site Captures' %></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <%
+                      original_url_arr.each_index do |index|
+                        if(original_url_arr[index] && archived_url_arr[index])
+                          %><%= link_to(original_url_arr[index], archived_url_arr[index], :title => 'CCF permalink for: ' + original_url_arr[index]) %><%
+                        end
+                        if(original_url_arr[index+1] && archived_url_arr[index+1])
+                            %><br /><%
+                        end
+                      end
+                      %>
+                    </td>
+                  </tr>
+                <% end %>
+              </table>
+
             </div>
 
           </div>
