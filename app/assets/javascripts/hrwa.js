@@ -390,53 +390,21 @@ jQuery(function($) {
     $('#commentForm').attr('action', '/contact');
     $('#problemReportForm').attr('action', '/problem_report');
 
+	/******************
+   * Archive result *
+   * hide / show    *
+   ******************/
+	//Note: Css rule says that
 
-    /*
-    //Add infinite-scroll if we're working with a ranged set of results (if #current_result_set_range is present)
-    //Note: Temporarily disabled for dev purposes.
-    if(false && $('#current_result_set_range').length > 0)
-    {
-      //If we're working with infinite scroll, hide div.pagination
-      $('div.pagination').hide(0);
+	var hl_snippets = $('.archive-result .hl_snippet');
 
-      $('#search_results ul.thumbnails').infinitescroll({
-        loading: {
-          finishedMsg : '',
-          speed : 'slow',
-          msgText     : "",
-          img      : "/assets/ajax-loader.gif"
-        },
-        debug           : false,
-        nextSelector    : "div.pagination .next a",
-        navSelector     : "div.pagination",
-        contentSelector : "#search_results ul.thumbnails",
-        itemSelector    : "#search_results ul.thumbnails > li"
-        },function(){
-          //Each time that a new set of results is retrieved, we'll update #current_result_set_range
-          $('#current_result_set_range').html('1 - ' + $('#search_results article.post').length);
-      });
-    }
-    */
+	var num_lines_to_show = 3;
+	var current_hl_snippet_line_height = parseInt(hl_snippets.css('line-height'));
+	window.new_max_hl_snippet_container_height = num_lines_to_show*current_hl_snippet_line_height;
+	$('.archive-result .hl_snippet').css({'max-height' : window.new_max_hl_snippet_container_height + 'px'});
 
-
-
-  /*
-  // stick the secondary_nav on scroll
-    var theLoc = $('#secondary_nav .subnav').position().top;
-    $(window).scroll(function() {
-        if(theLoc >= $(window).scrollTop()+$('.navbar-fixed-top').height()) {
-            if($('#secondary_nav .subnav').hasClass('fixed')) {
-                $('#secondary_nav .subnav').removeClass('fixed');
-				$('#inner-headline-outer').css('margin-bottom', '0px');
-            }
-        } else {
-            if(!$('#secondary_nav .subnav').hasClass('fixed')) {
-                $('#secondary_nav .subnav').addClass('fixed');
-				$('#inner-headline-outer').css('margin-bottom', '45px');
-            }
-        }
-    }); // end stick
-  */
-
+	$('.result_url').click(function(){
+		$(this).closest('article').find('.hl_snippet').css({'max-height':''});
+	});
 
 }); // ready

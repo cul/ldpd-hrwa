@@ -24,4 +24,4 @@
 //= require bootstrap-image-gallery.min
 //= require jquery.infinitescroll.min
 //= require jquery.ba-outside-events.min
-//= require lindquist
+//= require hrwa
