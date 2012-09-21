@@ -22,11 +22,14 @@ class AdminController < ApplicationController
 
     if service_user_signed_in?
       # That's fine
-    elseif user_signed_in?
+    elsif user_signed_in?
       # Need to check to see if this user is allowed to do anything
       allowed_users = ['elo2112', 'er2576', 'ba2213']
       if( ! allowed_users.include?(current_user.login) )
         # If not on the allowed list, then log this user out
+
+        puts 'LOGGIN U OUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+
         redirect_to destroy_user_session_path
       end
     end
