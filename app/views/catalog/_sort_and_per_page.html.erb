@@ -1,6 +1,5 @@
 <%# Only show per_page and sort_by controls if there are two or more results. %>
   <% if @response.response['numFound'] >= 2 %>
-    <% default_per_page_sting = '30' %>
 
     <div class="results_control pull-right">
       <div id="result_handling_options" class="btn-toolbar">
@@ -10,10 +9,17 @@
                 Results per page <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
+              <%
+              if @search_type == 'archive'
+                result_size_one = '30'; result_size_two = '60'; result_size_three = '90'
+              else
+                result_size_one = '10'; result_size_two = '25'; result_size_three = '50'
+              end
+              %>
                 <!-- dropdown menu links -->
-                <li <% if (!params[:per_page] || params[:per_page] == default_per_page_sting) %> class="active"<% end %>><%= link_to default_per_page_sting, catalog_index_path(params.merge({:per_page => default_per_page_sting})) %></li>
-                <li <% if (params[:per_page] && params[:per_page] == '60') %> class="active"<% end %>><%= link_to '60', catalog_index_path(params.merge({:per_page => '60'})) %></li>
-                <li <% if (params[:per_page] && params[:per_page] == '90') %> class="active"<% end %>><%= link_to '90', catalog_index_path(params.merge({:per_page => '90'})) %></li>
+                <li <% if (!params[:per_page] || params[:per_page] == result_size_one) %> class="active"<% end %>><%= link_to result_size_one, catalog_index_path(params.merge({:per_page => result_size_one})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_two) %> class="active"<% end %>><%= link_to result_size_two, catalog_index_path(params.merge({:per_page => result_size_two})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_three) %> class="active"<% end %>><%= link_to result_size_three, catalog_index_path(params.merge({:per_page => result_size_three})) %></li>
             </ul>
           </div>
           <div class="btn-group sort_by pull-left">

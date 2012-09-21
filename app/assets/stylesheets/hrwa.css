@@ -326,7 +326,7 @@ iframe#x_container { width:100%; }
 #search_results article a.thumbnail { position:relative; }
 #search_results article a.thumbnail i { position:absolute; top:2px; right:2px; }
 /*#documents li.span3 article { height:440px; overflow:auto; }*/
-#primary div.pageEntriesInfo { margin:1px 0 0 0; font-size:110%; }
+#primary div.pageEntriesInfo { margin:1px 0 10px 0; font-size:110%; }
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 10px 0 20px; height:auto; display:block; font-size:0.85em; }
 #primary .blacklight-photographs h3 { clear:both; }
@@ -466,6 +466,9 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 
 .alert.admin-error {background-color:#C22222;color:white;}
 
+.pull-left-important {float:left !important;}
+.pull-right-important {float:right !important;}
+
 #hero-search #searchform, #hero-search #appliedParams {margin-bottom:0px;}
 #hero-search {
   padding-top:20px;
@@ -487,6 +490,8 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 #top_q_wrapper #search_type_dropdown_chooser {padding-right:15px;}
 
 /* Search results */
+
+#sort_and_per_page {float:right !important;}
 
 #primary article.archive-result { margin-left:11px; margin-bottom:10px;}
 #primary article.archive-result dl { padding: 6px 8px; }
@@ -650,6 +655,10 @@ ul.facet_extended_list li a { color:rgb(165, 42, 42); }
 @media (max-width: 767px) {
   #faces_container img {
     margin-bottom: 20px;
+  }
+
+  #primary div.results_pagination {
+    margin-left:0px;
   }
 }
 

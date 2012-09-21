@@ -1,4 +1,4 @@
-<div class="pagination span5">
+<div class="pagination results_pagination span5">
 <% if paginate_params(@response).num_pages > 1 %>
     <%= paginate_rsolr_response @response, :inner_window => 3, :left => 1, :theme => 'blacklight' %>
 <% else %>
