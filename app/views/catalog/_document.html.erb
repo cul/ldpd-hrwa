@@ -23,7 +23,14 @@
             <%# not using bookmark/folder functions-%>
             <%#= render_index_doc_actions document %>
             <% # main title container for doc partial view -%>
-            <h5 class="index_title"><%= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc_text_link_html %></h5>
+            <h5 class="index_title">
+              <%#= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %>
+              <%= doc_text_link_html %>
+            </h5>
+        </div>
+
+        <div class="hl_snippet">
+        <%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
         </div>
 
         <p>

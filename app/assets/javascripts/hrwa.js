@@ -76,7 +76,7 @@ jQuery(function($) {
   /* #q keydown */
 	if ($(window).width() > 767 || $(window).height() > 767) {
 	  $('#q').bind('keydown', function(){
-	    $('#advo_link').parent().addClass('open');
+	    //$('#advo_link').parent().addClass('open');
 	  });
 	}
   /* keep sources dropdown open even after radio click */
@@ -392,19 +392,31 @@ jQuery(function($) {
 
 	/******************
    * Archive result *
-   * hide / show    *
+   * hl snippets    *
    ******************/
-	//Note: Css rule says that
 
-	var hl_snippets = $('.archive-result .hl_snippet');
+	var hl_snippets_for_archive_results = $('.archive-result .hl_snippet');
+	var num_archive_lines_to_show = 3;
+	var current_hl_snippet_line_height = parseInt(hl_snippets_for_archive_results.css('line-height'));
+	window.new_max_archive_hl_snippet_container_height = num_archive_lines_to_show * current_hl_snippet_line_height;
+	hl_snippets_for_archive_results.css({'max-height' : window.new_max_archive_hl_snippet_container_height + 'px'});
 
-	var num_lines_to_show = 3;
-	var current_hl_snippet_line_height = parseInt(hl_snippets.css('line-height'));
-	window.new_max_hl_snippet_container_height = num_lines_to_show*current_hl_snippet_line_height;
-	$('.archive-result .hl_snippet').css({'max-height' : window.new_max_hl_snippet_container_height + 'px'});
+	//$('.result_url').click(function(){
+	//	$(this).closest('article').find('.hl_snippet').css({'max-height':''});
+	//});
 
-	$('.result_url').click(function(){
-		$(this).closest('article').find('.hl_snippet').css({'max-height':''});
-	});
+	/********************
+   * Find Site Result *
+   * hl snippets      *
+   ********************/
+
+	// Note: For formatting reason, we use 'height' below rather than 'max-height'
+	// because it's important that all find site results are the same height
+	var hl_snippets_for_find_site_results = $('.find-site-result .hl_snippet');
+	//Check for length of non-whitespace characters.  If 0, then we have no snippets to work with:
+	var num_find_site_lines_to_show = (hl_snippets_for_find_site_results.first().text().replace(/\s/g,'').length > 0) ? 3 : 0;
+	var current_hl_snippet_line_height = parseInt(hl_snippets_for_find_site_results.css('line-height'));
+	window.new_max_find_site_hl_snippet_container_height = num_find_site_lines_to_show * current_hl_snippet_line_height;
+	hl_snippets_for_find_site_results.css({'height' : window.new_max_find_site_hl_snippet_container_height + 'px'});
 
 }); // ready
