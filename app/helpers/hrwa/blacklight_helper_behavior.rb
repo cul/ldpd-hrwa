@@ -8,7 +8,7 @@ module Hrwa::BlacklightHelperBehavior
   def application_name
     return Rails.application.config.application_name if Rails.application.config.respond_to? :application_name
 
-    'G.E.E Lindquist Native American Photographs'
+    return 'The Columbia University Human Rights Web Archive'
   end
 
   # ! Override !

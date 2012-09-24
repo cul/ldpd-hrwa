@@ -77,14 +77,14 @@ $(document).ready(function() {
       if(event.metaKey || event.ctrlKey){f.target = '_blank';};
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'counter'); d.setAttribute('value', $(this).data('counter')); f.appendChild(d);
-      //START Lindquist additions
+      //START CUL additions
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'results_view'); d.setAttribute('value', $(this).data('results_view')); f.appendChild(d);
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'folder_view'); d.setAttribute('value', $(this).data('folder_view')); f.appendChild(d);
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'last_known_s_search_json_string'); d.setAttribute('value', LIND.last_known_s_search_json_string); f.appendChild(d);
-      //END Lindquist additions
+      //END CUL additions
       var m = document.createElement('input'); m.setAttribute('type', 'hidden');
       m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);
       var m = document.createElement('input'); m.setAttribute('type', 'hidden');

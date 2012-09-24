@@ -653,15 +653,9 @@ ul.facet_extended_list li a { color:rgb(165, 42, 42); }
   margin:20px 0px;
 }
 
-/* About the Collection / About G.E.E. Lindquist */
-#about_the_collection_img, #about_gee_lindquist_img {
+/* About the Archive */
+#about_hrwa_img {
   margin: 0px 0px 10px 10px;
-}
-
-#faces_container img {
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
 }
 
 @media (max-width: 767px) {
