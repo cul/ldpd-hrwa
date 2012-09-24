@@ -20,8 +20,8 @@
       <div class="caption">
         <% # header bar for doc items in index view -%>
         <div class="documentHeader">
-            <% # bookmark/folder functions for items/docs -%>
-            <%= render_index_doc_actions document %>
+            <%# not using bookmark/folder functions-%>
+            <%#= render_index_doc_actions document %>
             <% # main title container for doc partial view -%>
             <h5 class="index_title"><%= (item_count_id.to_s + '. ') if (params[:controller] == 'catalog' && params[:action] == 'index') %><%= doc_text_link_html %></h5>
         </div>
