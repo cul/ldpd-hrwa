@@ -1,75 +1,53 @@
-<% unless has_search_parameters? %>
+<% @page_title = "Advanced Search" %>
 
-	<%# if there are no input/search related params, display the "home" partial -%>
-	<%= render 'search_home' %>
+<div class="row">
+  <div class="span12">
+		<article class="entry">
+      <h2>Advanced Search</h2>
 
-<% else %>
+			<div class="tabbable"> <!-- Only required for left/right tabs -->
+				<ul class="nav nav-tabs">
+					<li class="pull-right"><a href="#advanced_search_archive_tab" data-toggle="tab">Search Through Archived Pages</a></li>
+					<li class="active pull-right"><a href="#advanced_search_find_site_tab" data-toggle="tab">Find A Site</a></li>
+				</ul>
+				<form id="advanced_search_form">
 
-  <% @page_title = "Advanced Search" %>
-  <% extra_head_content << render_opensearch_response_metadata.html_safe %>
+					<div class="row">
+						<h6 class="span12">Find Pages/Sites that have&hellip;</h6>
 
-<%#  <div id="primary_container" class="container no-hero-mobile"> %>
-    <div class="row">
+						<div class="span12">
+							<label class="pull-left span3">all of these words:</label>
+							<input class="pull-left span9" placeholder="Enter search terms..." name="q_and" size="16" type="text"/>
+						</div>
+						<div class="span12">
+							<label class="pull-left span3">this exact phrase:</label>
+							<input class="pull-left span9 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/>
+						</div>
+						<div class="span12">
+							<label class="pull-left span3">any of these words:</label>
+							<input class="pull-right span9 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
+						</div>
 
-      <div id="primary" class="span9">
-        <div class="pageEntriesInfo">
-          <%#= render_pagination_info @response, :entry_name=>'item' %>
-		  <% if(@search_type.to_s == 'archive') %>
-		    <%= render_archive_pagination_info @response, :entry_name=>'archived web page result' %>
-		  <% else %>
-		    <%= render_pagination_info @response, :entry_name=>'sites' %>
-		  <% end %>
+						<h6 class="span12">But don't show results that have&hellip;</h6>
 
-            <%#=link_to 'Start Over', catalog_index_path, :class=>'btn btn-mini pull-right' %>
-            <span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span>
+						<div class="span12">
+							<label class="pull-left span3">these unwanted words:</label>
+							<input class="pull-right span9 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/>
+						</div>
+					</div>
 
-            <form id="edit_query_form">
-              <div class="pull-right">
-                <button id="edit_query_confirm" class="btn btn-mini pull-right" data-original-title="Update your search query" type="submit"><i class="icon-ok"></i></button>
-                <button id="edit_query_cancel" class="btn btn-mini pull-right" ><i class="icon-remove"></i></button>
-              </div>
-              <div id="edit_query_input_wrapper">
-                <%= text_field_tag :q, params[:q], :class => '', :placeholder => 'Add some search terms to your current search&hellip;'.html_safe, :id => 'edit_query_input' %>
-              </div>
+					<div class="tab-content">
+						<div class="tab-pane active" id="advanced_search_find_site_tab">
+							<%= render :partial => 'advanced_search_form_find_site' %>
+						</div>
+						<div class="tab-pane" id="advanced_search_archive_tab">
+							<%= render :partial => 'advanced_search_form_archive' %>
+						</div>
+					</div>
 
-              <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
-            </form>
+				</form>
+			</div>
 
-            <span id="echo_query">
-              <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="green strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
-            </span>
-        </div>
-        <div class="row" id="search_constraints">
-          <div class="span9">
-            <%= render 'constraints', :localized_params=>params %>
-          </div>
-        </div><!--/row-->
-        <div class="row">
-          <div class="span5 nomar pull-left-important">
-            <%= render 'results_pagination' %>
-          </div>
-          <div class="span4 pull-right-important">
-            <%= render 'sort_and_per_page' %>
-          </div>
-        </div>
-        <div id="search_results">
-          <%= render :partial => 'result_list' %>
-        </div>
-        <div class="row">
-          <%= render 'results_pagination' %>
-        </div>
-      </div><!--/#primary-->
-
-      <div id="secondary" class="span3">
-        <div id="facets" class="find_site facets">
-          <% sidebar_items << capture do %>
-            <%= render :partial=>'facets' %>
-          <% end %>
-          <%= sidebar_items.join('').html_safe %>
-        </div>
-      </div>
-
-    </div><!--/.row-->
-<%#  </div><!--/#primary_container--> %>
-
-<% end %>
+    </article>
+  </div>
+</div>

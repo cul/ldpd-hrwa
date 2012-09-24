@@ -11,9 +11,11 @@ class CatalogController < ApplicationController
 
     case params[:action].to_s
       when 'index'
-        _configure_by_search_type
-      when 'advanced'
-        _configure_by_search_type
+        if ! params[:search_type]
+          _configure_by_search_type('find_site')
+        else
+          _configure_by_search_type
+        end
       when 'show'
         _configure_by_search_type('site_detail')
       when 'update'
@@ -32,8 +34,13 @@ class CatalogController < ApplicationController
   end
 
   def advanced
-    _do_advanced_search_params_preprocessing
-    _do_search
+    if params[:search_type]
+      _do_advanced_query_processing_and_redirect
+    end
+  end
+
+  def _do_advanced_query_processing_and_redirect
+    redirect_to params.merge({:action => 'index'})
   end
 
   # display hrwa_home page, and grab 12 random results from Solr
@@ -142,10 +149,6 @@ class CatalogController < ApplicationController
       format.rss  { render :layout => false }
       format.atom { render :layout => false }
     end
-  end
-
-  def _do_advanced_search_params_preprocessing
-    @filters = params[:f] || []
   end
 
   # sets @debug_mode to true if params[:debug_mode] == true

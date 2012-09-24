@@ -5,10 +5,8 @@ Hrwa::Application.routes.draw do
   DeviseWind.add_routes(self)
 
   # Our Blacklight stuff (before Blacklight adds its own routes)
-  match 'site_detail/:id' => 'catalog#show/:id', :as => :site_detail
-
+  match ':catalog/advanced'        => 'catalog#advanced'
   # Replaces 'catalog' in all urls with 'search'
-  #resources :search, :as => :catalog, :controller => :catalog
   resources :catalog, :path => :search
 
   Blacklight.add_routes(self)
@@ -19,7 +17,6 @@ Hrwa::Application.routes.draw do
   match '/contact'                => 'pages#contact'
   match '/problem_report'         => 'pages#problem_report'
   match '/terms_of_use'           => 'pages#terms_of_use'
-
   match '/owner_nomination'  => 'pages#owner_nomination'
   match '/public_nomination' => 'pages#public_nomination'
 
