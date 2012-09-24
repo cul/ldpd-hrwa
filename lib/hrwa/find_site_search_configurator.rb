@@ -37,7 +37,7 @@ class HRWA::FindSiteSearchConfigurator
                                 "summary^1",
                                 "title^1",
                                 ],
-          :rows             => 10,
+          :rows             => self.default_num_rows,
         }
 
         config.unique_key = "id"
@@ -218,6 +218,10 @@ class HRWA::FindSiteSearchConfigurator
 
     def result_type
       return 'document'
+    end
+
+    def default_num_rows
+      return 30
     end
 
     # Takes optional environment arg for testability

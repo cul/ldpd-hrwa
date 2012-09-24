@@ -35,7 +35,7 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
                                 'originalUrl^1',
                                 'originalUrl__no_stemming_balancing_field^1',
                                ],
-          :rows             => 10,
+          :rows             => self.default_num_rows,
         }
 
         config.unique_key = 'recordIdentifier'
@@ -287,6 +287,10 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
 
     # Overwrite existing qf
     solr_parameters[ :qf ] = qf
+  end
+
+  def default_num_rows
+    return 10
   end
 
     # Takes optional environment arg for testability

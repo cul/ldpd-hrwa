@@ -6,7 +6,7 @@ module Hrwa::CatalogHelperBehavior
     html_to_return = '';
 
     array_of_facets.each{ |facet_value|
-      html_to_return += '<a href="/catalog?f%5B'.html_safe + facet_fieldname + '%5D%5B%5D='.html_safe + facet_value + '">'.html_safe + h(facet_value) + '</a>; '.html_safe
+      html_to_return += '<a href="/catalog?search_type=find_site&f%5B'.html_safe + facet_fieldname + '%5D%5B%5D='.html_safe + facet_value + '">'.html_safe + h(facet_value) + '</a>; '.html_safe
     }
 
     #And then remove the final space and semicolon (" ;")

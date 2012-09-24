@@ -22,14 +22,14 @@
       <% if( ! @document.get('organization_type').blank? ) %>
         <tr>
           <td>Organization Type</td>
-          <td><%= @document.get('organization_type') %></td>
+          <td><%=facet_array_to_delimited_list_with_links('organization_type__facet', [@document.get('organization_type')])%></td>
         </tr>
       <% end %>
 
       <% if( ! @document.get('organization_based_in').blank? ) %>
         <tr>
           <td>Organization Based In</td>
-          <td><%= @document.get('organization_based_in') %></td>
+          <td><%=facet_array_to_delimited_list_with_links('organization_based_in__facet', [@document.get('organization_based_in')])%></td>
         </tr>
       <% end %>
 

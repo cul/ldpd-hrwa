@@ -66,6 +66,10 @@ class HRWA::Configurator
     return @configurator.result_type
   end
 
+  def default_num_rows
+    return @configurator.default_num_rows
+  end
+
   def solr_url
     return @configurator.class.solr_url
   end

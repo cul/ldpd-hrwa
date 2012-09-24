@@ -36,7 +36,7 @@ class HRWA::SiteDetailConfigurator
                                 "summary^1",
                                 "title^1",
                                 ],
-          :rows             => 10,
+          :rows             => self.default_num_rows,
         }
 
         config.document_solr_request_handler = 'document'
@@ -219,6 +219,10 @@ class HRWA::SiteDetailConfigurator
 
     def result_type
       return 'document'
+    end
+
+    def default_num_rows
+      return 1
     end
 
     # Takes optional environment arg for testability

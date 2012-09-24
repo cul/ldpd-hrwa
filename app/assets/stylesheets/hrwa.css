@@ -330,7 +330,9 @@ iframe#x_container { width:100%; }
 #search_results article a.thumbnail { position:relative; }
 #search_results article a.thumbnail i { position:absolute; top:2px; right:2px; }
 /*#documents li.span3 article { height:440px; overflow:auto; }*/
-#primary div.pageEntriesInfo { margin:1px 0 10px 0; font-size:110%; }
+#primary div.pageEntriesInfo { margin:1px 0 0 0; font-size:110%; }
+#appliedParams {margin-top:17px}
+#primary #search_constraints {margin-bottom:10px;}
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 10px 0 20px; height:auto; display:block; font-size:0.85em; }
 #primary .blacklight-photographs h3 { clear:both; }
@@ -548,6 +550,11 @@ article#faq dd { margin:.5em 0; }
 
 #show_fsf_record_title {
     margin-bottom: 3px;
+}
+
+table#view_site_captures {
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 #show_item_back_prev_and_next_buttons .page_nav {

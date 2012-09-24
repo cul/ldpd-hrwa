@@ -29,7 +29,7 @@ class HRWA::ArchiveSearchConfigurator
                                 'title^1',
                                 'originalUrl^1',
                                ],
-          :rows             => 10,
+          :rows             => self.default_num_rows,
         }
 
         config.unique_key = 'recordIdentifier'
@@ -283,6 +283,10 @@ class HRWA::ArchiveSearchConfigurator
     # Overwrite existing qf
     solr_parameters[ :qf ] = qf
   end
+
+    def default_num_rows
+      return 10
+    end
 
     # Takes optional environment arg for testability
     def self.solr_url(environment = Rails.env)
