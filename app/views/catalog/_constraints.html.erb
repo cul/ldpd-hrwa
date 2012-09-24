@@ -1,5 +1,13 @@
 <div id="appliedParams">
   <div id="fqs">
-    <%= render_constraints(localized_params) %>
+    <% constraints_to_render = render_constraints(localized_params) %>
+    <%
+      unless constraints_to_render.blank?
+        # Render all facets
+        %><%= constraints_to_render %><%
+        # And also render a button for removing all facets
+        %><%= render_constraint_element(nil, 'Remove all facets', {:clear_all_facets => true}) %><%
+      end
+    %>
   </div>
 </div>

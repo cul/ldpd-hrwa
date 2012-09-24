@@ -13,20 +13,37 @@
 -%>
 
 <span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
-      <%- unless options[:remove].blank? -%>
-        <% accessible_remove_label = '<i class="icon-remove icon-white"></i>'.html_safe + 
-                if label.blank?
-                  processed_value
-                else
-                  '<span class="opacity_75">'.html_safe + processed_label + '</span>: '.html_safe + processed_value
-                end
-        %>
-        <%= link_to(accessible_remove_label,
-					options[:remove],
-					:class => 'btn btn-info btn-small facet-pill',
-					:rel => 'tooltip',
-					:'data-original-title' => 'Remove this facet',
-          :alt => 'remove'
-				) %>
-      <%- end -%>
+      <%
+      if ! (options[:remove].blank?) || ! (options[:clear_all_facets].blank?) %>
+        <%
+				accessible_remove_label = '<i class="icon-remove icon-white"></i>'.html_safe +
+						if label.blank?
+							processed_value
+						else
+							'<span class="opacity_75">'.html_safe + processed_label + '</span>: '.html_safe + processed_value
+						end
+
+				unless options[:clear_all_facets].blank?
+					params_without_f = params.dup
+					params_without_f.delete(:f)
+
+					%><%= link_to(accessible_remove_label,
+						params_without_f,
+						:class => 'btn btn-danger btn-small facet-pill',
+						:rel => 'tooltip',
+						:'data-original-title' => 'Remove all facets',
+						:alt => 'remove'
+					) %><%
+				else
+					%><%= link_to(accessible_remove_label,
+						options[:remove],
+						:class => 'btn btn-info btn-small facet-pill',
+						:rel => 'tooltip',
+						:'data-original-title' => 'Remove this facet',
+						:alt => 'remove'
+					)
+					%><%
+				end
+			end
+			%>
 </span>

@@ -331,8 +331,8 @@ iframe#x_container { width:100%; }
 #search_results article a.thumbnail i { position:absolute; top:2px; right:2px; }
 /*#documents li.span3 article { height:440px; overflow:auto; }*/
 #primary div.pageEntriesInfo { margin:1px 0 0 0; font-size:110%; }
-#appliedParams {margin-top:17px}
-#primary #search_constraints {margin-bottom:10px;}
+#appliedParams {margin-top:10px}
+#primary #search_constraints {margin-bottom:5px;}
 #primary #qtime_ms {font-style:italic;font-size:13px;}
 #primary div.pagination { margin:0 10px 0 20px; height:auto; display:block; font-size:0.85em; }
 #primary .blacklight-photographs h3 { clear:both; }
