@@ -18,6 +18,7 @@ class Hrwa::Admin::SolrTaskHandler
                             :q  => '*:*',
                             :qt => 'search',
                             :facet => true,
+                            :'facet.sort' => 'index', # We want Solr to order facets based on their index (alphabetically, numerically, etc.)
                             :'facet.field' => ['title__facet',
                                                'original_urls',
                                                'subject__facet',
