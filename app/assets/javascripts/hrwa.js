@@ -76,7 +76,7 @@ jQuery(function($) {
   /* #q keydown */
 	if ($(window).width() > 767 || $(window).height() > 767) {
 	  $('#q').bind('keydown', function(){
-	    //$('#advo_link').parent().addClass('open');
+	    $('#advo_link').parent().addClass('open');
 	  });
 	}
   /* keep sources dropdown open even after radio click */

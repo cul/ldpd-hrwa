@@ -316,7 +316,7 @@ iframe#x_container { width:100%; }
 #search_results article .hl_snippet {display:block;font-size:11px;line-height:14px;overflow:hidden;padding-bottom:1px;}
 #search_results article.find-site-result .hl_snippet {margin-bottom:8px;}
 #search_results article.archive-result .hl_snippet {margin-bottom:1px;}
-#search_results article.archive-result .hl_snippet:hover {max-height:inherit !important;background-color:#feffaa;border-radius:5px;}
+/* #search_results article.archive-result .hl_snippet:hover {max-height:inherit !important;background-color:#feffaa;border-radius:5px;} */
 #search_results article dl dd.result_url {font-size:110%;color:#999/*#009129*/;word-break:break-word;}
 #search_results article dl dd .toggler {display:block;margin:0.2em 0 0.1em 0; }
 #search_results article dl dd.result_aka {margin-top:1px;font-size:12px;font-style:italic;}
