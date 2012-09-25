@@ -50,11 +50,11 @@ vorpal_solr: &vorpal_solr
     url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
 
-development: *vorpal_solr
+development: *carter_solr
 test: *test_solr
 production: *vorpal_solr
 
 hrwa_dev: *carter_solr
-hrwa_staging: *harding_solr
+hrwa_staging: *carter_solr
 hrwa_test: *vorpal_solr
 hrwa_prod: *vorpal_solr

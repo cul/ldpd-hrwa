@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-# This file was automatically generated on: 2012-09-25T01:46:17-04:00
+# This file was automatically generated on: 2012-09-25T02:21:46-04:00
 module Hrwa::BrowseListHelper
 def browse_list_for_title__facet
 return {

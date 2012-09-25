@@ -64,6 +64,12 @@ class CatalogController < ApplicationController
 
     params[:q] = combined_q
 
+    # and remove the advanced text fields from params
+    params.delete(:q_and)
+    params.delete(:q_phrase)
+    params.delete(:q_or)
+    params.delete(:q_exclude)
+
     # Ignore all empty f[] items
     params[:f].delete_if{|key, value|
       value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
