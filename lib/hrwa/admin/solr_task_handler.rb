@@ -36,12 +36,16 @@ class Hrwa::Admin::SolrTaskHandler
                             :'f.geographic_focus__facet.facet.limit' => -1,
                             :'f.language__facet.facet.limit' => -1,
 
-														'creator_name__facet' => -1,
-														'organization_based_in__facet' => -1,
-														'organization_type__facet' => -1,
+														:'f.creator_name__facet.facet.limit' => -1,
+														:'f.organization_based_in__facet.facet.limit' => -1,
+														:'f.organization_type__facet.facet.limit' => -1,
 
                             :rows => 0,
                           }
+
+    puts  '--------------------------------------------------'
+    puts @response.pretty_inspect
+    puts  '--------------------------------------------------'
 
     file_text = ''
     file_text += '# -*- encoding : utf-8 -*-' + "\n"
