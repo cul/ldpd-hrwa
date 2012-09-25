@@ -34,12 +34,23 @@ class CatalogController < ApplicationController
   end
 
   def advanced
-    if params[:search]
+    if params[:submit]
       _do_advanced_query_processing_and_redirect
     end
   end
 
   def _do_advanced_query_processing_and_redirect
+
+    # Also ignore params[:catalog]
+    params.delete(:catalog)
+
+    # Also ignore params[:submit]
+    params.delete(:submit)
+
+    # Ignore all empty params items
+    params.delete_if{|key, value|
+      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
+    }
 
     # Combine q_and, q_phrase, q_or, q_exclude into q
 
@@ -70,7 +81,7 @@ class CatalogController < ApplicationController
     params.delete(:q_or)
     params.delete(:q_exclude)
 
-    # Ignore all empty f[] items
+    # Ignore all empty params[:f] items
     params[:f].delete_if{|key, value|
       value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
     }

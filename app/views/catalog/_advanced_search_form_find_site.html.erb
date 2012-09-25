@@ -1,4 +1,4 @@
-<%= form_tag nil, :method => :get, :class => 'advanced_search_form' do %>
+<%= form_tag catalog_path('advanced'), :method => :get, :class => 'advanced_search_form' do %>
 
 <%= render :partial => 'advanced_search_form_text_fields' %>
 
@@ -93,28 +93,33 @@
 			</select>
 		</div>
 	</div>
-	<!--
+
 	<h6 class="span12">Display Options</h6>
 
 	<div class="span6">
 		<div class="control-group">
 				 <label class="span2 control-label">results per page</label>
-				 <select class="control-group" name="per_page">
-					<option>10</option>
-					<option>25</option>
-					<option>50</option>
-					<option>100</option>
+				 <select class="control-group span3" name="per_page">
+					<option value="">- Choose an option -</option>
+					<option>30</option>
+					<option>60</option>
+					<option>90</option>
 				 </select>
 		</div>
 	</div>
 	<div class="span6">
 		<div class="control-group">
-				 <label class="span2 control-label">sort</label>
-				 <select class="control-group" name="sort">
-					 <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
-				 </select>
+				<label class="span2 control-label">sort</label>
+				<select class="control-group span3" name="sort">
+					<option value="">- Choose an option -</option>
+					<option value="score desc">Relevance</option>
+					<option value="title__sort asc">A-Z</option>
+					<option value="title__sort desc">Z-A</option>
+				</select>
 		</div>
 	</div>
+
+	<!--
 
 	<h6 class="span12">Dev Options (Temporary)</h6>
 
@@ -122,7 +127,7 @@
 		<div class="span6">
 			<div class="control-group">
 				<label class="span2 control-label">host</label>
-				<select id="hrwa_host_asf" name="hrwa_host"><%
+				<select id="hrwa_host_asf" class="span3" name="hrwa_host"><%
 						hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
 						%>
 						<option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
@@ -136,7 +141,7 @@
 		<div class="span6">
 			<div class="control-group">
 				<label class="span2 control-label">core</label>
-					<select id="hrwa_core_asf" name="hrwa_core">
+					<select id="hrwa_core_asf" class="span3" name="hrwa_core">
 							<% hrwa_core_asf = params[ :hrwa_core ].blank? ? '' : get_current_hrwa_solr_core %>
 							<option value="">- Choose an option -</option>
 							<option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
@@ -146,10 +151,11 @@
 			</div>
 		</div>
 	</div>
+
 	-->
 
 	<input type="hidden" name="search_type" value="find_site" />
-	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="search" value="Search Sites" /></div>
+	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="submit" value="Search Sites" /></div>
 
 </div>
 

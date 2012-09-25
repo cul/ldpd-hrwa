@@ -1,4 +1,4 @@
-<%= form_tag nil, :method => :get, :class => 'advanced_search_form' do %>
+<%= form_tag catalog_path('advanced'), :method => :get, :class => 'advanced_search_form' do %>
 
 <%= render :partial => 'advanced_search_form_text_fields' %>
 
@@ -39,12 +39,14 @@
 		</div>
 				<div class="control-group">
 				<label class="span2 control-label">file type</label>
-				<select class="control-group span3" name="f[mimetype][]">
+				<select class="control-group span3" name="f[mimetype_code][]">
 					<option value="">- Choose an option -</option>
-					<%# selected_items = params[:f].nil? ? nil : params[:f][:mimetype] %>
-					<%# file_type_options().each do | key, value | %>
-						<%#= '<option value="'.html_safe + key + '"'.html_safe + (value ? ' selected="selected"'.html_safe : ''.html_safe) + '>'.html_safe + key + '</option>'.html_safe %>
-					<%# end %>
+					<option value="DOCUMENT">Document</option>
+					<option value="HTML">HTML</option>
+					<option value="PDF">PDF</option>
+					<option value="SLIDESHOW">Slideshow</option>
+					<option value="SPREADSHEET">Spreadsheet</option>
+					<option value="XML">XML</option>
 				</select>
 		</div>
 	</div>
@@ -84,11 +86,10 @@
 		</div>
 	</div>
 
-	<!--
 	<h6 class="span12">Date of Capture</h6>
 
-	<% capture_start_date_value =   params[ :capture_start_date ].nil?  ? '' : params[ :capture_start_date ]
-			 capture_end_date_value =       params[ :capture_end_date ].nil?    ? '' : params[ :capture_end_date   ] %>
+	<% capture_start_date_value = ''
+			 capture_end_date_value = '' %>
 
 	<div class="span6 capture_start_date_group">
 		<div class="control-group">
@@ -108,22 +109,16 @@
 	<div class="span6">
 		<div class="control-group">
 				 <label class="span2 control-label">results per page</label>
-				 <select class="control-group" name="per_page">
+				 <select class="control-group span3" name="per_page">
+					<option value="">- Choose an option -</option>
 					<option>10</option>
 					<option>25</option>
 					<option>50</option>
-					<option>100</option>
 				 </select>
 		</div>
 	</div>
-	<div class="span6">
-		<div class="control-group">
-				 <label class="span2 control-label">sort</label>
-				 <select class="control-group" name="sort">
-					 <option value="score desc" <%= params[:sort] == 'score desc' ? 'selected="selected"'.html_safe : ''.html_safe %>>Relevance</option>
-				 </select>
-		</div>
-	</div>
+
+	<!--
 
 	<h6 class="span12">Dev Options (Temporary)</h6>
 
@@ -131,7 +126,7 @@
 		<div class="span6">
 			<div class="control-group">
 				<label class="span2 control-label">host</label>
-				<select id="hrwa_host_asf" name="hrwa_host"><%
+				<select id="hrwa_host_asf" class="span3" name="hrwa_host"><%
 						hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
 						%>
 						<option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
@@ -145,7 +140,7 @@
 		<div class="span6">
 			<div class="control-group">
 				<label class="span2 control-label">core</label>
-					<select id="hrwa_core_asf" name="hrwa_core">
+					<select id="hrwa_core_asf" class="span3" name="hrwa_core">
 							<% hrwa_core_asf = params[ :hrwa_core ].blank? ? '' : get_current_hrwa_solr_core %>
 							<option value="">- Choose an option -</option>
 							<option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
@@ -155,9 +150,11 @@
 			</div>
 		</div>
 	</div>
+
 	-->
+
 	<input type="hidden" name="search_type" value="archive" />
-	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="search" value="Search Pages" /></div>
+	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="submit" value="Search Pages" /></div>
 
 </div>
 
