@@ -68,7 +68,7 @@ class HRWA::ArchiveSearchConfigurator
                                :label => 'Date Of Capture',
                                :limit => 5
 
-        config.add_facet_field 'mimetype',
+        config.add_facet_field 'mimetypeCode',
                                :label => 'File Type',
                                :limit => 5
 

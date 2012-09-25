@@ -13,7 +13,7 @@
 
               result_size_one = @configurator.default_num_rows
 
-              if @search_type == 'archive'
+              if @search_type == :archive
                  result_size_two   = '25';
                  result_size_three = '50'
               else
@@ -27,11 +27,14 @@
                 <li <% if (params[:per_page] && params[:per_page] == result_size_three) %> class="active"<% end %>><%= link_to result_size_three, catalog_index_path(params.merge({:per_page => result_size_three})) %></li>
             </ul>
           </div>
-          <div class="btn-group sort_by pull-left">
-            <%= link_to 'Relevance', catalog_index_path(params.merge({:sort => 'score desc'})), :class => 'btn' + ((!params[:sort] || params[:sort] == 'score desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Relevance' %>
-            <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'item_title__sort asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
-            <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'item_title__sort desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
-          </div>
+
+          <% if @search_type != :archive %>
+            <div class="btn-group sort_by pull-left">
+              <%= link_to 'Relevance', catalog_index_path(params.merge({:sort => 'score desc'})), :class => 'btn' + ((!params[:sort] || params[:sort] == 'score desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Relevance' %>
+              <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'item_title__sort asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
+              <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'item_title__sort desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
+            </div>
+          <% end %>
 
       </div>
     </div>

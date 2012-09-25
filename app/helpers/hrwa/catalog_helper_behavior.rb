@@ -80,7 +80,6 @@ module Hrwa::CatalogHelperBehavior
       degree_of_rounding = 100
     else
       degree_of_rounding = 10**(real_number.to_s.length-2)
-      puts 'degree_of_roundingggggggggggggggggggggggggg: ' + degree_of_rounding.to_s
     end
 
     number_with_delimiter((((real_number).to_f/degree_of_rounding).to_f).round*degree_of_rounding, :delimiter => ',')
