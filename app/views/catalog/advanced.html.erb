@@ -2,50 +2,24 @@
 
 <div class="row">
   <div class="span12">
-		<article class="entry">
-      <h2>Advanced Search</h2>
+	  <article class="entry">
+		<h2 id="advanced_search_title">Advanced Search</h2>
 
 			<div class="tabbable"> <!-- Only required for left/right tabs -->
 				<ul class="nav nav-tabs">
-					<li class="pull-right"><a href="#advanced_search_archive_tab" data-toggle="tab">Search Through Archived Pages</a></li>
-					<li class="active pull-right"><a href="#advanced_search_find_site_tab" data-toggle="tab">Find A Site</a></li>
+					<li class="active pull-left"><a href="#advanced_search_find_site_tab" data-toggle="tab">Find A Site</a></li>
+					<li class="pull-left"><a href="#advanced_search_archive_tab" data-toggle="tab">Search Through Archived Pages</a></li>
 				</ul>
-				<form id="advanced_search_form">
 
-					<div class="row">
-						<h6 class="span12">Find Pages/Sites that have&hellip;</h6>
-
-						<div class="span12">
-							<label class="pull-left span3">all of these words:</label>
-							<input class="pull-left span9" placeholder="Enter search terms..." name="q_and" size="16" type="text"/>
-						</div>
-						<div class="span12">
-							<label class="pull-left span3">this exact phrase:</label>
-							<input class="pull-left span9 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/>
-						</div>
-						<div class="span12">
-							<label class="pull-left span3">any of these words:</label>
-							<input class="pull-right span9 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
-						</div>
-
-						<h6 class="span12">But don't show results that have&hellip;</h6>
-
-						<div class="span12">
-							<label class="pull-left span3">these unwanted words:</label>
-							<input class="pull-right span9 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/>
-						</div>
+				<div class="tab-content">
+					<div class="tab-pane active" id="advanced_search_find_site_tab">
+						<%= render :partial => 'advanced_search_form_find_site' %>
 					</div>
-
-					<div class="tab-content">
-						<div class="tab-pane active" id="advanced_search_find_site_tab">
-							<%= render :partial => 'advanced_search_form_find_site' %>
-						</div>
-						<div class="tab-pane" id="advanced_search_archive_tab">
-							<%= render :partial => 'advanced_search_form_archive' %>
-						</div>
+					<div class="tab-pane" id="advanced_search_archive_tab">
+						<%= render :partial => 'advanced_search_form_archive' %>
 					</div>
+				</div>
 
-				</form>
 			</div>
 
     </article>
