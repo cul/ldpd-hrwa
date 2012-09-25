@@ -31,8 +31,8 @@
           <% if @search_type != :archive %>
             <div class="btn-group sort_by pull-left">
               <%= link_to 'Relevance', catalog_index_path(params.merge({:sort => 'score desc'})), :class => 'btn' + ((!params[:sort] || params[:sort] == 'score desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Relevance' %>
-              <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'item_title__sort asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
-              <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'item_title__sort desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__sort desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
+              <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'item_title__facet asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__facet asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
+              <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'item_title__facet desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'item_title__facet desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
             </div>
           <% end %>
 

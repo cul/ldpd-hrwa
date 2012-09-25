@@ -384,14 +384,6 @@ jQuery(function($) {
       }
     });
 
-    /* Contact and Problem Report Forms */
-    // Actions here to slow robots
-
-    $('#commentForm').attr('action', '/contact');
-    $('#problemReportForm').attr('action', '/problem_report');
-    $('#frmOwnerNomination').attr('action', '/owner_nomination');
-    $('#frmPublicNomination').attr('action', '/public_nomination');
-
 	/******************
    * Archive result *
    * hl snippets    *
@@ -436,5 +428,162 @@ jQuery(function($) {
   problem_report_hidden_field_html += '<input type="hidden" name="problem_report[UserAgent]" value="' + navigator.userAgent + '" />';
 
 	$('#problemReportForm').append(problem_report_hidden_field_html);
+
+	/*******************
+   * Form actions    *
+   * inserted using  *
+   * JavaScript to   *
+   * deter robots    *
+   *******************/
+
+	$('#commentForm').attr('action', '/contact');
+	$('#problemReportForm').attr('action', '/problem_report');
+	$('#frmOwnerNomination').attr('action', '/owner_nomination');
+	$('#frmPublicNomination').attr('action', '/public_nomination');
+
+	/******************
+   * HRWA Date      *
+   * Picker Stuff   *
+   ******************/
+
+  //Define the hrwadatepicker creation function
+  //Note: This is only meant to be used on input[type="text"] elements
+  jQuery.fn.hrwadatepicker = function(params) {
+
+    //First, grab a reference to the jquery selector that this function was used on
+    var o = $(this[0]);
+
+    //Using the each function just in case the selector brings in multiple items
+    o.each(function(){
+
+        var minYear = params.minYear;
+        var maxYear = params.maxYear;
+
+        //By default, set selectedDate to null
+        var selectedDate = null;
+        //But if a valid date already exists in the input, use it
+        //Note: We have to convert the month to month-1 because the new Date() constructor uses zero-indexed months
+        var dateInInput = $(this).val();
+
+        if(dateInInput != '' && dateInInput.search(/^\d{4}-\d{2}$/) != -1 )
+        {
+            selectedDate = new Date(parseInt(dateInInput.substring(0, dateInInput.indexOf("-"))), parseInt(dateInInput.substring(dateInInput.indexOf("-")+1, dateInInput.length))-1, 1);
+        }
+
+        var selectedYear = selectedDate != null ? selectedDate.getFullYear() : -1;
+
+        //Note: The month in a date is zero-indexed (so 0 == January and 1 == February)
+        var selectedMonth = selectedDate != null ? selectedDate.getMonth()+1 : -1;
+        //Note: At this point, the selected month does NOT have a leading 0
+
+        var yearSelectOptionHtml = '';
+        for(var i = minYear; i <= maxYear; i++)
+        {
+            if(i == selectedYear)
+            {
+                yearSelectOptionHtml += '<option selected="selected" val="'+i+'">'+i+'</option>';
+            }
+            else
+            {
+                yearSelectOptionHtml += '<option val="'+i+'">'+i+'</option>';
+            }
+        }
+
+        var month_number_to_month_data = {
+            1 : ['01', 'Jan'],
+            2 : ['02', 'Feb'],
+            3 : ['03', 'Mar'],
+            4 : ['04', 'Apr'],
+            5 : ['05', 'May'],
+            6 : ['06', 'Jun'],
+            7 : ['07', 'Jul'],
+            8 : ['08', 'Aug'],
+            9 : ['09', 'Sep'],
+            10 : ['10', 'Oct'],
+            11 : ['11', 'Nov'],
+            12 : ['12', 'Dec']
+        }
+        var monthSelectOptionHtml = '';
+        for(var j = 1; j <= 12; j++)
+        {
+            if(j == selectedMonth)
+            {
+                monthSelectOptionHtml += '<option selected="selected" val="'+month_number_to_month_data[j][0]+'">'+month_number_to_month_data[j][1]+'</option>';
+            }
+            else
+            {
+                monthSelectOptionHtml += '<option val="'+month_number_to_month_data[j][0]+'">'+month_number_to_month_data[j][1]+'</option>';
+            }
+        }
+
+        //Wrap this input in a div
+        $(this).wrap('<span class="hrwadatepicker_wrapper" />');
+
+        var hrwaDatePickerHtml =
+        '<span style="display:none;" class="hrwadatepicker_selects form-inline">'+
+            '<select class="year">'+
+                '<option val="YYYY"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>YYYY</option>' +
+                yearSelectOptionHtml +
+            '</select> '+
+            '<select class="month">'+
+                '<option val="MM"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>MM</option>' +
+                monthSelectOptionHtml +
+            '</select>' +
+        '</span>';
+
+        $(this).parent().append(hrwaDatePickerHtml);
+
+        //Show newly added html, hide original input
+        $(this).parent().children('.hrwadatepicker_selects').first().css({
+            'display' : 'inline-block',
+            'width'   : $(this).width() + 'px'
+        });
+        $(this).addClass('invisible');
+
+        $(this).parent().children('.hrwadatepicker_selects').children('select').bind('change', function(){
+            var month_name_to_number = {
+                'MM'  : 'MM',
+                'Jan' : '01',
+                'Feb' : '02',
+                'Mar' : '03',
+                'Apr' : '04',
+                'May' : '05',
+                'Jun' : '06',
+                'Jul' : '07',
+                'Aug' : '08',
+                'Sep' : '09',
+                'Oct' : '10',
+                'Nov' : '11',
+                'Dec' : '12'
+            }
+
+            var year_select_value = $(this).parent().children('select.year').val();
+            var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
+
+            if(year_select_value != 'YYYY')
+            {
+				if(month_select_value == 'MM')
+				{
+				  month_select_value = '01';
+				}
+
+                $(this).parent().parent().children('input').val(year_select_value+'-'+month_select_value);
+            }
+
+        });
+
+    });
+  };
+
+  $(".hrwadatepicker_start").hrwadatepicker({
+	  minYear: 2008,
+	  maxYear: new Date().getFullYear(),
+  });
+
+  $(".hrwadatepicker_end").hrwadatepicker({
+	  minYear: 2008,
+	  maxYear: new Date().getFullYear(),
+  });
+
 
 }); // ready

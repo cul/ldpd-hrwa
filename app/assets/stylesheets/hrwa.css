@@ -426,7 +426,7 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 .white { color:white!important; }
 .strong { font-weight:bold; }
 .big { font-size:1.2em; }
-.invisible { display:none; }
+.invisible { display:none !important; }
 .hidden { visibility:hidden; }
 .justify { text-align:justify; }
 .alignright { text-align:right; }
