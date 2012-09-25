@@ -389,6 +389,8 @@ jQuery(function($) {
 
     $('#commentForm').attr('action', '/contact');
     $('#problemReportForm').attr('action', '/problem_report');
+    $('#frmOwnerNomination').attr('action', '/owner_nomination');
+    $('#frmPublicNomination').attr('action', '/public_nomination');
 
 	/******************
    * Archive result *

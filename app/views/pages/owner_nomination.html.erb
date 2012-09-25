@@ -10,19 +10,19 @@
         <p>This form is for site owners who wish to nominate their organization or site for inclusion in the <strong>Human Rights Web Archive</strong>. If you are not the owner of the site you are nominating, please use the <a href="<%= public_nomination_path %>" class="">public nomination form</a>.</p>
         <p>Please note that we cannot guarantee the inclusion of a nominated website in this program. We review the nominations carefully and assess the subject, technical, and copyright issues that may affect a site's suitability for archiving. Send questions and comments to <a class="culhrweb-email" href="#">&hellip;</a>. See also our <a href="#" class="donothing">FAQ</a>.</p>
 
-<form class="form-horizontal" id="frmWebsiteNomination" name="frmWebsiteNomination" action="#">
+<form class="form-horizontal" id="frmOwnerNomination" name="frmOwnerNomination" action="#">
   <fieldset>
     <legend>Site Information</legend>
     <div class="control-group">
         <label class="control-label">Name of website/organization</label>
       <div class="controls">
-        <input class="span9" id="inpSiteName" name="SiteName" type="text" size="40" required="required">
+        <input class="span9" id="inpSiteName" name="owner_nomination[SiteName]" type="text" size="40" required="required">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">URL of website</label>
       <div class="controls">
-        <input class="span9" id="inpURL" name="URL" type="text" size="40" required="required">
+        <input class="span9" id="inpURL" name="owner_nomination[URL]" type="text" size="40" required="required">
       </div>
     </div>
   </fieldset>
@@ -30,13 +30,13 @@
     <div class="control-group">
         <label class="control-label">Description of website/organization</label>
       <div class="controls">
-        <textarea class="span9" id="txtDescription" name="Description" cols="70" rows="6" required="required"></textarea>
+        <textarea class="span9" id="txtDescription" name="owner_nomination[Description]" cols="70" rows="6" required="required"></textarea>
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">Additional Information</label>
       <div class="controls">
-        <textarea class="span9" id="txtAdditionalInformation" name="AdditionalInformation" cols="70" rows="6"></textarea>
+        <textarea class="span9" id="txtAdditionalInformation" name="owner_nomination[AdditionalInformation]" cols="70" rows="6"></textarea>
       </div>
     </div>
   </fieldset>
@@ -45,9 +45,9 @@
         <label class="control-label">Permissions</label>
     <div class="controls">
       <select required="required">
-        <option id="inpPermissionsYes" name="Permissions" value="Yes">Yes</option>
-        <option id="inpPermissionsNo" name="Permissions" value="No"> No</option>
-        <option id="inpPermissionsContact" name="Permissions" value="Contact">Please Contact To Discuss Permissions</option>
+        <option id="inpPermissionsYes" name="owner_nomination[Permissions]" value="Yes">Yes</option>
+        <option id="inpPermissionsNo" name="owner_nomination[Permissions]" value="No"> No</option>
+        <option id="inpPermissionsContact" name="owner_nomination[Permissions]" value="Contact">Please Contact To Discuss Permissions</option>
       </select>
         <p class="help-block">If we select your site for inclusion in the Human Rights Web Archive, will you give Columbia University Libraries/Information Services permission to crawl your site and provide access to the archived content in the Human Rights Web Archive?</p>
     </div>
@@ -58,30 +58,30 @@
     <div class="control-group">
         <label class="control-label">Name</label>
       <div class="controls">
-        <input class="span9" id="inpContactName" name="ContactName" type="text" size="40" required="required">
+        <input class="span9" id="inpContactName" name="owner_nomination[ContactName]" type="text" size="40" required="required">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">Title or Position</label>
       <div class="controls">
-        <input class="span9" id="inpContactTitle" name="ContactTitle" type="text" size="40" required="required">
+        <input class="span9" id="inpContactTitle" name="owner_nomination[ContactTitle]" type="text" size="40" required="required">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">E-mail</label>
       <div class="controls">
-        <input class="span9" id="inpContactEmail" name="ContactEmail" type="text" size="40" required="required">
+        <input class="span9" id="inpContactEmail" name="owner_nomination[ContactEmail]" type="text" size="40" required="required">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">Mailing Address</label>
       <div class="controls">
-        <textarea class="span9" id="txtContactAddress" name="ContactAddress" cols="50" rows="5"></textarea>
+        <textarea class="span9" id="txtContactAddress" name="owner_nomination[ContactAddress]" cols="50" rows="5"></textarea>
       </div>
     </div>
   </fieldset>
         <p class="submit">
-          <input type="submit" value="Submit" class="btn btn-primary">
+          <input type="submit" value="Submit" class="btn btn-primary" />
         </p>
 </form>
 
