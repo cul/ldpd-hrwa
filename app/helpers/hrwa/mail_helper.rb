@@ -32,6 +32,14 @@ module Hrwa::MailHelper
     message += "Email:\n" + (params[:problem_report]['email'].blank? ? 'blank' : params[:problem_report]['email']) + "\n\n"
     message += "Message:\n" + (params[:problem_report]['message'].blank? ? 'blank' : params[:problem_report]['message']) + "\n\n"
 
+    message += "Referrer:\n" + (params[:problem_report]['Referrer'].blank? ? 'blank' : params[:problem_report]['Referrer']) + "\n\n"
+    message += "App Code Name:\n" + (params[:problem_report]['AppCodeName'].blank? ? 'blank' : params[:problem_report]['AppCodeName']) + "\n\n"
+    message += "App Name:\n" + (params[:problem_report]['AppName'].blank? ? 'blank' : params[:problem_report]['AppName']) + "\n\n"
+    message += "App Version:\n" + (params[:problem_report]['AppVersion'].blank? ? 'blank' : params[:problem_report]['AppVersion']) + "\n\n"
+    message += "Cookies Enabled:\n" + (params[:problem_report]['CookiesEnabled'].blank? ? 'blank' : params[:problem_report]['CookiesEnabled']) + "\n\n"
+    message += "Platform:\n" + (params[:problem_report]['Platform'].blank? ? 'blank' : params[:problem_report]['Platform']) + "\n\n"
+    message += "User Agent:\n" + (params[:problem_report]['UserAgent'].blank? ? 'blank' : params[:problem_report]['UserAgent']) + "\n\n"
+
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
 
     send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Problem Report Form', message)

@@ -421,4 +421,20 @@ jQuery(function($) {
 	window.new_max_find_site_hl_snippet_container_height = num_find_site_lines_to_show * current_hl_snippet_line_height;
 	hl_snippets_for_find_site_results.css({'height' : window.new_max_find_site_hl_snippet_container_height + 'px'});
 
+	/*********************
+   * Extra JS Info For *
+   * Problem Reports   *
+   *********************/
+
+	var problem_report_hidden_field_html = '';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[Referrer]" value="' + (document.referrer == '' ? 'None' : document.referrer) + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[AppCodeName]" value="' + navigator.appCodeName + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[AppName]" value="' + navigator.appName + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[AppVersion]" value="' + navigator.appVersion + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[CookiesEnabled]" value="' + navigator.cookieEnabled + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[Platform]" value="' + navigator.platform + '" />';
+  problem_report_hidden_field_html += '<input type="hidden" name="problem_report[UserAgent]" value="' + navigator.userAgent + '" />';
+
+	$('#problemReportForm').append(problem_report_hidden_field_html);
+
 }); // ready
