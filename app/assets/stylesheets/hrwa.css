@@ -492,11 +492,11 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 #top_q_wrapper #search_type_dropdown_chooser {padding-right:15px;}
 
 /* Advamced search form */
-#advanced_search_form label {text-align:left;padding-top:6px;}
-#advanced_search_form h6 {margin-top:10px;margin-bottom:10px;}
-#advanced_search_submit {float:right;}
+.advanced_search_form label {text-align:left;padding-top:6px;}
+.advanced_search_form h6 {margin-top:10px;margin-bottom:10px;}
+.advanced_search_submit {float:right;}
 @media (min-width: 768px) {
-	#advanced_search_form .control-group {text-align:right;}
+	.advanced_search_form .control-group {text-align:right;}
 }
 #advanced_search_title {margin-bottom:15px;}
 

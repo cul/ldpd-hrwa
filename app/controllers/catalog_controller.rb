@@ -34,12 +34,41 @@ class CatalogController < ApplicationController
   end
 
   def advanced
-    if params[:search_type]
+    if params[:search]
       _do_advanced_query_processing_and_redirect
     end
   end
 
   def _do_advanced_query_processing_and_redirect
+
+    # Combine q_and, q_phrase, q_or, q_exclude into q
+
+    combined_q = ''
+
+    q_and = params[:q_and]                                                      unless params[:q_and].blank?
+    q_and = q_and.split( /\s+/ ).map { |term| "+#{term}" }.join( ' ' )          unless params[:q_and].blank?
+    q_phrase = '"' + params[:q_phrase] + '"'                                    unless params[:q_phrase].blank?
+    q_or = params[:q_or]                                                        unless params[:q_or].blank?
+    q_or = q_or.split( /\s+/ ).map { |term| "#{term}" }.join( ' ' )             unless params[:q_or].blank?
+    q_exclude = params[:q_exclude]                                              unless params[:q_exclude].blank?
+    q_exclude = q_exclude.split( /\s+/ ).map { |term| "-#{term}" }.join( ' ' )  unless params[:q_exclude].blank?
+
+    combined_q << q_and     + ' ' unless q_and.blank?
+    combined_q << q_phrase  + ' ' unless q_phrase.blank?
+    combined_q << q_or      + ' ' unless q_or.blank?
+    combined_q << q_exclude + ' ' unless q_exclude.blank?
+
+    unless combined_q.blank?
+      combined_q = combined_q[0,combined_q.length-1]
+    end
+
+    params[:q] = combined_q
+
+    # Ignore all empty f[] items
+    params[:f].delete_if{|key, value|
+      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
+    }
+
     redirect_to params.merge({:action => 'index'})
   end
 

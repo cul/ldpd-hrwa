@@ -1,4 +1,4 @@
-<form id="advanced_search_form">
+<%= form_tag nil, :method => :get, :class => 'advanced_search_form' do %>
 
 <%= render :partial => 'advanced_search_form_text_fields' %>
 
@@ -156,9 +156,9 @@
 		</div>
 	</div>
 	-->
-
-	<div class="span12"><input type="submit" id="advanced_search_submit" class="btn" value="Search Pages" /></div>
+	<input type="hidden" name="search_type" value="archive" />
+	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="search" value="Search Pages" /></div>
 
 </div>
 
-</form>
+<% end %>
