@@ -63,11 +63,7 @@ class Hrwa::Admin::SolrTaskHandler
 						if(index%2 == 0)
 							last_item_key = facet_name_or_sort_field
 						else
-							if(facet_name_or_sort_field.is_a?(Fixnum))
-								facet_groups[last_group_name][last_item_key] = facet_name_or_sort_field.to_s
-							else
-								facet_groups[last_group_name][last_item_key] = facet_name_or_sort_field
-							end
+							facet_groups[last_group_name][last_item_key] = facet_name_or_sort_field
 						end
 					}
 				end
@@ -96,11 +92,37 @@ class Hrwa::Admin::SolrTaskHandler
     facet_groups.each_pair{|outer_key, outer_value|
 			file_text += "def browse_list_for_#{outer_key}\n"
 			file_text += "return {\n"
-				outer_value.each_pair{|inner_key, inner_value|
+
+				facet_group = outer_value
+
+				#puts ":::#{outer_key}:::"
+				#
+				#if(outer_key == 'title__sort')
+				#	# Skip the sort field because we're using it to sort title__facet
+				#end
+				#
+				#
+				#
+				#puts '::::::::::::::::::::' + outer_value.pretty_inspect
+				#
+				#if(outer_key == 'title__facet')
+				#	#facet_group = Hash[ facet_group.zip( facet_groups['title__sort'] ) ]
+				#end
+
+
+				# Sort the facet group by key
+				facet_group = facet_group.sort_by {|k,v| k.upcase}
+
+				facet_group.each{|inner_key, inner_value|
 					file_text += '%q{' + inner_key + '}'
-					file_text += ' => %q{' + inner_value + '}'
+					if(inner_value.is_a?(Fixnum))
+						file_text += ' => ' + inner_value.to_s
+					else
+						file_text += ' => %q{' + inner_value + '}'
+					end
 					file_text += ",\n"
 				}
+
 			file_text += "}\n"
 			file_text += "end\n\n"
 		}
