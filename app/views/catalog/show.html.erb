@@ -43,7 +43,7 @@
 
 
 
-              <table id="view_site_captures" class="table table-bordered table-striped zebra-striped">
+              <table id="view_site_captures" class="table table-bordered">
                 <% if( ! @document.get('original_urls').blank? ) %>
                   <% original_url_arr = @document.get('original_urls',{:sep => nil}) %>
                   <% preview_icon = image_tag asset_path('search.png'), :alt => 'quicklook', :class => 'preview_icon' %>
@@ -55,14 +55,11 @@
                       # value
                   %>
                   <tr>
-                    <td>View Site Captures</td>
-                  </tr>
-                  <tr>
                     <td>
                       <%
                       original_url_arr.each_index do |index|
                         if(original_url_arr[index] && archived_url_arr[index])
-                          %><%= link_to(original_url_arr[index], archived_url_arr[index], :title => 'Permalink for: ' + original_url_arr[index]) %><%
+                          %><%= link_to('View site captures for ' + original_url_arr[index], archived_url_arr[index], :title => 'Permalink for: ' + original_url_arr[index]) %><%
                         end
                         if(original_url_arr[index+1] && archived_url_arr[index+1])
                             %><br /><%
