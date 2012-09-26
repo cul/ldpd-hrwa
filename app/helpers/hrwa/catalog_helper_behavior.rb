@@ -111,13 +111,41 @@ module Hrwa::CatalogHelperBehavior
     #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
     url_params = url_params.dup
     url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
-    url_params.delete(:f) if url_params[:f] = nil
 
     #remove capture_start params
     url_params.delete(:capture_start_date)
     url_params.delete(:capture_end_date)
-    # also remove url_params[:f]['dateOfCaptureYYYY']
-    url_params[:f].delete('dateOfCaptureYYYY') unless url_params[:f].nil?
+
+    return url_for(url_params)
+
+  end
+
+  # Returns the current url with an extra :f['domain'] added
+  def url_for_added_domain_facet(domain_facet_value_to_add, url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #add additional domain facet
+    url_params[:f] = {} if url_params[:f].nil?
+    url_params[:f]['domain'] = [] if url_params[:f]['domain'].nil?
+    url_params[:f]['domain'] << domain_facet_value_to_add if ! url_params[:f]['domain'].include?(domain_facet_value_to_add)
+
+    return url_for(url_params)
+
+  end
+
+  # Returns the current url with an added fq for excluding the specified domain
+  def url_for_exclude_domain(domain_to_exclude, url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #add additional domain facet
+    url_params[:excl_domain] = [] if url_params[:excl_domain].nil?
+    url_params[:excl_domain] << domain_to_exclude if ! url_params[:excl_domain].include?(domain_to_exclude)
 
     return url_for(url_params)
 

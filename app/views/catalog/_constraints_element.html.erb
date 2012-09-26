@@ -24,14 +24,17 @@
 						end
 
 				unless options[:clear_all_facets].blank?
-					params_without_f = params.dup
-					params_without_f.delete(:f)
+					params_without_filters_or_facets = params.dup
+					params_without_filters_or_facets.delete(:f)
+					params_without_filters_or_facets.delete(:fq)
+					params_without_filters_or_facets.delete(:capture_start_date)
+					params_without_filters_or_facets.delete(:capture_end_date)
 
 					%><%= link_to(accessible_remove_label,
-						params_without_f,
+						params_without_filters_or_facets,
 						:class => 'btn btn-danger btn-small facet-pill',
 						:rel => 'tooltip',
-						:'data-original-title' => 'Remove all facets',
+						:'data-original-title' => 'Remove all facets/filters',
 						:alt => 'remove'
 					) %><%
 				else
