@@ -31,20 +31,8 @@
 			<select class="control-group span3" name="f[mimetype_code][]">
 				<option value="">- Choose an option -</option>
 				<% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
-
-				<%
-				mimetype_codes = {
-					'Document' => 'DOCUMENT',
-					'HTML' => 'HTML',
-					'PDF' => 'PDF',
-					'Slideshow' => 'SLIDESHOW',
-					'Spreadsheet' => 'SPREADSHEET',
-					'XML' => 'XML',
-				}
-				%>
-
-				<% mimetype_codes.each do | key, value | %>
-					<%= '<option value="'.html_safe + value + '">'.html_safe + key + '</option>'.html_safe %>
+				<% get_mimetype_codes.each do | key, value | %>
+					<%= '<option value="'.html_safe + key + '">'.html_safe + value + '</option>'.html_safe %>
 				<% end %>
 			</select>
 		</div>
@@ -125,6 +113,7 @@
 					<option>10</option>
 					<option>25</option>
 					<option>50</option>
+					<option>100</option>
 				 </select>
 		</div>
 	</div>

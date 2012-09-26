@@ -525,11 +525,11 @@ jQuery(function($) {
 
         var hrwaDatePickerHtml =
         '<span style="display:none;padding-bottom:10px;" class="hrwadatepicker_selects form-inline pull-right-important">'+
-            '<select ' + (miniButtons ? 'style="height:22px;" ' : '') + ' class="month span1">'+
+            '<select ' + (miniButtons ? 'style="height:28px;" ' : '') + ' class="month span1">'+
                 '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + mm_placeholder + '</option>' +
                 monthSelectOptionHtml +
             '</select>' +
-            '<select ' + (miniButtons ? 'style="height:22px;" ' : '') + ' class="year span1">'+
+            '<select ' + (miniButtons ? 'style="height:28px;" ' : '') + ' class="year span1">'+
                 '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + yyyy_placeholder + '</option>' +
                 yearSelectOptionHtml +
             '</select> '+

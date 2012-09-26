@@ -16,15 +16,18 @@
               if @search_type == :archive
                  result_size_two   = '25';
                  result_size_three = '50'
+                 result_size_four = '100'
               else
                 result_size_two    = '60'
                 result_size_three  = '90'
+                result_size_four  = '120'
               end
               %>
                 <!-- dropdown menu links -->
                 <li <% if (!params[:per_page] || params[:per_page] == result_size_one) %> class="active"<% end %>><%= link_to result_size_one, catalog_index_path(params.merge({:per_page => result_size_one})) %></li>
                 <li <% if (params[:per_page] && params[:per_page] == result_size_two) %> class="active"<% end %>><%= link_to result_size_two, catalog_index_path(params.merge({:per_page => result_size_two})) %></li>
                 <li <% if (params[:per_page] && params[:per_page] == result_size_three) %> class="active"<% end %>><%= link_to result_size_three, catalog_index_path(params.merge({:per_page => result_size_three})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_four) %> class="active"<% end %>><%= link_to result_size_four, catalog_index_path(params.merge({:per_page => result_size_four})) %></li>
             </ul>
           </div>
 

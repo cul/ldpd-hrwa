@@ -1,16 +1,3 @@
-<%
-
-mimetype_codes_to_display_strings = {
-  'DOCUMENT' => 'Document',
-  'HTML' => 'HTML',
-  'PDF' => 'PDF',
-  'SLIDESHOW' => 'Slideshow',
-  'SPREADSHEET' => 'Spreadsheet',
-  'XML' => 'XML',
-}
-
-%>
-
 <ul>
   <% paginator =
       Blacklight::Solr::FacetPaginator.new(display_facet.items,
@@ -21,7 +8,7 @@ mimetype_codes_to_display_strings = {
     <% if facet_in_params?( solr_field, item.value ) %>
         <%= render_selected_facet_value_with_custom_display_text(solr_field, item, 'custom') %>
       <% else %>
-        <%= render_facet_value_with_custom_display_text(solr_field, item, {}, mimetype_codes_to_display_strings[item.value]) %>
+        <%= render_facet_value_with_custom_display_text(solr_field, item, {}, mimetype_code_to_display_string(item.value)) %>
     <% end -%>
     </li>
   <% end %>

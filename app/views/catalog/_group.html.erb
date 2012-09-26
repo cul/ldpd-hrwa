@@ -37,10 +37,8 @@
           <div class="file_tech_info">
             <!-- SIZE -->
             <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
-            <!-- MIMETYPE -->
-            <span class="file_type">File type: <%= doc[ :mimetype ] %></span>
             <!-- MIMETYPE CODE-->
-            <span class="file_type">(<%= doc[ :mimetypeCode ] %>)</span>
+            <span class="file_type"><%= mimetype_code_to_display_string(doc[ :mimetypeCode ]) %></span>
           </div>
 
           <!-- OTHER CAPTURE INSTANCES -->
@@ -76,7 +74,7 @@
 
           <%# if( ! (params[:excl_domain] && params[:excl_domain].include?(doc[:domain])) ) %>
           <%# No need to do a check for whether or not to show the Domain- button, since excluded sites won't appear in search results %>
-            <a href="<%= url_for_exclude_domain_addition(doc[:domain]) %>" class="btn btn-mini pull-right danger" rel="tooltip" data-original-title="Exclude results from <%= doc[ :domain ] %>">Domain-</a>
+            <a href="<%= url_for_exclude_domain_addition(doc[:domain]) %>" class="btn btn-mini pull-right red" rel="tooltip" data-original-title="Exclude results from <%= doc[ :domain ] %>">Domain-</a>
           <%# end %>
 
           <div class="clearfix"></div>
