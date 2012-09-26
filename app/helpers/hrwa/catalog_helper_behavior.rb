@@ -137,18 +137,51 @@ module Hrwa::CatalogHelperBehavior
   end
 
   # Returns the current url with an added fq for excluding the specified domain
-  def url_for_exclude_domain(domain_to_exclude, url_params = params)
+  def url_for_exclude_domain_addition(domain_to_exclude, url_params = params)
 
     #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
     url_params = url_params.dup
     url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
 
-    #add additional domain facet
-    url_params[:excl_domain] = [] if url_params[:excl_domain].nil?
+    #add additional domain exclusion
+
+    if(url_params[:excl_domain])
+      url_params[:excl_domain] = url_params[:excl_domain].dup
+    else
+      url_params[:excl_domain] = []
+    end
+
     url_params[:excl_domain] << domain_to_exclude if ! url_params[:excl_domain].include?(domain_to_exclude)
 
     return url_for(url_params)
+  end
 
+  # Returns the current url with the specified domain exclusion removed
+  def url_for_exclude_domain_removal(domain_exclusion_to_remove, url_params = params)
+
+    puts url_params[:excl_domain].inspect
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #remove domain exclusion
+
+    puts url_params[:excl_domain].inspect
+
+    if(url_params[:excl_domain])
+      url_params[:excl_domain] = url_params[:excl_domain].dup
+    else
+      url_params[:excl_domain] = []
+    end
+
+    puts url_params[:excl_domain].inspect
+
+    url_params[:excl_domain].delete(domain_exclusion_to_remove)
+
+    puts url_params[:excl_domain].inspect
+
+    return url_for(url_params)
   end
 
 end

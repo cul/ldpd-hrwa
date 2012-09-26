@@ -29,6 +29,7 @@
 					params_without_filters_or_facets.delete(:fq)
 					params_without_filters_or_facets.delete(:capture_start_date)
 					params_without_filters_or_facets.delete(:capture_end_date)
+					params_without_filters_or_facets.delete(:excl_domain)
 
 					%><%= link_to(accessible_remove_label,
 						params_without_filters_or_facets,

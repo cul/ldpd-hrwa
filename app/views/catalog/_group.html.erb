@@ -68,7 +68,7 @@
           <% end %>
 
           <a href="<%= url_for_added_domain_facet(doc[:domain]) %>" class="btn btn-mini pull-right blue" rel="tooltip" data-original-title="See all results from <%= doc[ :domain ] %>">Domain+</a>
-          <a href="<%= url_for_exclude_domain(doc[:domain]) %>" class="btn btn-mini pull-right danger" rel="tooltip" data-original-title="Exclude results from <%= doc[ :domain ] %>">Domain-</a>
+          <a href="<%= url_for_exclude_domain_addition(doc[:domain]) %>" class="btn btn-mini pull-right danger" rel="tooltip" data-original-title="Exclude results from <%= doc[ :domain ] %>">Domain-</a>
 
           <div class="clearfix"></div>
 

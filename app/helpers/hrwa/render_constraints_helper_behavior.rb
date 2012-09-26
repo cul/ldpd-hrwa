@@ -49,36 +49,28 @@ module Hrwa::RenderConstraintsHelperBehavior
   #TODO: Don't do direct html rendering using link_to.  Use a shared partial instead (catalog/constraints_element).
   def render_excl_domain_filters(localized_params = params)
 
-    values = localized_params[:excl_domain] ? localized_params[:excl_domain].dup : nil
+     html_to_return = ''
 
-    if(values)
-       values.map do |value|
+      values = localized_params[:excl_domain] ? localized_params[:excl_domain].dup : []
 
-            options = {:remove => remove_excl_domain_filter(value), :classes => ["exclusion"]}
-            removal_link_body = "<i class=\"icon-remove icon-white\"></i> Excluding: ".html_safe + value
-            return link_to(
-                            removal_link_body,
-                            options[:remove],
-                            :rel=>'tooltip', :title=>'Remove this filter', :class=>'btn btn-info btn-small facet-pill ' + (options[:classes].join(" ") if options[:classes]))
+      if(values.length > 0)
+         values.each{|item|
 
-        end
-    end
+            puts 'ITEMMMMM: ' + item
 
-  end
+            options = {:remove => url_for_exclude_domain_removal(item), :classes => ["exclusion"]}
+            removal_link_body = "<i class=\"icon-remove icon-white\"></i>Exclude Domain: ".html_safe + item
+            html_to_return += link_to(
+                           removal_link_body,
+                           url_for_exclude_domain_removal(item),
+                           :rel=>'tooltip', :title=>'Remove this filter', :class=>'btn btn-info btn-small facet-pill ' + (options[:classes].join(" ") if options[:classes]))
 
-  # Based on the remove_facet_params method in facets_helper_behavior.rb
-  def remove_excl_domain_filter(domain_value_to_remove, source_params = params)
-    p = source_params.dup
+            html_to_return += ' '
+         }
+      end
 
-    p[:excl_domain] = (p[:excl_domain] || []).dup
-    p.delete :page
-    p.delete :id
-    p.delete :counter
-    p.delete :commit
-    p[:excl_domain] = p[:excl_domain] - [domain_value_to_remove]
-    p.delete(:excl_domain) if p[:excl_domain].size == 0
+      return html_to_return.html_safe
 
-    return p
   end
 
 end
