@@ -441,7 +441,7 @@ jQuery(function($) {
 	$('#frmOwnerNomination').attr('action', '/owner_nomination');
 	$('#frmPublicNomination').attr('action', '/public_nomination');
 
-	/******************
+  /******************
    * HRWA Date      *
    * Picker Stuff   *
    ******************/
@@ -461,6 +461,7 @@ jQuery(function($) {
 
         var minYear = params.minYear;
         var maxYear = params.maxYear;
+        var miniButtons = params.miniButtons ? params.miniButtons : false;
 
         //By default, set selectedDate to null
         var selectedDate = null;
@@ -523,12 +524,12 @@ jQuery(function($) {
         $(this).wrap('<span class="hrwadatepicker_wrapper" />');
 
         var hrwaDatePickerHtml =
-        '<span style="display:none;" class="hrwadatepicker_selects form-inline pull-right-important">'+
-            '<select class="month span1">'+
+        '<span style="display:none;padding-bottom:10px;" class="hrwadatepicker_selects form-inline pull-right-important">'+
+            '<select ' + (miniButtons ? 'style="height:22px;" ' : '') + ' class="month span1">'+
                 '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + mm_placeholder + '</option>' +
                 monthSelectOptionHtml +
             '</select>' +
-            '<select class="year span1">'+
+            '<select ' + (miniButtons ? 'style="height:22px;" ' : '') + ' class="year span1">'+
                 '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + yyyy_placeholder + '</option>' +
                 yearSelectOptionHtml +
             '</select> '+
@@ -597,6 +598,71 @@ jQuery(function($) {
   $(".hrwadatepicker_end").hrwadatepicker({
 	  minYear: 2008,
 	  maxYear: new Date().getFullYear(),
+  });
+
+
+  /******************
+   * Sidebar Facet  *
+   * Modifications  *
+   ******************/
+
+  /* --- Date of Capture */
+  $('#facets.archive .sb_widget h6:contains(Date Of Capture)').siblings('ul').append(
+	(
+	  (HRWA.capture_start_date_value != '' || HRWA.capture_end_date_value != '') ?
+
+	  '<li>' +
+		(HRWA.capture_end_date_value == '' ? 'After ' + HRWA.capture_start_date_value : (HRWA.capture_start_date_value == '' ? '' : HRWA.capture_start_date_value + ' to ')) +
+		(HRWA.capture_start_date_value == '' ? 'Before ' + HRWA.capture_end_date_value : HRWA.capture_end_date_value) +
+        ' (' + ($('#search_result_count').length > 0 ? $('#search_result_count').attr('data-actual-result-count') : '0') + ') ' +
+		'<a class="remove post_pageload_tooltip" rel="tooltip" data-original-title="Remove this filter" href="' + HRWA.current_url_without_capture_date_params + '">[x]</a>' +
+	  '</li>'
+
+	  : ''
+	) +
+    '<li>' +
+		'<span id="date_of_cap_custom_range_container">' +
+			'<a id="date_of_cap_custom_range_link" class="post_pageload_tooltip lime" rel="tooltip" data-original-title="Filter by a custom date range" href="#">custom range &raquo;</a>' +
+			'<span id="date_of_cap_custom_range_input_container" class="invisible">' +
+				'<div><label>Start Date:</label><input class="span2" type="text" id="capture_start_date_sidebar" name="capture_start_date_sidebar" /></div>' +
+				'<div><label>End Date:</label><input class="span2" type="text" id="capture_end_date_sidebar" name="capture_end_date_sidebar" /></div>' +
+				'<div class="pull-right"><a href="#" class="btn btn-mini cancel">Cancel</a> <a href="#" class="btn btn-mini btn-success submit">Search</a></div>' +
+			    '<div class="clear"></div>' +
+			'</span>' +
+			'<span class="clearfix"></span>' +
+		'<span>' +
+	'</li>'
+  );
+  //Manually add js twipsy tooltips to the recently added anchor tags
+  $('.post_pageload_tooltip').tooltip();
+  //Add the mini sidebar date chooser when the #date_of_cap_custom_range_link is clicked
+  $('#date_of_cap_custom_range_link').bind('click', function(){
+	$('#date_of_cap_custom_range_link').addClass('invisible');
+	$('#date_of_cap_custom_range_input_container').removeClass('invisible');
+	return false;
+  });
+  $('#date_of_cap_custom_range_input_container').find('.btn.cancel').bind('click', function(){
+    $('#date_of_cap_custom_range_link').removeClass('invisible');
+	$('#date_of_cap_custom_range_input_container').addClass('invisible');
+	$(this).parent().children('input').val('');
+	return false;
+  });
+  $('#date_of_cap_custom_range_input_container').find('.btn.submit').bind('click', function(){
+    window.location = HRWA.current_url_without_capture_date_params +
+		'&capture_start_date=' + $('#date_of_cap_custom_range_input_container').find('#capture_start_date_sidebar').val() +
+		'&capture_end_date=' + $('#date_of_cap_custom_range_input_container').find('#capture_end_date_sidebar').val();
+		return false;
+  });
+  //Add hrwa datepickers to the two sidebar capture date inputs
+  $("#capture_start_date_sidebar").hrwadatepicker({
+	  minYear: 2008,
+	  maxYear: new Date().getFullYear(),
+      miniButtons: true
+  });
+  $("#capture_end_date_sidebar").hrwadatepicker({
+	  minYear: 2008,
+	  maxYear: new Date().getFullYear(),
+      miniButtons: true
   });
 
 

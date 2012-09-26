@@ -8,6 +8,13 @@
   <% @page_title = application_name + " Search Results" %>
   <% extra_head_content << render_opensearch_response_metadata.html_safe %>
 
+  <%# Script below used for custom date range in sidebar %>
+  <script type="text/javascript">
+	HRWA.current_url_without_capture_date_params = decodeURIComponent("<%= CGI.escape(url_for_without_capture_date_params).gsub('+','%20') %>");
+	HRWA.capture_start_date_value = '<%= params[ :capture_start_date ].nil?  ? '' : params[ :capture_start_date ] %>';
+	HRWA.capture_end_date_value = '<%= params[ :capture_end_date ].nil?  ? '' : params[ :capture_end_date ] %>';
+  </script>
+
 <%#  <div id="primary_container" class="container no-hero-mobile"> %>
     <div class="row">
 
@@ -61,7 +68,7 @@
       </div><!--/#primary-->
 
       <div id="secondary" class="span3">
-        <div id="facets" class="find_site facets">
+        <div id="facets" class="<%= @search_type %> facets">
           <% sidebar_items << capture do %>
             <%= render :partial=>'facets' %>
           <% end %>

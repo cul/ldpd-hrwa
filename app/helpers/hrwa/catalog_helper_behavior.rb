@@ -61,11 +61,11 @@ module Hrwa::CatalogHelperBehavior
       if num_pages < 2
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
-        when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
-        else;   "Displaying <b>all</b> #{entry_name.pluralize}".html_safe
+        when 1; "Displaying <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>1</b> #{h(entry_name)}".html_safe
+        else;   "Displaying <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>all</b> #{entry_name.pluralize}".html_safe
         end
       else
-        "Displaying page #{current_page} of about <b>".html_safe + round_result_to_closest_vague_number(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
+        "Displaying page #{current_page} for about <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>".html_safe + round_result_to_closest_vague_number(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
       end
   end
 
@@ -102,6 +102,25 @@ module Hrwa::CatalogHelperBehavior
   # because implementation of where this data is stored/retrieved may change.
   def item_page_entry_info
     "Showing item <b>#{session[:search][:counter].to_i} of #{format_num(session[:search][:total])}</b>.".html_safe
+  end
+
+  # Returns the current url without any capture-date-related params
+  # i.e. - Removes :capture_start_date, :capture_end_date and :f['dateOfCaptureYYYY']
+  def url_for_without_capture_date_params(url_params = params)
+
+    #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+    url_params.delete(:f) if url_params[:f] = nil
+
+    #remove capture_start params
+    url_params.delete(:capture_start_date)
+    url_params.delete(:capture_end_date)
+    # also remove url_params[:f]['dateOfCaptureYYYY']
+    url_params[:f].delete('dateOfCaptureYYYY') unless url_params[:f].nil?
+
+    return url_for(url_params)
+
   end
 
 end

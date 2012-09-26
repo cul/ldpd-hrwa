@@ -83,7 +83,7 @@ $(document).ready(function() {
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
       d.setAttribute('name', 'folder_view'); d.setAttribute('value', $(this).data('folder_view')); f.appendChild(d);
       var d = document.createElement('input'); d.setAttribute('type', 'hidden');
-      d.setAttribute('name', 'last_known_s_search_json_string'); d.setAttribute('value', LIND.last_known_s_search_json_string); f.appendChild(d);
+      d.setAttribute('name', 'last_known_s_search_json_string'); d.setAttribute('value', CUL.last_known_s_search_json_string); f.appendChild(d);
       //END CUL additions
       var m = document.createElement('input'); m.setAttribute('type', 'hidden');
       m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);

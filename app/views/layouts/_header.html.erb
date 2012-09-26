@@ -23,7 +23,8 @@
     <link href="assets/crown-small-blue.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
     <script type="text/javascript">
-	  var LIND = {}; //LIND Namespace
+	  var CUL = {}; //CUL Namespace for prev/next fix
+	  var HRWA = {}; //HRWA Namespace for app-specific variables
 
 	  <%
 		if ((params[:controller] == 'catalog' || params[:controller] == 'folder') && (params[:action] == 'index' || params[:action] == 'hrwa_home'))
@@ -38,7 +39,7 @@
 	  %>
 
 	  //Most recent search
-	  <%= 'LIND.last_known_s_search_json_string = "'.html_safe + escape_javascript((session[:search].merge(:total => latest_total).to_json).html_safe) + '";'.html_safe unless session[:search].nil? %>
+	  <%= 'CUL.last_known_s_search_json_string = "'.html_safe + escape_javascript((session[:search].merge(:total => latest_total).to_json).html_safe) + '";'.html_safe unless session[:search].nil? %>
 
 	</script>
 
