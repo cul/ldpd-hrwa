@@ -209,7 +209,10 @@ a.thumbnail:hover {
 	margin: 0 0 0 1em;
 }
 #top_datasource li:not(.divider) {
-	padding-top: 4px;
+	padding-top: 2px;
+	margin-top: 4px;
+	padding-bottom:4px;
+	margin-bottom:4px;
 	border-bottom: 1px solid #eee;
 }
 #top_datasource p a#cliobeta_exit i.icon-arrow-right {
@@ -455,8 +458,8 @@ a.thumbnail:hover {
 */
 #main {
 }
-.well { 
-    border-color:#ddd; 
+.well {
+    border-color:#ddd;
 }
 .well-mini {
 	border:1px solid #ddd;
@@ -547,14 +550,14 @@ a.thumbnail:hover {
 }
 .hero-carousel h2 {
 	color:#fff;
-	display:inline-block; 
+	display:inline-block;
 	display:none;
 }
 .carousel-caption { padding:3px 10px; }
 .hero-carousel p {
  margin-bottom:3px;
 }
-.hero-carousel p a { 
+.hero-carousel p a {
 	color:#fff;
 }
 .carousel-control {
@@ -571,7 +574,7 @@ a.thumbnail:hover {
 .well-primary li {
 	margin-bottom:.5em;
 }
-.thumb-and-text { 
+.thumb-and-text {
 	padding:10px;
 }
 .thumb-and-text h2 {
@@ -775,10 +778,10 @@ a.nodec {
 		padding:13px;
 	}
     .hero-home-mobile h2 {
-		font-size:105%; 
+		font-size:105%;
     }
     .hero-home-mobile p {
-		font-size:115%; 
+		font-size:115%;
 		line-height:125%;
     }
 /* old/unnescessary?
@@ -902,7 +905,7 @@ a.nodec {
 		display: none;
 	}
 
-	#inner-headline { border-top:0; padding-top:0; }	
+	#inner-headline { border-top:0; padding-top:0; }
 
 	ul#culnav-main > li {
 		display: inline-block;

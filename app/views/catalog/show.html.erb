@@ -39,7 +39,7 @@
 
             <div class="thumbnail"><img src="<%= get_image_uri(@document, 640) %>" alt="<%= @document.get('item_title') %>" /></div>
 
-            <div id="item_level_back_prev_next_select_wrapper">
+            <div>
 
 
 
@@ -59,7 +59,7 @@
                       <%
                       original_url_arr.each_index do |index|
                         if(original_url_arr[index] && archived_url_arr[index])
-                          %><%= link_to('View site captures for ' + original_url_arr[index], archived_url_arr[index], :title => 'Permalink for: ' + original_url_arr[index]) %><%
+                          %><%= link_to('<i class="icon-camer icon-white"></i>View site captures for '.html_safe + original_url_arr[index], archived_url_arr[index], :class => 'target-blank btn btn-primary', :title => 'Permalink for: ' + original_url_arr[index]) %><%
                         end
                         if(original_url_arr[index+1] && archived_url_arr[index+1])
                             %><br /><%

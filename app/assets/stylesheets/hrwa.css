@@ -566,6 +566,15 @@ table#view_site_captures {
     margin-bottom:10px;
 }
 
+table#view_site_captures td {
+    text-align: center;
+}
+
+table#view_site_captures .btn {
+    margin:5px 0px;
+    overflow:hidden;
+}
+
 #show_item_back_prev_and_next_buttons .page_nav {
   margin-left:0px;
 }
@@ -584,31 +593,8 @@ table#view_site_captures {
   border-radius: 15px;
 }
 
-#item_level_back_prev_next_select_wrapper form {
-  margin-bottom:0px;
-}
-
-#item_level_back_prev_next_select_wrapper a.btn {
-  float:left;
-  margin-right:7px;
-}
-
-#item_level_back_prev_next_select_wrapper .documentFunctions {
-  float:left;
-  width:100px;
-  margin-top:3px;
-}
-
-#item_level_back_prev_next_select_wrapper ul {
-  list-style:none;
-}
-
 ul#previousNextDocument {
   list-style:none;
-}
-#item_level_back_prev_next_select_wrapper #previousNextDocument a {
-  margin-right:0px;
-  margin-left:10px;
 }
 
 #show_image_download_btns {

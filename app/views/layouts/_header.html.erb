@@ -138,7 +138,7 @@
 <div class="span7">
 <ul class="nav nav-pills pull-left">
   <li class="hidden-phone"><a href="/" class="opacity_50"><i class="icon-home"></i></a></li>
-  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Learn More <b class="caret"></b></a>
 		<ul class="dropdown-menu">
 			<li><%= link_to('About the Archive', about_path) %></li>
 			<li><%= link_to('FAQ', faq_path) %></li>
@@ -155,6 +155,7 @@
 </div><!--/span8-->
   <div id="navbar_right_wrapper" class="span5 pull-right">
     <ul class="nav nav-pills pull-right nav-collapse" id="user_util_links">
+			<li><%= link_to 'Advanced Search', catalog_path('advanced') %></li>
       <%= render :partial=>'/user_util_links' %>
 			<% if user_signed_in? || service_user_signed_in? %>
 				<li><%= link_to 'Admin', admin_path %></li>
