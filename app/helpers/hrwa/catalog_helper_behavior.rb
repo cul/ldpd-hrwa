@@ -76,7 +76,11 @@ module Hrwa::CatalogHelperBehavior
     # Remove any possibly present commas in this number string
     real_number = number_string_to_round.gsub(',', '').to_i
 
-    if(real_number < 1000)
+    if(real_number < 10)
+      degree_of_rounding = 1
+    elsif(real_number < 100)
+      degree_of_rounding = 10
+    elsif(real_number < 1000)
       degree_of_rounding = 100
     else
       degree_of_rounding = 10**(real_number.to_s.length-2)
