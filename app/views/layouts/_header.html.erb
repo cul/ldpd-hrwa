@@ -27,7 +27,7 @@
 	  var HRWA = {}; //HRWA Namespace for app-specific variables
 
 	  <%
-		if ((params[:controller] == 'catalog' || params[:controller] == 'folder') && (params[:action] == 'index' || params[:action] == 'hrwa_home'))
+		if (@response && (params[:controller] == 'catalog' || params[:controller] == 'folder') && (params[:action] == 'index' || params[:action] == 'hrwa_home'))
 		  latest_total = @response.total
 		else
 		  if(session[:search].nil? || session[:search][:total].nil?)

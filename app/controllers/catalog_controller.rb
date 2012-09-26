@@ -155,7 +155,7 @@ class CatalogController < ApplicationController
         user_q_text    = ex.request[ :params ][ :q ]
         user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
         @alert_type    = 'alert-info'
-        @error_message = "Sorry, #{user_query} is not valid. Please try a different search.".html_safe
+        @error_message = "Sorry, #{user_query} is not valid. Please try another search with different search terms.".html_safe
       else
         @alert_type    = 'alert-error'
         @error_message = "Sorry, an internal system error has occurred.".html_safe
