@@ -25,7 +25,9 @@ class HRWA::ArchiveSearchConfigurator
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
           :qf               => [
-                                'catchall^1',
+                                'contents^1',
+                               'title^1',
+                               'originalUrl^1',
                                ],
           :rows             => self.default_num_rows,
         }
