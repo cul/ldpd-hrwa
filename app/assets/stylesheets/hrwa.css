@@ -210,6 +210,9 @@ letter-spacing: 0;
 margin-left: 0px;
 margin-top: 6px;
 }
+#inner-headline #beta {
+display:inline-block;margin-top:-24px;margin-right:20px;text-shadow:1px 1px 1px #222;font-size:22px;font-variant:small-caps;font-weight:normal;color:#ccf;letter-spacing:1px;float:right;
+}
 /* Subnav */
 #secondary_nav { margin-right:10px; margin-left:10px; }
 .subnav {
