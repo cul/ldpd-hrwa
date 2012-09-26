@@ -686,6 +686,10 @@ ul.facet_extended_list li a { color:rgb(165, 42, 42); }
   margin-bottom:10px;
 }
 
+/* Facet Popups */
+
+ul.facet_extended_list li a { color:#0064cd }
+
 /* Modal Stuff */
 ul#modal-download-options {bottom:100%;top:auto;text-align:left;}
 #modal-download-btn-group {float:left;margin-left:10px;}
@@ -703,7 +707,7 @@ ul#modal-download-options {bottom:100%;top:auto;text-align:left;}
 span.Z3988 { display:none; }
 
 /*!
- * Lindquist specific Responsive stuffs
+ * App Specific Responsive stuffs
  */
 
 @media (max-width: 480px) {
