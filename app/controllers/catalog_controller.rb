@@ -4,6 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
+  include HRWA::SolrHelper
 
   before_filter :_check_for_debug_mode, :_configure_by_controller_action, :_select_appropriate_partial
 
