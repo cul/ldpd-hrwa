@@ -450,6 +450,9 @@ jQuery(function($) {
   //Note: This is only meant to be used on input[type="text"] elements
   jQuery.fn.hrwadatepicker = function(params) {
 
+    var mm_placeholder = '- MM -';
+    var yyyy_placeholder = '- YYYY -';
+
     //First, grab a reference to the jquery selector that this function was used on
     var o = $(this[0]);
 
@@ -522,11 +525,11 @@ jQuery(function($) {
         var hrwaDatePickerHtml =
         '<span style="display:none;" class="hrwadatepicker_selects form-inline pull-right-important">'+
             '<select class="month span1">'+
-                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>- MM -</option>' +
+                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + mm_placeholder + '</option>' +
                 monthSelectOptionHtml +
             '</select>' +
             '<select class="year span1">'+
-                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>- YYYY -</option>' +
+                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>' + yyyy_placeholder + '</option>' +
                 yearSelectOptionHtml +
             '</select> '+
         '</span>';
@@ -542,7 +545,6 @@ jQuery(function($) {
 
         $(this).parent().children('.hrwadatepicker_selects').children('select').css({'width' : '50%'}).bind('change', function(){
             var month_name_to_number = {
-                'MM'  : 'MM',
                 'Jan' : '01',
                 'Feb' : '02',
                 'Mar' : '03',
@@ -558,17 +560,29 @@ jQuery(function($) {
             }
 
             var year_select_value = $(this).parent().children('select.year').val();
-            var month_select_value = month_name_to_number[$(this).parent().children('select.month').val()];
 
-            if(year_select_value != 'YYYY')
+            var month_name_select_value = $(this).parent().children('select.month').val();
+            var month_select_value = '01';
+            if(month_name_select_value == mm_placeholder)
             {
-				if(month_select_value == 'MM')
-				{
-				  month_select_value = '01';
-				}
-
-                $(this).parent().parent().children('input').val(year_select_value+'-'+month_select_value);
+                  month_name_select_value = '01';
             }
+            else
+            {
+                  month_select_value = month_name_to_number[month_name_select_value];
+            }
+
+            var date_val = '';
+
+            if(year_select_value != '- YYYY -')
+            {
+                date_val = year_select_value+'-'+month_select_value;
+            }
+            else {
+
+            }
+
+            $(this).parent().parent().children('input').val(date_val);
 
         });
 
