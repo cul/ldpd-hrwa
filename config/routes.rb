@@ -20,8 +20,9 @@ Hrwa::Application.routes.draw do
   match '/owner_nomination'  => 'pages#owner_nomination'
   match '/public_nomination' => 'pages#public_nomination'
 
-  # Images controller
-  match '/images/:pid/:size/:disposition' => 'images#get', :as => :images
+  # Internal controller
+  match '/internal/feedback'        => 'internal#feedback_form'
+  match '/internal/feedback_submit' => 'internal#feedback_submit'
 
   # Admin controller
   match '/admin'                    => 'admin#index'

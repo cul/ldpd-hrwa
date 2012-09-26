@@ -21,6 +21,9 @@ gem 'net-ldap'
 # For Javascript runtime needed by the asset pipeline
 gem 'therubyracer', '0.10.1'
 
+# Soap gem to interface with hrwa jira project
+gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
