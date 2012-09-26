@@ -26,6 +26,29 @@
 					<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 				<% end %>
 			</select>
+		<div class="control-group">
+			<label class="span2 control-label">File Type</label>
+			<select class="control-group span3" name="f[mimetype_code][]">
+				<option value="">- Choose an option -</option>
+				<% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+
+				<%
+				mimetype_codes = {
+					'Document' => 'DOCUMENT',
+					'HTML' => 'HTML',
+					'PDF' => 'PDF',
+					'Slideshow' => 'SLIDESHOW',
+					'Slideshow' => 'DOCUMENT',
+					'Spreadsheet' => 'SPREADSHEET',
+					'XML' => 'XML',
+				}
+				%>
+
+				<% mimetype_codes.each do | key, value | %>
+					<%= '<option value="'.html_safe + value + '">'.html_safe + key + '</option>'.html_safe %>
+				<% end %>
+			</select>
+		</div>
 		</div>
 				<div class="control-group">
 				<label class="span2 control-label">organization based in</label>
@@ -35,18 +58,6 @@
 						<% browse_list_for_organization_based_in__facet().each do | key, value | %>
 							<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
 						<% end %>
-				</select>
-		</div>
-				<div class="control-group">
-				<label class="span2 control-label">file type</label>
-				<select class="control-group span3" name="f[mimetype_code][]">
-					<option value="">- Choose an option -</option>
-					<option value="DOCUMENT">Document</option>
-					<option value="HTML">HTML</option>
-					<option value="PDF">PDF</option>
-					<option value="SLIDESHOW">Slideshow</option>
-					<option value="SPREADSHEET">Spreadsheet</option>
-					<option value="XML">XML</option>
 				</select>
 		</div>
 	</div>
@@ -84,6 +95,7 @@
 				<% end %>
 			</select>
 		</div>
+
 	</div>
 
 	<h6 class="span12">Date of Capture</h6>
@@ -93,14 +105,14 @@
 
 	<div class="span6 capture_start_date_group">
 		<div class="control-group">
-			<label class="span2 control-label">start date</label>
-			<input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" />
+			<label class="span3 control-label">start date</label>
+			<div class="span3 nomar"><input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /></div>
 		</div>
 	</div>
 	<div class="span6 capture_end_date_group">
 		<div class="control-group">
-			<label class="span2 control-label">end date</label>
-			<input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" />
+			<label class="span3 control-label">end date</label>
+			<div class="span3 nomar"><input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" /></div>
 		 </div>
 	</div>
 

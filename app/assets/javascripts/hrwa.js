@@ -520,27 +520,27 @@ jQuery(function($) {
         $(this).wrap('<span class="hrwadatepicker_wrapper" />');
 
         var hrwaDatePickerHtml =
-        '<span style="display:none;" class="hrwadatepicker_selects form-inline">'+
-            '<select class="year">'+
-                '<option val="YYYY"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>YYYY</option>' +
-                yearSelectOptionHtml +
-            '</select> '+
-            '<select class="month">'+
-                '<option val="MM"' + ($(this).val() == '' ? ' selected="selected"' : '') + '>MM</option>' +
+        '<span style="display:none;" class="hrwadatepicker_selects form-inline pull-right-important">'+
+            '<select class="month span1">'+
+                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>- MM -</option>' +
                 monthSelectOptionHtml +
             '</select>' +
+            '<select class="year span1">'+
+                '<option val=""' + ($(this).val() == '' ? ' selected="selected"' : '') + '>- YYYY -</option>' +
+                yearSelectOptionHtml +
+            '</select> '+
         '</span>';
 
         $(this).parent().append(hrwaDatePickerHtml);
 
         //Show newly added html, hide original input
         $(this).parent().children('.hrwadatepicker_selects').first().css({
-            'display' : 'inline-block',
-            'width'   : $(this).width() + 'px'
+            'display' : 'block',
+            'width'   : '100%'
         });
         $(this).addClass('invisible');
 
-        $(this).parent().children('.hrwadatepicker_selects').children('select').bind('change', function(){
+        $(this).parent().children('.hrwadatepicker_selects').children('select').css({'width' : '50%'}).bind('change', function(){
             var month_name_to_number = {
                 'MM'  : 'MM',
                 'Jan' : '01',
