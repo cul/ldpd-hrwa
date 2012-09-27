@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'blacklight/configuration'
 
-describe 'HRWA::SiteDetailConfigurator' do
+describe 'Hrwa::SiteDetailConfigurator' do
   before ( :all ) do
-    @configurator = HRWA::SiteDetailConfigurator.new
+    @configurator = Hrwa::SiteDetailConfigurator.new
   end
 
   it 'returns the correct partial name' do

@@ -9,6 +9,7 @@ class HRWA::Configurator
   include HRWA::AdvancedSearch
 
   def initialize( search_request_type )
+
     case search_request_type
       when :archive
         @configurator = HRWA::ArchiveSearchConfigurator.new
@@ -63,6 +64,10 @@ class HRWA::Configurator
 
   def result_type
     return @configurator.result_type
+  end
+
+  def default_num_rows
+    return @configurator.default_num_rows
   end
 
   def solr_url

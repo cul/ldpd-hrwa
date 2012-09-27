@@ -14,7 +14,7 @@ class HRWA::ArchiveSearchConfigurator
           :'group.field'    => 'originalUrl',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 1000,
+          :'hl.fragsize'    => 600,
           :'hl.fl'          => [
                                'contents',
                                'title',
@@ -26,10 +26,10 @@ class HRWA::ArchiveSearchConfigurator
           :'q.alt'          => '*:*',
           :qf               => [
                                 'contents^1',
-                                'title^1',
-                                'originalUrl^1',
+                               'title^1',
+                               'originalUrl^1',
                                ],
-          :rows             => 10,
+          :rows             => self.default_num_rows,
         }
 
         config.unique_key = 'recordIdentifier'
@@ -68,9 +68,10 @@ class HRWA::ArchiveSearchConfigurator
                                :label => 'Date Of Capture',
                                :limit => 5
 
-        config.add_facet_field 'mimetype',
+        config.add_facet_field 'mimetypeCode',
                                :label => 'File Type',
-                               :limit => 5
+                               :limit => 5,
+                               :partial => 'facet_layout_for_mimetype_code'
 
         config.add_facet_field 'geographic_focus__facet',
                                :label => 'Geographic Focus',
@@ -224,6 +225,12 @@ class HRWA::ArchiveSearchConfigurator
   # gives us.
   def post_blacklight_processing( solr_response, result_list )
     result_list = solr_response.groups
+
+    #Manually add hash field ['numFound'] to improve compatibility with other
+    # blacklight code, for example : the "did_you_mean" partial for spell
+    # checking (if we ever decide to use it)
+    solr_response.response['numFound'] = solr_response.total
+
     return solr_response, result_list
   end
 
@@ -277,6 +284,10 @@ class HRWA::ArchiveSearchConfigurator
     # Overwrite existing qf
     solr_parameters[ :qf ] = qf
   end
+
+    def default_num_rows
+      return 10
+    end
 
     # Takes optional environment arg for testability
     def self.solr_url(environment = Rails.env)

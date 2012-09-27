@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'cgi'
 
-include HRWA::CatalogHelperBehavior
+include Hrwa::CatalogHelperBehavior
 
 describe 'exclude_domain_from_hits_link' do
   before :each do

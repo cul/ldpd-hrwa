@@ -3,15 +3,16 @@ require 'mail'
 require 'pp'
 
 class InternalController < ApplicationController
+
   HRWA_JIRA_EMAIL_ADDRESS = 'hrwa_portal@libraries.cul.columbia.edu'
   CC_EMAIL_ADDRESS        = 'da217@columbia.edu'
   FEEDBACK_FORM_URL       = '/internal_feedback'
-  SEPARATOR = '=========================================================='    
-  
+  SEPARATOR = '=========================================================='
+
   def feedback_form
     render 'feedback_form', :layout => false
   end
-  
+
   def feedback_submit
     @submission_response = ''
     jira_params = [
@@ -44,7 +45,7 @@ class InternalController < ApplicationController
 
     # Validate this request.  All fields are required because the form should not
     # have been submitted without them.
-    jira_params.each { | jira_param |    
+    jira_params.each { | jira_param |
       if params[ jira_param ]
         # Okay, move along
       else
@@ -52,19 +53,18 @@ class InternalController < ApplicationController
         @submission_response << %Q{<a href="#{ FEEDBACK_FORM_URL }">#{ FEEDBACK_FORM_URL }"</a><br/>}
       end
     }
-    
-    # Construct header
-    email_header              = {}
-    email_header[ 'to' ]      = HRWA_JIRA_EMAIL_ADDRESS
-    email_header[ 'cc' ]      = CC_EMAIL_ADDRESS
-    email_header[ 'subject' ] = "BUG: #{ params[ :summary ] }"
-    # Send the email
-    email_sent_successfully = send_jira_email( jira_email_content,
-                                               email_header )
-                                               
+
+
+    # setup JIRA soap instance
+    server = JIRA::JIRAService.new APP_CONFIG["jira"]["host"]
+    server.login(APP_CONFIG["jira"]["username"], APP_CONFIG["jira"]["password"])
+
+    # create the ticket
+    jira_ticket_create = send_ticket_to_jira(server, params, environment_message)
+
     # Report to user
-    if email_sent_successfully
-      @submission_status   = 'Jira issue created'
+    if jira_ticket_create
+      @submission_status   = "Jira issue [#{jira_ticket_create.key}] created"
       @submission_response = jira_email_content
     else
       @submission_status = 'Creation of Jira issue failed'
@@ -72,7 +72,7 @@ class InternalController < ApplicationController
         'Please report this problem to da217@columbia.edu.'
     end
   end
-  
+
   def environment_message
     message = ''
     message << "USER AGENT          : #{ params[ 'userAgent'     ] }\n"
@@ -88,7 +88,7 @@ class InternalController < ApplicationController
     message << SEPARATOR + "\n"
     message << "params[ 'mimeTypes' ] }\n"
     message << SEPARATOR + "\n"
-    
+
     # These are not that important.  Might not even need to send them.
     message << "BROWSER CODE NAME             : #{ params[ 'appCodeName' ] }\n"
     message << "BROWSER NAME                  : #{ params[ 'appName'     ] }\n"
@@ -102,18 +102,18 @@ class InternalController < ApplicationController
 
     return message
   end
-  
+
   def labels_message( )
     # TODO
   end
-  
-  def jira_directive( name, value )    
+
+  def jira_directive( name, value )
     return "#{ name } = #{ value }\n"
   end
-  
+
   def jira_email_content
     content = ''
-          
+
     content << jira_directive( 'summary'     , params[ 'summary'    ]      )
     content << jira_directive( 'environment' , environment_message         )
     content << jira_directive( 'issueType'   , params[ 'issueType'  ]      )
@@ -121,12 +121,12 @@ class InternalController < ApplicationController
     content << jira_directive( 'components'  , params[ 'components' ]      )
     content << jira_directive( 'assignee'    , params[ 'assignee'   ]      )
     content << jira_directive( 'reporter'    , params[ 'reporter'   ]      )
-    
+
     content << "\n\n#{ params[ 'description' ] }\n"
-    
+
     # TODO
     # content << get_jira_directive( 'labels'     , get_labels_message( )      )
-    
+
     return content
   end
 
@@ -140,4 +140,25 @@ class InternalController < ApplicationController
     }
     mail.deliver!
   end
+
+private
+
+  # creates an issue based on the parameters supplied and pushes it to the server
+  def send_ticket_to_jira(server,params,environment_message)
+    found_component = server.components_for_project_with_key(APP_CONFIG["jira"]["project"]).select { |cmp| cmp.id == params['components']} # find component
+    issue = JIRA::Issue.new()
+    issue.type_id = params['issueType'] # set issue type
+    issue.priority_id = params['priority'] # set priority
+    issue.summary = params["summary"] # set summary
+    issue.project_name = APP_CONFIG["jira"]["project"] # set the project
+    issue.reporter_username = params['reporter'] # set reporter
+    issue.assignee_username = params['assignee'] unless params['assignee'].match(/unassigned/i)  # set assignee if the parameter points to an user, otherwise don't
+    issue.components = found_component if found_component # set component
+    issue.description = params['description'] if !params['description'].nil? # set the description, unless it's empty
+    issue.environment = environment_message # might want to fix this later to map to several custom fields rather than one, seems a bit messy
+    returned_issue = server.create_issue_with_issue(issue) # create the issue on the server
+  end
+
+
+
 end

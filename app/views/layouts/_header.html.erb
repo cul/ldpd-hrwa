@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= h(@page_title || application_name) %></title>
+    <meta name="description" content="An archive and portal that provides search access to archival copies of over 450 web sites in the area of human rights: 2008 to present for active sites.">
+    <meta name="author" content="The Center for Human Rights Documentation &amp; Research at Columbia University Libraries">
+    <link href="<%= opensearch_catalog_path(:format => 'xml', :only_path => false) %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+    <%= favicon_link_tag asset_path('crown-small-blue.png') %>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= raw(render_head_content) %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+
+    <!-- fav and touch icons -->
+
+    <link href="assets/crown-small-blue.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+
+    <script type="text/javascript">
+	  var CUL = {}; //CUL Namespace for prev/next fix
+	  var HRWA = {}; //HRWA Namespace for app-specific variables
+
+	  <%
+		if (@response && (params[:controller] == 'catalog' || params[:controller] == 'folder') && (params[:action] == 'index' || params[:action] == 'hrwa_home'))
+		  latest_total = @response.total
+		else
+		  if(session[:search].nil? || session[:search][:total].nil?)
+			latest_total = 1
+		  else
+			latest_total = session[:search][:total]
+		  end
+		end
+	  %>
+
+	  //Most recent search
+	  <%= 'CUL.last_known_s_search_json_string = "'.html_safe + escape_javascript((session[:search].merge(:total => latest_total).to_json).html_safe) + '";'.html_safe unless session[:search].nil? %>
+
+	</script>
+
+	<% if Rails.env == 'hrwa_prod' %>
+	<!--
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-796949-22']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+	-->
+	<% end %>
+
+  </head>
+
+  <% onload_text = (request.path == catalog_index_path) ? ("$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil?) : '' %>
+  <body onload="<%= onload_text %>" class="<%= render_body_class.html_safe %>">
+  <div class="container" id="outer-container">
+
+
+    <header>
+        <h1 class="hide">CUL - Header</h1>
+        <div id="topnavbar" class="navbar navbar-fixed-top">
+            <div class="navbar-inner fill">
+                <div id="navbar-container" class="container">
+                    <a data-target="#topnav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <nav>
+                        <div class="span4" id="cul_top">
+                            <ul class="nav pull-left" id="crowndown">
+                                <li class="dropdown menu">
+		<% crown_img = image_tag("crown-bts-24x24.png", :alt => "CU") %>
+        <%= link_to crown_img + ' <span class="topbarlogo">Columbia University Libraries</span>'.html_safe + '<b class="caret"></b>'.html_safe, '#', :'data-toggle' => 'dropdown', :title => 'External Links @ Columbia', :class => 'dropdown-toggle menu' %>
+                                    <ul class="dropdown-menu menu-dropdown">
+                                        <li><a href="http://columbia.edu">Columbia University - Home</a></li>
+                                        <li><a href="http://library.columbia.edu">Libraries - Home</a></li>
+                                        <li><a href="http://library.columbia.edu/indiv/humanrights.html">Center for Human Rights Documentation and Research</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /cul_top -->
+					<h3 class='topbarlogo'>
+        <%= link_to 'HRWA', root_path, :title => 'Human Rights Web Archive at Columbia University', :rel => 'tooltip', :class => 'brand hidden-tablet' %>
+        <%= link_to 'Human Rights Web Archive', root_path, :title => 'Human Rights Web Archive at Columbia University', :rel => 'tooltip', :class => 'brand visible-tablet' %>
+					</h3>
+<!--
+                    <h1 class="topbarlogo">
+                        <a data-original-title="Columbia University Libraries" rel="" class="brand visible-tablet" href="/">Columbia University Libraries</a>
+                        <a data-original-title="Columbia University Libraries" rel="" class="brand visible-phone" href="/">LibraryWeb</a>
+                    </h1>
+-->
+                    </nav>
+
+                    <div id="topnav-collapse" class="nav-collapse collapse">
+                        <!-- TODO: Clean up unnecessary classes.-->
+                        <div class="navbar-search pull-right" id="topbarformdiv">
+				<%= render :partial=>'/layouts/search_form' %>
+                        </div>
+                    </div> <!-- //.nav-collapse collapse -->
+                </div>
+            </div>
+        </div> <!-- /#topnavbar.navbar-fixed-top -->
+    </header>
+
+
+
+    <div class="container no-hero-mobile">
+    <!-- Main heading -->
+    <div class="container" id="inner-headline-outer">
+ <div class="row">
+  <div class="span12">
+  <div id="inner-headline">
+   <div id="beta">beta</div>
+   <h1><span class="pull-left"><%= link_to '<span class="darkblue ihshadow">Human</span> Rights <span class="darkblue ihshadow">Web</span> Archive </span>'.html_safe, root_path %></h1>
+   <div class="clear"></div>
+   <h2>Center for Human Rights Documentation & Research at Columbia University</h2>
+  </div>
+  </div>
+ </div>
+</div>
+
+<div id="secondary_nav" class="container">
+ <div class="subnav">
+		  <a id="show_utils_btn" class="btn btn-mini pull-right hidden-desktop" data-toggle="collapse" data-target="#user_util_links">
+              <i class="icon-tasks opacity_75"></i>
+          </a>
+<div class="row">
+<div class="span7">
+<ul class="nav nav-pills pull-left">
+  <li class="hidden-phone"><a href="/" class="opacity_50"><i class="icon-home"></i></a></li>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Learn More <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><%= link_to('About the Archive', about_path) %></li>
+			<li><%= link_to('FAQ', faq_path) %></li>
+		</ul>
+	</li>
+	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Nominate A Site <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><%= link_to('Site Owner Nomination Form', owner_nomination_path) %></li>
+			<li><%= link_to('Public Nomination Form', public_nomination_path) %></li>
+		</ul>
+	</li>
+  <li><%= link_to('Contact', contact_path) %></li>
+</ul>
+</div><!--/span8-->
+  <div id="navbar_right_wrapper" class="span5 pull-right">
+    <ul class="nav nav-pills pull-right nav-collapse" id="user_util_links">
+			<li><%= link_to 'Advanced Search', catalog_path('advanced') %></li>
+      <%= render :partial=>'/user_util_links' %>
+			<% if user_signed_in? || service_user_signed_in? %>
+				<li><%= link_to 'Admin', admin_path %></li>
+      <% end %>
+      <% if user_signed_in? %>
+				<li><%= link_to 'Sign Out', destroy_user_session_path %></li>
+      <% elsif service_user_signed_in? %>
+				<li><%= link_to 'Sign Out', destroy_service_user_session_path %></li>
+      <% end %>
+    </ul>
+  </div>
+</div><!--/row-->
+ </div><!--/subnav-->
+</div><!--/secondary_nav-->
+
+    </div>
+
+
+        <div id="primary_container" class="container no-hero-mobile">

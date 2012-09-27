@@ -1,70 +1,50 @@
-<div class="container no-hero-mobile admin_control_panel">
-    <h2>Admin Control Panel</h2>
-    <p>Hello, <%= current_admin.username %>!</p>
-    <div>
-        <h3>Application Information</h3>
+<h2>Admin Control Panel</h2>
+
+<% current_solr_urls =  YAML.load_file('config/solr.yml')[Rails.env] %>
+
+<h3>Application Information</h3>
+<ul>
+		<li>
+				<strong>Rails Environment:</strong>
+				<%= Rails.env %>
+		</li>
+		<li>
+				<strong>App Version:</strong>
+				<%= IO.read('VERSION') %>
+		</li>
+		<li>
+				<strong>App File System Location:</strong>
+				<%= Dir.getwd %>
+		</li>
+    <li>
+				<strong>Ruby Version:</strong>
+				<%= RUBY_VERSION %>
+		</li>
+		<li>
+				<strong>Rails Version:</strong>
+				<%= Rails::VERSION::STRING %>
+		</li>
+</ul>
+
+<h3>Tools</h3>
+<ul>
+		<li>
+        <strong>Current Solr Cores:</strong>
         <ul>
-            <li>
-                <strong>Rails Environment:</strong>
-                <%= Rails.env %>
-            </li>
-            <li>
-                <strong>HRWA App Version:</strong>
-                <%= IO.read('VERSION') %>
-            </li>
-            <li>
-                <strong>Ruby Version:</strong>
-                <%= RUBY_VERSION %>
-            </li>
-            <li>
-                <strong>Rails Version:</strong>
-                <%= Rails::VERSION::STRING %>
-            </li>
-            <li>
-                <strong>HRWA App File System Location:</strong>
-                <%= Dir.getwd %>
-            </li>
+						<li><strong>asf:</strong> <%= current_solr_urls['asf']['url'] %></li>
+						<li><strong>fsf:</strong> <%= current_solr_urls['fsf']['url'] %></li>
+						<li><strong>site_detail:</strong> <%= current_solr_urls['site_detail']['url'] %></li>
+						<li><strong>asf-hrwa-278:</strong> <%= current_solr_urls['asf-hrwa-278']['url'] %></li>
+						<li><form class="form-inline"><select>
+								<option class="mini" value="vorpal">vorpal.cul.columbia.edu</option>
+								<option class="mini" value="harding">harding.cul.columbia.edu</option>
+								<option class="mini" value="carter">carter.cul.columbia.edu</option>
+								<option class="mini" value="test">unit test solr</option>
+						</select> <input type="submit" value="Do Manual Solr Override" class="btn"/></form></li>
         </ul>
-        <br />
-
-        <h3>Administrative Tools</h3>
-        <p><%= link_to 'Refresh the hard-coded browse list and filter option files', refresh_browse_and_option_lists_path, :class => 'btn btn-small' %></p>
-        <br />
-
-        <h3>Change the Solr server associated with this application instance</h3>
-        <%== '<p class="alert alert-error admin-error">' + @disable_solr_core_switch_forms_error_message + '</p>' if @disable_solr_core_switch_forms %>
-        <p><strong>Archive primary Solr server:</strong> <%=  @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %></p>
-        <p><strong>Find Site primary Solr server:</strong> <%=  @solr_urls[:find_site][/(http:\/\/).+(.cul)/][7..-5] %></p>
-        <p><strong>Site Detail primary Solr server:</strong> <%=  @solr_urls[:site_detail][/(http:\/\/).+(.cul)/][7..-5] %></p>
-        <p>
-
-            <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
-                <fieldset>
-                    <strong>Switch to:</strong>
-                    <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
-                    <select name="new_primary_solr_server" id="new_primary_solr_server" class="input-medium"<%= @disable_solr_core_switch_forms ? 'disabled="disabled"' :'' %>>
-                        <%
-                            @solr_yaml['valid_overrides'].each_key do |key|
-                                %><%== '<option value="' + key + '"' + (key == current_server_name ? ' selected="selected"' : '') + '>' + key + '</option>' %><%
-                            end
-                        %>
-                    </select>
-                    <input type="submit" value="Go" class="btn" <%= @disable_solr_core_switch_forms ? 'disabled="disabled"' : '' %>/>
-                </fieldset>
-            <% end %>
-        </p>
-
-        <p>
-
-            <%= form_tag(admin_path, :method => 'post', :class => 'form-inline') do %>
-                <fieldset>
-                    <% current_server_name = @solr_urls[:archive][/(http:\/\/).+(.cul)/][7..-5] %>
-                    <input type="submit" id="reset_primary_solr_server" name="reset_primary_solr_server" value="Reset all primary solr servers to defaults" class="btn"  <%= @disable_solr_core_switch_forms ? 'disabled="disabled"' : '' %>/>
-                </fieldset>
-            <% end %>
-        </p>
-    </div>
-
-</div> <!-- /container -->
-
-<!-- REQUEST_TEST_STRING: <%= @request_test_string %> -->
+		</li>
+    <li>
+				<strong>Update the home page hardcoded browse list files:</strong>
+				<%= link_to 'Update!', {'controller' => 'admin', 'action' => 'update_hardcoded_browse_lists'}, :class => 'btn btn-mini' %>
+		</li>
+</ul>

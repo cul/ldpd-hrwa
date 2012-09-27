@@ -1,24 +1,10 @@
 <div class="container">
 
   <div class="row">
-    <div id="error-outer" class="span12">
-      <div class="error-message<%= @error_type == :user ? ' alert alert-info' : ' alert alert-error' %>">
+    <div class="span12">
+      <div class="error-message alert <%= @alert_type %>">
         <p><%= @error_message %></p>
-        <% if @error_type == :invalid_result_page %>
-            <p><a href="#" class="back_button_link">Click here to go back to the previous page.</a></p>
-        <% end %>
       </div>
-
-      <!-- TODO: TAKE THIS OUT OF PROD -->
-      <% if Rails.env != "hrwa_prod" %>
-        <% #Only show the box (with a border) if the hrwa_debug param value == "true" %>
-        <% if params[:hrwa_debug] == "true" %>
-          <div id="debug" name="debug" style="background-color: white; padding: 10px; border: 1px solid red; margin: 30px;">
-            <%= @debug %>
-          </div>
-        <% end %>
-      <% end %>
-
     </div>
   </div>
 </div>

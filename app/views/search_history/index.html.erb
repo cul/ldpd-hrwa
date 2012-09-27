@@ -1,0 +1,16 @@
+<h1>Search History</h1>
+<br />
+<%- if @searches.blank? -%>
+  <h3>You have no search history</h3>
+<%- else -%>
+  <table id="search_history" class="table-condensed">
+    <thead>
+      <tr><th><h3>Recent Searches <%= link_to "Clear Search History", clear_search_history_path, :method => :delete, :confirm => "Clear your search history?", :class => 'btn pull-right' %></h3></th></tr>
+    </thead>
+  <%-  @searches.each_with_index do |search,index| -%>
+    <%= content_tag :tr, :id => "document_#{index + 1}" do %>
+      <td class="query"><div class="well"><%= link_to_previous_search(search.query_params) %><div class="clear"></div></div></td>
+    <% end #content_tag %>
+  <%- end -%>
+  </table>
+<%- end -%>

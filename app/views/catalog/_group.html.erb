@@ -1,9 +1,91 @@
 <% item_count_id = group_counter + 1 + @response.params[:start].to_i %>
 
-    <% # container for a single doc -%>
-    <article id="a_<%= item_count_id %>" class="asf post">
+<% performing_a_search = (params[:controller] == 'catalog' && params[:action] == 'index') || (params[:controller] == 'catalog' && params[:action] == 'hrwa_home') %>
+<% folder_view = (params[:controller] == 'folder' && params[:action] == 'index') %>
 
-        <% # main container for group partial view -%>
-        <%= render :partial => 'index_group_default', :locals => {:group => group} %>
+<% # The top doc for the group will be displayed in full as a hit %>
+<% doc = group[ :doclist ][ :docs ].shift %>
 
-    </article>
+  <% # container for a single doc -%>
+  <% custom_string_time_format = '%b %-d, %Y at %l:%M%p %Z' %>
+
+  <article id="a_<%= item_count_id %>" class="archive-result <%= render_document_class group %>">
+    <dl class="defList document">
+
+        <!-- CAPTURE DATE FOR THE PAGE -->
+        <span class="capture_date pull-right mono" rel="tooltip" title="Captured on <%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %>"><%= doc[ :recordDate ].to_time.strftime(custom_string_time_format) %></span>
+
+        <% # bookmark/folder functions for items/docs -%>
+        <%#= render_index_doc_actions group %>
+
+        <% # main title container for group partial view -%>
+
+        <!-- TITLE LINK DATA -->
+        <dt><%= link_to((( ! doc[ :title ].blank? ) ? doc[ :title ] : '[Untitled]'), doc[ :archivedUrl ]) %></dt>
+
+        <% # main title container for group partial view -%>
+        <dd class="result_url">
+            <%= doc[ :originalUrl ] %>
+        </dd>
+
+        <%# <dd class="asf hl_snippet invisible"> %>
+        <dd class="hl_snippet">
+        <%= formatted_highlighted_snippet(@response[ :highlighting ][ doc[ :recordIdentifier ] ], @configurator.prioritized_highlight_field_list) %>
+        </dd>
+
+        <dd>
+          <div class="file_tech_info">
+            <!-- SIZE -->
+            <span class="size">Size: <%= number_to_human_size( doc[ :length ] ) %> - </span>
+            <!-- MIMETYPE CODE-->
+            <span class="file_type"><%= mimetype_code_to_display_string(doc[ :mimetypeCode ]) %></span>
+          </div>
+
+          <!-- OTHER CAPTURE INSTANCES -->
+          <% remaining_docs_in_group = group[ :doclist ][ :docs ]
+             other_capture_instances = []
+             remaining_docs_in_group.each { | doc |
+               capture_instance = { :url           => doc[ :archivedUrl ],
+                  :instance_date => doc[ :recordDate  ].to_time.strftime(custom_string_time_format),
+                  :size          => number_to_human_size( doc[ :length ] )
+                }
+               other_capture_instances << capture_instance
+             }
+          %>
+
+          <% if ! other_capture_instances.empty? %>
+              <div class="other_capture_instances well">
+              <%
+              other_instance_date_hits_html = '<strong>Other Relevant Captures</strong><ul class="other_capture_list">'
+              other_capture_instances.each { | instance |
+            other_instance_date_hits_html <<
+             %Q{<li><a href="#{ instance[ :url ] }">#{ instance[ :instance_date ]} (#{ instance[ :size ] })</a></li>}
+              }
+              other_instance_date_hits_html << '</ul>'
+          %>
+          <%= other_instance_date_hits_html.html_safe %>
+          </div>
+          <% end %>
+
+
+          <% if( ! (params[:f] && params[:f]['domain'] && params[:f]['domain'].include?(doc[:domain])) ) %>
+            <a href="<%= url_for_added_domain_facet(doc[:domain]) %>" class="btn btn-mini pull-right blue" rel="tooltip" data-original-title="See all results from <%= doc[ :domain ] %>">Domain+</a>
+          <% end %>
+
+          <%# if( ! (params[:excl_domain] && params[:excl_domain].include?(doc[:domain])) ) %>
+          <%# No need to do a check for whether or not to show the Domain- button, since excluded sites won't appear in search results %>
+            <a href="<%= url_for_exclude_domain_addition(doc[:domain]) %>" class="btn btn-mini pull-right red" rel="tooltip" data-original-title="Exclude results from <%= doc[ :domain ] %>">Domain-</a>
+          <%# end %>
+
+          <div class="clearfix"></div>
+
+        </dd>
+
+        <%# OpenURL Coins Info (for Zotero compatibility) -%>
+        <%#= render :partial => 'catalog/openurl_coins_data_for_a_document', :locals => {:document => doc} %>
+
+    </dl>
+  </article>
+
+
+<!-- REQUEST_TEST_STRING: HRWA::CATALOG::GROUP::RENDER_SUCCESS -->

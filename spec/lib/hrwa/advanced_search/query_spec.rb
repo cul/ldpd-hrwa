@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 class MockCatalogController
-  include HRWA::AdvancedSearch::Query
+  include Hrwa::AdvancedSearch::Query
 end
 
 mock_catalog_controller = MockCatalogController.new
@@ -17,9 +17,9 @@ describe 'advanced_search_processing_q_fields' do
     solr_parameters[ :q ].should == '+all1 +all2 +all3 '  +
                                     '"this is a phrase" ' +
                                     'any1 any2 '          +
-                                    '-none1 -none2' 
+                                    '-none1 -none2'
   end
-  
+
   # Regression error test: user clicks on a facet choice after performing an advanced keyword search
   it 'properly initalizes q solr param before building new one' do
     solr_parameters = { :q => '+women' }

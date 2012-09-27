@@ -3,9 +3,9 @@ require 'blacklight/configuration'
 
 require_relative 'mock_archive_search_response'
 
-describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
+describe 'Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator' do
   before ( :all ) do
-    @advanced_search_with_stemming_adjuster_q_and_women_params = { 
+    @advanced_search_with_stemming_adjuster_q_and_women_params = {
       :capture_start_date => '',
       :capture_end_date   => '',
       :per_page           => 10,
@@ -22,7 +22,7 @@ describe 'HRWA::ArchiveSearchWithStemmingAdjusterConfigurator' do
       :submit_search      => 'Advanced+Search'
     }
 
-    @configurator = HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.new
+    @configurator = Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.new
   end
 
   context '#config_proc' do

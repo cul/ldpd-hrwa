@@ -1,112 +1,221 @@
+# -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
-require 'pp'
 
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include HRWA::AdvancedSearch::Query
-  include HRWA::Debug
   include HRWA::SolrHelper
-  include HRWA::Catalog::Dev
 
-  before_filter :_merge_f_add_into_f, :only => [:index]
+  before_filter :_check_for_debug_mode, :_configure_by_controller_action, :_select_appropriate_partial
 
-  # displays values and pagination links for a single facet field
-  def facet
-    _configure_by_search_type
-    @configurator.configure_facet_action( self.blacklight_config )
-    @pagination = get_facet_pagination(params[:id], params)
-  end
+  def _configure_by_controller_action
+
+    case params[:action].to_s
+      when 'index'
+        if ! params[:search_type]
+          _configure_by_search_type('find_site')
+        else
+          _configure_by_search_type
+        end
+      when 'show'
+        _configure_by_search_type('site_detail')
+      when 'update'
+        _configure_by_search_type('site_detail')
+      when 'facet'
+        _configure_by_search_type
+      else
+      # In general, we use the find_site configuration, but there are certain exceptions (above)
+        _configure_by_search_type('find_site')
+      end
+    end
 
   # get search results from the solr index
   def index
-    if !params[:search].blank?
+    _do_search
+  end
 
-      _configure_by_search_type
+  def advanced
+    if params[:submit]
+      _do_advanced_query_processing_and_redirect
+    end
+  end
 
-      begin
-        (@response, @result_list) = get_search_results( params, {} )
-      rescue => ex
-        @error = ex.to_s
-        Rails.logger.error( @error )
+  def _do_advanced_query_processing_and_redirect
 
-        # We are categorizing user errors into :user and :system
-        if _user_query_has_bad_syntax( @error )
-          # Get query text if there is any
-          user_q_text    = ex.request[ :params ][ :q ]
-          user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
-          @error_type    = :user
-          @error_message = "Sorry, #{user_query} is not valid.  For query syntax help, see <a href='#'>[placeholder for help link]</a>.".html_safe
-        else
-          @error_type    = :system
-          @error_message = "Sorry, there has been an internal system error.  Please contact <a href='#'>[placeholder for help link]</a>.".html_safe
-        end
-        # TODO: remove this from production version
-        if params.has_key?( :hrwa_debug )
-          _set_debug_display
-        end
+    # Also ignore params[:catalog]
+    params.delete(:catalog)
 
-        render :error and return
-      end
+    # Also ignore params[:submit]
+    params.delete(:submit)
 
-      # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
-      # Check for navigation to a nonexistent/invalid result page
-      # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
-      if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
-        @error_type = :invalid_result_page
-        @error_message = 'Sorry, but there are no results available on this search result page.'
-        Rails.logger.info('-------------------------------------------------------------------------------------')
-        Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
-        Rails.logger.info('-------------------------------------------------------------------------------------')
-        render :error and return
-      end
+    # Ignore all empty params items
+    params.delete_if{|key, value|
+      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
+    }
 
-      # Configurator might need to manipulate the @response and @result_list
-      # This is absolutely the case for an archive search
-      if @configurator.post_blacklight_processing_required?
-        @response, @result_list = @configurator.post_blacklight_processing( @response,
-                                                                            @result_list )
-      end
+    # Combine q_and, q_phrase, q_or, q_exclude into q
 
-      @filters = params[:f] || []
+    combined_q = ''
 
-      # Select appropriate partials
-      @result_partial = @configurator.result_partial
-      @result_type    = @configurator.result_type
+    q_and = params[:q_and]                                                      unless params[:q_and].blank?
+    q_and = q_and.split( /\s+/ ).map { |term| "+#{term}" }.join( ' ' )          unless params[:q_and].blank?
+    q_phrase = '"' + params[:q_phrase] + '"'                                    unless params[:q_phrase].blank?
+    q_or = params[:q_or]                                                        unless params[:q_or].blank?
+    q_or = q_or.split( /\s+/ ).map { |term| "#{term}" }.join( ' ' )             unless params[:q_or].blank?
+    q_exclude = params[:q_exclude]                                              unless params[:q_exclude].blank?
+    q_exclude = q_exclude.split( /\s+/ ).map { |term| "-#{term}" }.join( ' ' )  unless params[:q_exclude].blank?
 
-      # TODO: remove this from production version
-      if params.has_key?( :hrwa_debug )
-        _set_debug_display
-      end
+    combined_q << q_and     + ' ' unless q_and.blank?
+    combined_q << q_phrase  + ' ' unless q_phrase.blank?
+    combined_q << q_or      + ' ' unless q_or.blank?
+    combined_q << q_exclude + ' ' unless q_exclude.blank?
 
-      respond_to do |format|
-        format.html { save_current_search_params }
-        format.rss  { render :layout => false }
-        format.atom { render :layout => false }
-      end
+    unless combined_q.blank?
+      combined_q = combined_q[0,combined_q.length-1]
+    end
 
+    params[:q] = combined_q
+
+    # and remove the advanced text fields from params
+    params.delete(:q_and)
+    params.delete(:q_phrase)
+    params.delete(:q_or)
+    params.delete(:q_exclude)
+
+    # Ignore all empty params[:f] items
+    params[:f].delete_if{|key, value|
+      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
+    }
+
+    redirect_to params.merge({:action => 'index'})
+  end
+
+  # display hrwa_home page, and grab 12 random results from Solr
+  def hrwa_home
+
+    number_of_items_to_show = 12
+
+    # add a new solr facet query ('fq') parameter that performs a radom subject facet search
+    @random_subjects_to_choose_from =  [ 'Civil rights',
+                                      'Democracy',
+                                      'Ombudspersons',
+                                      'Civil society',
+                                      'Transitional justice',
+                                      'Indigenous peoples',
+                                      'Torture',
+                                      'Truth commissions']
+
+    # If a subject has been specified in the query string, use it.  Otherwise choose something random.
+    if(params[:subject] && @random_subjects_to_choose_from.include?(params[:subject]))
+       @featured_home_page_subject = params[:subject]
+    else
+      @featured_home_page_subject = (@random_subjects_to_choose_from.shuffle)[0] # Get random item without reordering the hash
+    end
+
+    custom_solr_search_params =  {
+                                    :rows => number_of_items_to_show,
+                                    :fq => '{!raw f=subject__facet}' + @featured_home_page_subject
+                                  }
+
+    (@response, @result_list) = get_search_results(params, custom_solr_search_params)
+
+    custom_blacklight_search_params = {
+                                        :per_page => number_of_items_to_show,
+                                        :f=>{"subject__facet"=>[@featured_home_page_subject]},
+                                        :total => @response.total
+                                      }
+
+    session[:search] = params.merge(custom_blacklight_search_params)
+
+    if(@debug_mode)
+      @debug_printout << "session[:search]:\n"
+      @debug_printout << session[:search].pretty_inspect
+      @debug_printout << "\n\n"
+      @debug_printout << "Solr Response:\n"
+      @debug_printout << @response.pretty_inspect
     end
 
   end
 
-  # display the site detail for an fsf record, using bib_key as a unique identifier
-  # use the bib_key to get a single document from the solr index
-  def site_detail
-    _configure_by_search_type('site_detail')
-    @bib_key = params[:bib_key]
-    @response, @document = get_solr_response_for_doc_id(@bib_key)
+
+  def _do_search
+    extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
+    extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
+
+    # Be ready to capture Solr errors
+    begin
+      (@response, @result_list) = get_search_results
+    rescue => ex
+      @error = ex.to_s
+      Rails.logger.error( @error )
+
+      # Check to see if the query couldn't be understood by Solr
+      if ! ex.to_s.match( /HTTP Status 400/).nil?
+        # Get query text if there is any
+        user_q_text    = ex.request[ :params ][ :q ]
+        user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
+        @alert_type    = 'alert-info'
+        @error_message = "Sorry, #{user_query} is not valid. Please try another search with different search terms.".html_safe
+      else
+        @alert_type    = 'alert-error'
+        @error_message = "Sorry, an internal system error has occurred.".html_safe
+      end
+
+      render :error and return
+    end
+
+    # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
+    # Check for navigation to a nonexistent/invalid result page
+    # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
+    if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
+      @error_type = :invalid_result_page
+      @error_message = 'Sorry, but there are no results available on this search result page.'
+      Rails.logger.info('-------------------------------------------------------------------------------------')
+      Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
+      Rails.logger.info('-------------------------------------------------------------------------------------')
+      render :error and return
+    end
+
+    # Configurator might need to manipulate the @response and @result_list
+    # This is absolutely the case for an archive search
+    if @configurator.post_blacklight_processing_required?
+      @response, @result_list = @configurator.post_blacklight_processing( @response,
+                                                                          @result_list )
+    end
+
+    if(@debug_mode)
+      @debug_printout << "session[:search]:\n"
+      @debug_printout << session[:search].pretty_inspect
+      @debug_printout << "\n\n"
+      @debug_printout << "Solr Response:\n"
+      @debug_printout << @response.pretty_inspect
+    end
+
+    respond_to do |format|
+      format.html { save_current_search_params }
+      format.rss  { render :layout => false }
+      format.atom { render :layout => false }
+    end
   end
 
-  private
+  # sets @debug_mode to true if params[:debug_mode] == true
+  def _check_for_debug_mode
+    @debug_mode = params[:debug_mode] == "true"
+    @debug_printout = ''
+  end
 
   def _configure_by_search_type(search_type = params[:search_type])
-    @debug = ''.html_safe
+
+    if (search_type.nil?)
+      # We don't ever want this code to run
+      raise 'Search type should not be nil!'
+    else
+      @search_type = search_type.to_sym
+    end
 
     # Backend method of reselecting search_type based on hrwa_core if hrwa_core is the no-stemming core
     if ( params[ :hrwa_core ] == 'asf-hrwa-278' )
       @search_type = :archive_ns
-    else
-      @search_type = search_type.to_sym
     end
 
     @configurator = HRWA::Configurator.new( @search_type )
@@ -128,78 +237,11 @@ class CatalogController < ApplicationController
     Blacklight.solr = RSolr::Ext.connect( :url => @solr_url)
   end
 
-  def _set_debug_display
-    @debug << "<h1>@result_partial = #{ @result_partial }</h1>".html_safe
-    @debug << "<h1>@result_type    = #{ @result_type }</h1>".html_safe
-
-    @debug << "<h1>@solr_url    = #{ @solr_url }</h1>".html_safe
-
-    @debug << "<h1>params[]</h1>".html_safe
-    @debug << params_list
-
-    @debug << '<h1>solr_search_params_logic</h1>'.html_safe
-    @debug << array_pp( self.solr_search_params_logic )
-
-    @debug << "<h1>self.solr_search_params( params )</h1>\n\n".html_safe
-    solr_search_parameters = self.solr_search_params( params )
-    solr_search_parameters.keys.sort{ | a, b | a.to_s <=> b.to_s }.each do | key |
-      @debug << "<strong>#{key}</strong> = ".html_safe << solr_search_parameters[ key ].to_s << "<br/>".html_safe
-    end
-
-    if @response
-      @debug << '<h1>@response.request_params</h1>'.html_safe
-      @debug << "<pre>#{ @response.request_params.pretty_inspect }</pre>".html_safe
-
-      @debug << '<h1>@result_list</h1>'.html_safe
-      @debug << "<pre>#{ @result_list.pretty_inspect }".html_safe
-
-      @debug << '<h1>@response</h1>'.html_safe
-      @debug << "<pre>#{ @response.pretty_inspect }</pre>".html_safe
-    end
+  def _select_appropriate_partial
+    # Select appropriate partial
+    @result_partial = @configurator.result_partial
+    @result_type    = @configurator.result_type
   end
 
-  # Merges params[:f_add] options into the current params[:f] hash.
-  # Ignores all options that have empty values
-  def _merge_f_add_into_f
-    if(params[:f_add])
-
-      if( ! params[:f] )
-        params[:f] = {}
-      end
-
-      #Note: We're not merging the hashes themselves, but rather,
-      #the arrays inside each of the hashes.
-      params[:f_add].each do |hash_key, arr_value|
-
-				# if f_add contains a key that holds a single-element blank
-				# value ( [''] ), then don't do a merge.
-				if( ! arr_value[0].blank? )
-					if( ! params[:f][hash_key] )
-						params[:f][hash_key] = []
-					end
-					params[:f][hash_key] = params[:f][hash_key] | arr_value # Note: arr1 | arr2 == a single merged array (with duplicates removed)
-				end
-
-      end
-
-    end
-
-    # And now that we're done with f_add, we should delete it from params
-    # It was only meant to be used right before the catalog_controller index
-    # action anyway. It shouldn't be used by any other part of blacklight,
-    # or our application.
-    params.delete :f_add
-
-  end
-
-  # Cover all Solr version error responses we currently know of
-  def _user_query_has_bad_syntax( error_message )
-    # Covers Solr 3.6 and Solr 4
-    return error_message.match( /org\.apache\.lucene\.queryParser\.ParseException/) ||
-           error_message.match( /The request sent by the client was syntactically incorrect/)
-  end
-
-  def crawl_calendar
-  end
 
 end

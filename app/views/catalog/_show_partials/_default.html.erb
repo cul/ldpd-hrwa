@@ -1,0 +1,66 @@
+<%# default partial to display solr document fields in catalog show view -%>
+<%# Hrwa Note: We can't use Blacklight's default rendering of show fields because we have specific, customized needs %>
+
+<article id='sdf_view' class="post">
+  <table id='sdf_table' class='table table-bordered table-striped zebra-striped'>
+    <tbody>
+      <%# Only show alternate title(s) if the field isn't empty %>
+      <% if( ! @document.get('alternate_title').blank? ) %>
+        <tr>
+          <td>Alternate Title</td><%# <- Multivalued %>
+          <td><%=facet_array_to_delimited_list_with_links('alternate_title', @document.get('alternate_title', {:sep => nil}))%></td>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('creator_name__facet').blank? ) %>
+        <tr>
+          <td>Creator</td><%# <- Multivalued %>
+          <td><%=facet_array_to_delimited_list_with_links('creator_name__facet', @document.get('creator_name', {:sep => nil}))%></td>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('organization_type').blank? ) %>
+        <tr>
+          <td>Organization Type</td>
+          <td><%=facet_array_to_delimited_list_with_links('organization_type__facet', [@document.get('organization_type')])%></td>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('organization_based_in').blank? ) %>
+        <tr>
+          <td>Organization Based In</td>
+          <td><%=facet_array_to_delimited_list_with_links('organization_based_in__facet', [@document.get('organization_based_in')])%></td>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('geographic_focus__facet').blank? ) %>
+        <tr>
+          <td>Geographic Focus</td><%# <- Multivalued %>
+          <td><%=facet_array_to_delimited_list_with_links('geographic_focus__facet', @document.get('geographic_focus', {:sep => nil}))%></td>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('subject__facet').blank? ) %>
+        <tr>
+          <td>Subjects</td><%# <- Multivalued %>
+          <td><%=facet_array_to_delimited_list_with_links('subject__facet', @document.get('subject', {:sep => nil}))%></td>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('summary').blank? ) %>
+        <tr>
+          <td>Summary</td>
+          <td><%= @document.get('summary') %></td>
+        </tr>
+      <% end %>
+
+      <% if( ! @document.get('language__facet').blank? ) %>
+        <tr>
+          <td>Languages</td><%# <- Multivalued %>
+          <td><%=facet_array_to_delimited_list_with_links('language__facet', @document.get('language', {:sep => nil}))%></td>        <%# <- Multivalued, using :sep => nil to get back an Array object %>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+</article>

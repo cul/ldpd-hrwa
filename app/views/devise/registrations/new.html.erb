@@ -1,37 +1,25 @@
-<div class="container no-hero-mobile">
+<article class="entry">
 
-    <div class="content">
+  <%= devise_error_messages! %>
 
-        <div class="row">
-          <div class="span12 columns">
-            <article class="entry">
+  <h2>Sign up</h2>
 
-              <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => registration_url(resource_name, :protocol => !(Rails.env.development? || Rails.env.test?) ? 'https://' : 'http://')) do |f| %>
 
-              <h2>Sign up</h2>
+    <div><%= f.label :username %>
+    <%= f.text_field :username %></div>
 
-              <%= form_for(resource, :as => resource_name, :url => registration_url(resource_name, :protocol => !(Rails.env.development? || Rails.env.test?) ? 'https://' : 'http://')) do |f| %>
+    <div><%= f.label :email %>
+    <%= f.email_field :email %></div>
 
-                <div><%= f.label :username %>
-                <%= f.text_field :username %></div>
+    <div><%= f.label :password %>
+    <%= f.password_field :password %></div>
 
-                <div><%= f.label :email %>
-                <%= f.email_field :email %></div>
+    <div><%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %></div>
 
-                <div><%= f.label :password %>
-                <%= f.password_field :password %></div>
+    <div><%= f.submit "Sign up", :class => 'btn' %></div>
+  <% end %>
 
-                <div><%= f.label :password_confirmation %>
-                <%= f.password_field :password_confirmation %></div>
-
-                <div><%= f.submit "Sign up", :class => 'btn' %></div>
-              <% end %>
-
-              <%= render :partial => "devise/shared/links" %>
-            </article>
-          </div>
-        </div>
-
-	</div> <!--//content-->
-
-</div>
+  <%= render "links" %>
+</article>

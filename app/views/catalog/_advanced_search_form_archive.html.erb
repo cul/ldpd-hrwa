@@ -1,0 +1,161 @@
+<%= form_tag catalog_path('advanced'), :method => :get, :class => 'advanced_search_form' do %>
+
+<%= render :partial => 'advanced_search_form_text_fields' %>
+
+<div class="row">
+
+	<h6 class="span12">Add additional search filters</h6>
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="span2 control-label">organization type</label>
+			<select class="control-group span3" name="f[organization_type__facet][]">
+				<option value="">- Choose an option -</option>
+				<% selected_items = params[:f].nil? ? nil : params[:f][:organization_type__facet] %>
+				<% browse_list_for_organization_type__facet().each do | key, value | %>
+					<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+				<% end %>
+			</select>
+		</div>
+		<div class="control-group">
+			<label class="span2 control-label">geographic focus</label>
+			<select class="control-group span3" name="f[geographic_focus__facet][]">
+				<option value="">- Choose an option -</option>
+				<% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+				<% browse_list_for_geographic_focus__facet().each do | key, value | %>
+					<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+				<% end %>
+			</select>
+		<div class="control-group">
+			<label class="span2 control-label">File Type</label>
+			<select class="control-group span3" name="f[mimetype_code][]">
+				<option value="">- Choose an option -</option>
+				<% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+				<% get_mimetype_codes.each do | key, value | %>
+					<%= '<option value="'.html_safe + key + '">'.html_safe + value + '</option>'.html_safe %>
+				<% end %>
+			</select>
+		</div>
+		</div>
+				<div class="control-group">
+				<label class="span2 control-label">organization based in</label>
+					<select class="control-group span3" name="f[organization_based_in__facet][]">
+						<option value="">- Choose an option -</option>
+						<% selected_items = params[:f].nil? ? nil : params[:f][:organization_based_in__facet] %>
+						<% browse_list_for_organization_based_in__facet().each do | key, value | %>
+							<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+						<% end %>
+				</select>
+		</div>
+	</div>
+
+	<div class="span6">
+		<div class="control-group">
+				<label class="span2 control-label">site language</label>
+				<select class="control-group span3" name="f[language__facet][]">
+					<option value="">- Choose an option -</option>
+					<% selected_items = params[:f].nil? ? nil : params[:f][:language__facet] %>
+					<% browse_list_for_language__facet().each do | key, value | %>
+						<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+					<% end %>
+				</select>
+				<!--Non-displayed facets below here-->
+		</div>
+
+				<div class="control-group">
+				<label class="span2 control-label">creator name</label>
+				<select class="control-group span3" name="f[creator_name__facet][]">
+					<option value="">- Choose an option -</option>
+					<% selected_items = params[:f].nil? ? nil : params[:f][:creator_name__facet] %>
+					<% browse_list_for_creator_name__facet().each do | key, value | %>
+						<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+					<% end %>
+				</select>
+		</div>
+		<div class="control-group">
+			<label class="span2 control-label">domain</label>
+			<select class="control-group span3" name="f[domain][]">
+				<option value="">- Choose an option -</option>
+				<% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
+				<% browse_list_for_domain().each do | key, value | %>
+					<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+				<% end %>
+			</select>
+		</div>
+
+	</div>
+
+	<h6 class="span12">Date of Capture</h6>
+
+	<% capture_start_date_value = ''
+			 capture_end_date_value = '' %>
+
+	<div class="span6 capture_start_date_group">
+		<div class="control-group">
+			<label class="span3 control-label">start date</label>
+			<div class="span3 nomar"><input id="capture_start_date" class="span3 hrwadatepicker_start" type="text" name="capture_start_date" value="<%= capture_start_date_value %>" /></div>
+		</div>
+	</div>
+	<div class="span6 capture_end_date_group">
+		<div class="control-group">
+			<label class="span3 control-label">end date</label>
+			<div class="span3 nomar"><input id="capture_end_date" class="span3 hrwadatepicker_end" type="text" name="capture_end_date" value="<%= capture_end_date_value %>" /></div>
+		 </div>
+	</div>
+
+	<h6 class="span12">Display Options</h6>
+
+	<div class="span6">
+		<div class="control-group">
+				 <label class="span2 control-label">results per page</label>
+				 <select class="control-group span3" name="per_page">
+					<option value="">- Choose an option -</option>
+					<option>10</option>
+					<option>25</option>
+					<option>50</option>
+					<option>100</option>
+				 </select>
+		</div>
+	</div>
+
+	<!--
+
+	<h6 class="span12">Dev Options (Temporary)</h6>
+
+	<div class="<%= ' invisible' if(Rails.env == 'hrwa_test' || Rails.env == 'hrwa_prod') %>">
+		<div class="span6">
+			<div class="control-group">
+				<label class="span2 control-label">host</label>
+				<select id="hrwa_host_asf" class="span3" name="hrwa_host"><%
+						hrwa_solr_host = params[:hrwa_host].blank? ? '' : get_current_hrwa_solr_host
+						%>
+						<option value=""<%= params[:hrwa_host].blank? ? ' selected="selected"'.html_safe : '' %>>- Choose an option -</option>
+						<option value="dev"<%= hrwa_solr_host == 'dev' ? ' selected="selected"'.html_safe : '' %>>Dev</option>
+						<option value="test"<%= hrwa_solr_host == 'test' ? ' selected="selected"'.html_safe : '' %>>Test</option>
+						<option value="prod"<%= hrwa_solr_host == 'prod' ? ' selected="selected"'.html_safe : '' %>>Prod</option>
+				</select>
+				<input id="hrwa_host_asf_hidden" type="hidden" disabled="disabled" name="hrwa_host" value="test" />
+			</div>
+		</div>
+		<div class="span6">
+			<div class="control-group">
+				<label class="span2 control-label">core</label>
+					<select id="hrwa_core_asf" class="span3" name="hrwa_core">
+							<% hrwa_core_asf = params[ :hrwa_core ].blank? ? '' : get_current_hrwa_solr_core %>
+							<option value="">- Choose an option -</option>
+							<option value="asf" <%= hrwa_core_asf == 'asf' ? ' selected="selected"'.html_safe : '' %>>ASF</option>
+							<option value="asf-hrwa-278" <%= hrwa_core_asf == 'asf-hrwa-278' ? ' selected="selected"'.html_safe : '' %>>ASF-HRWA-278 (stemming and non-stemming results)</option>
+					</select>
+				<input id="hrwa_core_asf_hidden" type="hidden" disabled="disabled" name="hrwa_core" value="asf-hrwa-278" />
+			</div>
+		</div>
+	</div>
+
+	-->
+
+	<input type="hidden" name="search_type" value="archive" />
+	<div class="span12"><input type="submit" class="advanced_search_submit btn" name="submit" value="Search Pages" /></div>
+
+</div>
+
+<% end %>

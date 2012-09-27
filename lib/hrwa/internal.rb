@@ -7,8 +7,8 @@ module HRWA::Internal
   CC_EMAIL_ADDRESS        = 'da217@columbia.edu'
   FEEDBACK_FORM_URL       = '/internal_feedback'
   SEPARATOR               =
-    '=========================================================='    
-  
+    '=========================================================='
+
   def feedback_submit( user_params = params )
     debugger
     @submission_response = ''
@@ -42,7 +42,7 @@ module HRWA::Internal
 
     # Validate this request.  All fields are required because the form should not
     # have been submitted without them.
-    jira_params.each { | jira_param |    
+    jira_params.each { | jira_param |
       if user_params[ jira_param ]
         # Okay, move along
       else
@@ -51,16 +51,16 @@ module HRWA::Internal
         render and return
       end
     }
-    
+
     # Get the text for the JIRA email
     jira_email_content = jira_email_content( user_params )
-    
+
     # Construct header
     email_header[ 'to' ]      = HRWA_JIRA_EMAIL_ADDRESS
     email_header[ 'cc' ]      = CC_EMAIL_ADDRESS
     email_header[ 'subject' ] = "BUG: #{ user_params [ :summary ] }"
     # Send the email
-    email_sent_successfully = send_jira_email( email_header, jira_email_content )    
+    email_sent_successfully = send_jira_email( email_header, jira_email_content )
     # Report to user
     if email_sent_successfully
       @submission_response << "Feedback has been successfully sent to Jira Project HRWA Portal.\nInfo submitted:\n"
@@ -71,7 +71,7 @@ module HRWA::Internal
       exit
     end
   end
-  
+
   def environment_message( user_params = params )
     environment_mssage = ''
     environment_message << "USER AGENT          : #{ user_params[ :userAgent     ] }\n"
@@ -87,7 +87,7 @@ module HRWA::Internal
     environment_message << SEPARATOR + "\n"
     environment_message << "user_params[ :mimeTypes' ] }\n"
     environment_message << SEPARATOR + "\n"
-    
+
     # These are not that important.  Might not even need to send them.
     environment_message << "BROWSER CODE NAME             : #{ user_params[ :appCodeName ] }\n"
     environment_message << "BROWSER NAME                  : #{ user_params[ :appName     ] }\n"
@@ -101,18 +101,18 @@ module HRWA::Internal
 
     return environment_message
   end
-  
+
   def labels_message( )
     # TODO
   end
-  
-  def jira_directive( name, value )    
+
+  def jira_directive( name, value )
     return "@name=value\n"
   end
-  
+
   def jira_email_content( user_params = params)
     jira_email_content  = ''
-          
+
     jira_email_content << jira_directive( 'summary'     , user_params[ :summary    ]      )
     jira_email_content << jira_directive( 'environment' , environment_message( user_params )      )
     jira_email_content << jira_directive( 'issueType'   , user_params[ :issueType  ]      )
@@ -120,12 +120,12 @@ module HRWA::Internal
     jira_email_content << jira_directive( 'components'  , user_params[ :components ]      )
     jira_email_content << jira_directive( 'assignee'    , user_params[ :assignee   ]      )
     jira_email_content << jira_directive( 'reporter'    , user_params[ :reporter   ]      )
-    
+
     jira_email_content << "\n\n#{ user_params[ :description ] }\n"
-    
+
     # TODO
     #jira_email_content << get_jira_directive( 'labels'     , get_labels_message( )      )
-    
+
     return jira_email_content
   end
 
@@ -139,7 +139,7 @@ Cc: #{ email_header[ :cc ] }
 
 Subject: #{ email_header[ :subject ] }
 
-#{ email_content }    
+#{ email_content }
 END_OF_MESSAGE
 
     Net::SMTP.start('', 25) { |smtp|
@@ -151,7 +151,7 @@ END_OF_MESSAGE
 
     return email_sent_successfully
   end
-  
+
 end
 =======
 require 'rsolr'

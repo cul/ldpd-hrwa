@@ -3,7 +3,7 @@ require 'blacklight/configuration'
 
 require_relative 'mock_archive_search_response'
 
-describe 'HRWA::ArchiveSearchConfigurator' do
+describe 'Hrwa::ArchiveSearchConfigurator' do
   before ( :all ) do
     @advanced_search_q_and_women_params = {
       :capture_start_date => '',
@@ -22,7 +22,7 @@ describe 'HRWA::ArchiveSearchConfigurator' do
       :submit_search      => 'Advanced+Search'
     }
 
-    @configurator = HRWA::ArchiveSearchConfigurator.new
+    @configurator = Hrwa::ArchiveSearchConfigurator.new
   end
 
   context '#config_proc' do

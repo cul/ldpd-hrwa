@@ -1,0 +1,45 @@
+<%# Only show per_page and sort_by controls if there are two or more results. %>
+  <% if @response.response['numFound'] >= 2 %>
+
+    <div class="results_control pull-right">
+      <div id="result_handling_options" class="btn-toolbar">
+
+          <div class="btn-group per_page pull-left">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" data-original-title="">
+                Results per page <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <%
+
+              result_size_one = @configurator.default_num_rows
+
+              if @search_type == :archive
+                 result_size_two   = '25';
+                 result_size_three = '50'
+                 result_size_four = '100'
+              else
+                result_size_two    = '60'
+                result_size_three  = '90'
+                result_size_four  = '120'
+              end
+              %>
+                <!-- dropdown menu links -->
+                <li <% if (!params[:per_page] || params[:per_page] == result_size_one) %> class="active"<% end %>><%= link_to result_size_one, catalog_index_path(params.merge({:per_page => result_size_one})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_two) %> class="active"<% end %>><%= link_to result_size_two, catalog_index_path(params.merge({:per_page => result_size_two})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_three) %> class="active"<% end %>><%= link_to result_size_three, catalog_index_path(params.merge({:per_page => result_size_three})) %></li>
+                <li <% if (params[:per_page] && params[:per_page] == result_size_four) %> class="active"<% end %>><%= link_to result_size_four, catalog_index_path(params.merge({:per_page => result_size_four})) %></li>
+            </ul>
+          </div>
+
+          <% if @search_type != :archive %>
+            <div class="btn-group sort_by pull-left">
+              <%= link_to 'Relevance', catalog_index_path(params.merge({:sort => 'score desc'})), :class => 'btn' + ((!params[:sort] || params[:sort] == 'score desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Relevance' %>
+              <%= link_to 'A-Z', catalog_index_path(params.merge({:sort => 'title__sort asc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'title__sort asc') ? ' active ' : ''), :'data-original-title' => 'Sort by A-Z' %>
+              <%= link_to 'Z-A', catalog_index_path(params.merge({:sort => 'title__sort desc'})), :class => 'btn' + ((params[:sort] && params[:sort] == 'title__sort desc') ? ' active ' : ''), :'data-original-title' => 'Sort by Z-A' %>
+            </div>
+          <% end %>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+<% end %>

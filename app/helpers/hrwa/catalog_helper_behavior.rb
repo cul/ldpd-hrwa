@@ -1,214 +1,21 @@
 # -*- encoding : utf-8 -*-
-module HRWA::CatalogHelperBehavior
+module Hrwa::CatalogHelperBehavior
 
-  def debug_link( url_params = params )
-    if ( url_params.has_key?( :hrwa_debug ) )
-      return debug_off_link( url_params )
-    else
-      return debug_on_link( url_params )
-    end
-  end
+  def facet_array_to_delimited_list_with_links(facet_fieldname, array_of_facets)
 
-  def debug_off_link( url_params = params )
-    link_to_delete_params( 'Turn debug off', [ :hrwa_debug ], url_params )
-  end
+    html_to_return = '';
 
-  def debug_on_link( url_params = params )
-    link_to_with_new_params_reverse_merge( 'Turn debug on', url_params, :hrwa_debug => true )
-  end
-
-  def exclude_domain_from_hits_link( domain, url_params = params, html_options = {} )
-    current_excluded_domains = url_params[ :excl_domain ].nil? ? nil : url_params[ :excl_domain ].dup
-
-    # The '[]' may or may not have been appended to the param name -- TODO: Determine why this happens.  Does it still happen?  It doesn't seem like it ever does.
-    #current_excluded_domains ||= url_params[ :'excl_domain[]' ]
-
-    if ! current_excluded_domains
-      # Note that we add :'excl_domain' and not :'excl_domain[]' because the link_to
-      # helper that we will be using later will automatically append '[]' to the end,
-      # so we want to avoid doubling.  This behavior is expected because excl_domain
-      # is an array and inputs that hold arrays of data (as opposed to strings) indicate
-      # this by appending '[]' to the end of the name="" attribute of the input.
-      # (e.g. name="excl_domain[]")
-      return link_to_with_new_params_reverse_merge( 'Domain-',
-                                                    { :'excl_domain' => [ domain ] },
-                                                    url_params,
-                                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{Exclude #{ domain } from results}})
-                                                  )
-    end
-
-    if current_excluded_domains.class != Array
-      current_excluded_domains = [ current_excluded_domains ]
-    end
-
-    if current_excluded_domains.include?( domain )
-      excluded_domains = current_excluded_domains
-    else
-      excluded_domains = current_excluded_domains.push( domain )
-    end
-
-    # We will be adding :'excl_domain', not :'excl_domain[]' which is the name of the
-    # param after it has been processed by the link_to helper.  So to prevent the
-    # merge from inadvertently doubling the domain exclusion we remove the current
-    # :'excl_domain[]' param, knowing that our :'excl_domain' will be renamed to that
-    # after the merge and link_to call.
-    #url_params.delete( :'excl_domain[]' )
-    return link_to_with_new_params( 'Domain-',
-                                    { :'excl_domain' => excluded_domains },
-                                    url_params,
-                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{Exclude #{ domain } from results}})
-                                  )
-  end
-
-  def formatted_highlighted_snippet (highlighted_snippets, prioritized_highlight_field_list)
-    properly_ordered_snippet_array = Array.new
-
-    prioritized_highlight_field_list.each do | field |
-      if highlighted_snippets[field]
-        properly_ordered_snippet_array << highlighted_snippets[field]
-      end
-    end
-
-    return properly_ordered_snippet_array.join('...').html_safe
-  end
-
-  def link_to_delete_params( body, params_to_delete, url_params = params, html_options = {} )
-    url_params_copy = url_params.dup
-    params_to_delete.each { | key |
-      url_params_copy.delete( key )
+    array_of_facets.each{ |facet_value|
+      html_to_return += '<a href="/catalog?search_type=find_site&f%5B'.html_safe + facet_fieldname + '%5D%5B%5D='.html_safe + facet_value + '">'.html_safe + h(facet_value) + '</a>; '.html_safe
     }
-    return link_to( body, search_path( url_params_copy ), html_options )
+
+    #And then remove the final space and semicolon (" ;")
+
+    html_to_return = html_to_return[0...html_to_return.length-2]
+
+    return html_to_return.html_safe
   end
 
-  #TODO: da217 - switch position of url_params and new_params so that when you later add html_options = {}, it will work as the last parameter
-
-  def link_to_with_new_params( body, new_params, url_params = params, html_options ={} )
-    return link_to( body, search_path( url_params.merge( new_params ) ), html_options )
-  end
-
-  def link_to_with_new_params_reverse_merge( body, new_params, url_params = params, html_options = {} )
-    return link_to( body, search_path( url_params.reverse_merge( new_params ) ), html_options )
-  end
-
-  def link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(body, facet_type, facet_value, url_params = params, options ={})
-
-    # First, check if this facet_type => facet_value combo is already in the current url
-    # If so, return a non-clickable link
-    if params.include?(:f) && params[:f].include?(facet_type) && params[:f][facet_type].include?(facet_value)
-      return body
-    else
-      #otherwise return a link to add this facet to the current url
-      return (link_to body, add_facet_params_and_redirect(facet_type, facet_value), options).html_safe
-    end
-
-  end
-
-  # Returns the current url without any capture-date-related params
-  # i.e. - Removes :capture_start_date, :capture_end_date and :f['dateOfCaptureYYYY']
-  def url_for_without_capture_date_params(url_params = params)
-
-    #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
-    url_params = url_params.dup
-    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
-    url_params.delete(:f) if url_params[:f] = nil
-
-    #remove capture_start params
-    url_params.delete(:capture_start_date)
-    url_params.delete(:capture_end_date)
-    # also remove url_params[:f]['dateOfCaptureYYYY']
-    url_params[:f].delete('dateOfCaptureYYYY') unless url_params[:f].nil?
-
-    return url_for(url_params)
-
-  end
-
-  def generate_comma_delimited_facet_list(facet_name_array, facet_type, facet_value_array, as_links = false)
-
-    #If strings are supplied rather than arrays, turn the strings into one-element arrays
-    if facet_name_array.is_a?(String)
-      facet_name_array = [facet_name_array]
-    end
-
-    if facet_value_array.is_a?(String)
-      facet_value_array = [facet_value_array]
-    end
-
-		final_list = [];
-
-    facet_name_array.each_index do |index|
-      if as_links
-        final_list << link_to_add_additional_facet_to_current_url_unless_value_already_in_current_url(facet_name_array[index], facet_type, facet_value_array[index])
-      elsif
-        final_list << facet_name_array[index]
-      end
-    end
-
-    return final_list.join(', ').html_safe;
-
-  end
-
-  # ! Override of has_search_parameters? !
-  def has_search_parameters?
-    !params[:search].blank?
-  end
-
-  def see_all_hits_from_domain_link( domain, url_params = params, html_options = {})
-
-    return link_to_with_new_params_reverse_merge( 'Domain+',
-                                    { :'f[domain][]' => domain },
-                                    url_params,
-                                    html_options.merge({:rel => 'tooltip', :'data-original-title' => %Q{See all results from #{ domain }}})
-                                  )
-  end
-
-
-  def get_specific_search_weight_from_weighting_string(search_weight_type, weighting_string)
-
-    if(
-        weighting_string.empty? ||
-        (Regexp.new(search_weight_type + '\^\d').match(weighting_string)).nil? ||
-        (search_weight_type.length + 1) > weighting_string.length
-      )
-      return nil
-    end
-
-    start_of_numeric_value_index = (weighting_string.index(search_weight_type) + search_weight_type.length) + 1
-    end_of_numeric_value_index = (weighting_string.index(/\D/, start_of_numeric_value_index))
-
-    if(end_of_numeric_value_index.nil?)
-      #this number was found at the end of the weighting_string
-      numeric_value = weighting_string[start_of_numeric_value_index..weighting_string.length]
-    else
-      numeric_value = weighting_string[start_of_numeric_value_index..end_of_numeric_value_index]
-    end
-
-    if(numeric_value.to_i == 0)
-      return 1
-    else
-      return numeric_value.to_i # because if numeric_value.to_i == 0, that means that no valid numeric value was supplied for the search_weight_type
-    end
-
-  end
-
-  def calculate_no_stemming_boost_weighting_from_weighting_string(search_weight_type_to_base_calculation_on, weighting_string)
-      search_weight = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on, weighting_string)
-      search_weight = 1 if search_weight.nil?
-      # Check for special exceptional case 'originalUrl'
-      if(search_weight_type_to_base_calculation_on == 'originalUrl')
-        search_weight_no_stemming = get_specific_search_weight_from_weighting_string('originalUrl__no_stemming_balancing_field' , weighting_string)
-      else
-        search_weight_no_stemming = get_specific_search_weight_from_weighting_string(search_weight_type_to_base_calculation_on + '__no_stemming' , weighting_string)
-      end
-
-      if(search_weight.nil? || search_weight_no_stemming.nil?)
-        return 1
-      else
-        return (search_weight_no_stemming / search_weight)
-      end
-  end
-
-  # ! Override of render_pagination_info !
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
       start = response.start + 1
@@ -218,7 +25,7 @@ module HRWA::CatalogHelperBehavior
       total_hits = response.total
 
       start_num = format_num(start)
-      end_num = format_num(start + per_page - 1)
+      end_num = format_num(start + response.docs.length - 1)
       total_num = format_num(total_hits)
 
       entry_name = options[:entry_name] ||
@@ -227,60 +34,158 @@ module HRWA::CatalogHelperBehavior
       if num_pages < 2
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
-        when 1; "Displaying <b id='search_result_count'>1</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name)}".html_safe
-        else;   "Displaying <b id='search_result_count'>all #{total_num}</b>".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{entry_name.pluralize}".html_safe
+        when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
+        else;   "Displaying <b>all #{total_num}</b> #{entry_name.pluralize}".html_safe
         end
       else
-        "Displaying".html_safe + (@configurator.name == 'archive' ? ' grouped ' : ' ').html_safe + "#{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b id='search_result_count'>#{total_num}</b>".html_safe
+        "Displaying #{h(entry_name.pluralize)} <b id=\"current_result_set_range\">#{start_num} - #{end_num}</b> of <b>#{total_num}</b>".html_safe
       end
   end
-  
-  # Uses params to determine the currently selected hrwa core,
-  # and if no core is specified in the params this method defaults
-  # to whatever is normal for the current search_type
-  def get_current_hrwa_solr_core(localized_params = params)
 
-    current_hrwa_solr_core = nil
-    valid_cores = [ 'asf', 'fsf', 'asf-hrwa-278' ]
+  # Custom HRWA variation of render_pagination_info for an unknown set of grouped archive results
+  # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
+  def render_archive_pagination_info(response, options = {})
+      start = response.start + 1
+      per_page = response.rows
+      current_page = (response.start / per_page).ceil + 1
+      num_pages = (response.total / per_page.to_f).ceil
+      total_hits = response.total
 
-    if( params[ :hrwa_core ] && valid_cores.include?( params[ :hrwa_core ] ) )
-      current_hrwa_solr_core = params[ :hrwa_core ]
-    else
-      # Use default for the search_type 
-      if    ( 'archive'   == params[ :search_type ] )
-        current_hrwa_solr_core = 'asf'
-      elsif ( 'find_site' == params[ :search_type ] )
-        current_hrwa_solr_host = 'fsf'
-      else
-        # There are no other search_type values, should never get here
-      end
-    end
+      start_num = format_num(start)
+      end_num = format_num(start + response.docs.length - 1)
+      total_num = format_num(total_hits)
 
-  end
+      entry_name = options[:entry_name] ||
+        (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
 
-  #Uses params to determine the currently selected hrwa solr host,
-  #and if no host is specified in the params this method defaults
-  #to the current Rails.env value
-  def get_current_hrwa_solr_host(localized_params = params)
-
-    current_hrwa_solr_host = nil
-    valid_hosts = ["dev", "test", "prod"]
-
-    if(params[:hrwa_host] && valid_hosts.include?(params[:hrwa_host]))
-      current_hrwa_solr_host = params[:hrwa_host]
-    else
-        rails_env =  Rails.env;
-
-        #Use Rails.env instead
-        if(rails_env.development?)
-            current_hrwa_solr_host = 'dev'
-        elsif(rails_env.test?)
-            current_hrwa_solr_host = 'test'
-        else
-            current_hrwa_solr_host = 'prod'
+      if num_pages < 2
+        case response.docs.length
+        when 0; "No #{h(entry_name.pluralize)} found".html_safe
+        when 1; "Displaying <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>1</b> #{h(entry_name)}".html_safe
+        else;   "Displaying <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>all</b> #{entry_name.pluralize}".html_safe
         end
+      else
+        "Displaying page #{current_page} for about <b id='search_result_count' data-actual-result-count='".html_safe + total_num + "'>".html_safe + round_result_to_closest_vague_number(total_num).to_s + "</b> #{h(entry_name.pluralize)}".html_safe
+      end
+  end
+
+  # Number converter that rounds any number to a more vague number
+  #
+  def round_result_to_closest_vague_number(number_string_to_round)
+
+    # Remove any possibly present commas in this number string
+    real_number = number_string_to_round.gsub(',', '').to_i
+
+    if(real_number < 10)
+      degree_of_rounding = 1
+    elsif(real_number < 100)
+      degree_of_rounding = 10
+    elsif(real_number < 1000)
+      degree_of_rounding = 100
+    else
+      degree_of_rounding = 10**(real_number.to_s.length-2)
     end
 
+    number_with_delimiter((((real_number).to_f/degree_of_rounding).to_f).round*degree_of_rounding, :delimiter => ',')
+
+
+  end
+
+  def has_search_parameters?
+    params[:q] or !params[:f].blank? or !params[:search_field].blank?
+  end
+
+  # ! Override ! We don't really need this method to say "from your search",
+  # since sometimes we're showing result that didn't come from a user actively
+  # searching for something, and this wording might be confusing.
+  #
+  # Like  #render_pagination_info above, but for an individual
+  # item show page. Displays "showing X of Y items" message. Actually takes
+  # data from session though (not a great design).
+  # Code should call this method rather than interrogating session directly,
+  # because implementation of where this data is stored/retrieved may change.
+  def item_page_entry_info
+    "Showing item <b>#{session[:search][:counter].to_i} of #{format_num(session[:search][:total])}</b>.".html_safe
+  end
+
+  # Returns the current url without any capture-date-related params
+  # i.e. - Removes :capture_start_date, :capture_end_date and :f['dateOfCaptureYYYY']
+  def url_for_without_capture_date_params(url_params = params)
+
+    #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #remove capture_start params
+    url_params.delete(:capture_start_date)
+    url_params.delete(:capture_end_date)
+
+    return url_for(url_params)
+
+  end
+
+  # Returns the current url with an extra :f['domain'] added
+  def url_for_added_domain_facet(domain_facet_value_to_add, url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #add additional domain facet
+    url_params[:f] = {} if url_params[:f].nil?
+    url_params[:f]['domain'] = [] if url_params[:f]['domain'].nil?
+    url_params[:f]['domain'] << domain_facet_value_to_add if ! url_params[:f]['domain'].include?(domain_facet_value_to_add)
+
+    return url_for(url_params)
+
+  end
+
+  # Returns the current url with an added fq for excluding the specified domain
+  def url_for_exclude_domain_addition(domain_to_exclude, url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #add additional domain exclusion
+
+    if(url_params[:excl_domain])
+      url_params[:excl_domain] = url_params[:excl_domain].dup
+    else
+      url_params[:excl_domain] = []
+    end
+
+    url_params[:excl_domain] << domain_to_exclude if ! url_params[:excl_domain].include?(domain_to_exclude)
+
+    return url_for(url_params)
+  end
+
+  # Returns the current url with the specified domain exclusion removed
+  def url_for_exclude_domain_removal(domain_exclusion_to_remove, url_params = params)
+
+    puts url_params[:excl_domain].inspect
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+    url_params[:f] = url_params[:f] ? url_params[:f].dup : nil #Also need to dup :f hash (if it exists), since we might be modifying it
+
+    #remove domain exclusion
+
+    puts url_params[:excl_domain].inspect
+
+    if(url_params[:excl_domain])
+      url_params[:excl_domain] = url_params[:excl_domain].dup
+    else
+      url_params[:excl_domain] = []
+    end
+
+    puts url_params[:excl_domain].inspect
+
+    url_params[:excl_domain].delete(domain_exclusion_to_remove)
+
+    puts url_params[:excl_domain].inspect
+
+    return url_for(url_params)
   end
 
 end

@@ -1,5 +1,5 @@
 set :default_stage, "hrwa_dev"
-set :stages, %w(hrwa_dev hrwa_test hrwa_staging hrwa_prod hrwa_local_to_dev hrwa_local_to_test)
+set :stages, %w(hrwa_dev hrwa_staging hrwa_test hrwa_prod)
 
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
@@ -26,8 +26,8 @@ set :use_sudo, false
 namespace :deploy do
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
-    current_version = 'v' + 
-                      IO.read("VERSION").strip + 
+    current_version = 'v' +
+                      IO.read("VERSION").strip +
                       "/" +
                       DateTime.now.strftime("%Y%m%d")
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
@@ -45,6 +45,7 @@ namespace :deploy do
   task :symlink_shared do
     run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}shared/app_config.yml #{release_path}/config/app_config.yml"
+    run "ln -nfs #{deploy_to}shared/fedora.yml #{release_path}/config/fedora.yml"
     run "mkdir -p #{release_path}/db"
     run "ln -nfs #{deploy_to}shared/#{rails_env}.sqlite3 #{release_path}/db/#{rails_env}.sqlite3"
   end
