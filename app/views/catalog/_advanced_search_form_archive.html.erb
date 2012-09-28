@@ -40,16 +40,17 @@
 			</select>
 		</div>
 		<div class="control-group">
-			<label class="span2 control-label">geographic focus</label>
-			<select class="control-group span3" name="f[geographic_focus__facet][]">
-				<option value="">- Choose an option -</option>
-				<% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
-				<% browse_list_for_geographic_focus__facet().each do | key, value | %>
-					<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
-				<% end %>
-			</select>
+				<label class="span2 control-label">geographic focus</label>
+				<select class="control-group span3" name="f[geographic_focus__facet][]">
+					<option value="">- Choose an option -</option>
+					<% selected_items = params[:f].nil? ? nil : params[:f][:geographic_focus__facet] %>
+					<% browse_list_for_geographic_focus__facet().each do | key, value | %>
+						<%= '<option value="'.html_safe + key + '">'.html_safe + key + '</option>'.html_safe %>
+					<% end %>
+				</select>
+		</div>
 		<div class="control-group">
-			<label class="span2 control-label">File Type</label>
+			<label class="span2 control-label">file type</label>
 			<select class="control-group span3" name="f[mimetype_code][]">
 				<option value="">- Choose an option -</option>
 				<% selected_items = params[:f].nil? ? nil : params[:f][:domain] %>
@@ -58,8 +59,7 @@
 				<% end %>
 			</select>
 		</div>
-		</div>
-				<div class="control-group">
+		<div class="control-group">
 				<label class="span2 control-label">organization based in</label>
 					<select class="control-group span3" name="f[organization_based_in__facet][]">
 						<option value="">- Choose an option -</option>
