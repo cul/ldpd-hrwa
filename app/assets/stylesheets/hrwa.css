@@ -652,6 +652,10 @@ ul.facet_extended_list li a { color:rgb(165, 42, 42); }
   margin: 0px 0px 10px 10px;
 }
 
+#archive_statistics_heading {
+    margin-bottom: 10px;
+}
+
 @media (max-width: 767px) {
   #faces_container img {
     margin-bottom: 20px;

@@ -796,7 +796,7 @@ a.nodec {
 	}
 */
 	#user_util_links {
-		float: left!important;
+		float: right!important;
 	}
 	#search_results li {
 		width: 100% !important;

@@ -8,6 +8,7 @@
       <tr><th><h3>Recent Searches <%= link_to "Clear Search History", clear_search_history_path, :method => :delete, :confirm => "Clear your search history?", :class => 'btn pull-right' %></h3></th></tr>
     </thead>
   <%-  @searches.each_with_index do |search,index| -%>
+  <% puts 'searchhhhhhhh hash: ' + search.query_params.pretty_inspect %>
     <%= content_tag :tr, :id => "document_#{index + 1}" do %>
       <td class="query"><div class="well"><%= link_to_previous_search(search.query_params) %><div class="clear"></div></div></td>
     <% end #content_tag %>
