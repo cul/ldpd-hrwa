@@ -155,7 +155,7 @@
 </div><!--/span8-->
   <div id="navbar_right_wrapper" class="span5 pull-right">
     <ul class="nav nav-pills pull-right nav-collapse" id="user_util_links">
-			<li><%= link_to 'Advanced Search', catalog_path('advanced') %></li>
+			<%#= '<li>'.html_safe + (link_to 'Advanced Search', catalog_path('advanced')) + '</li>'.html_safe %>
       <%= render :partial=>'/user_util_links' %>
 			<% if user_signed_in? || service_user_signed_in? %>
 				<li><%= link_to 'Admin', admin_path %></li>

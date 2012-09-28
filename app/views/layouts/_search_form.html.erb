@@ -13,10 +13,9 @@
                           checked_radio_button = 'find_site'
                         end
                       %>
-                      <li><label class="radio"><input type="radio" name="search_type" value="find_site" <%= 'checked="checked"' if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Find a site</span></label></li>
-                      <li><label class="radio"><input type="radio" name="search_type" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Search through archived web pages</span></label></li>
+                      <li><label class="radio"><input type="radio" name="search_type" value="find_site" <%= 'checked="checked"' if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Website descriptions</span></label></li>
+                      <li><label class="radio"><input type="radio" name="search_type" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Page full text</span></label></li>
                   </ul>
-                  <p><a id="cliobeta_exit" href="http://cliobeta.columbia.edu" rel="tooltip" title="Goto CLIObeta"><img src="http://library.columbia.edu/content/libraryweb/index/jcr%3acontent/bottomCell/textimage/image.img.png/1332439303934.png" alt="cliobeta"><i class="icon-arrow-right"></i></a></p>
               </div>
           </div>
           <input type="text" class="span5 pull-left" data-content="Enter your search terms." data-original-title="Search the Libraries" id="q" name="q" placeholder="Start a new search&hellip;" value="">
