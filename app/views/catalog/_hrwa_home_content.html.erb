@@ -46,13 +46,13 @@
     <%= render :partial => 'random_home_results' %>
 	</div>
 
-	<div id="t2" class="tab-pane" data-description="Browse through website titles.">
+	<div id="t2" class="tab-pane no-count" data-description="Browse through website titles.">
 		<ul class="zebra cols-two">
-      <%= render_browse_list('title__facet') %>
+      <%= render_browse_list('title__facet', false) %>
     </ul>
 	</div>
 
-  <div id="t3" class="tab-pane" data-description="Browse through website URLs.">
+  <div id="t3" class="tab-pane no-count" data-description="Browse through website URLs.">
     <ul class="zebra cols-two">
       <%= render_browse_list('original_urls', false) %>
 		</ul>
