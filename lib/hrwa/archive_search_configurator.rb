@@ -70,7 +70,7 @@ class HRWA::ArchiveSearchConfigurator
 
         config.add_facet_field 'mimetypeCode',
                                :label => 'File Type',
-                               :limit => 5,
+                               :limit => 6,
                                :partial => 'facet_layout_for_mimetype_code'
 
         config.add_facet_field 'geographic_focus__facet',

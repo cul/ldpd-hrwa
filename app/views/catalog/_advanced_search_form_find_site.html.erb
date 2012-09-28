@@ -1,6 +1,28 @@
 <%= form_tag catalog_path('advanced'), :method => :get, :class => 'advanced_search_form' do %>
 
-<%= render :partial => 'advanced_search_form_text_fields' %>
+<div class="row">
+	<h6 class="span12">Find sites that have&hellip;</h6>
+
+	<div class="span12">
+		<label class="pull-left span3">all of these words:</label>
+		<input class="pull-left span9" placeholder="Enter search terms..." name="q_and" size="16" type="text"/>
+	</div>
+	<div class="span12">
+		<label class="pull-left span3">this exact phrase:</label>
+		<input class="pull-left span9 q_phrase" placeholder="Enter search terms..." name="q_phrase" size="16" type="text"/>
+	</div>
+	<div class="span12">
+		<label class="pull-left span3">any of these words:</label>
+		<input class="pull-right span9 q_or" placeholder="Enter search terms..." name="q_or" size="16" type="text"/>
+	</div>
+
+	<h6 class="span12">But don't show results that have&hellip;</h6>
+
+	<div class="span12">
+		<label class="pull-left span3">these unwanted words:</label>
+		<input class="pull-right span9 q_exclude" placeholder="Enter search terms..." name="q_exclude" size="16" type="text"/>
+	</div>
+</div>
 
 <div class="row">
 
