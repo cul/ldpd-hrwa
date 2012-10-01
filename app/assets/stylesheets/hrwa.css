@@ -727,6 +727,7 @@ span.Z3988 { display:none; }
   #primary_container { clear:both; }
   #primary article .caption h5.index_title { white-space: normal; width: auto; overflow: visible; text-overflow: clip; }
   #search_results li {width:100% !important;}
+  #topbarformdiv #q { width: 99%; }
 
   /* erik's new tab attempt - solution is in the markup */
   ul.nav-tabs { padding-left:0; }
@@ -800,6 +801,7 @@ and (orientation: portrait) {
   #user_util_links li {border-bottom:1px solid #AAAAAA;width:100%;}
   #user_util_links li:hover, #user_util_links li:active {border-top:0px solid #AAAAAA;}
   #show_utils_btn {line-height:18px; margin-right:2px; padding-left:2px;padding-right:2px;}
+  #tabmob_datasource .radio { min-width:40px; }
 }
 
 @media (min-width: 480px) and (max-width: 979px) {
