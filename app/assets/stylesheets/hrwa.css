@@ -711,6 +711,7 @@ span.Z3988 { display:none; }
   #primary_container { clear:both; }
   #primary article .caption h5.index_title { white-space: normal; width: auto; overflow: visible; text-overflow: clip; }
   #search_results li {width:100% !important;}
+  #topbarformdiv #q { width: 99%; }
 
   /* erik's new tab attempt - solution is in the markup */
   ul.nav-tabs { padding-left:0; }
