@@ -21,10 +21,10 @@ Hrwa::Application.routes.draw do
   match '/public_nomination' => 'pages#public_nomination'
 
   # Internal controller
-  match '/internal/feedback', :to => redirect('/internal_feedback.html')
+  #match '/internal/feedback', :to => redirect('/internal_feedback.html')
   #Temporarily commenting out these lines below until I can properly integrate the jira submission changes from branch jiraSOAP
-  #match '/internal/feedback'        => 'internal#feedback_form'
-  #match '/internal/feedback_submit' => 'internal#feedback_submit'
+  match '/internal/feedback'        => 'internal#feedback_form'
+  match '/internal/feedback_submit' => 'internal#feedback_submit'
 
   # Admin controller
   match '/admin'                    => 'admin#index'
