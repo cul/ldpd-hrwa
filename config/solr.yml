@@ -23,6 +23,7 @@ test_solr: &test_solr
     url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
   asf-hrwa-278: *asf-hrwa-278
 
+#other
 coolidge_solr: &coolidge_solr
   asf:
     url: "http://coolidge.cul.columbia.edu:8080/solr-3.6/asf"
@@ -32,6 +33,7 @@ coolidge_solr: &coolidge_solr
     url: "http://coolidge.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
 
+#dev
 carter_solr: &carter_solr
   asf:
     url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf"
@@ -40,7 +42,8 @@ carter_solr: &carter_solr
   site_detail:
     url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
-    
+
+#staging
 harding_solr: &harding_solr
   asf:
     url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf"
@@ -50,6 +53,7 @@ harding_solr: &harding_solr
     url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
 
+#prod
 vorpal_solr: &vorpal_solr
   asf:
     url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/asf"
@@ -59,11 +63,11 @@ vorpal_solr: &vorpal_solr
     url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
 
-development: *coolidge_solr
+development: *vorpal_solr
 test: *test_solr
 production: *vorpal_solr
 
-hrwa_dev: *coolidge_solr
-hrwa_staging: *coolidge_solr
-hrwa_test: *coolidge_solr
+hrwa_dev: *vorpal_solr
+hrwa_staging: *vorpal_solr
+hrwa_test: *vorpal_solr
 hrwa_prod: *vorpal_solr
