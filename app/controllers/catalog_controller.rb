@@ -142,6 +142,9 @@ class CatalogController < ApplicationController
     extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
     extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
 
+    #Remove extra :search_type_mobile_button param if it exists
+    params.delete(:search_type_mobile_button)
+
     # Be ready to capture Solr errors
     begin
       (@response, @result_list) = get_search_results

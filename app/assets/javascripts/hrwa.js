@@ -87,7 +87,7 @@ jQuery(function($) {
   /***** search search_type switcher *****/
   var hcurrentradio= $("#clio_home_search input[name='search_type']:checked")[0];
         $('#advo_link span').text($("#clio_home_search input[name='search_type']:checked").next('span').attr('data-shorttitle')); //for firefox
-  $('#clio_home_search input[name=search_type]').change(function() {
+  $('input[name=search_type]').change(function() {
     var hnewradio= $("#clio_home_search input[name='search_type']:checked")[0];
     if (hnewradio===hcurrentradio) {
         return;
@@ -664,6 +664,30 @@ jQuery(function($) {
 	  maxYear: new Date().getFullYear(),
       miniButtons: true
   });
+
+	/**********************
+	 * Fix for having two *
+	 * of the top search  *
+	 * form radio buttons *
+	 **********************/
+
+	$('input[name="search_type_mobile_button"]').bind('change', function(){
+		var value_of_clicked_input = $(this).val();
+		$('input[name="search_type"]').each(function(){
+				if($(this).val() == value_of_clicked_input) {
+					$(this).click();
+				}
+		});
+	});
+
+	$('input[name="search_type"]').bind('change', function(){
+		var value_of_clicked_input = $(this).val();
+		$('input[name="search_type_mobile_button"]').each(function(){
+				if($(this).val() == value_of_clicked_input) {
+					$(this).prop('checked', true);
+				}
+		});
+	});
 
 
 }); // ready
