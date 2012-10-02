@@ -55,7 +55,6 @@ class AdminController < ApplicationController
 
     # Core switching is possible if cache_classes is ON and none of the configurators are set to be unloadable
     @core_switching_is_possible = Rails.application.config.cache_classes || ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A HRWA::.*Configurator \Z/x }.empty?
-
     @core_switching_message = 'Warning! Solr server switching will not work!<br /><br />'.html_safe +
                                                     "Rails.application.config.cache_classes = #{Rails.application.config.cache_classes}<br /><br />".html_safe +
                                                     "ActiveSupport::Dependencies.explicitly_unloadable_constants =<br />#{ActiveSupport::Dependencies.explicitly_unloadable_constants.to_s}".html_safe +
@@ -64,36 +63,34 @@ class AdminController < ApplicationController
 
   def manual_solr_server_override
 
-    _check_to_see_if_core_switching_is_possible
+    flash[:notice] = 'Invalid override request.' # Default response
 
+    # The check below makes sure that only valid servers in the valid overrides section of solr.yml can be selected
+    valid_overrides = ['test', 'carter', 'coolidge', 'harding', 'vorpal']
+    solr_server_name = (valid_overrides.include?(params[:solr_server_name])) ? params[:solr_server_name] : nil
 
-    if( @core_switching_is_possible )
+    if((params[:override] && ! solr_server_name.nil?) || params[:reset])
 
-      if(params[:reset_primary_solr_server])
-        # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
-        HRWA::Configurator.reset_solr_config
-        flash[:notice] = 'Your solr servers have been reset to their default settings.'.html_safe;
-      end
-  
-      if(params[:new_primary_solr_server])
-        # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
-        HRWA::Configurator.override_solr_url(@solr_yaml['valid_overrides'][params[:new_primary_solr_server]])
-        flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
+      _check_to_see_if_core_switching_is_possible
+
+      if( @core_switching_is_possible )
+
+        if(params[:reset])
+          # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
+          HRWA::Configurator.reset_solr_config
+          flash[:notice] = 'Your solr servers have been reset to their default settings.'.html_safe;
+        end
+
+        if(params[:override])
+          solr_yml = YAML.load_file('config/solr.yml')[solr_server_name + '_solr']
+          HRWA::Configurator.override_solr_url(solr_yml)
+          flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
+        end
+
       end
 
     end
 
-    archive_solr_url = HRWA::ArchiveSearchConfigurator.solr_url
-    find_site_solr_url = HRWA::FindSiteSearchConfigurator.solr_url
-    site_detail_solr_url = HRWA::SiteDetailConfigurator.solr_url
-
-    @solr_urls =   {
-                    :archive      => archive_solr_url,
-                    :find_site    => find_site_solr_url,
-                    :site_detail  => site_detail_solr_url,
-                  }
-
-    flash[:notice] = 'I did it!'
     redirect_to admin_path
   end
 

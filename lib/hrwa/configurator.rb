@@ -78,12 +78,14 @@ class HRWA::Configurator
     HRWA::ArchiveSearchConfigurator.reset_solr_config
     HRWA::FindSiteSearchConfigurator.reset_solr_config
     HRWA::SiteDetailConfigurator.reset_solr_config
+    HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.reset_solr_config
   end
 
-  def self.override_solr_url(new_solr_url)
-    HRWA::ArchiveSearchConfigurator.override_solr_url(new_solr_url)
-    HRWA::FindSiteSearchConfigurator.override_solr_url(new_solr_url)
-    HRWA::SiteDetailConfigurator.override_solr_url(new_solr_url)
+  def self.override_solr_url(new_solr_yaml)
+    HRWA::ArchiveSearchConfigurator.override_solr_url(new_solr_yaml)
+    HRWA::FindSiteSearchConfigurator.override_solr_url(new_solr_yaml)
+    HRWA::SiteDetailConfigurator.override_solr_url(new_solr_yaml)
+    HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.override_solr_url(new_solr_yaml)
   end
 
   def prioritized_highlight_field_list

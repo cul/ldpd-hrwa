@@ -41,13 +41,15 @@
 								<% end %>
 
 								<%= form_tag(admin_manual_solr_server_override_path, :method=>'post', :class=>'form-inline') do %>
-										<select>
+										<select name="solr_server_name">
 												<option class="mini" value="vorpal">vorpal.cul.columbia.edu</option>
 												<option class="mini" value="harding">harding.cul.columbia.edu</option>
+												<option class="mini" value="coolidge">coolidge.cul.columbia.edu</option>
 												<option class="mini" value="carter">carter.cul.columbia.edu</option>
 												<option class="mini" value="test">unit test solr</option>
 										</select>
-										<input type="submit" value="Do Manual Solr Override" class="btn" <%= ' disabled="disabled"' unless @core_switching_is_possible %>/>
+										<input type="submit" name="override" value="Override" class="btn" <%= ' disabled="disabled"' unless @core_switching_is_possible %>/>
+										<input type="submit" name="reset" value="Reset to Defaults" class="btn" <%= ' disabled="disabled"' unless @core_switching_is_possible %>/>
 								<% end %>
 						</li>
         </ul>

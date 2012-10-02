@@ -239,9 +239,9 @@ class HRWA::SiteDetailConfigurator
     end
 
 		# Set a new solr url for this configurator
-		def self.override_solr_url(new_solr_url)
-			@@solr_url = new_solr_url + '/solr-3.6/fsf'
-		end
+		def self.override_solr_url(new_solr_yaml)
+      @@solr_url = new_solr_yaml['site_detail']['url']
+    end
 
     # Did Blacklight give us everything we need in SOLR response and
     # results list objects?

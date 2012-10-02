@@ -306,8 +306,8 @@ class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
     end
 
     # Set a new solr url for this configurator
-    def self.override_solr_url(new_solr_url)
-      @@solr_url = new_solr_url + '/solr-3.6/asf-hrwa-278'
+    def self.override_solr_url(new_solr_yaml)
+      @@solr_url = new_solr_yaml['asf-hrwa-278']['url']
     end
 
 end
