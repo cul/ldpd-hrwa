@@ -54,7 +54,7 @@ development: *harding_solr
 test: *test_solr
 production: *vorpal_solr
 
-hrwa_dev: *carter_solr
+hrwa_dev: *harding_solr
 hrwa_staging: *harding_solr
 hrwa_test: *vorpal_solr
 hrwa_prod: *vorpal_solr
