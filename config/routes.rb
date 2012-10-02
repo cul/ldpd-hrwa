@@ -29,6 +29,7 @@ Hrwa::Application.routes.draw do
   # Admin controller
   match '/admin'                    => 'admin#index'
   match '/admin/login_options'      => 'admin#login_options'
+  match '/admin/manual_solr_server_override'      => 'admin#manual_solr_server_override'
   # match '/admin/clear_solr_index'   => 'admin#clear_solr_index'
   match '/admin/reindex_solr_from_xml_file'   => 'admin#reindex_solr_from_xml_file'
   match '/admin/update_hardcoded_browse_lists'   => 'admin#update_hardcoded_browse_lists'

@@ -63,7 +63,7 @@ development: *coolidge_solr
 test: *test_solr
 production: *vorpal_solr
 
-hrwa_dev: *vorpal_solr
+hrwa_dev: *coolidge_solr
 hrwa_staging: *coolidge_solr
-hrwa_test: *vorpal_solr
+hrwa_test: *coolidge_solr
 hrwa_prod: *vorpal_solr

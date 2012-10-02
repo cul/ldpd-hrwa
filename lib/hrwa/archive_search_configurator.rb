@@ -293,7 +293,6 @@ class HRWA::ArchiveSearchConfigurator
     def self.solr_url(environment = Rails.env)
        @@solr_url ||= YAML.load_file( 'config/solr.yml' )[ environment ][ 'asf' ][ 'url' ]
        return @@solr_url
-
     end
 
     # Clear the current (class cached) value of @@solr_url

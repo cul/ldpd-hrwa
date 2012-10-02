@@ -1,7 +1,5 @@
 <h2>Admin Control Panel</h2>
 
-<% current_solr_urls =  YAML.load_file('config/solr.yml')[Rails.env] %>
-
 <h3>Application Information</h3>
 <ul>
 		<li>
@@ -31,16 +29,27 @@
 		<li>
         <strong>Current Solr Cores:</strong>
         <ul>
-						<li><strong>asf:</strong> <%= current_solr_urls['asf']['url'] %></li>
-						<li><strong>fsf:</strong> <%= current_solr_urls['fsf']['url'] %></li>
-						<li><strong>site_detail:</strong> <%= current_solr_urls['site_detail']['url'] %></li>
-						<li><strong>asf-hrwa-278:</strong> <%= current_solr_urls['asf-hrwa-278']['url'] %></li>
-						<li><form class="form-inline"><select>
-								<option class="mini" value="vorpal">vorpal.cul.columbia.edu</option>
-								<option class="mini" value="harding">harding.cul.columbia.edu</option>
-								<option class="mini" value="carter">carter.cul.columbia.edu</option>
-								<option class="mini" value="test">unit test solr</option>
-						</select> <input type="submit" value="Do Manual Solr Override" class="btn"/></form></li>
+						<li><strong>asf:</strong> <%= @current_solr_urls['asf_url'] %></li>
+						<li><strong>fsf:</strong> <%= @current_solr_urls['fsf_url'] %></li>
+						<li><strong>site_detail:</strong> <%= @current_solr_urls['site_detail_url'] %></li>
+						<li><strong>asf-hrwa-278:</strong> <%= @current_solr_urls['asf-hrwa-278_url'] %></li>
+						<li>
+								<% if @core_switching_is_possible %>
+										<div class="alert alert-success"><%= @core_switching_message %></div>
+								<% else %>
+										<div class="alert alert-error"><%= @core_switching_message %></div>
+								<% end %>
+
+								<%= form_tag(admin_manual_solr_server_override_path, :method=>'post', :class=>'form-inline') do %>
+										<select>
+												<option class="mini" value="vorpal">vorpal.cul.columbia.edu</option>
+												<option class="mini" value="harding">harding.cul.columbia.edu</option>
+												<option class="mini" value="carter">carter.cul.columbia.edu</option>
+												<option class="mini" value="test">unit test solr</option>
+										</select>
+										<input type="submit" value="Do Manual Solr Override" class="btn" <%= ' disabled="disabled"' unless @core_switching_is_possible %>/>
+								<% end %>
+						</li>
         </ul>
 		</li>
     <li>
