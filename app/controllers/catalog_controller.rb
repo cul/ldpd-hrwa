@@ -127,13 +127,7 @@ class CatalogController < ApplicationController
 
     session[:search] = params.merge(custom_blacklight_search_params)
 
-    if(@debug_mode)
-      @debug_printout << "session[:search]:\n"
-      @debug_printout << session[:search].pretty_inspect
-      @debug_printout << "\n\n"
-      @debug_printout << "Solr Response:\n"
-      @debug_printout << @response.pretty_inspect
-    end
+    _append_default_debug_printout_items()
 
   end
 
@@ -186,13 +180,7 @@ class CatalogController < ApplicationController
                                                                           @result_list )
     end
 
-    if(@debug_mode)
-      @debug_printout << "session[:search]:\n"
-      @debug_printout << session[:search].pretty_inspect
-      @debug_printout << "\n\n"
-      @debug_printout << "Solr Response:\n"
-      @debug_printout << @response.pretty_inspect
-    end
+    _append_default_debug_printout_items()
 
     respond_to do |format|
       format.html { save_current_search_params }
@@ -201,9 +189,24 @@ class CatalogController < ApplicationController
     end
   end
 
+  def _append_default_debug_printout_items
+    if(@debug_mode)
+      @debug_printout << "----------\n\n"
+      @debug_printout << "solr core:\n\n"
+      @debug_printout << @configurator.solr_url + "\n\n"
+      @debug_printout << "----------\n\n"
+      @debug_printout << "session[:search]:\n\n"
+      @debug_printout << session[:search].pretty_inspect + "\n"
+      @debug_printout << "----------\n\n"
+      @debug_printout << "Solr Response:\n\n"
+      @debug_printout << @response.pretty_inspect + "\n"
+      @debug_printout << "----------\n\n"
+    end
+  end
+
   # sets @debug_mode to true if params[:debug_mode] == true
   def _check_for_debug_mode
-    @debug_mode = params[:debug_mode] == "true"
+    @debug_mode = (params[:debug_mode] == "true")
     @debug_printout = ''
   end
 
