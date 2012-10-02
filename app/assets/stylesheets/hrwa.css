@@ -164,11 +164,10 @@ a.thumbnail:hover {
 #inner-headline-outer {
 border-bottom: 1px solid #888;
 background: #285896;
-background-image: url('child-soldier_2.jpeg ');
+background-image: url('header.jpeg ');
 background-attachment: absolute;
-background-repeat: none;
-background-position: center;
-background-size: 100% auto;
+background-repeat: no-repeat;
+background-position: left -100px;
 padding: 2.0em 10px 1.0em 10px;
 margin-top: .5em;
 margin-left: -10px;
