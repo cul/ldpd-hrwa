@@ -55,10 +55,15 @@ class AdminController < ApplicationController
 
     # Core switching is possible if cache_classes is ON and none of the configurators are set to be unloadable
     @core_switching_is_possible = Rails.application.config.cache_classes || ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A HRWA::.*Configurator \Z/x }.empty?
-    @core_switching_message = 'Warning! Solr server switching will not work!<br /><br />'.html_safe +
+
+    if(@core_switching_is_possible)
+      @core_switching_message = 'Good news!  Solr server overriding is available.'
+    else
+      @core_switching_message = 'Warning! Solr server switching will not work!<br /><br />'.html_safe +
                                                     "Rails.application.config.cache_classes = #{Rails.application.config.cache_classes}<br /><br />".html_safe +
                                                     "ActiveSupport::Dependencies.explicitly_unloadable_constants =<br />#{ActiveSupport::Dependencies.explicitly_unloadable_constants.to_s}".html_safe +
                                                     "<br /><br />Whenever config.cache_classes is false AND one or more of the configurators are unloadable, you cannot change Solr servers because any source code change will clear out the configurator class variables that store their currently associated Solr servers.".html_safe
+    end
   end
 
   def manual_solr_server_override
