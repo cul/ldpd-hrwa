@@ -140,7 +140,7 @@ a.thumbnail:hover {
 #crowndown img { /*float:left;*/ margin-top:-8px; margin-right:0; padding-right:0; }
 #crowndown .dropdown-menu { margin-top:-2px; border-color:#002B7F; border-top:0; }
 #crowndown .menu-dropdown li { line-height:1.0em;margin-bottom:0.2em; }
-/*.navbar li.dropdown.menu:hover,*/ .navbar a.brand:hover { background:rgba(255,255,255,0.09); }
+/*.navbar li.dropdown.menu:hover,*/ .navbar a.brand:hover { background:transparent; }
 .navbar a.brand { font-size:125%; font-family: TrajanProRegular, trajan, georgia, serif; font-weight:normal; /*font-size:140%;*/ letter-spacing:1px; text-shadow:1px 1px 3px #222; }
 .navbar .dropdown-menu {  -moz-border-radius:0 0 4px 4px; -webkit-border-radius:0 0 4px 4px; border-radius:0 0 4px 4px; }
 .navbar .dropdown-menu li a { color:#777; }
