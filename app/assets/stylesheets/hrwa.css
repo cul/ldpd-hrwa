@@ -1,3 +1,20 @@
+/******************
+ * CUL COMMON     *
+ * OVERRIDES      *
+ ******************/
+
+#cul_inner {
+	background: transparent url('/assets/crown-bts-24x24.png') no-repeat left top;
+}
+
+#crowndown a.menu, #crowndown-nosearch a.menu {
+	background:transparent url('/assets/crown-bts-24x24.png') no-repeat 4px 22%;
+}
+
+/******************
+ * START MAIN CSS *
+ ******************/
+
 body { color:#505050;
   background-image: url('map-dark-150.png');
   background-attachment:absolute;
@@ -6,35 +23,35 @@ body { color:#505050;
   background-size: auto;
 }
 h6 { color:#777; }
-@font-face { font-family: trajanprobold; src: url('fonts/TrajanPro-Bold.otf'); }
+@font-face { font-family: trajanprobold; src: url('/assets/fonts/TrajanPro-Bold.otf'); }
 @font-face {
     font-family: 'TrajanProRegular';
-    src: url('fonts/trajanpro-regular-webfont.eot');
-    src: url('fonts/trajanpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/trajanpro-regular-webfont.woff') format('woff'),
-         url('fonts/trajanpro-regular-webfont.ttf') format('truetype'),
-         url('fonts/trajanpro-regular-webfont.svg#TrajanProRegular') format('svg');
+    src: url('/assets/fonts/trajanpro-regular-webfont.eot');
+    src: url('/assets/fonts/trajanpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/trajanpro-regular-webfont.woff') format('woff'),
+         url('/assets/fonts/trajanpro-regular-webfont.ttf') format('truetype'),
+         url('/assets/fonts/trajanpro-regular-webfont.svg#TrajanProRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
 @font-face {
     font-family: 'BlueHighwayCondensed';
-    src: url('fonts/blue_highway_cd-webfont.eot');
-    src: url('fonts/blue_highway_cd-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/blue_highway_cd-webfont.woff') format('woff'),
-         url('fonts/blue_highway_cd-webfont.ttf') format('truetype'),
-         url('fonts/blue_highway_cd-webfont.svg#BlueHighwayCondensed') format('svg');
+    src: url('/assets/fonts/blue_highway_cd-webfont.eot');
+    src: url('/assets/fonts/blue_highway_cd-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/blue_highway_cd-webfont.woff') format('woff'),
+         url('/assets/fonts/blue_highway_cd-webfont.ttf') format('truetype'),
+         url('/assets/fonts/blue_highway_cd-webfont.svg#BlueHighwayCondensed') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'ArialNarrowRegular';
-    src: url('fonts/arial_narrow-webfont.eot');
-    src: url('fonts/arial_narrow-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/arial_narrow-webfont.woff') format('woff'),
-         url('fonts/arial_narrow-webfont.ttf') format('truetype'),
-         url('fonts/arial_narrow-webfont.svg#ArialNarrowRegular') format('svg');
+    src: url('/assets/fonts/arial_narrow-webfont.eot');
+    src: url('/assets/fonts/arial_narrow-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/arial_narrow-webfont.woff') format('woff'),
+         url('/assets/fonts/arial_narrow-webfont.ttf') format('truetype'),
+         url('/assets/fonts/arial_narrow-webfont.svg#ArialNarrowRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }

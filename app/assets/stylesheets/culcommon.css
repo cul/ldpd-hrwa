@@ -23,7 +23,7 @@ color: rgb(215, 59, 59);
 @font-face {
 	font-family: trajanprobold;
 	src: url('../fonts/TrajanPro-Bold.otf');
-}
+}/*
 @font-face {
 	font-family: 'TrajanProRegular';
 	src: url('../fonts/trajanpro-regular-webfont.eot');
@@ -34,6 +34,7 @@ color: rgb(215, 59, 59);
 	font-weight: normal;
 	font-style: normal;
 }
+*/
 #outer-container {
 	padding: 1.0em 10px 1em 10px;
 	margin-top: -1em;
