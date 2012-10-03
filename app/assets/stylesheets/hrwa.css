@@ -1,6 +1,7 @@
 /******************
  * CUL COMMON     *
- * OVERRIDES      *
+ * OVERRIDES /    *
+ * UPDATES        *
  ******************/
 
 #cul_inner {
@@ -9,6 +10,17 @@
 
 #crowndown a.menu, #crowndown-nosearch a.menu {
 	background:transparent url('/assets/crown-bts-24x24.png') no-repeat 4px 22%;
+}
+
+@font-face {
+	font-family: 'TrajanProRegular';
+	src: url('/assets/fonts/trajanpro-regular-webfont.eot');
+	src: url('/assets/fonts/trajanpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/assets/fonts/trajanpro-regular-webfont.woff') format('woff'),
+	url('/assets/fonts/trajanpro-regular-webfont.ttf') format('truetype'),
+	url('/assets/fonts/trajanpro-regular-webfont.svg#TrajanProRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 /******************
