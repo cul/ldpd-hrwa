@@ -4,7 +4,7 @@
 <%
 	use_https =  (Rails.env != 'development' && Rails.env != 'test')
 	service_user_protocol = use_https ? 'https' : 'http'
-	service_user_write_out_full_url = use_https
+	service_user_write_out_full_url = ! use_https
 %>
 
 <%= link_to 'Basic Login', new_service_user_session_path({:only_path => service_user_write_out_full_url, :protocol => service_user_protocol}), :class => 'btn' %>
