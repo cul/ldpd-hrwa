@@ -3,7 +3,7 @@ module Hrwa::BrowseListRenderHelper
 
   include Hrwa::BrowseListHelper
 
-  def render_browse_list(field_name, show_count=true)
+  def render_browse_list(field_name, include_count=true, include_hidden_alphabetical_sort_field=false)
 
     valid_field_types = [ 'title__facet',
                           'original_urls',
@@ -20,13 +20,17 @@ module Hrwa::BrowseListRenderHelper
 
     html_to_return = ''
 
-    if show_count
+    if include_count
       browse_list_hash.each_pair{|item, sort_field|
-        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + ' <span class="count">' + sort_field.to_s + '</span>' + '</div></li>'
+        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + ' <span class="invisible alpha_sort">' + h(item) + '</span>' + ' <span class="count">' + sort_field.to_s + '</span>' + '</div></li>'
+      }
+    elsif include_hidden_alphabetical_sort_field
+      browse_list_hash.each_pair{|item, sort_field|
+        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + ' <span class="invisible alpha_sort">' + sort_field.to_s + '</span>' + '</div></li>'
       }
     else
       browse_list_hash.each_pair{|item, sort_field|
-        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + '</div></li>'
+        html_to_return += '<li><div>' + link_to(h(item), {:controller => 'catalog', :action => 'index', :q => '', :search_type => 'find_site', "f[#{field_name.html_safe}][]".html_safe => item}) + ' <span class="invisible alpha_sort">' + h(item) + '</span>' + '</div></li>'
       }
     end
 

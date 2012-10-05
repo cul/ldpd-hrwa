@@ -14,34 +14,42 @@ class Hrwa::Admin::SolrTaskHandler
 		@rsolr = RSolr.connect :url => @solr_url
 
     @response = @rsolr.get 'select',
-                          :params => {
-                            :q  => '*:*',
-                            :qt => 'search',
-                            :facet => true,
-                            :'facet.sort' => 'index', # We want Solr to order facets based on their index (alphabetically, numerically, etc.)
-                            :'facet.field' => ['title__facet',
-                                               'original_urls',
-                                               'subject__facet',
-                                               'geographic_focus__facet',
-                                               'language__facet',
+														:params => {
+															:q  => '*:*',
+															:qt => 'search',
+															:facet => true,
+															:'facet.sort' => 'index', # We want Solr to order facets based on their index (alphabetically, numerically, etc.)
+															:'facet.field' => ['original_urls',
+																								 'subject__facet',
+																								 'geographic_focus__facet',
+																								 'language__facet',
 
-                                               'creator_name__facet',
-                                               'organization_based_in__facet',
-                                               'organization_type__facet',
-                                               ],
+																								 'creator_name__facet',
+																								 'organization_based_in__facet',
+																								 'organization_type__facet',
+																								 ],
 
-                            :'f.title__facet.facet.limit' => -1,
-                            :'f.original_urls.facet.limit' => -1,
-                            :'f.subject__facet.facet.limit' => -1,
-                            :'f.geographic_focus__facet.facet.limit' => -1,
-                            :'f.language__facet.facet.limit' => -1,
+															:'f.original_urls.facet.limit' => -1,
+															:'f.subject__facet.facet.limit' => -1,
+															:'f.geographic_focus__facet.facet.limit' => -1,
+															:'f.language__facet.facet.limit' => -1,
 
-														:'f.creator_name__facet.facet.limit' => -1,
-														:'f.organization_based_in__facet.facet.limit' => -1,
-														:'f.organization_type__facet.facet.limit' => -1,
+															:'f.creator_name__facet.facet.limit' => -1,
+															:'f.organization_based_in__facet.facet.limit' => -1,
+															:'f.organization_type__facet.facet.limit' => -1,
 
-                            :rows => 0,
-                          }
+															:rows => 0,
+														}
+
+		# Get total num docs from query above so that in the query below, we can select that count for :rows
+		total_num_docs = @response['response']['numFound'].to_i
+
+    @response_for_title_sort_special_case = @rsolr.get 'select',
+																						:params => {
+																							:q  => '*:*',
+																							:fl => 'title__facet, title__sort',
+																							:rows => total_num_docs,
+																						}
 
 		facet_groups = Hash.new()
 		last_group_name = ''
@@ -79,7 +87,18 @@ class Hrwa::Admin::SolrTaskHandler
 				facet_groups['domain'][url_to_hoststring(key)] = value
 			}
 
-	  end
+    end
+
+    # And we'll want to handle the special title case, sorting title__facet items by their corresponding face__sort values
+    titles_to_sort_values = Hash.new()
+    @response_for_title_sort_special_case['response']['docs'].each { | item |
+			titles_to_sort_values[item['title__facet']] = item['title__sort']
+		}
+
+    titles_to_sort_values = titles_to_sort_values.sort_by {|key, value| value}
+
+    #And now we'll add the titles to facet_groups so that it can be processed like all of the other browse lists
+    facet_groups['title__facet'] = titles_to_sort_values
 
 		###############################################################
 		# Now we'll generate the browse_list file string from our hash
@@ -95,23 +114,10 @@ class Hrwa::Admin::SolrTaskHandler
 
 				facet_group = outer_value
 
-				#puts ":::#{outer_key}:::"
-				#
-				#if(outer_key == 'title__sort')
-				#	# Skip the sort field because we're using it to sort title__facet
-				#end
-				#
-				#
-				#
-				#puts '::::::::::::::::::::' + outer_value.pretty_inspect
-				#
-				#if(outer_key == 'title__facet')
-				#	#facet_group = Hash[ facet_group.zip( facet_groups['title__sort'] ) ]
-				#end
-
-
-				# Sort the facet group by key
-				facet_group = facet_group.sort_by {|k,v| k.upcase}
+				# Sort the facet group by key (as long as it's not the already-pre-sorted 'title__facet' group)
+				unless outer_key == 'title__facet'
+					facet_group = facet_group.sort_by {|k,v| k.upcase}
+				end
 
 				facet_group.each{|inner_key, inner_value|
 					file_text += '%q{' + inner_key + '}'
