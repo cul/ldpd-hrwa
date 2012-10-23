@@ -16,13 +16,13 @@
     <div class="control-group">
         <label class="control-label">Name of website/organization</label>
       <div class="controls">
-        <input class="span9" id="inpSiteName" name="owner_nomination[SiteName]" type="text" size="40" required="required">
+        <input class="span9" id="inpSiteName" name="public_nomination[SiteName]" type="text" size="40" required="required">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">URL of website</label>
       <div class="controls">
-        <input class="span9" id="inpURL" name="owner_nomination[URL]" type="text" size="40" required="required">
+        <input class="span9" id="inpURL" name="public_nomination[URL]" type="text" size="40" required="required">
       </div>
     </div>
   </fieldset>
@@ -30,28 +30,15 @@
     <div class="control-group">
         <label class="control-label">Description of website/organization</label>
       <div class="controls">
-        <textarea class="span9" id="txtDescription" name="owner_nomination[Description]" cols="70" rows="6" required="required"></textarea>
+        <textarea class="span9" id="txtDescription" name="public_nomination[Description]" cols="70" rows="6" required="required"></textarea>
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">Additional Information</label>
       <div class="controls">
-        <textarea class="span9" id="txtAdditionalInformation" name="owner_nomination[AdditionalInformation]" cols="70" rows="6"></textarea>
+        <textarea class="span9" id="txtAdditionalInformation" name="public_nomination[AdditionalInformation]" cols="70" rows="6"></textarea>
       </div>
     </div>
-  </fieldset>
-  <fieldset>
-  <div class="control-group">
-        <label class="control-label">Permissions</label>
-    <div class="controls">
-      <select>
-        <option id="inpPermissionsYes" name="owner_nomination[Permissions]" value="Yes">Yes</option>
-        <option id="inpPermissionsNo" name="owner_nomination[Permissions]" value="No"> No</option>
-        <option id="inpPermissionsContact" name="owner_nomination[Permissions]" value="Contact">Please Contact To Discuss Permissions</option>
-      </select>
-        <p class="help-block">If we select your site for inclusion in the Human Rights Web Archive, will you give Columbia University Libraries/Information Services permission to crawl your site and provide access to the archived content in the Human Rights Web Archive?</p>
-    </div>
-  </div>
   </fieldset>
   <fieldset>
     <legend>Contact Information</legend>
@@ -59,13 +46,13 @@
     <div class="control-group">
         <label class="control-label">Name</label>
       <div class="controls">
-        <input class="span9" id="inpContactName" name="owner_nomination[ContactName]" type="text" size="40">
+        <input class="span9" id="inpContactName" name="public_nomination[ContactName]" type="text" size="40">
       </div>
     </div>
     <div class="control-group">
         <label class="control-label">E-mail</label>
       <div class="controls">
-        <input class="span9" id="inpContactEmail" name="owner_nomination[ContactEmail]" type="text" size="40">
+        <input class="span9" id="inpContactEmail" name="public_nomination[ContactEmail]" type="text" size="40">
       </div>
     </div>
   </fieldset>

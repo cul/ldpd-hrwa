@@ -77,7 +77,6 @@ module Hrwa::MailHelper
     message += "URL of website:\n" + (params[:public_nomination]['URL'].blank? ? 'blank' : params[:public_nomination]['URL']) + "\n\n"
     message += "Description of website/organization:\n" + (params[:public_nomination]['Description'].blank? ? 'blank' : params[:public_nomination]['Description']) + "\n\n"
     message += "Additional Information:\n" + (params[:public_nomination]['AdditionalInformation'].blank? ? 'blank' : params[:public_nomination]['AdditionalInformation']) + "\n\n"
-    message += "Permissions:\n" + (params[:public_nomination]['Permissions'].blank? ? 'blank' : params[:public_nomination]['Permissions']) + "\n\n"
 
     message += "Contact Name:\n" + (params[:public_nomination]['ContactName'].blank? ? 'blank' : params[:public_nomination]['ContactName']) + "\n\n"
     message += "Contact Email:\n" + (params[:public_nomination]['ContactEmail'].blank? ? 'blank' : params[:public_nomination]['ContactEmail']) + "\n\n"
