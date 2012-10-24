@@ -151,6 +151,7 @@ class CatalogController < ApplicationController
         # Get query text if there is any
         user_q_text    = ex.request[ :params ][ :q ]
         user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
+        @error_type    = :user
         @alert_type    = 'alert-info'
         @error_message = "Sorry, #{user_query} is not valid. Please try another search with different search terms.".html_safe
       else
