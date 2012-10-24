@@ -10,7 +10,7 @@
         <p>This form is for site owners who wish to nominate their organization or site for inclusion in the <strong>Human Rights Web Archive</strong>. If you are not the owner of the site you are nominating, please use the <a href="<%= public_nomination_path %>" class="">public nomination form</a>.</p>
         <p>Please note that we cannot guarantee the inclusion of a nominated website in this program. We review the nominations carefully and assess the subject, technical, and copyright issues that may affect a site's suitability for archiving. Send questions and comments to <a class="culhrweb-email" href="#">&hellip;</a>. See also our <%= link_to('FAQ', faq_path) %>.</p>
 
-<form class="form-horizontal" id="frmOwnerNomination" name="frmOwnerNomination" action="#">
+<form class="form-horizontal" id="frmOwnerNomination" name="frmOwnerNomination" action="#" method="post">
   <fieldset>
     <legend>Site Information</legend>
     <div class="control-group">
@@ -44,10 +44,10 @@
   <div class="control-group">
         <label class="control-label">Permissions</label>
     <div class="controls">
-      <select required="required">
-        <option id="inpPermissionsYes" name="owner_nomination[Permissions]" value="Yes">Yes</option>
-        <option id="inpPermissionsNo" name="owner_nomination[Permissions]" value="No"> No</option>
-        <option id="inpPermissionsContact" name="owner_nomination[Permissions]" value="Contact">Please Contact To Discuss Permissions</option>
+      <select required="required" name="owner_nomination[Permissions]">
+        <option id="inpPermissionsYes" value="Yes">Yes</option>
+        <option id="inpPermissionsNo" value="No"> No</option>
+        <option id="inpPermissionsContact" value="Contact">Please Contact To Discuss Permissions</option>
       </select>
         <p class="help-block">If we select your site for inclusion in the Human Rights Web Archive, will you give Columbia University Libraries/Information Services permission to crawl your site and provide access to the archived content in the Human Rights Web Archive?</p>
     </div>
