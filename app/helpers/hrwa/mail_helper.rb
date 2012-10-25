@@ -12,13 +12,15 @@ module Hrwa::MailHelper
 
     message = ''
 
-    message += "Name:\n" + (params[:contact]['name'].blank? ? 'blank' : params[:contact]['name']) + "\n\n"
+    contact_name = (params[:contact]['name'].blank? ? 'blank' : params[:contact]['name'])
+
+    message += "Name:\n" + contact_name + "\n\n"
     message += "Email:\n" + (params[:contact]['email'].blank? ? 'blank' : params[:contact]['email']) + "\n\n"
     message += "Message:\n" + (params[:contact]['message'].blank? ? 'blank' : params[:contact]['message']) + "\n\n"
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Contact Form', message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Contact: ' + contact_name, message)
   end
 
   def send_mail_problem_report(to)
@@ -51,7 +53,9 @@ module Hrwa::MailHelper
 
     message = ''
 
-    message += "Name of website/organization:\n" + (params[:owner_nomination]['SiteName'].blank? ? 'blank' : params[:owner_nomination]['SiteName']) + "\n\n"
+    site_name = (params[:owner_nomination]['SiteName'].blank? ? 'blank' : params[:owner_nomination]['SiteName'])
+
+    message += "Name of website/organization:\n" + site_name + "\n\n"
     message += "URL of website:\n" + (params[:owner_nomination]['URL'].blank? ? 'blank' : params[:owner_nomination]['URL']) + "\n\n"
     message += "Description of website/organization:\n" + (params[:owner_nomination]['Description'].blank? ? 'blank' : params[:owner_nomination]['Description']) + "\n\n"
     message += "Additional Information:\n" + (params[:owner_nomination]['AdditionalInformation'].blank? ? 'blank' : params[:owner_nomination]['AdditionalInformation']) + "\n\n"
@@ -64,7 +68,7 @@ module Hrwa::MailHelper
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Owner Nomination Form', message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Owner: ' + site_name, message)
   end
 
   def send_mail_public_nomination(to)
@@ -73,7 +77,9 @@ module Hrwa::MailHelper
 
     message = ''
 
-    message += "Name of website/organization:\n" + (params[:public_nomination]['SiteName'].blank? ? 'blank' : params[:public_nomination]['SiteName']) + "\n\n"
+    site_name = (params[:public_nomination]['SiteName'].blank? ? 'blank' : params[:public_nomination]['SiteName'])
+
+    message += "Name of website/organization:\n" + site_name + "\n\n"
     message += "URL of website:\n" + (params[:public_nomination]['URL'].blank? ? 'blank' : params[:public_nomination]['URL']) + "\n\n"
     message += "Description of website/organization:\n" + (params[:public_nomination]['Description'].blank? ? 'blank' : params[:public_nomination]['Description']) + "\n\n"
     message += "Additional Information:\n" + (params[:public_nomination]['AdditionalInformation'].blank? ? 'blank' : params[:public_nomination]['AdditionalInformation']) + "\n\n"
@@ -83,7 +89,7 @@ module Hrwa::MailHelper
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Public Nomination Form', message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Public: ' + site_name, message)
   end
 
 end
