@@ -62,6 +62,16 @@ vorpal_solr: &vorpal_solr
   site_detail:
     url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
+  
+#prod-alt
+spatha_solr: &spatha_solr
+  asf:
+    url: "http://spatha.cul.columbia.edu:8181/solr-3.6/asf"
+  fsf:
+    url: "http://spatha.cul.columbia.edu:8181/solr-3.6/fsf"
+  site_detail:
+    url: "http://spatha.cul.columbia.edu:8181/solr-3.6/fsf"
+  asf-hrwa-278: *asf-hrwa-278
 
 development: *vorpal_solr
 test: *test_solr
