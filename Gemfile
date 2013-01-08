@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 source 'http://rubygems.cul.columbia.edu/ldpd'
 
-gem 'rails', '~> 3.2.3'
+gem 'rails', '~> 3.2.11'
 gem 'sqlite3'
 gem 'mysql2', '0.3.11'
 gem 'nokogiri', '~> 1.5.2'
