@@ -20,13 +20,17 @@
 
       <div id="primary" class="span9">
 
+<% if(@configurator.name == 'archive') %>
 <ul data-tabs="tabs" class="nav nav-tabs tabs">
   <li class="active"><a data-toggle="tab" href="#hrwa">HRWA Results</a></li>
   <li><a data-toggle="tab" href="#extended">Other Data Sources</a></li>
 </ul>
+<% end %>
 
+<% if(@configurator.name == 'archive') %>
 <div id="results-tab-content" class="tab-content" style="padding-top:1em;">
 <div id="hrwa" class="tab-pane active" style="border:0;">
+<% end %>
         <div class="pageEntriesInfo">
           <%#= render_pagination_info @response, :entry_name=>'item' %>
 		  <% if(@search_type.to_s == 'archive') %>
@@ -73,6 +77,7 @@
         <div class="row">
           <%= render 'results_pagination' %>
         </div>
+<% if(@configurator.name == 'archive') %>
 </div><!-- tab-pane -->
 <div id="extended" class="tab-pane" style="border:0;">
 <div class="pageEntriesInfo">This is extended search helper/explanatory text/leaving this site message thing.</div>
@@ -110,6 +115,7 @@
         </div><!--search_results-->
 </div><!-- tab-pane -->
 </div><!-- tab-content -->
+<% end %>
       </div><!--/#primary-->
 
       <div id="secondary" class="span3">
