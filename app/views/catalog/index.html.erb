@@ -88,7 +88,7 @@
 <dd>http://www.archive-it.org/explore?show=Collections</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">Archive-It</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://www.archive-it.org/explore?q=<%= params[:q] %>&page=1&show=Collections">Archive-It <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
@@ -99,7 +99,7 @@
 <dd>http://www.hurisearch.org/</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">HuriSearch</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="#">HuriSearch <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
@@ -110,18 +110,18 @@
 <dd>http://beta.worldcat.org/archivegrid/</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">ArchiveGrid</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="#">ArchiveGrid <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
 </article>
 <article class="archive-result">
 <dl class="defList document">
-<dt>ProQuest Social Sciences Databases <a href="#" rel="tooltip" title="Columbia Restricted"><i class="icon-lock"></i></a></dt>
+<dt>ProQuest Social Sciences Databases <a href="#" rel="tooltip" title="Columbia Restricted"><i class="icon-lock"></i> <i class="icon-circle-arrow-right icon-white"></i></a></dt>
 <dd>http://search.proquest.com/socialsciences/advanced?accountid=10226</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">ProQuest Social Sciences Databases</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="#">ProQuest Social Sciences Databases <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
@@ -132,7 +132,7 @@
 <dd>http://ohchr.org/</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">Office of the High Commissioner for Human Rights, United Nations</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="#">Office of the High Commissioner for Human Rights <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
@@ -143,7 +143,7 @@
 <dd>http://uhri.ohchr.org/</dd>
 <dd>
 <ul>
-<li>Launch this Search at <a class="btn btn-warning btn-mini" href="#">Universal Human Rights Index, maintained by the OHCHR</a></li>
+<li>Search <%= ((params[:q] && params[:q] != '') ? 'for <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %> at <a class="btn btn-warning btn-mini" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="#">Universal Human Rights Index <i class="icon-circle-arrow-right icon-white"></i></a></li>
 </ul>
 </dd>
 </dl>
