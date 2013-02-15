@@ -19,6 +19,18 @@
     <div class="row">
 
       <div id="primary" class="span9">
+
+<% if(@configurator.name == 'archive') %>
+<ul data-tabs="tabs" class="nav nav-tabs tabs">
+  <li class="active"><a data-toggle="tab" href="#hrwa" class="strong">HRWA Results</a></li>
+  <li><a data-toggle="tab" href="#extended"><span class="darkblue strong">Search Other Sources <sup>trial feature</sup></span></a></li>
+</ul>
+<% end %>
+
+<% if(@configurator.name == 'archive') %>
+<div id="results-tab-content" class="tab-content" style="padding-top:1em;">
+<div id="hrwa" class="tab-pane active" style="border:0;">
+<% end %>
         <div class="pageEntriesInfo">
           <%#= render_pagination_info @response, :entry_name=>'item' %>
 		  <% if(@search_type.to_s == 'archive') %>
@@ -65,6 +77,54 @@
         <div class="row">
           <%= render 'results_pagination' %>
         </div>
+<% if(@configurator.name == 'archive') %>
+</div><!-- tab-pane -->
+<div id="extended" class="tab-pane" style="border:0;">
+<div class="pageEntriesInfo">
+<p>You just searched in HRWA for: <%= ((params[:q] && params[:q] != '') ? ' <span id="search_query_echo" class="green">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) %></p>
+Click any of the links below to perform the same search in a related human-rights oriented database.
+</div>
+        <div id="search_results">
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at Archive-It" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://www.archive-it.org/explore?q=<%= params[:q] %>&amp;page=1&amp;show=Collections"><i class="icon-circle-arrow-right"></i></a><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://www.archive-it.org/explore?q=<%= params[:q] %>&amp;page=1&amp;show=Collections">Archive-It</a></dt>
+<dd>http://www.archive-it.org/explore?show=Collections</dd>
+</dl>
+</article>
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at HuriSearch" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://www.hurisearch.org/?q=<%= params[:q] %>&amp;ql=&amp;ngo=1&amp;nhri=1&amp;academic=1&amp;igo=1"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://www.hurisearch.org/?q=<%= params[:q] %>&amp;ql=&amp;ngo=1&amp;nhri=1&amp;academic=1&amp;igo=1">HuriSearch</a></dt>
+<dd>http://www.hurisearch.org/</dd>
+</dl>
+</article>
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at ArchiveGrid" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://beta.worldcat.org/archivegrid/?p=1&amp;q=<%= params[:q] %>"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://beta.worldcat.org/archivegrid/?p=1&amp;q=<%= params[:q] %>">ArchiveGrid</a></dt>
+<dd>http://beta.worldcat.org/archivegrid/</dd>
+</dl>
+</article>
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at ProQuest Social Sciences Databases" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://search.proquest.com/socialsciences/advanced?accountid=10226"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://search.proquest.com/socialsciences/advanced?accountid=10226">ProQuest Social Sciences Databases</a> <a href="#" rel="tooltip" title="Columbia Restricted"><i class="icon-lock"></i></a></dt>
+<dd>http://search.proquest.com/socialsciences/advanced?accountid=10226</dd>
+</dl>
+</article>
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at OHCHR" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://search.ohchr.org/search?site=default_collection&amp;client=default_frontend&amp;output=xml_no_dtd&amp;ie=UTF-8&amp;oe=UTF-8&amp;Entqr=0&amp;ud=1&amp;sort=date%3AD%3AL%3Ad1&amp;proxystylesheet=en_frontend&amp;q=<%= params[:q] %>"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://search.ohchr.org/search?site=default_collection&amp;client=default_frontend&amp;output=xml_no_dtd&amp;ie=UTF-8&amp;oe=UTF-8&amp;Entqr=0&amp;ud=1&amp;sort=date%3AD%3AL%3Ad1&amp;proxystylesheet=en_frontend&amp;q=<%= params[:q] %>">Office of the High Commissioner for Human Rights, United Nations</a></dt>
+<dd>http://ohchr.org/</dd>
+</dl>
+</article>
+<article class="archive-result">
+<dl class="defList document">
+<dt><a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at UHRI" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://uhri.ohchr.org/search/results?keyword=<%= params[:q] %>&amp;searchoperatortype=And&amp;bodytypes=00000000-0000-0000-0000-000000000000&amp;BodyFilter=00000000-0000-0000-0000-000000000000&amp;AnnotationTypeFilter=aa43335f-ec93-415e-bd4a-87ec91225983&amp;CountryFilter=00000000-0000-0000-0000-000000000000&amp;resultsOrder=Relevance"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="new" href="http://uhri.ohchr.org/search/results?keyword=<%= params[:q] %>&amp;searchoperatortype=And&amp;bodytypes=00000000-0000-0000-0000-000000000000&amp;BodyFilter=00000000-0000-0000-0000-000000000000&amp;AnnotationTypeFilter=aa43335f-ec93-415e-bd4a-87ec91225983&amp;CountryFilter=00000000-0000-0000-0000-000000000000&amp;resultsOrder=Relevance">Universal Human Rights Index, maintained by the OHCHR</a></dt>
+<dd>http://uhri.ohchr.org/</dd>
+</dl>
+</article>
+        </div><!--search_results-->
+</div><!-- tab-pane -->
+</div><!-- tab-content -->
+<% end %>
       </div><!--/#primary-->
 
       <div id="secondary" class="span3">

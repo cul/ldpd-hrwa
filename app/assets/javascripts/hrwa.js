@@ -18,6 +18,9 @@ jQuery(function($) {
 		alert('disallowing external (non-cu) clicks for now while testing.');
 		return false;
   });
+  $('a[data-exitmsg]').click(function () {
+		alert($(this).attr('data-exitmsg'));
+  });
   $('div.alert-message a.close').live('click', function (e) {
 	$(this).parent('.alert-message').hide();
 	return false;
@@ -53,6 +56,8 @@ jQuery(function($) {
 
   /* Links with class .target-blank should be opened in a new window */
   $('a.target-blank').attr('target','_blank');
+  /* Will phase out above in favor of below to keep classes cleaner */
+  $('a[data-target="new"]').attr('target','_new');
 
   /*****************
    * THUMBNAIL     *
@@ -693,5 +698,21 @@ jQuery(function($) {
 		});
 	});
 
+
+
+/*******************************
+ * Extended Search Tab Madness *
+ * hacky. will redo later      *
+ *******************************/
+	$('#primary ul.nav-tabs li.active a').live('click', function() {
+	if ( $(this).attr('href') == '#extended' ) {
+		//alert('extended tab');
+		$('#secondary').hide(0);
+		$('#primary').removeClass('span9').addClass('span12');
+	} else {
+		$('#secondary').show(0);
+		$('#primary').removeClass('span12').addClass('span9');
+    }
+    });
 
 }); // ready
