@@ -29,9 +29,11 @@
             </h5>
         </div>
 
+        <% if document.solr_response[:highlighting] %>
         <div class="hl_snippet">
         <%= formatted_highlighted_snippet(document.solr_response[:highlighting][document[:bib_key]], @configurator.prioritized_highlight_field_list) %>
         </div>
+        <% end %>
 
         <p>
           <%= doc_button_link_html %>

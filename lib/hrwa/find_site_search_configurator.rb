@@ -7,7 +7,7 @@ class HRWA::FindSiteSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :defType          => "dismax",
+          :defType          => "edismax",
           :facet            => true,
           :'facet.mincount' => 1,
           :hl               => true,
