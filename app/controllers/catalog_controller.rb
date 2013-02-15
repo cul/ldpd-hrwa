@@ -4,7 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include HRWA::SolrHelper
+  include Hrwa::SolrHelper
 
   before_filter :_check_for_debug_mode, :_configure_by_controller_action, :_select_appropriate_partial
 
@@ -225,7 +225,7 @@ class CatalogController < ApplicationController
       @search_type = :archive_ns
     end
 
-    @configurator = HRWA::Configurator.new( @search_type )
+    @configurator = Hrwa::Configurator.new( @search_type )
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324
     @configurator.reset_configuration( self.blacklight_config )

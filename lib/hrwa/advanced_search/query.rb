@@ -1,5 +1,5 @@
 # Mix in advanced search processing
-module HRWA::AdvancedSearch::Query
+module Hrwa::AdvancedSearch::Query
 
   def advanced_search_processing_q_fields( solr_parameters, user_params )
 # debugger

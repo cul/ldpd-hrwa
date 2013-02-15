@@ -4,21 +4,21 @@ require 'hrwa/archive_search_with_stemming_adjuster_configurator'
 require 'hrwa/find_site_search_configurator'
 require 'hrwa/site_detail_configurator'
 
-class HRWA::Configurator
+class Hrwa::Configurator
 
-  include HRWA::AdvancedSearch
+  include Hrwa::AdvancedSearch
 
   def initialize( search_request_type )
 
     case search_request_type
       when :archive
-        @configurator = HRWA::ArchiveSearchConfigurator.new
+        @configurator = Hrwa::ArchiveSearchConfigurator.new
       when :archive_ns
-        @configurator = HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.new
+        @configurator = Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.new
       when :find_site
-        @configurator = HRWA::FindSiteSearchConfigurator.new
+        @configurator = Hrwa::FindSiteSearchConfigurator.new
       when :site_detail
-        @configurator = HRWA::SiteDetailConfigurator.new
+        @configurator = Hrwa::SiteDetailConfigurator.new
     end
   end
 
@@ -75,17 +75,17 @@ class HRWA::Configurator
   end
 
   def self.reset_solr_config
-    HRWA::ArchiveSearchConfigurator.reset_solr_config
-    HRWA::FindSiteSearchConfigurator.reset_solr_config
-    HRWA::SiteDetailConfigurator.reset_solr_config
-    HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.reset_solr_config
+    Hrwa::ArchiveSearchConfigurator.reset_solr_config
+    Hrwa::FindSiteSearchConfigurator.reset_solr_config
+    Hrwa::SiteDetailConfigurator.reset_solr_config
+    Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.reset_solr_config
   end
 
   def self.override_solr_url(new_solr_yaml)
-    HRWA::ArchiveSearchConfigurator.override_solr_url(new_solr_yaml)
-    HRWA::FindSiteSearchConfigurator.override_solr_url(new_solr_yaml)
-    HRWA::SiteDetailConfigurator.override_solr_url(new_solr_yaml)
-    HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.override_solr_url(new_solr_yaml)
+    Hrwa::ArchiveSearchConfigurator.override_solr_url(new_solr_yaml)
+    Hrwa::FindSiteSearchConfigurator.override_solr_url(new_solr_yaml)
+    Hrwa::SiteDetailConfigurator.override_solr_url(new_solr_yaml)
+    Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.override_solr_url(new_solr_yaml)
   end
 
   def prioritized_highlight_field_list

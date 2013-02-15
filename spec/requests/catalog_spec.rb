@@ -14,7 +14,7 @@ Capybara.javascript_driver = :webkit
 describe 'the portal search' do
   it 'renders the "search home page" if there are no params' do
     visit '/search'
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::SEARCH_HOME::RENDER_SUCCESS/ ).should_not be nil
+    page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::SEARCH_HOME::RENDER_SUCCESS/ ).should_not be nil
   end
 
   # JIRA issue: https://issues.cul.columbia.edu/browse/HRWA-324
@@ -36,14 +36,14 @@ describe 'the portal search' do
       fill_in 'q', :with => 'women'
       choose 'asfsearch'
       click_link 'top_form_submit'
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       visit '/search'
       fill_in 'q', :with => 'water'
       choose 'fsfsearch'
       click_link 'top_form_submit'
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
     end
 
     # TODO: For some reason this test fails using form fill-in when running full test suite,
@@ -56,15 +56,15 @@ describe 'the portal search' do
       # choose 'fsfsearch'
       # click_link 'top_form_submit'
       visit '/search?utf8=%E2%9C%93&search=true&q=water&search_type=find_site'
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       # visit '/search'
       # fill_in 'q', :with => 'women'
       # choose 'asfsearch'
       # click_link 'top_form_submit'
       visit '/search?utf8=%E2%9C%93&search=true&q=women&search_type=archive'
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
-      page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
+      page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
     end
   end
 
@@ -493,6 +493,6 @@ describe 'error handler' do
     # TODO: change this from a page scan to just referencing whatever div the Eri[ck]s put the
     # error text in
     page.should have_content( '"+" is not valid.' )
-    page.source.match( /REQUEST_TEST_STRING: HRWA::CATALOG::ERROR::RENDER_SUCCESS/ ).should_not be_nil
+    page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::ERROR::RENDER_SUCCESS/ ).should_not be_nil
   end
 end

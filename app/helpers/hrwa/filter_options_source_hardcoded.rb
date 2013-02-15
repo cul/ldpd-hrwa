@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module HRWA::FilterOptionsSourceHardcoded
+module Hrwa::FilterOptionsSourceHardcoded
   def creator_name_filter_options
     return [
               %q{"İnsan Hüquqları XXI ăsr-Azărbaycan" Fondu},

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class HRWA::ArchiveSearchWithStemmingAdjusterConfigurator
+class Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator
   unloadable
 
   @@solr_url = nil;

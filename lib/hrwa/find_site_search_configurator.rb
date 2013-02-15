@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class HRWA::FindSiteSearchConfigurator
+class Hrwa::FindSiteSearchConfigurator
   unloadable
 
   @@solr_url = nil;

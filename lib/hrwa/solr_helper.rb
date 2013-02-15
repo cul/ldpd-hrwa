@@ -1,4 +1,4 @@
-module HRWA::SolrHelper
+module Hrwa::SolrHelper
   extend ActiveSupport::Concern
 
   included do

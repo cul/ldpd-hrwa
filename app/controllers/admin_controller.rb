@@ -38,10 +38,10 @@ class AdminController < ApplicationController
 
     #asf, fsf, site_detail, asf-hrwa-278
     @current_solr_urls =  {
-                            'asf_url' => HRWA::ArchiveSearchConfigurator.solr_url,
-                            'fsf_url' => HRWA::FindSiteSearchConfigurator.solr_url,
-                            'site_detail_url' => HRWA::SiteDetailConfigurator.solr_url,
-                            'asf-hrwa-278_url' => HRWA::ArchiveSearchWithStemmingAdjusterConfigurator.solr_url
+                            'asf_url' => Hrwa::ArchiveSearchConfigurator.solr_url,
+                            'fsf_url' => Hrwa::FindSiteSearchConfigurator.solr_url,
+                            'site_detail_url' => Hrwa::SiteDetailConfigurator.solr_url,
+                            'asf-hrwa-278_url' => Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.solr_url
                           }
   end
 
@@ -54,7 +54,7 @@ class AdminController < ApplicationController
     # http://stackoverflow.com/questions/2879891/config-cache-classes-true-in-production-mode-has-problems-in-ie
 
     # Core switching is possible if cache_classes is ON and none of the configurators are set to be unloadable
-    @core_switching_is_possible = Rails.application.config.cache_classes || ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A HRWA::.*Configurator \Z/x }.empty?
+    @core_switching_is_possible = Rails.application.config.cache_classes || ActiveSupport::Dependencies.explicitly_unloadable_constants.select { |item| item =~ /\A Hrwa::.*Configurator \Z/x }.empty?
 
     if(@core_switching_is_possible)
       @core_switching_message = 'Good news!  Solr server overriding is available.'
@@ -82,13 +82,13 @@ class AdminController < ApplicationController
 
         if(params[:reset])
           # The line below makes sure that only servers in the valid overrides section of solr.yml can be selected
-          HRWA::Configurator.reset_solr_config
+          Hrwa::Configurator.reset_solr_config
           flash[:notice] = 'Your solr servers have been reset to their default settings.'.html_safe;
         end
 
         if(params[:override])
           solr_yml = YAML.load_file('config/solr.yml')[solr_server_name + '_solr']
-          HRWA::Configurator.override_solr_url(solr_yml)
+          Hrwa::Configurator.override_solr_url(solr_yml)
           flash[:notice] = 'Your solr server settings have been changed.'.html_safe;
         end
 
