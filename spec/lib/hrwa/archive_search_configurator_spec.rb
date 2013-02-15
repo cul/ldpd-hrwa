@@ -35,12 +35,12 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
-          :defType          => "dismax",
+          :defType          => "edismax",
           :facet            => true,
           :'facet.field'    => [
                                 'domain',
                                 'dateOfCaptureYYYY',
-                                'mimetype',
+                                'mimetypeCode',
                                 'geographic_focus__facet',
                                 'organization_based_in__facet',
                                 'organization_type__facet',
@@ -52,7 +52,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
           :'group.field'    => 'originalUrl',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 1000,
+          :'hl.fragsize'    => 600,
           :'hl.fl'          => [
                                'contents',
                                'title',
@@ -67,7 +67,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
                                 'title^1',
                                 'originalUrl^1',
                                ],
-          :rows             => 10,
+          :rows             => @configurator.default_num_rows,
         }
     end
 
@@ -75,7 +75,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
       expected_facet_fields = {
         'domain'                       => { :label => 'Domain',                     :limit => 5 },
         'dateOfCaptureYYYY'            => { :label => 'Date Of Capture',            :limit => 5 },
-        'mimetype'                     => { :label => 'File Type',                  :limit => 5 },
+        'mimetypeCode'                 => { :label => 'File Type',                  :limit => 6 },
         'geographic_focus__facet'      => { :label => 'Geographic Focus',           :limit => 5 },
         'organization_based_in__facet' => { :label => 'Organization Based In',      :limit => 5 },
         'organization_type__facet'     => { :label => 'Organization Type',          :limit => 5 },

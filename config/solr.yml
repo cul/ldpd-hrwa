@@ -74,7 +74,7 @@ spatha_solr: &spatha_solr
   asf-hrwa-278: *asf-hrwa-278
 
 development: *vorpal_solr
-test: *test_solr
+test: *spatha_solr
 production: *vorpal_solr
 
 hrwa_dev: *vorpal_solr

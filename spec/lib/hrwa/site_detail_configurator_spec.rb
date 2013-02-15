@@ -28,7 +28,7 @@ describe 'Hrwa::SiteDetailConfigurator' do
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
-            :defType          => "dismax",
+            :defType          => "edismax",
             :facet            => true,
             :'facet.mincount' => 1,
             :hl               => true,
@@ -57,7 +57,7 @@ describe 'Hrwa::SiteDetailConfigurator' do
                                   "summary^1",
                                   "title^1",
                                   ],
-            :rows             => 10,
+            :rows             => @configurator.default_num_rows,
             :'facet.field'    => [
                                   "geographic_focus__facet",
                                   "language__facet",

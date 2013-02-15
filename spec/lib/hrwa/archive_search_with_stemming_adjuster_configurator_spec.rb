@@ -35,7 +35,7 @@ describe 'Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator' do
     it 'sets Blacklight::Configuration.default_solr_params correctly' do
       @blacklight_config.default_solr_params.should ==
         {
-          :defType          => "dismax",
+          :defType          => 'edismax',
           :facet            => true,
           :'facet.field'    => [
                                 'domain',
@@ -64,7 +64,7 @@ describe 'Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator' do
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
-          :'q.alt'          => "*:*",
+          :'q.alt'          => '*:*',
           :qf               => [
                                 'contentBody^1',
                                 'contentBody__no_stemming^1',
@@ -73,7 +73,7 @@ describe 'Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator' do
                                 'originalUrl^1',
                                 'originalUrl__no_stemming_balancing_field^1',
                                ],
-          :rows             => 10,
+          :rows             => @configurator.default_num_rows,
         }
     end
 
@@ -359,35 +359,6 @@ describe 'Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator' do
       @configurator.set_solr_field_boost_levels( extra_controller_params, @params )
       extra_controller_params.should == { :qf => @valid_params }
     end
-  end
-
-  describe '#solr_url' do
-
-    before :each do
-        @configurator.class.reset_solr_config
-    end
-
-    after :each do
-        @configurator.class.reset_solr_config
-    end
-
-    it 'returns correct URL for environment "development"' do
-      @configurator.class.solr_url( 'development' ).should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
-    end
-
-    it 'returns correct URL for environment "test"' do
-      # Not necessary to explicitly pass in environment for test, obviously
-      @configurator.class.solr_url().should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
-    end
-
-    it 'returns correct URL for environment "hrwa_dev"' do
-      @configurator.class.solr_url( 'hrwa_dev' ).should == 'http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
-    end
-
-    it 'returns correct URL for environment "hrwa_staging"' do
-      @configurator.class.solr_url( 'hrwa_staging' ).should == 'http://harding.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278'
-    end
-
   end
 
 end
