@@ -699,4 +699,20 @@ jQuery(function($) {
 	});
 
 
+
+/*******************************
+ * Extended Search Tab Madness *
+ * hacky. will redo later      *
+ *******************************/
+	$('#primary ul.nav-tabs li.active a').live('click', function() {
+	if ( $(this).attr('href') == '#extended' ) {
+		//alert('extended tab');
+		$('#secondary').hide(0);
+		$('#primary').removeClass('span9').addClass('span12');
+	} else {
+		$('#secondary').show(0);
+		$('#primary').removeClass('span12').addClass('span9');
+    }
+    });
+
 }); // ready
