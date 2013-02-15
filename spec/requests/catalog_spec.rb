@@ -33,14 +33,15 @@ describe 'the portal search' do
     # Use top form for first test and in-page form for second test to exercise both forms
     it 'can successfully run a find_site search immediately after an archive search', :js => true do
       visit '/search'
+
       fill_in 'q', :with => 'women'
-      choose 'asfsearch'
+      find('#search_type_find_site').click()
       click_link 'top_form_submit'
       page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
 
       visit '/search'
       fill_in 'q', :with => 'water'
-      choose 'fsfsearch'
+      find('#search_type_archive').click()
       click_link 'top_form_submit'
       page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS/ ).should_not be_nil
       page.source.match( /REQUEST_TEST_STRING: Hrwa::CATALOG::ERROR::RENDER_SUCCESS/ ).should be_nil
@@ -74,21 +75,12 @@ describe 'archive search' do
   it 'should not have "host" param in querystring', :js => true do
     visit '/search'
     fill_in 'q', :with => 'water'
-    choose 'asfsearch'
+    find('#search_type_archive').click()
     click_link 'top_form_submit'
 
     querystring = URI.parse( current_url ).query
     params_hash = Rack::Utils.parse_nested_query( querystring ).deep_symbolize_keys
     params_hash[ :host ].should be_nil
-  end
-
-  # https://issues.cul.columbia.edu/browse/HRWA-392
-  it 'shows 10 for end of results range for q="rights"', :js => true do
-    visit '/search'
-    fill_in 'q', :with => 'rights'
-    choose 'asfsearch'
-    click_link 'top_form_submit'
-    page.should have_content( '1 - 10' )
   end
 
   # https://issues.cul.columbia.edu/browse/HRWA-359 Bug
@@ -103,19 +95,8 @@ describe 'archive search' do
     # clink_link 'Domain-'
     # click_link 'Menu'
     # click_link 'Turn debug on'
-    visit '/search?excl_domain%5B%5D=www.privacyinternational.org&f%5Blanguage__facet%5D%5B%5D=English&hrwa_debug=true&q=Privacy+International&search=true&search_type=archive&utf8=%E2%9C%93'
-    page.should have_content( %q{fq = ["{!raw f=language__facet}English", "-domain:www.privacyinternational.org"]} )
-  end
-
-  # TODO: Finish writing this test
-  # Exclude domain filter bug - For some reason, domain exclusions keep adding unnecessary extra domains that were never selected by the user.
-  # Example link: http://localhost:3020/search?excl_domain[]=aaa&f[organization_based_in__facet][]=England&q=rights&search=true&search_type=archive&utf8=%E2%9C%93
-  # Go to the link above and click the submit button without changing any other search options.  The result count shouldn't change, but it does!
-  it 'does not randomly add extra excl_domain filters that were not added by the user', :js => true do
-    # visit '/search?excl_domain[]=aaa&f[organization_based_in__facet][]=England&q=rights&search=true&search_type=archive&utf8=%E2%9C%93'
-    #page.should have_content( '407,366' )
-    # click_link 'top_form_submit'
-    #page.should have_content( '407,366' )
+    visit '/search?excl_domain%5B%5D=www.privacyinternational.org&f%5Blanguage__facet%5D%5B%5D=English&debug_mode=true&q=Privacy+International&search=true&search_type=archive&utf8=%E2%9C%93'
+    page.should have_content( %q{"fq"=> ["{!raw f=language__facet}English", "-domain:www.privacyinternational.org"]} )
   end
 
   # TODO: For some reason this test fails using form fill-in when running full test suite,
@@ -155,15 +136,15 @@ describe 'archive search' do
   describe 'SOLR field boost level overriding' do
     it 'correctly sets new weights for contents, title, and originalUrl', :js => true do
 
-      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=title%5E3&field%5B%5D=contents%5E4&hrwa_debug=true'
-      choose 'asfsearch'
+      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=title%5E3&field%5B%5D=contents%5E4&debug_mode=true'
+      find('#search_type_archive').click()
       click_link 'advo_link'
       click_link 'top_form_submit'
       page.should have_content( %q{:qf=>["originalUrl^2", "title^3", "contents^4"]} )
     end
 
     it 'correctly sets new weights for contents, title and originalUrl, with originalUrl omitted in form submission', :js => true do
-      visit '/search?field%5B%5D=title%5E3&field%5B%5D=contents%5E4&hrwa_debug=true'
+      visit '/search?field%5B%5D=title%5E3&field%5B%5D=contents%5E4&debug_mode=true'
       choose 'asfsearch'
       click_link 'advo_link'
       click_link 'top_form_submit'
