@@ -57,17 +57,17 @@ describe 'exclude_domain_from_hits_link' do
   end
 
   it 'creates correct link if there are no domains already excluded' do
-    link_tag        = exclude_domain_from_hits_link( @domain1, @params_unsorted )
+    link_tag        = url_for_exclude_domain_addition( @domain1, @params_unsorted )
     link_tag.should == @expected_link_tag1
   end
 
   it 'creates correct link if one domain is already excluded' do
-    link_tag        = exclude_domain_from_hits_link( @domain2, @params_expected_in_url1 )
+    link_tag        = url_for_exclude_domain_addition( @domain2, @params_expected_in_url1 )
     link_tag.should == @expected_link_tag2
   end
 
   it 'returns the current URL when attempting to exclude a domain that is already being excluded' do
-    link_tag = exclude_domain_from_hits_link( @domain1, @params_expected_in_url1 )
+    link_tag = url_for_exclude_domain_addition( @domain1, @params_expected_in_url1 )
     link_tag = @expected_link_tag1
   end
 end
