@@ -19,8 +19,9 @@ module Hrwa::MailHelper
     message += "Message:\n" + (params[:contact]['message'].blank? ? 'blank' : params[:contact]['message']) + "\n\n"
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
+    message += "HTTP Referer:\n" + request.referer + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Contact: ' + contact_name, message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Contact: ' + contact_name, message.html_safe)
   end
 
   def send_mail_problem_report(to)
@@ -43,8 +44,9 @@ module Hrwa::MailHelper
     message += "User Agent:\n" + (params[:problem_report]['UserAgent'].blank? ? 'blank' : params[:problem_report]['UserAgent']) + "\n\n"
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
+    message += "HTTP Referer:\n" + request.referer + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Problem Report Form', message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Problem Report Form', message.html_safe)
   end
 
   def send_mail_owner_nomination(to)
@@ -67,8 +69,9 @@ module Hrwa::MailHelper
     message += "Contact Address:\n" + (params[:owner_nomination]['ContactAddress'].blank? ? 'blank' : params[:owner_nomination]['ContactAddress']) + "\n\n"
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
+    message += "HTTP Referer:\n" + request.referer + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Owner: ' + site_name, message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Owner: ' + site_name, message.html_safe)
   end
 
   def send_mail_public_nomination(to)
@@ -88,8 +91,9 @@ module Hrwa::MailHelper
     message += "Contact Email:\n" + (params[:public_nomination]['ContactEmail'].blank? ? 'blank' : params[:public_nomination]['ContactEmail']) + "\n\n"
 
     message += "Form URL:\n" + "http://#{request.host}:#{request.port.to_s + request.fullpath}" + "\n\n"
+    message += "HTTP Referer:\n" + request.referer + "\n\n"
 
-    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Public: ' + site_name, message)
+    send_mail(to, 'hrwa-developers@libraries.cul.columbia.edu', 'HRWA Public: ' + site_name, message.html_safe)
   end
 
 end

@@ -10,7 +10,7 @@
           <p>This form is for problem reports for the Human Rights Web Archive. For comments/feedback, please use the <%= link_to 'contact', contact_path %> form.</p>
 
 
-          <%= form_tag '#', :class => 'form-horizontal', :id => 'problemReportForm', :action => '#', :method => 'post' do %>
+          <%= form_tag '#', {:class => 'form-horizontal', :id => 'problemReportForm', :action => '#', :method => 'post', :honeypot => true} do %>
             <fieldset>
               <div class="control-group">
                 <label class="control-label">Message</label>

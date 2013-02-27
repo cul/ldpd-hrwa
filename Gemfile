@@ -18,6 +18,8 @@ gem 'devise_wind'
 gem 'devise-encryptable'
 gem 'net-ldap'
 
+gem 'honeypot-captcha'
+
 # For Javascript runtime needed by the asset pipeline
 gem 'therubyracer', '0.10.1'
 
