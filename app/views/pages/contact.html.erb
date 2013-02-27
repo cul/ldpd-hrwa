@@ -9,7 +9,7 @@
 
           <p>This form is for public comments/feedback for Human Rights Web Archive. For bug/error reporting, please use the <%= link_to 'problem report', problem_report_path %> form.</p>
 
-          <%= form_tag '#', {:class => 'form-horizontal', :id => 'commentForm', :action => '#', :method => 'post', :honeypot => true} do %>
+          <%= form_tag 'http://', {:class => 'form-horizontal', :id => 'commentForm', :action => '#', :method => 'post', :honeypot => true} do %>
             <fieldset>
               <div class="control-group">
                 <label class="control-label">Message</label>
