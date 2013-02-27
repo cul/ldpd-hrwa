@@ -439,7 +439,7 @@ a.moreless.btn { font-size:80%; }
 .nobpad { padding-bottom:0!important; }
 .nomar { margin:0!important; }
 .nobull { list-style:none!important; }
-.inline { display:inline; }
+.inline { display:inline!important; }
 .black { color:#000!important; }
 .gray { color:#666; }
 .lime { color:#88C34B; }
