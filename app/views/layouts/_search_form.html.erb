@@ -15,7 +15,7 @@
                       %>
                       <li><label class="radio"><input type="radio" id="search_type_find_site" name="search_type" value="find_site" <%= 'checked="checked"'.html_safe if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Website descriptions</span></label></li>
                       <li><label class="radio"><input type="radio" id="search_type_archive" name="search_type" value="archive"   <%= 'checked="checked"'.html_safe if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Page full text</span></label></li>
-							<li><label class="radio nopad"><input style="margin-top:-2px;" type="checkbox" id="expanded_results_checkbox" name="expanded_results_checkbox" value="expanded"> <span data-shorttitle="Expanded">Expand Terms</span> <a href="#" rel="tooltip" title="Include synonyms in search results." class="nopad inline"><i class="icon-info-sign"></i></a></label></li>
+							<li class="hide"><label class="radio nopad"><input style="margin-top:-2px;" type="checkbox" id="expanded_results_checkbox" name="expanded_results_checkbox" value="expanded"> <span data-shorttitle="Expanded">Expand Terms</span> <a href="#" rel="tooltip" title="Include synonyms in search results." class="nopad inline"><i class="icon-info-sign"></i></a></label></li>
                   </ul>
               </div>
           </div>
@@ -32,7 +32,7 @@
                       %>
                       <li class="pull-left"><label class="radio"><input type="radio" id="search_type_mobile_button_find_site" name="search_type_mobile_button" value="find_site" <%= 'checked="checked"' if checked_radio_button == 'find_site' %>><span data-shorttitle="Sites">Sites</span></label> </li>
                       <li class="pull-left"> <label class="radio"><input type="radio" id="search_type_mobile_button_archive" name="search_type_mobile_button" value="archive"   <%= 'checked="checked"' if checked_radio_button == 'archive' %>><span data-shorttitle="Pages">Pages</span></label></li>
-							<li class="pull-left"><label class="radio nopad"><input style="margin-top:-2px;" type="checkbox" id="expanded_results_checkbox" name="expanded_results_checkbox" value="expanded"> <span data-shorttitle="Expanded">Expand Terms</span> <a href="#" rel="tooltip" title="Include synonyms in search results." class="nopad inline"><i class="icon-info-sign icon-white"></i></a></label></li>
+							<li class="pull-left hide"><label class="radio nopad"><input style="margin-top:-2px;" type="checkbox" id="expanded_results_checkbox" name="expanded_results_checkbox" value="expanded"> <span data-shorttitle="Expanded">Expand Terms</span> <a href="#" rel="tooltip" title="Include synonyms in search results." class="nopad inline"><i class="icon-info-sign icon-white"></i></a></label></li>
                   </ul>
               </div>
       </div>
