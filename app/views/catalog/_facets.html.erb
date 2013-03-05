@@ -1,4 +1,6 @@
-<!-- if related_terms.... -->
+<% # expanded search
+   # will need if statement here
+if(@configurator.name == 'archive') %>
   <h4>Expand These Results</h4>
 <div id="expanded_search" class="sb_widget facet_limit">
   <h6>Related Terms</h6>
@@ -12,8 +14,8 @@
 	<li><a href="#" class="btn btn-mini">Search</a>  <a href="#" class="btn btn-mini">Search All</a></li>
   </ul>
 </div>
-
 <hr>
+<% end %>
 
 <% # main container for facets/limits menu -%>
 <%
