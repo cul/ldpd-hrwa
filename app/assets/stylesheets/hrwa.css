@@ -742,6 +742,8 @@ span.Z3988 { display:none; }
 
 @media (max-width: 480px) {
   body { background-image:none; }
+  #outer-container { margin-left:-20px!important; margin-right:-20px!important; }
+  #topnavbar { margin-left:-1px; margin-right:-1px; }
   .navbar { border:1px solid #000; border-bottom:0; border-top:0; }
   #inner-headline { background:rgba(255,255,255,.5)!important; text-align:left; margin-top:1em;padding-top:2px; }
   #inner-headline h1 span {float:none;}
