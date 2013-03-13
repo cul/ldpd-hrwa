@@ -9,17 +9,19 @@ admin_login_password = 'supercomplexpassword'
 
 describe 'the admin control panel' do
 
-  it 'brings up a sign in screen when you click the top menu "Admin Login" link' do
-    visit '/'
-    click_link 'Menu'
-    click_link 'Admin Login'
-    page.should have_content( 'Sign in' )
+  before :each do
+    ServiceUser.new({:email => "test-admin-user@columbia.edu", :username => admin_login_username, :password => "supercomplexpassword", :password_confirmation => "supercomplexpassword" }).save!
+  end
+
+  after :each do
+    @deleted_user = ServiceUser.find_for_authentication(:username => admin_login_username)
+    @deleted_user.destroy
   end
 
   it 'is possible to log into the admin control panel' do
-    visit '/admin'
-    fill_in 'admin_username', :with => admin_login_username
-    fill_in 'admin_password', :with => admin_login_password
+    visit '/service_users/sign_in'
+    fill_in 'service_user_username', :with => admin_login_username
+    fill_in 'service_user_password', :with => admin_login_password
     click_button 'Sign in'
     visit '/admin'
 
@@ -27,59 +29,48 @@ describe 'the admin control panel' do
 
     #Cleanup - Log out
 
-    click_link 'Menu'
-    click_link 'Log out'
+    click_link 'Sign Out'
   end
 
   describe 'Solr server overriding' do
 
     before :each do
-      visit '/admin'
-      fill_in 'admin_username', :with => admin_login_username
-      fill_in 'admin_password', :with => admin_login_password
+      visit '/service_users/sign_in'
+      fill_in 'service_user_username', :with => admin_login_username
+      fill_in 'service_user_password', :with => admin_login_password
       click_button 'Sign in'
       visit '/admin'
     end
 
     after :each do
       #Cleanup - Log out
-      click_link 'Menu'
-      click_link 'Log out'
-    end
-
-    it 'should have carter set as the default solr server for the test environment' do
-      page.should have_content( 'Archive primary Solr server: carter' )
-      page.should have_content( 'Find Site primary Solr server: carter' )
-      page.should have_content( 'Site Detail primary Solr server: carter' )
+      click_link 'Sign Out'
     end
 
     it 'is possible to override the solr servers, and also possible to reset them to their defaults' do
-      page.find('#new_primary_solr_server').select('coolidge')
-      click_button( 'Go' )
+      page.find('select[name="solr_server_name"]').select('vorpal')
+      click_button( 'Override' )
 
-      page.should have_content( 'Archive primary Solr server: coolidge' )
-      page.should have_content( 'Find Site primary Solr server: coolidge' )
-      page.should have_content( 'Site Detail primary Solr server: coolidge' )
-
-      # Fresh visit, not just checking after form submission
-      visit '/admin'
-
-      page.should have_content( 'Archive primary Solr server: coolidge' )
-      page.should have_content( 'Find Site primary Solr server: coolidge' )
-      page.should have_content( 'Site Detail primary Solr server: coolidge' )
-
-      click_button( 'Reset all primary solr servers to defaults' )
+      page.should have_content( 'asf: http://vorpal.cul.columbia.edu:8080/solr-3.6/asf' )
+      page.should have_content( 'fsf: http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf' )
+      page.should have_content( 'site_detail: http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf' )
 
       # Fresh visit, not just checking after form submission
       visit '/admin'
 
-      page.should have_content( 'Archive primary Solr server: carter' )
-      page.should have_content( 'Find Site primary Solr server: carter' )
-      page.should have_content( 'Site Detail primary Solr server: carter' )
-    end
+      page.should have_content( 'asf: http://vorpal.cul.columbia.edu:8080/solr-3.6/asf' )
+      page.should have_content( 'fsf: http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf' )
+      page.should have_content( 'site_detail: http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf' )
 
-    it 'passes a test!' do
-      #true
+      click_button( 'Reset to Defaults' )
+
+      # Fresh visit, not just checking after form submission
+      visit '/admin'
+
+      page.should have_content( 'asf: http://spatha.cul.columbia.edu:8181/solr-3.6/asf' )
+      page.should have_content( 'fsf: http://spatha.cul.columbia.edu:8181/solr-3.6/fsf' )
+      page.should have_content( 'site_detail: http://spatha.cul.columbia.edu:8181/solr-3.6/fsf' )
+
     end
 
   end
