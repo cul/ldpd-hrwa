@@ -11,15 +11,20 @@ module Hrwa::SearchExpansion::SearchExpander
   def find_expanded_search_terms_for_query(q)
 
     at_least_one_expanded_search_term_found = false
-    query_with_expanded_search_terms = {}
+    # This (below) needs to be an array (rather than a hash) so that if a user
+    # re-uses a word in their query, the second instance of that word isn't lost
+    # (because adding the same string key twice to a hash would only result in a
+    # single hash element).
+    query_terms_with_expanded_search_terms_arr = []
 
     start_time = Time.now
 
     search_terms = q.split(" ").each {|term| term.strip!}
 
     search_terms.each { | term |
-      query_with_expanded_search_terms[term] = find_expanded_terms_for_single_word(term)
-      if query_with_expanded_search_terms[term]
+      expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
+      query_terms_with_expanded_search_terms_arr.push({term => expanded_terms_for_single_term})
+      if ! expanded_terms_for_single_term.nil?
         at_least_one_expanded_search_term_found = true
       end
     }
@@ -30,7 +35,7 @@ module Hrwa::SearchExpansion::SearchExpander
       "Expansion time: " + ((Time.now - start_time)*1000).to_i.to_s + " milliseconds"
     )
 
-    return at_least_one_expanded_search_term_found, query_with_expanded_search_terms
+    return at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr
   end
 
   def find_expanded_terms_for_single_word(single_word)
