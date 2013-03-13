@@ -29,11 +29,11 @@ module Hrwa::SearchExpansion::SearchExpander
       end
     }
 
-    Rails.logger.debug(
-      "Search expansion results:\n\n" +
-      "search_terms: " + search_terms.pretty_inspect + "\n\n" +
-      "Expansion time: " + ((Time.now - start_time)*1000).to_i.to_s + " milliseconds"
-    )
+    #Rails.logger.debug(
+    #  "Search expansion results:\n\n" +
+    #  "search_terms: " + search_terms.pretty_inspect + "\n\n" +
+    #  "Expansion time: " + ((Time.now - start_time)*1000).to_i.to_s + " milliseconds"
+    #)
 
     return at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr
   end
@@ -47,16 +47,10 @@ module Hrwa::SearchExpansion::SearchExpander
     end
 
     if @@search_expansion_hash_CACHED.nil?
-      #We want to cache the search_expansion_terms.csv file data into memory (Class cache)
+      # We want to cache the search_expansion_terms.csv file data into memory as a hash (using Rails class caching)
       Rails.logger.debug("Cache is NOT available for @@search_expansion_hash_CACHED.  Loading from file.")
       @@search_expansion_hash_CACHED = get_search_expansion_hash_from_csv_file('lib/hrwa/search_expansion/search_expansion_terms.csv')
-    else
-      Rails.logger.debug("Cache IS available for @@search_expansion_hash_CACHED")
     end
-    puts '--------------'
-    puts '@@search_expansion_hash_CACHED:'
-   #puts @@search_expansion_hash_CACHED
-    puts '--------------'
 
     # Now we'll check to see if single_word exists within the set of search expansion terms
     if(expanded_terms = @@search_expansion_hash_CACHED[single_word.to_sym])
