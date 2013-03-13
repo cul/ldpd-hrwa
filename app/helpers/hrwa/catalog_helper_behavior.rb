@@ -188,4 +188,30 @@ module Hrwa::CatalogHelperBehavior
     return url_for(url_params)
   end
 
+  # Returns the current url with an extra search_expansion=true added
+  def url_for_with_search_expansion_on(url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+
+    #add search_expansion param
+    url_params[:search_expansion] = true
+
+    return url_for(url_params)
+
+  end
+
+  # Removes search_expansion=true from the current url if it is present
+  def url_for_with_search_expansion_off(url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+
+    #add search_expansion param
+    url_params.delete(:search_expansion)
+
+    return url_for(url_params)
+
+  end
+
 end

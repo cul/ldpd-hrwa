@@ -57,6 +57,26 @@
             <span id="echo_query">
               <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="green strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
             </span>
+
+						<% if @expanded_search_terms_found %>
+							<% if @search_expansion_is_on %>
+								<div class="alert alert-info expanded-search-terms-info">
+									<%= link_to 'Turn off search expansion &raquo;'.html_safe, url_for_with_search_expansion_off, :class => 'btn btn-mini pull-right' %>
+									<strong>Your search has been expanded to include the following terms:</strong><br />
+									<%
+									@expanded_search_terms.each_pair { |term, array_of_related_terms|
+										html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + " (via \"<strong>#{term}</strong>\")<br />"
+										%><%= html_output_for_term.html_safe %><%
+									}
+									%>
+								</div>
+							<% else %>
+								<div class="alert expanded-search-terms-found">
+									Expanded search terms were found for this query!
+									<%= link_to 'Turn on search expansion to include these terms &raquo;'.html_safe, url_for_with_search_expansion_on, :class => 'btn btn-mini pull-right' %>
+								</div>
+							<% end %>
+						<% end %>
         </div>
         <div class="row" id="search_constraints">
           <div class="span9">
