@@ -40,9 +40,11 @@ module Hrwa::SearchExpansion::SearchExpander
 
   def find_expanded_terms_for_single_word(single_word)
 
+    single_word_downcase = single_word.downcase #make comparison case insensitive
+
     # If single_word is on the stopwords list, return ni
     stopwords = ['the', 'and', 'in', 'on', 'at', 'into', 'OR', 'AND']
-    if stopwords.include?(single_word)
+    if stopwords.include?(single_word_downcase)
       return nil
     end
 
@@ -53,7 +55,7 @@ module Hrwa::SearchExpansion::SearchExpander
     end
 
     # Now we'll check to see if single_word exists within the set of search expansion terms
-    if(expanded_terms = @@search_expansion_hash_CACHED[single_word.to_sym])
+    if(expanded_terms = @@search_expansion_hash_CACHED[single_word_downcase.to_sym])
       expanded_terms = expanded_terms.dup # Important! Make a DUPLICATE of the returned expanded_terms array so that we don't modify the original in @@search_expansion_hash_CACHED
       expanded_terms.delete(single_word)
       return expanded_terms
@@ -65,8 +67,8 @@ module Hrwa::SearchExpansion::SearchExpander
 
   # Returns a hash that maps each expansion term to its group of related expansion terms
   # Note: Groups of related expansion terms contain ALL related expansion terms, including
-  # whichever hash key is mapping to that group.
-  # Sample structure: { :Adi => ['Adi','Abo','Abor','Abors','Tangam'], :Adivasis => ['Adivasis','Adibasis'], :Adibasis => ['Adivasis','Adibasis'] }
+  # whichever hash key is mapping to that group. Keys and values are all lower case
+  # Sample structure: { :adi => ['adi','abo','abor','abors','tangam'], :adivasis => ['adivasis','adibasis'], :adibasis => ['adivasis','adibasis'] }
   def get_search_expansion_hash_from_csv_file(path_to_csv_file)
 
     search_expansion_hash_to_return = {}
@@ -98,7 +100,7 @@ module Hrwa::SearchExpansion::SearchExpander
       # in the search expansion terms file).  Basically, I'm trying to use
       # less memory.
       array_for_this_line.each { |expansion_synonym|
-        search_expansion_hash_to_return[expansion_synonym.to_sym] = array_for_this_line.sort! # Sort terms in alphabetical order
+        search_expansion_hash_to_return[expansion_synonym.downcase.to_sym] = array_for_this_line.sort! # Sort terms in alphabetical order
       }
 
     }

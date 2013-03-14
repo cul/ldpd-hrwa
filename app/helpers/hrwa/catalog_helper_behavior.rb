@@ -214,4 +214,18 @@ module Hrwa::CatalogHelperBehavior
 
   end
 
+  def get_expanded_search_term_relationship_html(expanded_search_terms)
+
+    html_to_return = ''
+
+    expanded_search_terms.each { |expanded_term_item|
+      expanded_term_item.each { |term, array_of_related_terms|
+        html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + " (via \"<strong>#{term}</strong>\")<br />"
+        html_to_return += html_output_for_term
+      }
+    }
+
+    return html_to_return.html_safe
+  end
+
 end

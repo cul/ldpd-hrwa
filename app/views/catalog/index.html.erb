@@ -31,13 +31,14 @@
 <div id="results-tab-content" class="tab-content" style="padding-top:1em;">
 <div id="hrwa" class="tab-pane active" style="border:0;">
 <% end %>
+
         <div class="pageEntriesInfo">
           <%#= render_pagination_info @response, :entry_name=>'item' %>
-		  <% if(@search_type.to_s == 'archive') %>
-		    <%= render_archive_pagination_info @response, :entry_name=>'archived web page result' %>
-		  <% else %>
-		    <%= render_pagination_info @response, :entry_name=>'sites' %>
-		  <% end %>
+				<% if(@search_type.to_s == 'archive') %>
+					<%= render_archive_pagination_info @response, :entry_name=>'archived web page result' %>
+				<% else %>
+					<%= render_pagination_info @response, :entry_name=>'site' %>
+				<% end %>
 
             <%#=link_to 'Start Over', catalog_index_path, :class=>'btn btn-mini pull-right' %>
             <span id="qtime_ms"> (<%= number_with_precision(@response['responseHeader']['QTime'].to_f/1000, :precision => 3) %> seconds)</span>
@@ -58,28 +59,23 @@
               <%= ((params[:q] && params[:q] != '') ? 'for: <span id="search_query_echo" class="green strong">'.html_safe + params[:q] + '</span>'.html_safe : ''.html_safe) + '<a href="#" id="query_inline_edit_button" class="btn btn-mini" rel="tooltip" data-original-title="Modify your current search query"><i class="icon-pencil"></i></a>'.html_safe %>
             </span>
 
-						<% if @expanded_search_terms_found %>
-							<% if @search_expansion_is_on %>
-								<div class="alert alert-info expanded-search-terms-info">
-									<%= link_to 'Turn off search expansion &raquo;'.html_safe, url_for_with_search_expansion_off, :class => 'btn btn-mini pull-right' %>
-									<strong>Your search has been expanded to include the following terms:</strong><br />
-									<%
-									@expanded_search_terms.each { |expanded_term_item|
-										expanded_term_item.each { |term, array_of_related_terms|
-											html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + " (via \"<strong>#{term}</strong>\")<br />"
-											%><%= html_output_for_term.html_safe %><%
-										}
-									}
-									%>
-								</div>
-							<% else %>
-								<div class="alert expanded-search-terms-found">
-									Expanded search terms were found for this query!
-									<%= link_to 'Turn on search expansion to include these terms &raquo;'.html_safe, url_for_with_search_expansion_on, :class => 'btn btn-mini pull-right' %>
-								</div>
-							<% end %>
-						<% end %>
         </div>
+
+				<% if @expanded_search_terms_found %>
+					<% if @search_expansion_is_on %>
+						<div class="alert alert-info expanded-search-terms-info">
+							<%= link_to 'Turn off search expansion &raquo;'.html_safe, url_for_with_search_expansion_off, :class => 'btn btn-mini pull-right' %>
+							<strong>Your search has been expanded to include the following terms:</strong><br />
+							<%= get_expanded_search_term_relationship_html(@expanded_search_terms) %>
+						</div>
+					<% else %>
+						<div class="alert expanded-search-terms-found">
+							Expanded search terms were found for this query!
+							<%= link_to 'Turn on search expansion to include these terms &raquo;'.html_safe, url_for_with_search_expansion_on, :class => 'btn btn-mini pull-right' %>
+						</div>
+					<% end %>
+				<% end %>
+
         <div class="row" id="search_constraints">
           <div class="span9">
             <%= render 'constraints', :localized_params=>params %>

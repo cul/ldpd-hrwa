@@ -502,7 +502,7 @@ text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
 .alert.expanded-search-terms-found,
 .alert.expanded-search-terms-info {
 	font-size:13px;
-	margin:10px 0px 5px;
+	margin:10px 0px 0px;
 	padding:15px;
 }
 
