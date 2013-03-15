@@ -158,11 +158,16 @@ class CatalogController < ApplicationController
             if array_of_related_terms.nil?
               @expanded_query += term + ' '
             else
-              @expanded_query += '(' + term + ' OR ' + array_of_related_terms.join(' OR ') + ') '
+              #If this expansion appears at the beginning of a query, don't start the query with a + (no need to)
+              @expanded_query += (@expanded_query.empty? ? '(' : '+(') + term + ' OR ' + array_of_related_terms.join(' OR ') + ') '
             end
           }
         }
         @expanded_query.strip!
+
+        # Remove "OR +" (that might have been introduced by query expansion)
+        @expanded_query.gsub!(/OR\s{1}\+/, 'OR ')
+
       else
         #If search_expansion is ON and we didn't find any search expansion terms, redirect to URL that doesn't contain the search_expansion param
         params.delete(:search_expansion)

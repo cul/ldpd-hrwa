@@ -70,6 +70,8 @@
 							</div>
 							<strong>Your search has been expanded to include the following terms:</strong><br />
 							<%= get_expanded_search_term_relationship_html(@expanded_search_terms) %>
+							<br />
+							<strong>Equivalent Query:</strong> <%= @expanded_query %>
 						</div>
 					<% else %>
 						<div class="alert alert-info expanded-search-terms-found">

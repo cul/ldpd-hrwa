@@ -197,6 +197,9 @@ module Hrwa::CatalogHelperBehavior
     #add search_expansion param
     url_params[:search_expansion] = true
 
+    #remove page so that we default to page 1
+    url_params.delete(:page)
+
     return url_for(url_params)
 
   end

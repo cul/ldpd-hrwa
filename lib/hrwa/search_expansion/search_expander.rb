@@ -12,14 +12,14 @@ module Hrwa::SearchExpansion::SearchExpander
   # If no related search terms are found, this method returns nil
   def find_expanded_search_terms_for_query(q)
 
+    start_time = Time.now
+
     at_least_one_expanded_search_term_found = false
     # This (below) needs to be an array (rather than a hash) so that if a user
     # re-uses a word in their query, the second instance of that word isn't lost
     # (because adding the same string key twice to a hash would only result in a
     # single hash element).
     query_terms_with_expanded_search_terms_arr = []
-
-    start_time = Time.now
 
     search_terms = split_search_query_on_double_quotation_marks_and_spaces_but_preserve_double_quotes(q).each {|term| term.strip!}
 
@@ -31,11 +31,9 @@ module Hrwa::SearchExpansion::SearchExpander
       end
     }
 
-    #Rails.logger.debug(
-    #  "Search expansion results:\n\n" +
-    #  "search_terms: " + search_terms.pretty_inspect + "\n\n" +
-    #  "Expansion time: " + ((Time.now - start_time)*1000).to_i.to_s + " milliseconds"
-    #)
+    Rails.logger.debug(
+      "Search expansion occurred. Expansion time: " + ((Time.now - start_time)*1000).to_i.to_s + " milliseconds"
+    )
 
     return at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr
   end
@@ -72,7 +70,10 @@ module Hrwa::SearchExpansion::SearchExpander
     # Now we'll check to see if single_word exists within the set of search expansion terms
     if(expanded_terms = @@search_expansion_hash_CACHED[single_word_downcase.to_sym])
       expanded_terms = expanded_terms.dup # Important! Make a DUPLICATE of the returned expanded_terms array so that we don't modify the original in @@search_expansion_hash_CACHED
-      expanded_terms.delete(single_word)
+      #case-insensitive deletion of the same-name item in the array
+      expanded_terms.delete_if { |item|
+        item.downcase == single_word.downcase
+      }
       return expanded_terms
     end
 
