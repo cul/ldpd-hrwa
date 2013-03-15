@@ -146,21 +146,28 @@ class CatalogController < ApplicationController
       puts '@expanded_search_terms: ' + @expanded_search_terms.inspect
     end
 
-    if @expanded_search_terms_found && params[:search_expansion] == 'true'
-      @search_expansion_is_on = true
-      #Then we want to apply the expanded terms to the current query.  Let's reconstruct the query:
-      @original_query = params[:q]
-      @expanded_query = ''
-      @expanded_search_terms.each { |expanded_term_item|
-        expanded_term_item.each { |term, array_of_related_terms|
-          if array_of_related_terms.nil?
-            @expanded_query += term + ' '
-          else
-            @expanded_query += '(' + term + ' OR ' + array_of_related_terms.join(' OR ') + ') '
-          end
+    if params[:search_expansion] == 'true'
+      if @expanded_search_terms_found
+
+        @search_expansion_is_on = true
+        #Then we want to apply the expanded terms to the current query.  Let's reconstruct the query:
+        @original_query = params[:q]
+        @expanded_query = ''
+        @expanded_search_terms.each { |expanded_term_item|
+          expanded_term_item.each { |term, array_of_related_terms|
+            if array_of_related_terms.nil?
+              @expanded_query += term + ' '
+            else
+              @expanded_query += '(' + term + ' OR ' + array_of_related_terms.join(' OR ') + ') '
+            end
+          }
         }
-      }
-      @expanded_query.strip!
+        @expanded_query.strip!
+      else
+        #If search_expansion is ON and we didn't find any search expansion terms, redirect to URL that doesn't contain the search_expansion param
+        params.delete(:search_expansion)
+        redirect_to params
+      end
     end
 
     if @search_expansion_is_on

@@ -201,14 +201,17 @@ module Hrwa::CatalogHelperBehavior
 
   end
 
-  # Removes search_expansion=true from the current url if it is present
+  # Removes search_expansion=true from the current url if it is present and returns the user to page of of the results
   def url_for_with_search_expansion_off(url_params = params)
 
     #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
     url_params = url_params.dup
 
-    #add search_expansion param
+    #remove search_expansion param
     url_params.delete(:search_expansion)
+
+    #remove page so that we default to page 1
+    url_params.delete(:page)
 
     return url_for(url_params)
 
