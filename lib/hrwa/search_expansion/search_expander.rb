@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'shellwords'
+
 module Hrwa::SearchExpansion::SearchExpander
 
   ## Creating class variable for class-caching purposes
@@ -19,7 +21,7 @@ module Hrwa::SearchExpansion::SearchExpander
 
     start_time = Time.now
 
-    search_terms = q.split(" ").each {|term| term.strip!}
+    search_terms = split_search_query_on_double_quotation_marks_and_spaces_but_preserve_double_quotes(q).each {|term| term.strip!}
 
     search_terms.each { | term |
       expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
@@ -36,6 +38,19 @@ module Hrwa::SearchExpansion::SearchExpander
     #)
 
     return at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr
+  end
+
+  #Example usage:
+  # String: 'this is a test "with quotes" in it "and" here "are some more" quotes'
+  # Output: ['this', 'is', 'a', 'test', '"with quotes"', 'in', 'it', 'and', 'here', '"are some more"', 'quotes']
+  def split_search_query_on_double_quotation_marks_and_spaces_but_preserve_double_quotes(q)
+    #Temporarily replace apostrophes so that they don't count as quotes
+    pieces = Shellwords.split(q.gsub("'", '|||||')).each { |item| item.gsub!('|||||', "'")}
+
+    #If any piece contains a space, that means that it was quotes and it should be wrapped in dobule quotation marks
+
+    pieces.each_index { |element_index| pieces[element_index] = '"' + pieces[element_index] + '"' unless pieces[element_index].index(' ').nil? }
+
   end
 
   def find_expanded_terms_for_single_word(single_word)

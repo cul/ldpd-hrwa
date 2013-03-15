@@ -70,6 +70,15 @@
 							</div>
 							<strong>Your search has been expanded to include the following terms:</strong><br />
 							<%= get_expanded_search_term_relationship_html(@expanded_search_terms) %>
+
+							Equivalent search query:
+							<br />
+							<% @expanded_search_terms.each { |item|
+								item.each_pair { |term, expansion_results|
+									%><%= term + ' --- ' %><%
+								}
+							} %>
+							
 						</div>
 					<% else %>
 						<div class="alert alert-info expanded-search-terms-found">
