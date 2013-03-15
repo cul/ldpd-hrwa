@@ -72,7 +72,7 @@
 							<%= get_expanded_search_term_relationship_html(@expanded_search_terms) %>
 						</div>
 					<% else %>
-						<div class="alert expanded-search-terms-found">
+						<div class="alert alert-info expanded-search-terms-found">
 							<div class="btn-group pull-right">
 								<%= link_to 'Expansion Off', '#', :class => 'btn btn-mini btn-primary white active' %>
 								<%= link_to 'Expansion On', url_for_with_search_expansion_on, :class => 'btn btn-mini' %>
