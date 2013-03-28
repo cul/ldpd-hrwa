@@ -193,6 +193,9 @@ class CatalogController < ApplicationController
         # Remove trailing ' AND' (that might have been introduced by query expansion)
         @expanded_query = @expanded_query.slice(0, @expanded_query.length-4) if @expanded_query.ends_with?(' AND')
 
+        # Replace "AND OR AND" (that might have been introduced by query expansion) with "OR"
+        @expanded_query.gsub!(/AND OR AND/, 'OR')
+
       else
         #If search_expansion is ON and we didn't find any search expansion terms, redirect to URL that doesn't contain the search_expansion param
         params.delete(:search_expansion)
