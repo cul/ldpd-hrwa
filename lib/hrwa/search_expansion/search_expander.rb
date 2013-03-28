@@ -21,7 +21,7 @@ module Hrwa::SearchExpansion::SearchExpander
     # single hash element).
     query_terms_with_expanded_search_terms_arr = []
 
-    search_terms = split_search_query_on_double_quotation_marks_and_spaces_but_preserve_double_quotes(q).each {|term| term.strip!}
+    search_terms = split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q).each {|term| term.strip!}
 
     search_terms.each { | term |
       expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
@@ -41,7 +41,13 @@ module Hrwa::SearchExpansion::SearchExpander
   #Example usage:
   # String: 'this is a test "with quotes" in it "and" here "are some more" quotes'
   # Output: ['this', 'is', 'a', 'test', '"with quotes"', 'in', 'it', 'and', 'here', '"are some more"', 'quotes']
-  def split_search_query_on_double_quotation_marks_and_spaces_but_preserve_double_quotes(q)
+  # Another example with parentheses
+  # String: (aleuts)
+  # Output: [' ( ', 'aleuts', ' ) ']
+  def split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q)
+
+    q = q.gsub('(', ' ( ').gsub(')', ' ) ')
+
     #Temporarily replace apostrophes so that they don't count as quotes
     pieces = Shellwords.split(q.gsub("'", '|||||')).each { |item| item.gsub!('|||||', "'")}
 
@@ -49,15 +55,17 @@ module Hrwa::SearchExpansion::SearchExpander
 
     pieces.each_index { |element_index| pieces[element_index] = '"' + pieces[element_index] + '"' unless pieces[element_index].index(' ').nil? }
 
+    return pieces
+
   end
 
   def find_expanded_terms_for_single_word(single_word)
 
     single_word_downcase = single_word.downcase #make comparison case insensitive
 
-    # If single_word is on the stopwords list, return ni
-    stopwords = ['the', 'and', 'in', 'on', 'at', 'into', 'OR', 'AND']
-    if stopwords.include?(single_word_downcase)
+    # If single_word is on the ignore_words list, return ni
+    ignore_words = ['OR', 'AND', '(', ')', 'the', 'and', 'in', 'on', 'at', 'into']
+    if ignore_words.include?(single_word_downcase)
       return nil
     end
 
@@ -126,6 +134,61 @@ module Hrwa::SearchExpansion::SearchExpander
     end
 
     return search_expansion_hash_to_return
+
+  end
+
+  def get_expanded_query_from_expanded_search_terms_array(expanded_search_terms_arr)
+
+    expanded_query_to_return = ''
+
+    expanded_search_terms_arr.each_index { |index|
+      expanded_search_terms_arr[index].each { |term, array_of_related_terms|
+        if array_of_related_terms.nil?
+          if index == 0
+            #start of search terms
+            expanded_query_to_return += "#{term} AND "
+          elsif index == (expanded_search_terms_arr.length - 1)
+            #end of search terms
+            expanded_query_to_return += "AND #{term}"
+          else
+            #middle of search terms
+            expanded_query_to_return += "AND #{term} AND "
+          end
+        else
+          if index == 0
+            #start of search terms
+            expanded_query_to_return += "(#{term} OR #{array_of_related_terms.join(' OR ')}) AND "
+          elsif index == (expanded_search_terms_arr.length - 1)
+            #end of search terms
+            expanded_query_to_return += "AND (#{term} OR #{array_of_related_terms.join(' OR ')})"
+          else
+            #middle of search terms
+            expanded_query_to_return += "AND (#{term} OR #{array_of_related_terms.join(' OR ')}) AND "
+          end
+        end
+      }
+    }
+    expanded_query_to_return.strip!
+
+    # Remove "AND AND" (that might have been introduced by query expansion) with "AND"
+    expanded_query_to_return.gsub!(/AND AND/, 'AND')
+
+    # Remove trailing ' AND' (that might have been introduced by query expansion)
+    expanded_query_to_return = expanded_query_to_return.slice(0, expanded_query_to_return.length-4) if expanded_query_to_return.ends_with?(' AND')
+
+    # Replace "AND OR AND" (that might have been introduced by query expansion) with "OR"
+    expanded_query_to_return.gsub!(/AND OR AND/, 'OR')
+
+    # Replace "AND AND AND" (that might have been introduced by query expansion) with "AND"
+    expanded_query_to_return.gsub!(/AND AND AND/, 'AND')
+
+    # Replace "( AND (" (that might have been introduced by query expansion) with "(("
+    expanded_query_to_return.gsub!(/\( AND \(/, '((')
+
+    # Replace ") AND )" (that might have been introduced by query expansion) with "))"
+    expanded_query_to_return.gsub!(/\) AND \)/, '))')
+
+    return expanded_query_to_return
 
   end
 
