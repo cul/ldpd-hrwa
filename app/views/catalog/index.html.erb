@@ -23,7 +23,7 @@
 <% if(@configurator.name == 'archive') %>
 <ul data-tabs="tabs" class="nav nav-tabs tabs">
   <li class="active"><a data-toggle="tab" href="#hrwa" class="strong">HRWA Results</a></li>
-  <li><a data-toggle="tab" href="#extended"><span class="darkblue strong">Search Other Sources<sup class="trial-feature-notice">trial feature</sup></span></a></li>
+  <li><a data-toggle="tab" href="#extended"><span class="darkblue strong">Search Other Sources <sup class="trial-feature-notice">trial feature</sup></span></a></li>
 </ul>
 <% end %>
 
@@ -63,21 +63,28 @@
 
 				<% if @expanded_search_terms_found %>
 					<div class="alert alert-info expanded-search-terms-info">
-						<div class="pull-right"><sup class="trial-feature-notice">trial feature</sup></div>
-						<% if @search_expansion_is_on %>
-								<div class="btn-group pull-right">
+						<div class="expanded-search-terms-header">
+							<span class="darkblue strong">search expansion</span> <sup class="trial-feature-notice">trial feature</sup>
+
+							<% if @search_expansion_is_on %>
+								<div class="btn-group pull-right expansion-switch">
 									<%= link_to 'Expansion Off', url_for_with_search_expansion_off, :class => 'btn btn-mini' %>
 									<%= link_to 'Expansion On', '#', :class => 'btn btn-mini active' %>
 								</div>
+							<% else %>
+								<div class="btn-group pull-right expansion-switch">
+									<%= link_to 'Expansion Off', '#', :class => 'btn btn-mini active' %>
+									<%= link_to 'Expansion On', url_for_with_search_expansion_on, :class => 'btn btn-mini' %>
+								</div>
+							<% end %>
+
+						</div>
+						<% if @search_expansion_is_on %>
 								<strong>Your search has been expanded to include the following terms:</strong><br />
 								<%= get_expanded_search_term_relationship_html(@expanded_search_terms) %>
 								<br />
 								<strong>Equivalent Query:</strong> <%= @expanded_query %>
 						<% else %>
-								<div class="btn-group pull-right">
-									<%= link_to 'Expansion Off', '#', :class => 'btn btn-mini active' %>
-									<%= link_to 'Expansion On', url_for_with_search_expansion_on, :class => 'btn btn-mini' %>
-								</div>
 								Expanded search terms were found for this query!
 						<% end %>
 					</div>

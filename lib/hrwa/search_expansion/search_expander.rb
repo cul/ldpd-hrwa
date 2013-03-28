@@ -46,6 +46,8 @@ module Hrwa::SearchExpansion::SearchExpander
   # Output: [' ( ', 'aleuts', ' ) ']
   def split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q)
 
+    # Add spaces around parentheses so that they're not grouped with terms during synonym detection
+    # These ' ( ' and ' ) ' query snippets will be converted back to normal parentheses when the expanded query string is created
     q = q.gsub('(', ' ( ').gsub(')', ' ) ')
 
     #Temporarily replace apostrophes so that they don't count as quotes
