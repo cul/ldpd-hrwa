@@ -335,6 +335,7 @@ iframe#x_container { width:100%; }
 #primary #results-tab-content { overflow:inherit; }
 #site_footer { margin-top:2em; border-top:1px solid #eee; padding-top:10px;}
 #site_footer #culcul { padding-left:28px; background:#fff url('crown-small-blue.png') no-repeat 0 2px; line-height:28px; font-size:11px; }
+.trial-feature-notice {color:red;font-variant:small-caps;font-weight:bold;margin-left:5px;font-size:11px;}
 #search_results article .documentHeader h5 {overflow:hidden;}
 #search_results article {overflow:hidden;}
 #search_results article dl {background:#fff;}
