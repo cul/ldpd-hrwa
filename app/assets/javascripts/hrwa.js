@@ -18,9 +18,11 @@ jQuery(function($) {
 		alert('disallowing external (non-cu) clicks for now while testing.');
 		return false;
   });
+/*
   $('a[data-exitmsg]').click(function () {
 		alert($(this).attr('data-exitmsg'));
   });
+*/
   $('div.alert-message a.close').live('click', function (e) {
 	$(this).parent('.alert-message').hide();
 	return false;
