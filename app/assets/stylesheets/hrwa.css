@@ -193,10 +193,10 @@ a.thumbnail:hover {
 #inner-headline-outer {
 border-bottom: 1px solid #888;
 background: #285896;
-background-image: url('header.jpeg ');
+background-image: url('map-dark-150.png');
 background-attachment: absolute;
 background-repeat: no-repeat;
-background-position: left -100px;
+background-position: center center;
 padding: 2.0em 10px 1.0em 10px;
 margin-top: .5em;
 margin-left: -10px;
@@ -768,9 +768,9 @@ span.Z3988 { display:none; }
   #outer-container { margin-left:-20px!important; margin-right:-20px!important; }
   #topnavbar { margin-left:-1px; margin-right:-1px; }
   .navbar { border:1px solid #000; border-bottom:0; border-top:0; }
-  #inner-headline { background:rgba(255,255,255,.5)!important; text-align:left; margin-top:1em;padding-top:2px; }
+  #inner-headline { background:rgba(255,255,255,.5)!important; text-align:left; margin-top:1em;padding-top:2px; padding-bottom:1em; }
   #inner-headline h1 span {float:none;}
-  #inner-headline h1, #inner-headline h1 a  { line-height:18px; font-size:26px; text-shadow:1px 1px 0 black; margin:0; padding-top:.4em; }
+  #inner-headline h1, #inner-headline h1 a  { line-height:28px; font-size:30px; text-shadow:1px 1px 0 black; margin:0; padding-top:.4em; }
   #inner-headline .subhead { display:block; margin:0;font-size:.8em!important; }
   #inner-headline h2 { line-height:14px; font-size:13px; text-shadow:1px 1px 0 black; margin:0; font-family: "arial narrow", ArialNarrowRegular, arial, sans-serif; }
   #cul_top, #crowndown { -webkit-transform:skewX(0); transform:skewX(0); background:transparent; width:100%; display:none; }
@@ -870,6 +870,6 @@ and (orientation: portrait) {
 #primary div.pagination { padding-left:10px; }
 #inner-headline h1, #inner-headline h1 a {
 font-size:56px;
-letter-spacing:12px;
+letter-spacing:1px;
 }
 }
