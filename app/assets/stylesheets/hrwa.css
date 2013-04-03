@@ -193,10 +193,10 @@ a.thumbnail:hover {
 #inner-headline-outer {
 border-bottom: 1px solid #888;
 background: #285896;
-background-image: url('map-dark-150.png');
+background-image: url('header.jpeg');
 background-attachment: absolute;
 background-repeat: no-repeat;
-background-position: center center;
+background-position: 65% center;
 padding: 2.0em 10px 1.0em 10px;
 margin-top: .5em;
 margin-left: -10px;
@@ -861,6 +861,9 @@ and (orientation: portrait) {
 @media (min-width: 480px) and (max-width: 979px) {
   #inner-headline h1 span.pull-left {float:none;display:inline-block;}
   #inner-headline .subhead { clear:both; display:block;padding-top:5px;padding-bottom:2px;}
+	#inner-headline-outer {
+	background-position: 60% 54%;
+}
 }
 
 @media (min-width: 980px) {
