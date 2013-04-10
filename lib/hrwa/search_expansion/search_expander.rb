@@ -24,7 +24,15 @@ module Hrwa::SearchExpansion::SearchExpander
     search_terms = split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q).each {|term| term.strip!}
 
     search_terms.each { | term |
-      expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
+      #if term starts and ends with double quottation marks, then attempt to do a synonym lookup of the text contained within those quotation marks
+      if(term =~ /^".+"$/)
+        #quoted term found
+        expanded_terms_for_single_term = find_expanded_terms_for_single_word(term.slice(1..term.length-2))
+      else
+        #normal single-word term found
+        expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
+      end
+
       query_terms_with_expanded_search_terms_arr.push({term => expanded_terms_for_single_term})
       if ! expanded_terms_for_single_term.nil?
         at_least_one_expanded_search_term_found = true
@@ -42,7 +50,7 @@ module Hrwa::SearchExpansion::SearchExpander
   # String: 'this is a test "with quotes" in it "and" here "are some more" quotes'
   # Output: ['this', 'is', 'a', 'test', '"with quotes"', 'in', 'it', 'and', 'here', '"are some more"', 'quotes']
   # Another example with parentheses
-  # String: (aleuts)
+  # String: '(aleuts)'
   # Output: [' ( ', 'aleuts', ' ) ']
   def split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q)
 
@@ -65,7 +73,7 @@ module Hrwa::SearchExpansion::SearchExpander
 
     single_word_downcase = single_word.downcase #make comparison case insensitive
 
-    # If single_word is on the ignore_words list, return ni
+    # If single_word is on the ignore_words list, return nil
     ignore_words = ['OR', 'AND', '(', ')', 'the', 'and', 'in', 'on', 'at', 'into']
     if ignore_words.include?(single_word_downcase)
       return nil
@@ -140,7 +148,7 @@ module Hrwa::SearchExpansion::SearchExpander
   end
 
   def get_expanded_query_from_expanded_search_terms_array(expanded_search_terms_arr)
-
+    
     expanded_query_to_return = ''
 
     expanded_search_terms_arr.each_index { |index|

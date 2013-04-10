@@ -142,8 +142,6 @@ class CatalogController < ApplicationController
     # Check for search expansion terms during archive searches IF we are not already performing a search expansion (i.e. params[:search_expansion] is set)
     if params[:search_type] == 'archive'
       @expanded_search_terms_found, @expanded_search_terms = find_expanded_search_terms_for_query(params[:q])
-      puts '@expanded_search_terms_found: ' + @expanded_search_terms_found.to_s
-      puts '@expanded_search_terms: ' + @expanded_search_terms.inspect
     end
 
     if params[:search_expansion] == 'true'

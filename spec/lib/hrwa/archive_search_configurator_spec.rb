@@ -52,7 +52,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
           :'group.field'    => 'originalUrl',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 600,
+          :'hl.fragsize'    => 400,
           :'hl.fl'          => [
                                'contents',
                                'title',
