@@ -157,15 +157,29 @@ module Hrwa::SearchExpansion::SearchExpander
             expanded_query_to_return += "AND #{term} AND "
           end
         else
+
+
+          related_terms_delimited_by_OR = ''
+          array_of_related_terms.each { |term|
+            if term.index(' ').nil?
+              related_terms_delimited_by_OR += term + ' OR '
+            else
+              related_terms_delimited_by_OR += '"' + term + '" OR ' # Need to use quotation marks around multi-word synonyms
+            end
+
+          }
+          #remove trailing ' OR '
+          related_terms_delimited_by_OR = related_terms_delimited_by_OR.slice(0..related_terms_delimited_by_OR.length-5)
+
           if index == 0
             #start of search terms
-            expanded_query_to_return += "(#{term} OR #{array_of_related_terms.join(' OR ')}) AND "
+            expanded_query_to_return += "(#{term} OR #{related_terms_delimited_by_OR}) AND "
           elsif index == (expanded_search_terms_arr.length - 1)
             #end of search terms
-            expanded_query_to_return += "AND (#{term} OR #{array_of_related_terms.join(' OR ')})"
+            expanded_query_to_return += "AND (#{term} OR #{related_terms_delimited_by_OR})"
           else
             #middle of search terms
-            expanded_query_to_return += "AND (#{term} OR #{array_of_related_terms.join(' OR ')}) AND "
+            expanded_query_to_return += "AND (#{term} OR #{related_terms_delimited_by_OR}) AND "
           end
         end
       }
