@@ -56,8 +56,6 @@ module Hrwa::RenderConstraintsHelperBehavior
       if(values.length > 0)
          values.each{|item|
 
-            puts 'ITEMMMMM: ' + item
-
             options = {:remove => url_for_exclude_domain_removal(item), :classes => ["exclusion"]}
             removal_link_body = "<i class=\"icon-remove icon-white\"></i>Exclude Domain: ".html_safe + item
             html_to_return += link_to(

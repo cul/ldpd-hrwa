@@ -6,10 +6,13 @@ module Hrwa::SearchExpansion::SearchExpander
 
   ## Creating class variable for class-caching purposes
   @@search_expansion_hash_CACHED = nil
+  @@multi_word_synonym_hash_tree_CACHED = nil
 
   # Given a query q, this method checks for expanded (related) search terms
   # and returns a hash mapping each query term to its related search terms.
   # If no related search terms are found, this method returns nil
+  #
+  # This method assumes that cache_search_expansion_csv_file_data has already been called and that all search expansion terms are available
   def find_expanded_search_terms_for_query(q)
 
     start_time = Time.now
@@ -21,10 +24,12 @@ module Hrwa::SearchExpansion::SearchExpander
     # single hash element).
     query_terms_with_expanded_search_terms_arr = []
 
+    q = wrap_any_known_multi_word_search_expandable_terms_in_double_quotes(q)
+
     search_terms = split_search_query_on_double_quotation_marks_and_spaces_and_parentheses_but_preserve_double_quotes(q).each {|term| term.strip!}
 
     search_terms.each { | term |
-      #if term starts and ends with double quottation marks, then attempt to do a synonym lookup of the text contained within those quotation marks
+      #if term starts and ends with double quotation marks, then attempt to do a synonym lookup of the text contained within those quotation marks
       if(term =~ /^".+"$/)
         #quoted term found
         expanded_terms_for_single_term = find_expanded_terms_for_single_word(term.slice(1..term.length-2))
@@ -44,6 +49,85 @@ module Hrwa::SearchExpansion::SearchExpander
     )
 
     return at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr
+  end
+
+  # Searches the entire query q for any multi-word expandable terms.  If one of these multi-word expandable terms
+  # is found, it will be wrapped in double quotes so that it can be recognized as a single entity that should be
+  # scanned for expandable synonyms.
+  def wrap_any_known_multi_word_search_expandable_terms_in_double_quotes(q)
+
+    puts 'scanning query: ' + q
+
+    individual_words_in_query = q.split(' ')
+
+    found_match = false
+    phrase_to_quote = ''
+
+    individual_words_in_query.each_index { |index|
+
+      found_words = []
+      found_words_as_downcase_syms = []
+
+      #Check first word
+      found_words[0] = individual_words_in_query[index]
+      found_words_as_downcase_syms[0] = found_words[0].downcase.to_sym
+      if( ! found_match && @@multi_word_synonym_hash_tree_CACHED.include?(found_words_as_downcase_syms[0]))
+        puts '-' + found_words[0].to_s
+
+        latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]]
+        phrase_to_quote += found_words[0] + ' '
+        if latest_value == true
+          puts "we're done!"
+          found_match = true
+        end
+
+        #Check second word
+        found_words[1] = individual_words_in_query[index+1]
+        found_words_as_downcase_syms[1] = found_words[1].downcase.to_sym
+        if( ! found_match && @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]].include?(found_words_as_downcase_syms[1]) )
+          puts '--' + found_words[1].to_s
+
+          latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]]
+          phrase_to_quote += found_words[1] + ' '
+          if latest_value == true
+            puts "we're done!!"
+            found_match = true
+          end
+
+          #Check third word
+          found_words[2] = individual_words_in_query[index+2]
+          found_words_as_downcase_syms[2] = found_words[2].downcase.to_sym
+          if( ! found_match && @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]].include?(found_words_as_downcase_syms[2]) )
+            puts '---' + found_words[2].to_s
+
+            latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]][found_words_as_downcase_syms[2]] == true
+            phrase_to_quote += found_words[2] + ' '
+            if latest_value == true
+              puts "we're done!!!"
+              found_match = true
+            end
+
+          end
+        end
+      end
+
+      phrase_to_quote.strip!
+
+      if found_match
+        break
+      end
+
+    }
+
+
+    if found_match
+      puts 'phrase_to_quote: ' + phrase_to_quote
+      #re-scan to make sure that we catch any other multi-word synonyms
+      q = wrap_any_known_multi_word_search_expandable_terms_in_double_quotes(q.gsub(phrase_to_quote, '"' + phrase_to_quote + '"'))
+    end
+
+
+    return q
   end
 
   #Example usage:
@@ -69,6 +153,7 @@ module Hrwa::SearchExpansion::SearchExpander
 
   end
 
+  # This method assumes that cache_search_expansion_csv_file_data has already been run
   def find_expanded_terms_for_single_word(single_word)
 
     single_word_downcase = single_word.downcase #make comparison case insensitive
@@ -77,12 +162,6 @@ module Hrwa::SearchExpansion::SearchExpander
     ignore_words = ['OR', 'AND', '(', ')', 'the', 'and', 'in', 'on', 'at', 'into']
     if ignore_words.include?(single_word_downcase)
       return nil
-    end
-
-    if @@search_expansion_hash_CACHED.nil?
-      # We want to cache the search_expansion_terms.csv file data into memory as a hash (using Rails class caching)
-      Rails.logger.debug("Cache is NOT available for @@search_expansion_hash_CACHED.  Loading from file.")
-      @@search_expansion_hash_CACHED = get_search_expansion_hash_from_csv_file('lib/hrwa/search_expansion/search_expansion_terms.csv')
     end
 
     # Now we'll check to see if single_word exists within the set of search expansion terms
@@ -99,13 +178,30 @@ module Hrwa::SearchExpansion::SearchExpander
 
   end
 
+  # Caches
+  def cache_search_expansion_csv_file_data
+    if @@search_expansion_hash_CACHED.nil?
+      # We want to cache the search_expansion_terms.csv file data into memory as a hash (using Rails class caching)
+      Rails.logger.debug("Cache is NOT available for @@search_expansion_hash_CACHED.  Loading from file.")
+      @@search_expansion_hash_CACHED, @@multi_word_synonym_hash_tree_CACHED  = get_search_expansion_hash_and_multi_word_synonym_hash_tree_from_csv_file('lib/hrwa/search_expansion/search_expansion_terms.csv')
+    end
+  end
+
   # Returns a hash that maps each expansion term to its group of related expansion terms
   # Note: Groups of related expansion terms contain ALL related expansion terms, including
   # whichever hash key is mapping to that group. Keys and values are all lower case
   # Sample structure: { :adi => ['adi','abo','abor','abors','tangam'], :adivasis => ['adivasis','adibasis'], :adibasis => ['adivasis','adibasis'] }
-  def get_search_expansion_hash_from_csv_file(path_to_csv_file)
+  #
+  # As second return value, returns a hash-of-hashes that generates a tree structure that breaks multi-word search expansion terms into a hash tree structure like this:
+  # Sample synonyms: Dalits | Depressed classes | Harijans | Scheduled castes | Untouchables
+  # Results in a list that looks like: { "Depressed" => {"classes" => true}, "Scheduled" => {"castes" => true} }
+  # Other sample synonyms: Space age, Spaceman, Space flight museum, Dogs in space
+  # Results in a list that looks like: { "Space" => { "age" => true, "flight" => {"museum" => true} }, "Dogs" => { "in" => {"space" => true} } }
+
+  def get_search_expansion_hash_and_multi_word_synonym_hash_tree_from_csv_file(path_to_csv_file)
 
     search_expansion_hash_to_return = {}
+    multi_word_synonym_hash_tree_to_return = {}
 
     file_content = File.read(path_to_csv_file)
     file_content.gsub!(/,{2,}/, '') # Remove adjacent commas whenever two or more are next to each other (because these appear at the end of some rows when the number of columns varies)
@@ -118,10 +214,33 @@ module Hrwa::SearchExpansion::SearchExpander
 
     lines.each { |line|
 
-      # Convert each line into an array of words without leading or trailing whitespace
+      # Convert each line into an array of terms without leading or trailing whitespace
       array_for_this_line = []
-      line.split(',').each { |word|
-        array_for_this_line.push(word.strip)
+      line.split(',').each { |term|
+        term.strip! #remove leading and trailing whitespace
+        array_for_this_line.push(term)
+        #And if this "word" is a multi-word term, split it up and put it into multi_word_synonym_hash_tree_to_return
+        hash_builder = {}
+        first_run = true
+        unless term.index(' ').nil?
+          individual_words_in_multiword_term = term.split(' ')
+          individual_words_in_multiword_term.reverse!
+          individual_words_in_multiword_term.each_index { |index|
+
+            current_word = individual_words_in_multiword_term[index].downcase.to_sym
+
+            if index == 0
+              #First item in reversed array
+              hash_builder[current_word] = true; #first run only
+            elsif index == individual_words_in_multiword_term.length-1
+              hash_builder = {current_word => hash_builder}
+              multi_word_synonym_hash_tree_to_return = merge_hash_recursively(multi_word_synonym_hash_tree_to_return, hash_builder)
+            else
+              #Middle item in reversed array
+              hash_builder = {current_word => hash_builder}
+            end
+          }
+        end
       }
 
       # For each word in the newly-generated array, put that word in
@@ -143,12 +262,19 @@ module Hrwa::SearchExpansion::SearchExpander
       raise "Error: The list of search expansion terms is unavailable."
     end
 
-    return search_expansion_hash_to_return
+    puts multi_word_synonym_hash_tree_to_return.inspect
+
+    return search_expansion_hash_to_return, multi_word_synonym_hash_tree_to_return
 
   end
 
+  #http://stackoverflow.com/questions/8415240/merge-ruby-hash
+  def merge_hash_recursively(a, b)
+    a.merge(b) {|key, a_item, b_item| merge_hash_recursively(a_item, b_item) }
+  end
+
   def get_expanded_query_from_expanded_search_terms_array(expanded_search_terms_arr)
-    
+
     expanded_query_to_return = ''
 
     expanded_search_terms_arr.each_index { |index|

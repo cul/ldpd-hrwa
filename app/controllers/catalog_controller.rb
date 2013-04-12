@@ -139,6 +139,9 @@ class CatalogController < ApplicationController
     #Remove extra :search_type_mobile_button param if it exists
     params.delete(:search_type_mobile_button)
 
+    #Cache expansion term data from csv file
+    cache_search_expansion_csv_file_data #important!
+
     # Check for search expansion terms during archive searches IF we are not already performing a search expansion (i.e. params[:search_expansion] is set)
     if params[:search_type] == 'archive'
       @expanded_search_terms_found, @expanded_search_terms = find_expanded_search_terms_for_query(params[:q])
