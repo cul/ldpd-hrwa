@@ -36,7 +36,7 @@ describe 'Hrwa::SearchExpansion::SearchExpander' do
       puts query_terms_with_expanded_search_terms_arr.should == [{"information"=>nil}, {"\"depressed classes\""=>["Dalits", "Harijans", "Scheduled castes", "Untouchables"]}, {"government"=>nil}]
     end
 
-    it 'finds search expansion terms for multi-word known expandable query even when that multi-word query is not quoted (three word term)', :focus => true do
+    it 'finds search expansion terms for multi-word known expandable query even when that multi-word query is not quoted (three word term)' do
       at_least_one_expanded_search_term_found, query_terms_with_expanded_search_terms_arr = @search_expander.find_expanded_search_terms_for_query('information Lac Courte Oreilles government')
       at_least_one_expanded_search_term_found.should == true
       puts query_terms_with_expanded_search_terms_arr.should == [{"information"=>nil}, {"\"Lac Courte Oreilles\""=>["Algic", "Anishinabe", "Bawichtigoutek", "Bungee", "Bungi", "Chipouais", "Chippewa", "Ochepwa", "Odjibway", "Ojebwa", "Ojibua", "Ojibwa", "Ojibwauk", "Ojibway", "Ojibwe", "Otchilpwe", "Salteaux", "Saulteaux"]}, {"government"=>nil}]
@@ -110,7 +110,7 @@ describe 'Hrwa::SearchExpansion::SearchExpander' do
       expanded_query.should == "information AND (\"depressed classes\" OR Dalits OR Harijans OR \"Scheduled castes\" OR Untouchables) AND government"
     end
 
-    it 'returns the expected expanded query - test 6 (identifying a NON-quoted multi-word expandable term - TEST with case-insensitive match to "LaC CoUrTe OrEiLlEs")', :focus => true do
+    it 'returns the expected expanded query - test 6 (identifying a NON-quoted multi-word expandable term - TEST with case-insensitive match to "LaC CoUrTe OrEiLlEs")' do
       expanded_search_terms_found, expanded_search_terms = @search_expander.find_expanded_search_terms_for_query('information LaC CoUrTe OrEiLlEs government')
       expanded_query = @search_expander.get_expanded_query_from_expanded_search_terms_array(expanded_search_terms)
       expanded_query.should == "information AND (\"LaC CoUrTe OrEiLlEs\" OR Algic OR Anishinabe OR Bawichtigoutek OR Bungee OR Bungi OR Chipouais OR Chippewa OR Ochepwa OR Odjibway OR Ojebwa OR Ojibua OR Ojibwa OR Ojibwauk OR Ojibway OR Ojibwe OR Otchilpwe OR Salteaux OR Saulteaux) AND government"
