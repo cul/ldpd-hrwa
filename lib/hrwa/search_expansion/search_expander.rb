@@ -56,9 +56,12 @@ module Hrwa::SearchExpansion::SearchExpander
   # scanned for expandable synonyms.
   def wrap_any_known_multi_word_search_expandable_terms_in_double_quotes(q)
 
-    puts 'scanning query: ' + q
-
     individual_words_in_query = q.split(' ')
+
+    if individual_words_in_query.length < 2
+      #query is <= 1 word, so no need to compare to multi-word expandable terms
+      return q
+    end
 
     found_match = false
     phrase_to_quote = ''
@@ -72,56 +75,44 @@ module Hrwa::SearchExpansion::SearchExpander
       found_words[0] = individual_words_in_query[index]
       found_words_as_downcase_syms[0] = found_words[0].downcase.to_sym
       if( ! found_match && @@multi_word_synonym_hash_tree_CACHED.include?(found_words_as_downcase_syms[0]))
-        puts '-' + found_words[0].to_s
+        #puts '-' + found_words[0].to_s # for debugging purposes
 
         latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]]
         phrase_to_quote += found_words[0] + ' '
-        if latest_value == true
-          puts "we're done!"
-          found_match = true
-        end
 
-        #Check second word
-        found_words[1] = individual_words_in_query[index+1]
-        found_words_as_downcase_syms[1] = found_words[1].downcase.to_sym
-        if( ! found_match && @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]].include?(found_words_as_downcase_syms[1]) )
-          puts '--' + found_words[1].to_s
+        # At this point in the code, we already know that there must be at least two words in the multi-word query that we're analyzing
 
-          latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]]
-          phrase_to_quote += found_words[1] + ' '
-          if latest_value == true
-            puts "we're done!!"
-            found_match = true
+        i = 1
+        while( ! individual_words_in_query[index+i].nil? )
+          found_words[i] = individual_words_in_query[index+i]
+          found_words_as_downcase_syms[i] = found_words[i].downcase.to_sym
+
+          latest_value_string_to_eval = '@@multi_word_synonym_hash_tree_CACHED'
+
+          (0..i).each do |num|
+            latest_value_string_to_eval += "[found_words_as_downcase_syms[#{num}]]"
           end
+          latest_value = eval(latest_value_string_to_eval)
 
-          #Check third word
-          found_words[2] = individual_words_in_query[index+2]
-          found_words_as_downcase_syms[2] = found_words[2].downcase.to_sym
-          if( ! found_match && @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]].include?(found_words_as_downcase_syms[2]) )
-            puts '---' + found_words[2].to_s
-
-            latest_value = @@multi_word_synonym_hash_tree_CACHED[found_words_as_downcase_syms[0]][found_words_as_downcase_syms[1]][found_words_as_downcase_syms[2]] == true
-            phrase_to_quote += found_words[2] + ' '
+          if( ! found_match && latest_value )
+            #puts '-'*(i+1) + found_words[i].to_s # for debugging purposes
+            phrase_to_quote += found_words[i] + ' '
             if latest_value == true
-              puts "we're done!!!"
               found_match = true
+              break
             end
-
           end
+
+          i += 1
         end
+
       end
 
       phrase_to_quote.strip!
 
-      if found_match
-        break
-      end
-
     }
 
-
     if found_match
-      puts 'phrase_to_quote: ' + phrase_to_quote
       #re-scan to make sure that we catch any other multi-word synonyms
       q = wrap_any_known_multi_word_search_expandable_terms_in_double_quotes(q.gsub(phrase_to_quote, '"' + phrase_to_quote + '"'))
     end
@@ -261,8 +252,6 @@ module Hrwa::SearchExpansion::SearchExpander
     if search_expansion_hash_to_return.empty?
       raise "Error: The list of search expansion terms is unavailable."
     end
-
-    puts multi_word_synonym_hash_tree_to_return.inspect
 
     return search_expansion_hash_to_return, multi_word_synonym_hash_tree_to_return
 

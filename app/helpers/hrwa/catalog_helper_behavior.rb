@@ -226,7 +226,7 @@ module Hrwa::CatalogHelperBehavior
 
     expanded_search_terms.each { |expanded_term_item|
       expanded_term_item.each { |term, array_of_related_terms|
-        html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + " (via \"<strong>#{term}</strong>\")<br />"
+        html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + ' (via "<strong>' + (term.start_with?('"') && term.end_with?('"') ? term[1, term.length-2] : term ) + '</strong>")<br />'
         html_to_return += html_output_for_term
       }
     }
