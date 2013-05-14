@@ -18,9 +18,11 @@ jQuery(function($) {
 		alert('disallowing external (non-cu) clicks for now while testing.');
 		return false;
   });
+/*
   $('a[data-exitmsg]').click(function () {
 		alert($(this).attr('data-exitmsg'));
   });
+*/
   $('div.alert-message a.close').live('click', function (e) {
 	$(this).parent('.alert-message').hide();
 	return false;
@@ -57,7 +59,7 @@ jQuery(function($) {
   /* Links with class .target-blank should be opened in a new window */
   $('a.target-blank').attr('target','_blank');
   /* Will phase out above in favor of below to keep classes cleaner */
-  $('a[data-target="new"]').attr('target','_new');
+  $('a[data-target="blank"]').attr('target','_blank');
 
   /*****************
    * THUMBNAIL     *

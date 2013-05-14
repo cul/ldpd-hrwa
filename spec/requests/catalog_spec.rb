@@ -128,165 +128,6 @@ describe 'archive search' do
     }
   end
 
-  # We don't have a way of using capybara to slide the sliders, so this test
-  # involves going to a url in which the sliders are already set, but
-  # no other form settings are set.  Then we re-submit the form to make sure
-  # that the sliders preserve the query string values and properly resubmit
-  # them with the other new form values.
-  describe 'SOLR field boost level overriding' do
-    it 'correctly sets new weights for contents, title, and originalUrl', :js => true do
-
-      visit '/search?field%5B%5D=originalUrl%5E2&field%5B%5D=title%5E3&field%5B%5D=contents%5E4&debug_mode=true'
-      find('#search_type_archive').click()
-      click_link 'advo_link'
-      click_link 'top_form_submit'
-      page.should have_content( %q{:qf=>["originalUrl^2", "title^3", "contents^4"]} )
-    end
-
-    it 'correctly sets new weights for contents, title and originalUrl, with originalUrl omitted in form submission', :js => true do
-      visit '/search?field%5B%5D=title%5E3&field%5B%5D=contents%5E4&debug_mode=true'
-      choose 'asfsearch'
-      click_link 'advo_link'
-      click_link 'top_form_submit'
-      page.should have_content( %q{:qf=>["originalUrl^1", "title^3", "contents^4"]} )
-    end
-  end
-
-  describe 'advanced mode' do
-    it 'informs user "No results found" if advanced search returns no hits', :js => true do
-      visit '/search'
-      choose 'asfsearch'
-      click_link 'advo_link'
-      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'top_form_submit'
-      page.should have_content('No results found')
-    end
-
-    it 'returns 2,306 results for q_and=women', :js => true do
-      visit '/search'
-      choose 'asfsearch'
-      click_link 'advo_link'
-      fill_in 'q_and', :with => 'women'
-      click_link 'top_form_submit'
-      page.should have_content( '2,306' )
-    end
-
-    # HRWA-359 Bug
-    it 'does not wipe out facet fq params when a Date of Capture filter is specified', :js => true do
-      visit '/search'
-      choose 'asfsearch'
-      click_link 'advo_link'
-      fill_in 'q_and',              :with => 'women'
-      find('.capture_start_date_group select.year').select('2008')
-      find('.capture_start_date_group select.month').select('Mar')
-      find('.capture_end_date_group select.year').select('2012')
-      find('.capture_end_date_group select.month').select('Mar')
-      click_link 'top_form_submit'
-      click_link 'English'
-      click_link 'Menu'
-      click_link 'Turn debug on'
-      page.should have_content( %q{fq = ["{!raw f=language__facet}English", "dateOfCaptureYYYYMM:[ 200803 TO 201203 ]"]} )
-    end
-
-    # TODO: HRWA-375 Bug Test
-    #it 'does not create duplicate pills during an advanced search', :js => true do
-    #  visit '/search'
-    #  choose 'asfsearch'
-    #  click_link 'advo_link'
-    #  # ...other stuff here... (select items in <select> elements)
-    #  click_link 'top_form_submit'
-    #  click_link 'English'
-    #  #page.should_not have_content( %q{...put adjacent duplicate pill html here...} )
-    #end
-
-    # Slider test in advanced form (for the 'field' query string parameter )
-    it 'submits the slider values in the advanced form so that they appear in the form-generated url', :js => true do
-      visit '/search'
-      choose 'asfsearch'
-      click_link 'advo_link'
-      click_link 'top_form_submit'
-
-      page.current_url.should have_content( 'field%5B%5D=originalUrl%5E1&field%5B%5D=title%5E1&field%5B%5D=contents%5E1' )
-    end
-
-    describe 'archive search hrwa_host override dropdown' do
-        it 'correctly selects the Dev override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_asf').select('Dev')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/asf} )
-        end
-
-        it 'correctly selects the Test override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_asf').select('Test')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-3.6/asf} )
-        end
-
-        it 'correctly selects the Prod override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_asf').select('Prod')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://vorpal.cul.columbia.edu:8080/solr-3.6/asf} )
-        end
-    end
-
-    # Temporarily disabled until asf-hrwa-278 can be down-migrated to Solr 3.6
-    describe 'non-stemmed search boosting', :broken => true do
-
-        it 'enables boosting when the boost checkbox is checked, and debug mode indicates that it is using the correct core', :js => true do
-          visit '/search?&field%5B%5D=originalUrl%5E1&field%5B%5D=title%5E1&field%5B%5D=contents%5E1&field%5B%5D=originalUrl__no_stemming_balancing_field%5E23&field%5B%5D=title__no_stemming%5E23&field%5B%5D=contents__no_stemming%5E23'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          check('enable_ns_boost_checkbox')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278} )
-        end
-
-        it 'uses the boost values that are set in the advanced search form', :js => true do
-          visit '/search?field%5B%5D=originalUrl%5E10&field%5B%5D=title%5E20&field%5B%5D=contents%5E30&field%5B%5D=originalUrl__no_stemming_balancing_field%5E20&field%5B%5D=title__no_stemming%5E40&field%5B%5D=contents__no_stemming%5E60'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          check('enable_ns_boost_checkbox')
-          click_link 'top_form_submit'
-          page.should have_content( %q{field = ["originalUrl^10", "title^20", "contents^30", "originalUrl__no_stemming_balancing_field^20", "title__no_stemming^40", "contents__no_stemming^60"]} )
-        end
-
-        it 'displays a notice to users when they are performing a non-stemmed search', :js => true do
-          visit '/search'
-          choose 'asfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          check('enable_ns_boost_checkbox')
-          click_link 'top_form_submit'
-          page.should have_content( %q{You are currently performing a limited-result search that favors non-stemmed field searching.} )
-        end
-
-    end
-
-  end
 end
 
 describe 'find site search' do
@@ -303,65 +144,6 @@ describe 'find site search' do
     end
   }
 
-  describe 'advanced mode' do
-    it 'informs user "No results found" if advanced search returns no hits', :js => true do
-      visit '/search'
-      click_link 'advo_link'
-      fill_in 'q_and', :with => 'zzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaa'
-      click_link 'top_form_submit'
-      page.should have_content('No results found')
-    end
-
-    it 'returns search results for a known successful query', :js => true do
-      visit '/search'
-      click_link 'advo_link'
-      fill_in 'q_and', :with => 'water'
-      fill_in 'q_phrase', :with => 'Provides information'
-      fill_in 'q_or', :with => 'human rights'
-      fill_in 'q_exclude', :with => 'zamboni'
-      click_link 'top_form_submit'
-      page.should have_content('Center for Economic and Social Rights')
-    end
-  end
-
-  describe 'find_site search hrwa_host override dropdown' do
-        it 'correctly selects the Dev override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'fsfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_fsf').select('Dev')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://carter.cul.columbia.edu:8080/solr-3.6/fsf} )
-        end
-
-        it 'correctly selects the Test override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'fsfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_fsf').select('Test')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://harding.cul.columbia.edu:8080/solr-3.6/fsf} )
-        end
-
-        it 'correctly selects the Prod override server', :js => true do
-          visit '/search'
-          click_link 'Menu'
-          click_link 'Turn debug on'
-          choose 'fsfsearch'
-          click_link 'advo_link'
-          fill_in 'q_and', :with => 'women'
-          find('#hrwa_host_fsf').select('Prod')
-          click_link 'top_form_submit'
-          page.should have_content( %q{solr_url = http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf} )
-        end
-    end
-
 end
 
 describe 'site detail pages' do
@@ -372,94 +154,20 @@ describe 'site detail pages' do
 
   # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
   it 'can properly load the amnesty.org site detail page', :js => true do
-    visit '/site_detail/5421151'
+    visit '/search/5421151'
     page.should have_content('Amnesty International')
   end
 
   # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
   it 'can properly load the safhr.org site detail page', :js => true do
-    visit '/site_detail/5533251'
+    visit '/search/5533251'
     page.should have_content('South Asia Forum for Human Rights')
   end
 
   # Test below added to address https://issues.cul.columbia.edu/browse/HRWA-504
   it 'checks the find_site radio button when on a site_detail page', :js => true do
-    visit '/site_detail/5533251'
-    find("#fsfsearch").should be_checked
-  end
-
-end
-
-describe 'javascript two-way query conversion' do
-
-  describe 'proper multi q to single q conversion', :js => true do
-
-		before :each do
-			visit '/search'
-		end
-
-    it 'succeeds at a basic test' do
-			click_link 'advo_link'
-			fill_in 'q_and', :with => 'and1 and2 and3'
-			fill_in 'q_phrase', :with => 'an exact phrase'
-			fill_in 'q_or', :with => 'or1 or2 or3'
-			fill_in 'q_exclude', :with => 'exclude1 exclude2 exclude3'
-			find_field('q').value.should == '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
-    end
-
-  end
-
-  describe 'proper single q to multi q conversion', :js => true do
-
-    before :each do
-        visit '/search'
-    end
-
-    it 'succeeds at a basic test' do
-        fill_in 'q', :with => '+and1 +and2 +and3 "an exact phrase" or1 or2 or3 -exclude1 -exclude2 -exclude3'
-        click_link 'advo_link'
-        find_field('q_and').value.should == 'and1 and2 and3'
-        find_field('q_phrase').value.should == 'an exact phrase'
-        find_field('q_or').value.should == 'or1 or2 or3'
-        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
-    end
-
-    it 'works when q starts with a double quote' do
-        fill_in 'q', :with => '"an exact phrase" +and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3'
-        click_link 'advo_link'
-        find_field('q_and').value.should == 'and1 and2 and3'
-        find_field('q_phrase').value.should == 'an exact phrase'
-        find_field('q_or').value.should == 'or1 or2 or3'
-        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
-    end
-
-    it 'works when q ends with a double quote' do
-        fill_in 'q', :with => '+and1 +and2 +and3 or1 or2 or3 -exclude1 -exclude2 -exclude3 "an exact phrase"'
-        click_link 'advo_link'
-        find_field('q_and').value.should == 'and1 and2 and3'
-        find_field('q_phrase').value.should == 'an exact phrase'
-        find_field('q_or').value.should == 'or1 or2 or3'
-        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
-    end
-
-it 'works when q has lots of unnecessary extra spaces' do
-        fill_in 'q', :with => '     +and1 +and2      +and3    "an exact phrase"    or1      or2      or3     -exclude1     -exclude2 -exclude3     '
-        click_link 'advo_link'
-        find_field('q_and').value.should == 'and1 and2 and3'
-        find_field('q_phrase').value.should == 'an exact phrase'
-        find_field('q_or').value.should == 'or1 or2 or3'
-        find_field('q_exclude').value.should == 'exclude1 exclude2 exclude3'
-    end
-
-    it 'works when q has lots of detached pluses and minuses (if a plus or minus sign is alone, it\'s treated as a lone character rather than a special solr syntax item)' do
-        fill_in 'q', :with => '+ and1 + and2 +and3 "an exact phrase" or1 or2 or3 - exclude1 - exclude2 -exclude3'
-        click_link 'advo_link'
-        find_field('q_and').value.should == 'and3'
-        find_field('q_phrase').value.should == 'an exact phrase'
-        find_field('q_or').value.should == '+ and1 + and2 or1 or2 or3 - exclude1 - exclude2'
-        find_field('q_exclude').value.should == 'exclude3'
-    end
-
+    visit '/search/5533251'
+    find("#search_type_find_site").should be_checked
   end
 
 end

@@ -139,6 +139,33 @@ class CatalogController < ApplicationController
     #Remove extra :search_type_mobile_button param if it exists
     params.delete(:search_type_mobile_button)
 
+    #Cache expansion term data from csv file
+    cache_search_expansion_csv_file_data #important!
+
+    # Check for search expansion terms during archive searches IF we are not already performing a search expansion (i.e. params[:search_expansion] is set)
+    if params[:search_type] == 'archive'
+      @expanded_search_terms_found, @expanded_search_terms = find_expanded_search_terms_for_query(params[:q])
+    end
+
+    if params[:search_expansion] == 'true'
+      if @expanded_search_terms_found
+
+        @search_expansion_is_on = true
+        #Then we want to apply the expanded terms to the current query.  Let's reconstruct the query:
+        @original_query = params[:q]
+        @expanded_query = get_expanded_query_from_expanded_search_terms_array(@expanded_search_terms)
+
+      else
+        #If search_expansion is ON and we didn't find any search expansion terms, redirect to URL that doesn't contain the search_expansion param
+        params.delete(:search_expansion)
+        redirect_to params
+      end
+    end
+
+    if @search_expansion_is_on
+      params[:q] = @expanded_query
+    end
+
     # Be ready to capture Solr errors
     begin
       (@response, @result_list) = get_search_results
@@ -182,6 +209,10 @@ class CatalogController < ApplicationController
     end
 
     _append_default_debug_printout_items()
+
+    if @search_expansion_is_on
+      params[:q] = @original_query
+    end
 
     respond_to do |format|
       format.html { save_current_search_params }

@@ -7,6 +7,7 @@ module Blacklight::Catalog
 
   include Blacklight::Configurable
   include Blacklight::SolrHelper
+  include Hrwa::SearchExpansion::SearchExpander
 
   SearchHistoryWindow = 12 # how many searches to save in session history
 
@@ -292,4 +293,5 @@ module Blacklight::Catalog
         render "index", :status => 404
       end
     end
+
 end

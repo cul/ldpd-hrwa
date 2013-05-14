@@ -188,4 +188,50 @@ module Hrwa::CatalogHelperBehavior
     return url_for(url_params)
   end
 
+  # Returns the current url with an extra search_expansion=true added
+  def url_for_with_search_expansion_on(url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+
+    #add search_expansion param
+    url_params[:search_expansion] = true
+
+    #remove page so that we default to page 1
+    url_params.delete(:page)
+
+    return url_for(url_params)
+
+  end
+
+  # Removes search_expansion=true from the current url if it is present and returns the user to page of of the results
+  def url_for_with_search_expansion_off(url_params = params)
+
+    #we're doing an addition, so we want to dup url_params so as to avoid deleting anything from the real params hash
+    url_params = url_params.dup
+
+    #remove search_expansion param
+    url_params.delete(:search_expansion)
+
+    #remove page so that we default to page 1
+    url_params.delete(:page)
+
+    return url_for(url_params)
+
+  end
+
+  def get_expanded_search_term_relationship_html(expanded_search_terms)
+
+    html_to_return = ''
+
+    expanded_search_terms.each { |expanded_term_item|
+      expanded_term_item.each { |term, array_of_related_terms|
+        html_output_for_term = array_of_related_terms.nil? ? '' : '&bull; ' + array_of_related_terms.join(', ') + ' (via "<strong>' + (term.start_with?('"') && term.end_with?('"') ? term[1, term.length-2] : term ) + '</strong>")<br />'
+        html_to_return += html_output_for_term
+      }
+    }
+
+    return html_to_return.html_safe
+  end
+
 end

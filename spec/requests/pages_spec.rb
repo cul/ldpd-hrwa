@@ -16,14 +16,7 @@ end
 describe 'about page' do
   it 'loads with the correct text' do
     visit '/about'
-    page.should have_content('About the Project')
-  end
-end
-
-describe 'collection browse page' do
-  it 'loads with the correct text' do
-    visit '/browse'
-    page.should have_content('Collection Browse')
+    page.should have_content('About the Archive')
   end
 end
 
