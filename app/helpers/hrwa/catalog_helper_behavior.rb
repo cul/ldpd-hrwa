@@ -109,7 +109,7 @@ module Hrwa::CatalogHelperBehavior
   end
 
   # Returns the current url without any capture-date-related params
-  # i.e. - Removes :capture_start_date, :capture_end_date and :f['dateOfCaptureYYYY']
+  # i.e. - Removes :capture_start_date, :capture_end_date and :f['date_of_capture_yyyy']
   def url_for_without_capture_date_params(url_params = params)
 
     #we're doing a deletion, so we want to dup url_params so as to avoid deleting anything from the real params hash

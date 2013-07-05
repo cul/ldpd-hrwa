@@ -7,7 +7,8 @@ class Hrwa::FindSiteSearchConfigurator
   def config_proc
       return Proc.new { |config|
         config.default_solr_params = {
-          :defType          => "edismax",
+          :defType          => 'edismax',
+          :'q.op'           => 'AND', # Default search operator == AND
           :facet            => true,
           :'facet.mincount' => 1,
           :hl               => true,

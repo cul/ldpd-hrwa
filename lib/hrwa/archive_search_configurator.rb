@@ -8,31 +8,30 @@ class Hrwa::ArchiveSearchConfigurator
       return Proc.new { |config|
         config.default_solr_params = {
           :defType          => 'edismax',
+          :'q.op'           => 'AND', # Default search operator == AND
           :facet            => true,
           :'facet.mincount' => 1,
           :group            => true,
-          :'group.field'    => 'originalUrl',
+          :'group.field'    => 'original_url',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 400,
+          :'hl.fragsize'    => 600,
           :'hl.fl'          => [
                                'contents',
                                'title',
-                               'originalUrl',
+                               'original_url',
                                ],
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
           :'q.alt'          => '*:*',
           :qf               => [
-                                'contents^1',
-                               'title^1',
-                               'originalUrl^1',
+                                'text^1',
                                ],
           :rows             => self.default_num_rows,
         }
 
-        config.unique_key = 'recordIdentifier'
+        config.unique_key = 'record_identifier'
 
         # solr field configuration for search results/index views
         config.index.show_link           = 'title'
@@ -64,11 +63,11 @@ class Hrwa::ArchiveSearchConfigurator
                                :label => 'Domain',
                                :limit => 5
 
-        config.add_facet_field 'dateOfCaptureYYYY',
+        config.add_facet_field 'date_of_capture_yyyy',
                                :label => 'Date Of Capture',
                                :limit => 5
 
-        config.add_facet_field 'mimetypeCode',
+        config.add_facet_field 'mimetype_code',
                                :label => 'File Type',
                                :limit => 6,
                                :partial => 'facet_layout_for_mimetype_code'
@@ -172,9 +171,9 @@ class Hrwa::ArchiveSearchConfigurator
       solr_parameters[ :fq ] ||= []
       # Remove any existing capture date range filter
       # debugger
-      solr_parameters[ :fq ].delete_if { | param | param =~ /^dateOfCaptureYYYYMM/ }
+      solr_parameters[ :fq ].delete_if { | param | param =~ /^date_of_capture_yyyymm/ }
 
-      solr_parameters[ :fq ] << "dateOfCaptureYYYYMM:[ #{ capture_start_date } TO #{ capture_end_date } ]"
+      solr_parameters[ :fq ] << "date_of_capture_yyyymm:[ #{ capture_start_date } TO #{ capture_end_date } ]"
     end
 
   def add_exclude_fq_to_solr( solr_parameters, user_params = params )
@@ -248,7 +247,7 @@ class Hrwa::ArchiveSearchConfigurator
 
   def prioritized_highlight_field_list
     return [
-            'originalUrl',
+            'original_url',
             'title',
             'contents',
             ]
@@ -265,7 +264,7 @@ class Hrwa::ArchiveSearchConfigurator
   def set_solr_field_boost_levels( solr_parameters, user_params )
     return if ! user_params.has_key?( :field )
 
-    valid_solr_fields = [ 'contents', 'title', 'originalUrl', ]
+    valid_solr_fields = [ 'contents', 'title', 'original_url', ]
 
     qf = []
     user_params[ :field ].each { | field_boost |

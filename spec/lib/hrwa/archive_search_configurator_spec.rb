@@ -39,8 +39,8 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
           :facet            => true,
           :'facet.field'    => [
                                 'domain',
-                                'dateOfCaptureYYYY',
-                                'mimetypeCode',
+                                'date_of_capture_yyyy',
+                                'mimetype_code',
                                 'geographic_focus__facet',
                                 'organization_based_in__facet',
                                 'organization_type__facet',
@@ -49,23 +49,21 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
                                ],
           :'facet.mincount' => 1,
           :group            => true,
-          :'group.field'    => 'originalUrl',
+          :'group.field'    => 'original_url',
           :'group.limit'    => 10,
           :hl               => true,
-          :'hl.fragsize'    => 400,
+          :'hl.fragsize'    => 600,
           :'hl.fl'          => [
                                'contents',
                                'title',
-                               'originalUrl',
+                               'original_url',
                                ],
           :'hl.usePhraseHighlighter' => true,
           :'hl.simple.pre'  => '<code>',
           :'hl.simple.post' => '</code>',
           :'q.alt'          => "*:*",
           :qf               => [
-                                'contents^1',
-                                'title^1',
-                                'originalUrl^1',
+                                'text^1'
                                ],
           :rows             => @configurator.default_num_rows,
         }
@@ -74,8 +72,8 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
     it 'sets Blacklight::Configuration.facet_fields.* stuff correctly' do
       expected_facet_fields = {
         'domain'                       => { :label => 'Domain',                     :limit => 5 },
-        'dateOfCaptureYYYY'            => { :label => 'Date Of Capture',            :limit => 5 },
-        'mimetypeCode'                 => { :label => 'File Type',                  :limit => 6 },
+        'date_of_capture_yyyy'            => { :label => 'Date Of Capture',            :limit => 5 },
+        'mimetype_code'                 => { :label => 'File Type',                  :limit => 6 },
         'geographic_focus__facet'      => { :label => 'Geographic Focus',           :limit => 5 },
         'organization_based_in__facet' => { :label => 'Organization Based In',      :limit => 5 },
         'organization_type__facet'     => { :label => 'Organization Type',          :limit => 5 },
@@ -123,7 +121,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
     end
 
     it 'sets Blacklight::Configuration.unique_key correctly' do
-      @blacklight_config.unique_key.should == 'recordIdentifier'
+      @blacklight_config.unique_key.should == 'record_identifier'
     end
 
     it '#post_blacklight_processing_required? returns true' do
@@ -132,7 +130,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
 
     it '#post_blacklight_processing modifies result_list correctly' do
       raw_response         = create_mock_raw_response
-      expected_result_list = raw_response[ 'grouped' ][ 'originalUrl' ][ 'groups' ]
+      expected_result_list = raw_response[ 'grouped' ][ 'original_url' ][ 'groups' ]
 
       solr_response = create_mock_rsolr_ext_response
       result_list   = [ "doesn't matter what's in here -- should never see this" ]
@@ -171,7 +169,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
           @extra_controller_params,
           { :capture_start_date => '200801', :capture_end_date => end_date }
         )
-        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 200801 TO * ]' ]
+        @extra_controller_params[ :fq ].should == [ 'date_of_capture_yyyymm:[ 200801 TO * ]' ]
       end
     }
 
@@ -181,7 +179,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
           @extra_controller_params,
           { :capture_start_date => start_date, :capture_end_date => '200801' }
         )
-        @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ * TO 200801 ]' ]
+        @extra_controller_params[ :fq ].should == [ 'date_of_capture_yyyymm:[ * TO 200801 ]' ]
       end
     }
 
@@ -190,7 +188,7 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
         @extra_controller_params,
         { :capture_start_date => '200801', :capture_end_date => '201201' }
       )
-      @extra_controller_params[ :fq ].should == [ 'dateOfCaptureYYYYMM:[ 200801 TO 201201 ]' ]
+      @extra_controller_params[ :fq ].should == [ 'date_of_capture_yyyymm:[ 200801 TO 201201 ]' ]
     end
   end
 
@@ -243,8 +241,8 @@ describe 'Hrwa::ArchiveSearchConfigurator' do
 
   describe '#set_solr_field_boost_levels' do
     before :all do
-      @default_qf   = [ 'title^1', 'contents^1', 'originalUrl^1' ]
-      @valid_params = [ 'title^3', 'contents^2', 'originalUrl^4' ]
+      @default_qf   = [ 'original_url^1' ]
+      @valid_params = [ 'original_url^2' ]
       @bad_params   = [ 'subject^5', 'body^3' ]
     end
 

@@ -72,12 +72,22 @@ spatha_solr: &spatha_solr
   site_detail:
     url: "http://spatha.cul.columbia.edu:8181/solr-3.6/fsf"
   asf-hrwa-278: *asf-hrwa-278
+  
+#new-dev
+fillmore_solr: &fillmore_solr
+  asf:
+    url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
+  fsf:
+    url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
+  site_detail:
+    url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
+  asf-hrwa-278: *asf-hrwa-278
 
-development: *vorpal_solr
-test: *spatha_solr
-production: *vorpal_solr
+development: *fillmore_solr
+test: *fillmore_solr
+production: *fillmore_solr
 
-hrwa_dev: *vorpal_solr
-hrwa_staging: *vorpal_solr
-hrwa_test: *vorpal_solr
-hrwa_prod: *vorpal_solr
+hrwa_dev: *fillmore_solr
+hrwa_staging: *fillmore_solr
+hrwa_test: *fillmore_solr
+hrwa_prod: *fillmore_solr

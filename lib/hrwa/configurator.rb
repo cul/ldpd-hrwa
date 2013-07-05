@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'hrwa/archive_search_configurator'
-require 'hrwa/archive_search_with_stemming_adjuster_configurator'
 require 'hrwa/find_site_search_configurator'
 require 'hrwa/site_detail_configurator'
 

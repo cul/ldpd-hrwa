@@ -9,11 +9,11 @@ def mock_query_response_grouped
      "group.limit"=>"10",
      "spellcheck.q"=>"+women",
      "q.alt"=>"*:*",
-     "f.dateOfCaptureYYYY.facet.limit"=>"11",
+     "f.date_of_capture_yyyy.facet.limit"=>"11",
      "f.organization_type__facet.facet.limit"=>"11",
      "f.language__facet.facet.limit"=>"11",
      "f.mimetype.facet.limit"=>"11",
-     "group.field"=>"originalUrl",
+     "group.field"=>"original_url",
      "facet.field"=>
       ["domain",
        "geographic_focus__facet",
@@ -23,13 +23,11 @@ def mock_query_response_grouped
        "contentMetaLanguage",
        "creator_name__facet",
        "mimetype",
-       "dateOfCaptureYYYY"],
+       "date_of_capture_yyyy"],
      "f.creator_name__facet.facet.limit"=>"11",
      "facet.mincount"=>"1",
      "qf"=>
-      ["title^1",
-       "contents^1",
-       "originalUrl^1"],
+      ["text^1"],
      "wt"=>"ruby",
      "f.geographic_focus__facet.facet.limit"=>"11",
      "defType"=>"dismax",
@@ -40,7 +38,7 @@ def mock_query_response_grouped
      "q"=>"+women",
      "group"=>"true"}},
  "grouped"=>
-  {"originalUrl"=>
+  {"original_url"=>
     {"matches"=>1064474,
      "groups"=>
       [{"groupValue"=>"http://www.hrw.org/he/keywords/women",
@@ -49,16 +47,16 @@ def mock_query_response_grouped
           "start"=>0,
           "docs"=>
            [{"title"=>"Taxonomy | Human Rights Watch",
-             "originalUrl"=>"http://www.hrw.org/he/keywords/women",
-             "dateOfCaptureYYYY"=>"2011",
+             "original_url"=>"http://www.hrw.org/he/keywords/women",
+             "date_of_capture_yyyy"=>"2011",
              "statusCode"=>"200",
              "timestamp"=>"2011-09-29T21:39:45.041Z",
-             "dateOfCaptureYYYYMMDD"=>"20110606",
-             "archivedUrl"=>
+             "date_of_capture_yyyymmdd"=>"20110606",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20110606222047/http://www.hrw.org/he/keywords/women",
              "recordDate"=>"20110606222047",
              "contentMetaKeywords"=>"women",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20110606222047/http://www.hrw.org/he/keywords/women",
              "contentBody"=>
               "This is a doc.",
@@ -69,7 +67,7 @@ def mock_query_response_grouped
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2011_06/ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110606220953-00002-crawling207.us.archive.org-6680.warc.gz",
              "digest"=>"sha1:JTTZZQQNH2MXEH4LHABXR2RT7Y6EFZNR",
              "mimetype"=>"text/html; charset=utf-8",
-             "dateOfCaptureYYYYMM"=>"201106",
+             "date_of_capture_yyyymm"=>"201106",
              "bib_key"=>"4391359",
              "organization_based_in__facet"=>"New York (State)",
              "organization_based_in"=>"New York (State)",
@@ -95,16 +93,16 @@ def mock_query_response_grouped
           "start"=>0,
           "docs"=>
            [{"title"=>"Taxonomy | Human Rights Watch",
-             "originalUrl"=>"http://www.hrw.org/es/keywords/women",
-             "dateOfCaptureYYYY"=>"2011",
+             "original_url"=>"http://www.hrw.org/es/keywords/women",
+             "date_of_capture_yyyy"=>"2011",
              "statusCode"=>"200",
              "timestamp"=>"2011-09-29T21:39:51.012Z",
-             "dateOfCaptureYYYYMMDD"=>"20110606",
-             "archivedUrl"=>
+             "date_of_capture_yyyymmdd"=>"20110606",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20110606223240/http://www.hrw.org/es/keywords/women",
              "recordDate"=>"20110606223240",
              "contentMetaKeywords"=>"women",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20110606223240/http://www.hrw.org/es/keywords/women",
              "contentBody"=>
               "This is a doc.",
@@ -115,7 +113,7 @@ def mock_query_response_grouped
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2011_06/ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110606220953-00002-crawling207.us.archive.org-6680.warc.gz",
              "digest"=>"sha1:G4WW5I26EPHCPFQ6SZOMBQU2MBYN7ASA",
              "mimetype"=>"text/html; charset=utf-8",
-             "dateOfCaptureYYYYMM"=>"201106",
+             "date_of_capture_yyyymm"=>"201106",
              "bib_key"=>"4391359",
              "organization_based_in__facet"=>"New York (State)",
              "organization_based_in"=>"New York (State)",
@@ -141,16 +139,16 @@ def mock_query_response_grouped
           "start"=>0,
           "docs"=>
            [{"title"=>"women | Human Rights Watch",
-             "originalUrl"=>"http://www.hrw.org/en/keywords/women",
-             "dateOfCaptureYYYY"=>"2011",
+             "original_url"=>"http://www.hrw.org/en/keywords/women",
+             "date_of_capture_yyyy"=>"2011",
              "statusCode"=>"200",
              "timestamp"=>"2011-09-29T21:41:54.223Z",
-             "dateOfCaptureYYYYMMDD"=>"20110607",
-             "archivedUrl"=>
+             "date_of_capture_yyyymmdd"=>"20110607",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20110607054349/http://www.hrw.org/en/keywords/women",
              "recordDate"=>"20110607054349",
              "contentMetaKeywords"=>"women",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20110607054349/http://www.hrw.org/en/keywords/women",
              "contentBody"=>
               "This is a doc.",
@@ -161,7 +159,7 @@ def mock_query_response_grouped
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2011_06/ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110607044225-00021-crawling207.us.archive.org-6680.warc.gz",
              "digest"=>"sha1:QY4XD7BFV3OAJMRQX2BDOTLJWA6DWGBQ",
              "mimetype"=>"text/html; charset=utf-8",
-             "dateOfCaptureYYYYMM"=>"201106",
+             "date_of_capture_yyyymm"=>"201106",
              "bib_key"=>"4391359",
              "organization_based_in__facet"=>"New York (State)",
              "organization_based_in"=>"New York (State)",
@@ -187,16 +185,16 @@ def mock_query_response_grouped
           "start"=>0,
           "docs"=>
            [{"title"=>"Taxonomy | Human Rights Watch",
-             "originalUrl"=>"http://www.hrw.org/fr/keywords/women",
-             "dateOfCaptureYYYY"=>"2011",
+             "original_url"=>"http://www.hrw.org/fr/keywords/women",
+             "date_of_capture_yyyy"=>"2011",
              "statusCode"=>"200",
              "timestamp"=>"2011-09-29T21:44:10.051Z",
-             "dateOfCaptureYYYYMMDD"=>"20110607",
-             "archivedUrl"=>
+             "date_of_capture_yyyymmdd"=>"20110607",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20110607143029/http://www.hrw.org/fr/keywords/women",
              "recordDate"=>"20110607143029",
              "contentMetaKeywords"=>"women",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20110607143029/http://www.hrw.org/fr/keywords/women",
              "contentBody"=>
               "This is a doc.",
@@ -207,7 +205,7 @@ def mock_query_response_grouped
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2011_06/ARCHIVEIT-1068-BIMONTHLY-QXGACE-20110607131404-00033-crawling207.us.archive.org-6680.warc.gz",
              "digest"=>"sha1:6AURPJVALKWLA2H2HUXCF7BFYL73JAJP",
              "mimetype"=>"text/html; charset=utf-8",
-             "dateOfCaptureYYYYMM"=>"201106",
+             "date_of_capture_yyyymm"=>"201106",
              "bib_key"=>"4391359",
              "organization_based_in__facet"=>"New York (State)",
              "organization_based_in"=>"New York (State)",
@@ -237,18 +235,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "length"=>5938,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1272455398",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153026",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153026/http://khpg.org/en/index.php?do=print&id=1272455398",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153026/http://khpg.org/en/index.php?do=print&id=1272455398",
              "contentBody"=>
               "This is a doc.",
@@ -272,18 +270,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "length"=>3979,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1270822714",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153107",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153107/http://khpg.org/en/index.php?do=print&id=1270822714",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153107/http://khpg.org/en/index.php?do=print&id=1270822714",
              "contentBody"=>
               "This is a doc.",
@@ -307,18 +305,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "length"=>4499,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1270551304",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153148",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153148/http://khpg.org/en/index.php?do=print&id=1270551304",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153148/http://khpg.org/en/index.php?do=print&id=1270551304",
              "contentBody"=>
               "This is a doc.",
@@ -341,18 +339,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "length"=>4630,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1270203432",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153228",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153228/http://khpg.org/en/index.php?do=print&id=1270203432",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153228/http://khpg.org/en/index.php?do=print&id=1270203432",
              "contentBody"=>
               "This is a doc.",
@@ -376,18 +374,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "length"=>4559,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1269350026",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904151955-01207-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153309",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153309/http://khpg.org/en/index.php?do=print&id=1269350026",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153309/http://khpg.org/en/index.php?do=print&id=1269350026",
              "contentBody"=>
               "This is a doc.",
@@ -411,18 +409,18 @@ def mock_query_response_grouped
               "ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904153338-01208-crawling04.us.archive.org-6682.warc.gz",
              "length"=>2037,
              "mimetype"=>"text/html",
-             "originalUrl"=>
+             "original_url"=>
               "http://khpg.org/en/index.php?do=print&id=1269043679",
              "readerIdentifier"=>
               "/cul/cul1/ldpd/mellon_web_resources_collection/human_rights/asf-indexer-qad/archive-it_copy/2010_09/ARCHIVEIT-1068-QUARTERLY-HUHLCT-20100904153338-01208-crawling04.us.archive.org-6682.warc.gz",
              "recordDate"=>"20100904153350",
-             "recordIdentifier"=>
+             "record_identifier"=>
               "20100904153350/http://khpg.org/en/index.php?do=print&id=1269043679",
              "statusCode"=>"200",
-             "dateOfCaptureYYYY"=>"2010",
-             "dateOfCaptureYYYYMM"=>"201009",
-             "dateOfCaptureYYYYMMDD"=>"20100904",
-             "archivedUrl"=>
+             "date_of_capture_yyyy"=>"2010",
+             "date_of_capture_yyyymm"=>"201009",
+             "date_of_capture_yyyymmdd"=>"20100904",
+             "archived_url"=>
               "http://wayback.archive-it.org/1068/20100904153350/http://khpg.org/en/index.php?do=print&id=1269043679",
              "contentBody"=>
               "This is a doc.",
@@ -609,7 +607,7 @@ def mock_query_response_grouped
        15531,
        "window",
        15531],
-     "dateOfCaptureYYYY"=>["2011", 581788, "2010", 476491, "2009", 6195]},
+     "date_of_capture_yyyy"=>["2011", 581788, "2010", 476491, "2009", 6195]},
    "facet_dates"=>{},
    "facet_ranges"=>{}}})
 end
