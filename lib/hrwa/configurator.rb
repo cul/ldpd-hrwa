@@ -12,8 +12,6 @@ class Hrwa::Configurator
     case search_request_type
       when :archive
         @configurator = Hrwa::ArchiveSearchConfigurator.new
-      when :archive_ns
-        @configurator = Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.new
       when :find_site
         @configurator = Hrwa::FindSiteSearchConfigurator.new
       when :site_detail
@@ -77,14 +75,12 @@ class Hrwa::Configurator
     Hrwa::ArchiveSearchConfigurator.reset_solr_config
     Hrwa::FindSiteSearchConfigurator.reset_solr_config
     Hrwa::SiteDetailConfigurator.reset_solr_config
-    Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.reset_solr_config
   end
 
   def self.override_solr_url(new_solr_yaml)
     Hrwa::ArchiveSearchConfigurator.override_solr_url(new_solr_yaml)
     Hrwa::FindSiteSearchConfigurator.override_solr_url(new_solr_yaml)
     Hrwa::SiteDetailConfigurator.override_solr_url(new_solr_yaml)
-    Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.override_solr_url(new_solr_yaml)
   end
 
   def prioritized_highlight_field_list

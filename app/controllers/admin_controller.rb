@@ -40,8 +40,7 @@ class AdminController < ApplicationController
     @current_solr_urls =  {
                             'asf_url' => Hrwa::ArchiveSearchConfigurator.solr_url,
                             'fsf_url' => Hrwa::FindSiteSearchConfigurator.solr_url,
-                            'site_detail_url' => Hrwa::SiteDetailConfigurator.solr_url,
-                            'asf-hrwa-278_url' => Hrwa::ArchiveSearchWithStemmingAdjusterConfigurator.solr_url
+                            'site_detail_url' => Hrwa::SiteDetailConfigurator.solr_url
                           }
   end
 
