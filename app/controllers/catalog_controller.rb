@@ -272,7 +272,7 @@ class CatalogController < ApplicationController
         @solr_url = get_solr_host_from_url(@configurator.name, params)
     end
 
-    Blacklight.solr = RSolr::Ext.connect( :url => @solr_url)
+    Blacklight.solr = RSolr::Ext.connect( :url => @solr_url, :read_timeout => 240, :open_timeout => 240 )
   end
 
   def _select_appropriate_partial
