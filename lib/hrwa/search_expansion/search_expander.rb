@@ -15,6 +15,8 @@ module Hrwa::SearchExpansion::SearchExpander
   # This method assumes that cache_search_expansion_csv_file_data has already been called and that all search expansion terms are available
   def find_expanded_search_terms_for_query(q)
 
+    puts 'SEARCHING FOR EXPANDED SEARCH TERMS FOR ' + q
+
     start_time = Time.now
 
     at_least_one_expanded_search_term_found = false
@@ -36,6 +38,7 @@ module Hrwa::SearchExpansion::SearchExpander
       else
         #normal single-word term found
         expanded_terms_for_single_term = find_expanded_terms_for_single_word(term)
+        puts 'TERMS: ' + expanded_terms_for_single_term.to_s
       end
 
       query_terms_with_expanded_search_terms_arr.push({term => expanded_terms_for_single_term})
@@ -154,7 +157,7 @@ module Hrwa::SearchExpansion::SearchExpander
     if ignore_words.include?(single_word_downcase)
       return nil
     end
-
+    puts @@search_expansion_hash_CACHED.to_s
     # Now we'll check to see if single_word exists within the set of search expansion terms
     if(expanded_terms = @@search_expansion_hash_CACHED[single_word_downcase.to_sym])
       expanded_terms = expanded_terms.dup # Important! Make a DUPLICATE of the returned expanded_terms array so that we don't modify the original in @@search_expansion_hash_CACHED
@@ -204,7 +207,7 @@ module Hrwa::SearchExpansion::SearchExpander
     lines = file_content.split("\n")
 
     lines.each { |line|
-
+puts 'line: ' + line.to_s
       # Convert each line into an array of terms without leading or trailing whitespace
       array_for_this_line = []
       line.split(',').each { |term|
@@ -243,8 +246,12 @@ module Hrwa::SearchExpansion::SearchExpander
       # associated synonyms (otherwise we'll have one unique array per word
       # in the search expansion terms file).  Basically, I'm trying to use
       # less memory.
+
+      array_for_this_line.sort! #sort once
+
       array_for_this_line.each { |expansion_synonym|
-        search_expansion_hash_to_return[expansion_synonym.downcase.to_sym] = array_for_this_line.sort! # Sort terms in alphabetical order
+        puts 'I found: ' + expansion_synonym + ", which is linked to: " + array_for_this_line.to_s
+        search_expansion_hash_to_return[expansion_synonym.downcase.to_sym] = array_for_this_line
       }
 
     }
