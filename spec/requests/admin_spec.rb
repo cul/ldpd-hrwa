@@ -67,9 +67,9 @@ describe 'the admin control panel' do
       # Fresh visit, not just checking after form submission
       visit '/admin'
 
-      page.should have_content( 'asf: http://spatha.cul.columbia.edu:8181/solr-3.6/asf' )
-      page.should have_content( 'fsf: http://spatha.cul.columbia.edu:8181/solr-3.6/fsf' )
-      page.should have_content( 'site_detail: http://spatha.cul.columbia.edu:8181/solr-3.6/fsf' )
+      page.should have_content( 'asf: http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-asf' )
+      page.should have_content( 'fsf: http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf' )
+      page.should have_content( 'site_detail: http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf' )
 
     end
 

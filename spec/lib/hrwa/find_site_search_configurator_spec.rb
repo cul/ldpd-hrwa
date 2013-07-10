@@ -29,6 +29,7 @@ describe 'Hrwa::FindSiteSearchConfigurator' do
       @blacklight_config.default_solr_params.should ==
         {
             :defType          => "edismax",
+            :'q.op'           => 'AND', # Default search operator == AND
             :facet            => true,
             :'facet.mincount' => 1,
             :hl               => true,
