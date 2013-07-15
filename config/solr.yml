@@ -9,61 +9,8 @@
 # however you want.  
 # jetty_path is only required for rake tasks that need to know
 # how to start up solr, generally for automated testing. 
-
-
-asf-hrwa-278: &asf-hrwa-278
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf-hrwa-278"
-
-test_solr: &test_solr
-  asf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-asf-unit-test"
-  fsf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
-  site_detail:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/hrwa_blacklight-fsf-unit-test"
-  asf-hrwa-278: *asf-hrwa-278
-
-#other
-coolidge_solr: &coolidge_solr
-  asf:
-    url: "http://coolidge.cul.columbia.edu:8080/solr-3.6/asf"
-  fsf:
-    url: "http://coolidge.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://coolidge.cul.columbia.edu:8080/solr-3.6/fsf"
-  asf-hrwa-278: *asf-hrwa-278
-
-#dev
-carter_solr: &carter_solr
-  asf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/asf"
-  fsf:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://carter.cul.columbia.edu:8080/solr-3.6/fsf"
-  asf-hrwa-278: *asf-hrwa-278
-
-#staging
-harding_solr: &harding_solr
-  asf:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/asf"
-  fsf:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://harding.cul.columbia.edu:8080/solr-3.6/fsf"
-  asf-hrwa-278: *asf-hrwa-278
-
-#prod
-vorpal_solr: &vorpal_solr
-  asf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/asf"
-  fsf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-  site_detail:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-3.6/fsf"
-  asf-hrwa-278: *asf-hrwa-278
   
-#prod-alt
+#prod
 spatha_solr: &spatha_solr
   asf:
     url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
@@ -71,9 +18,17 @@ spatha_solr: &spatha_solr
     url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
   site_detail:
     url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
-  asf-hrwa-278: *asf-hrwa-278
+    
+#prod-alt
+vorpal_solr: &vorpal_solr
+  asf:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
+  fsf:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
+  site_detail:
+    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
   
-#new-dev
+#super-powered-dev
 fillmore_solr: &fillmore_solr
   asf:
     url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
@@ -81,7 +36,6 @@ fillmore_solr: &fillmore_solr
     url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
   site_detail:
     url: "http://fillmore.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
-  asf-hrwa-278: *asf-hrwa-278
 
 development: *spatha_solr
 test: *spatha_solr

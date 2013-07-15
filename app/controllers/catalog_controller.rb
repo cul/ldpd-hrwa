@@ -251,11 +251,6 @@ class CatalogController < ApplicationController
       @search_type = search_type.to_sym
     end
 
-    # Backend method of reselecting search_type based on hrwa_core if hrwa_core is the no-stemming core
-    if ( params[ :hrwa_core ] == 'asf-hrwa-278' )
-      @search_type = :archive_ns
-    end
-
     @configurator = Hrwa::Configurator.new( @search_type )
 
     # See https://issues.cul.columbia.edu/browse/HRWA-324

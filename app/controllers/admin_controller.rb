@@ -36,7 +36,7 @@ class AdminController < ApplicationController
   def index
     _check_to_see_if_core_switching_is_possible
 
-    #asf, fsf, site_detail, asf-hrwa-278
+    #asf, fsf, site_detail
     @current_solr_urls =  {
                             'asf_url' => Hrwa::ArchiveSearchConfigurator.solr_url,
                             'fsf_url' => Hrwa::FindSiteSearchConfigurator.solr_url,
