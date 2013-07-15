@@ -70,7 +70,7 @@ class AdminController < ApplicationController
     flash[:notice] = 'Invalid override request.' # Default response
 
     # The check below makes sure that only valid servers in the valid overrides section of solr.yml can be selected
-    valid_overrides = ['test', 'carter', 'coolidge', 'harding', 'spatha', 'vorpal']
+    valid_overrides = ['spatha', 'vorpal', 'fillmore']
     solr_server_name = (valid_overrides.include?(params[:solr_server_name])) ? params[:solr_server_name] : nil
 
     if((params[:override] && ! solr_server_name.nil?) || params[:reset])
