@@ -15,7 +15,7 @@ class AdminController < ApplicationController
   end
 
   def login_options
-
+    _create_service_users_if_they_do_not_exist()
   end
 
   def _check_for_allowed_users
@@ -110,6 +110,17 @@ class AdminController < ApplicationController
     end
 
     redirect_to admin_path
+  end
+
+  private
+
+  def _create_service_users_if_they_do_not_exist()
+    if(ServiceUser.where("service_users.username = 'picard' OR service_users.username = 'computer'").length == 0)
+      service_users = YAML.load_file('config/service_users.yml')
+
+      ServiceUser.create :username => 'picard', :password => service_users['picard']['password'], :email => service_users['picard']['email']
+      ServiceUser.create :username => 'computer', :password => service_users['computer']['password'], :email => service_users['computer']['email']
+    end
   end
 
 end
