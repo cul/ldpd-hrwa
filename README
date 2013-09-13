@@ -3,7 +3,7 @@ The Human Rights Web Archive (Ruby on Rails App)
 The Human Rights Web Archive @ Columbia University is a searchable collection of archived copies of human rights websites created by non-governmental organizations, national human rights institutions, tribunals and individuals. Collecting began in 2008 and has been ongoing for active websites. New websites are added to the collection regularly.  
 
 DEV NOTE:
-The following param[] names are reserved by Blacklight:
+The following param names are reserved by Blacklight:
 	action
 	background
 	bookmark
