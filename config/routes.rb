@@ -34,6 +34,9 @@ Hrwa::Application.routes.draw do
   match '/admin/reindex_solr_from_xml_file'   => 'admin#reindex_solr_from_xml_file'
   match '/admin/update_hardcoded_browse_lists'   => 'admin#update_hardcoded_browse_lists'
 
+  # Api controller
+  match '/api/sites'                => 'api#sites'
+
   root :to => "catalog#hrwa_home"
 
   # The priority is based upon order of creation:
