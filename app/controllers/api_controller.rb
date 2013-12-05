@@ -10,14 +10,10 @@ class ApiController < ApplicationController
 			'geographic_focus' => 'geographic_focus__facet'
 		}
 
-		puts 'fields: ' + params[:fields]
-
 		fields = params[:fields].split(',').collect{|x| x.strip} if ! params[:fields].blank?
 		fields ||= []
 		# Remove any fields that are not in supported_fields
 		fields.delete_if{ |field| ! supported_fields.include?(field) }
-
-		puts 'fields: ' + fields.inspect
 
 		@solr_url = YAML.load_file('config/solr.yml')[Rails.env]['fsf']['url']
 		@rsolr = RSolr.connect :url => @solr_url
