@@ -59,24 +59,27 @@ class ApiController < ApplicationController
 		# Generate field counts
 		field_counts = {}
 		fields.each {|field|
-			field_counts[field] = @response['facet_counts']['facet_fields'][supported_fields[field]]
+
+			field_counts_for_field = {}
+
+			@response['facet_counts']['facet_fields'][supported_fields[field]].each_slice(2) {|group_of_two_elements| field_counts_for_field[group_of_two_elements[0]] = group_of_two_elements[1] }
+
+			field_counts[field] = field_counts_for_field
 		}
 
 		site_count = @response['response']['docs'].length
 
-		sites = []
+		sites = {}
 
 		@response['response']['docs'].each {|doc|
 
 			site_data = {}
 
-			site_data['bib_key'] = doc['bib_key']
-
 			fields.each {|field|
 				site_data[field] = doc[supported_fields[field]]
 			}
 
-			sites.push(site_data)
+			sites[doc['bib_key']] = site_data
 		}
 
 		@data = {
