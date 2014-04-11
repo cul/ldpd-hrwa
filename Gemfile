@@ -20,8 +20,8 @@ gem 'net-ldap'
 
 gem 'honeypot-captcha'
 
-# For Javascript runtime needed by the asset pipeline
-gem 'therubyracer', '0.10.1'
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'therubyracer', '>= 0.10.2',  platforms: :ruby
 
 # Soap gem to interface with hrwa jira project
 gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git"

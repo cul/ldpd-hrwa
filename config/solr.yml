@@ -13,21 +13,12 @@
 #prod
 spatha_solr: &spatha_solr
   asf:
-    url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-asf"
   fsf:
-    url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-fsf"
   site_detail:
-    url: "http://spatha.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-fsf"
     
-#prod-alt
-vorpal_solr: &vorpal_solr
-  asf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-asf"
-  fsf:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
-  site_detail:
-    url: "http://vorpal.cul.columbia.edu:8080/solr-4.2/hrwa-fsf"
-  
 #super-powered-dev
 fillmore_solr: &fillmore_solr
   asf:

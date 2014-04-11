@@ -3,6 +3,9 @@
 # This controller handles all requests static HTML pages
 class ApiController < ApplicationController
 
+	def index
+	end
+
   def sites
 
 		supported_fields = {

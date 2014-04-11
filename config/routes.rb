@@ -35,6 +35,7 @@ Hrwa::Application.routes.draw do
   match '/admin/update_hardcoded_browse_lists'   => 'admin#update_hardcoded_browse_lists'
 
   # Api controller
+  match '/api'                      => 'api#index'
   match '/api/sites'                => 'api#sites'
 
   root :to => "catalog#hrwa_home"
