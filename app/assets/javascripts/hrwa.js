@@ -180,7 +180,7 @@ jQuery(function($) {
   $('#q').popover({'placement':'bottom', 'trigger':'manual'});
 
   // for home browse tabs
-  $('#home-tab-content .sort_default').live('click', function() { var c = $('#home-tab-content div.tab-pane ul:not(.no-count)'); $('li',c).tinysort('span.count', {order:"desc"}); });
+  $('#home-tab-content .sort_default').live('click', function() { var c = $('#home-tab-content div.tab-pane ul:not(.no-count)'); $('li',c).tinysort('span.count', {order:"desc"}, 'span.alpha_sort', {order:"asc"}); });
   $('#home-tab-content .sort_a-z').live('click', function() { var a = $('#home-tab-content div.tab-pane ul'); $('li',a).tinysort('span.alpha_sort', {order:"asc"}); });
   $('#home-tab-content .sort_z-a').live('click', function() { var z = $('#home-tab-content div.tab-pane ul'); $('li',z).tinysort('span.alpha_sort', {order:"desc"}); });
 
