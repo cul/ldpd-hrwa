@@ -6,9 +6,16 @@ GIT
       handsoap (~> 1.1.8)
       nokogiri (~> 1.5.0)
 
+GIT
+  remote: git@github.com:cul/rsolr-ext.git
+  revision: 7be08b6fc88c48b6bb6d8de6d7e2f6716a1726ec
+  branch: cul-grouping-fixes
+  specs:
+    rsolr-ext (1.0.32128541754)
+      rsolr (= 1.0.7)
+
 GEM
   remote: http://rubygems.org/
-  remote: http://rubygems.cul.columbia.edu/ldpd/
   specs:
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
@@ -142,7 +149,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.7)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -156,7 +163,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.19)
     multi_json (1.5.0)
-    mysql2 (0.3.11)
+    mysql2 (0.3.13)
     net-ldap (0.3.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -203,8 +210,6 @@ GEM
     ref (1.0.5)
     rsolr (1.0.7)
       builder (>= 2.1.2)
-    rsolr-ext (1.0.32128541754)
-      rsolr (= 1.0.7)
     rspec (2.9.0)
       rspec-core (~> 2.9.0)
       rspec-expectations (~> 2.9.0)
@@ -282,15 +287,17 @@ DEPENDENCIES
   jiraSOAP!
   jquery-rails
   kaminari (~> 0.13.0)
-  mysql2 (= 0.3.11)
+  libv8 (>= 3.16.14.7)
+  mysql2 (= 0.3.13)
   net-ldap
   net-ssh (~> 2.4.0)
   nokogiri (~> 1.5.2)
   rails (~> 3.2.11)
   rb-fsevent (~> 0.9.1)
+  rsolr-ext!
   rspec-rails (~> 2.9.0)
   ruby_gntp
   sass-rails (~> 3.2.3)
   sqlite3
-  therubyracer (>= 0.10.2)
+  therubyracer
   uglifier (>= 1.0.3)

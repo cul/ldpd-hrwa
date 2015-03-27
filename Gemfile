@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
-source 'http://rubygems.cul.columbia.edu/ldpd'
+#source 'http://rubygems.cul.columbia.edu/ldpd'
 
 gem 'rails', '~> 3.2.11'
 gem 'sqlite3'
-gem 'mysql2', '0.3.11'
+gem 'mysql2', '0.3.13'
 gem 'nokogiri', '~> 1.5.2'
 gem 'rb-fsevent', '~> 0.9.1'
 gem 'factory_girl_rails', '3.2.0'
@@ -20,8 +20,13 @@ gem 'net-ldap'
 
 gem 'honeypot-captcha'
 
+# Custom rsolr-ext override
+gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'cul-grouping-fixes'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '>= 0.10.2',  platforms: :ruby
+gem 'therubyracer', platforms: :ruby
+
+gem 'libv8', '>= 3.16.14.7' # Min version for compiling on Mac OS 10.10
 
 # Soap gem to interface with hrwa jira project
 gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git"
