@@ -10,14 +10,23 @@
 # jetty_path is only required for rake tasks that need to know
 # how to start up solr, generally for automated testing. 
   
+
+localhost_solr: &localhost_solr
+  asf:
+    url: "http://localhost:8983/solr/hrwa-asf"
+  fsf:
+    url: "http://localhost:8983/solr/hrwa-fsf"
+  site_detail:
+    url: "http://localhost:8983/solr/hrwa-fsf"
+
 #prod
 spatha_solr: &spatha_solr
   asf:
-    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-asf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.7-hrwa/hrwa-asf"
   fsf:
-    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-fsf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.7-hrwa/hrwa-fsf"
   site_detail:
-    url: "http://spatha.cul.columbia.edu:8081/solr-4.2-hrwa/hrwa-fsf"
+    url: "http://spatha.cul.columbia.edu:8081/solr-4.7-hrwa/hrwa-fsf"
     
 #super-powered-dev
 fillmore_solr: &fillmore_solr

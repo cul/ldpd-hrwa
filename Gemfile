@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.11'
 gem 'sqlite3'
-gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.3.18'
 gem 'nokogiri', '~> 1.5.2'
 gem 'rb-fsevent', '~> 0.9.1'
 gem 'factory_girl_rails', '3.2.0'
@@ -51,13 +51,13 @@ group :test, :development do
   gem 'growl'
   gem 'guard'
   gem 'ruby_gntp'
-  gem 'growl_notify'
+  #gem 'growl_notify'
   gem 'guard-rails'
   gem 'guard-rspec'
   gem 'guard-spork'
   gem 'rspec-rails', '~> 2.9.0'
   gem 'capybara', '1.1.2'
-  gem 'capybara-webkit', '0.11.0'
+  #gem 'capybara-webkit', '0.11.0'
 
   # To use debugger
   # ruby-debug19 is tricky to install.  Follow instructions from here:
