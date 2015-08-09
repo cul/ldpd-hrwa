@@ -5,7 +5,7 @@ class Hrwa::Admin::SolrTaskHandler
 
   end
 
-  def update_hardcoded_browse_lists
+  def update_browse_lists
 
 		@solr_url = YAML.load_file('config/solr.yml')[Rails.env]['fsf']['url']
 
@@ -99,57 +99,28 @@ class Hrwa::Admin::SolrTaskHandler
 
     #And now we'll add the titles to facet_groups so that it can be processed like all of the other browse lists
     facet_groups['title__facet'] = titles_to_sort_values
-
+    
+    ###############################################################
+		# Store browse list data in rails cache
 		###############################################################
-		# Now we'll generate the browse_list file string from our hash
-		###############################################################
+		
+		facet_groups.each_pair{|outer_key, outer_value|			
+			facet_group = outer_value
 
-		file_text = ''
-    file_text += '# -*- encoding : utf-8 -*-' + "\n"
-    file_text += '# This file was automatically generated on: ' + DateTime.now.to_s + "\n"
-    file_text += 'module Hrwa::BrowseListHelper' + "\n"
-    facet_groups.each_pair{|outer_key, outer_value|
-			file_text += "def browse_list_for_#{outer_key}\n"
-			file_text += "return {\n"
-
-				facet_group = outer_value
-
-				# Sort the facet group by key (as long as it's not the already-pre-sorted 'title__facet' group)
-				unless outer_key == 'title__facet'
-					facet_group = facet_group.sort_by {|k,v| k.upcase}
-				end
-
-				facet_group.each{|inner_key, inner_value|
-					file_text += '%q{' + inner_key + '}'
-					if(inner_value.is_a?(Fixnum))
-						file_text += ' => ' + inner_value.to_s
-					else
-						file_text += ' => %q{' + inner_value + '}'
-					end
-					file_text += ",\n"
-				}
-
-			file_text += "}\n"
-			file_text += "end\n\n"
+			# Sort the facet group by key (as long as it's not the already-pre-sorted 'title__facet' group)
+			unless outer_key == 'title__facet'
+				facet_group = facet_group.sort_by {|k,v| k.upcase}
+			end
+			
+			facet_as_hash = {}
+			facet_group.each{|inner_key, inner_value|
+				facet_as_hash[inner_key] = inner_value
+			}
+			
+			Rails.cache.write("browse_list_for_#{outer_key}", facet_as_hash, :expires_in => 12.hours)
 		}
-    file_text += "end\n"
 
-		###############################################################
-		# Done generating browse_list file string
-		###############################################################
-
-    wrote_the_file = false
-
-    # Now we'll write this file to the disk
-    begin
-      #do important stuff
-      File.open('app/helpers/hrwa/browse_list_helper.rb', 'w') {|f| f.write(file_text) }
-      wrote_the_file = true
-    rescue
-      #handle error
-    end
-
-    return wrote_the_file
+    return true
   end
 
 

@@ -7,7 +7,7 @@ class AdminController < ApplicationController
 
   before_filter :do_authentication_check, :_check_for_allowed_users, :except => :login_options
 
-  # THe do_authentication_check method below takes the place of devise's authenticate_service_user! and authenticate_user! methods.
+  # The do_authentication_check method below takes the place of devise's authenticate_service_user! and authenticate_user! methods.
   def do_authentication_check
     if !user_signed_in? && !service_user_signed_in?
       redirect_to :action => 'login_options'
@@ -99,9 +99,9 @@ class AdminController < ApplicationController
   end
 
   # This method updates the hardcoded browse list files using live data from the Solr index
-  def update_hardcoded_browse_lists()
+  def update_browse_lists()
     solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new
-    result = solrTaskHandler.update_hardcoded_browse_lists
+    result = solrTaskHandler.update_browse_lists
 
     if (result)
       flash[:notice] = 'Your browse lists have been updated.'
