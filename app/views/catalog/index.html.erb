@@ -150,7 +150,7 @@ Try your search in one of these related resources.  (Search results will display
 <article class="archive-result">
 <dl class="defList document">
 <dt>
-	<% ohchr_link = 'http://search.ohchr.org/search?site=default_collection&client=default_frontend&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&Entqr=0&ud=1&sort=date%3AD%3AL%3Ad1&proxystylesheet=en_frontend&q=' + params[:q] %>
+	<% ohchr_link = 'http://search.ohchr.org/results.aspx?k=' + params[:q] %>
 	<a class="pull-right btn btn-link btn-large" rel="tooltip" title="Search for <%= params[:q] %> at OHCHR" data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="blank" href="<%= ohchr_link %>"><i class="icon-circle-arrow-right"></i></a></li><a data-exitmsg="You are now leaving the Human Rights Web Archive" data-target="blank" href="<%= ohchr_link %>">Office of the High Commissioner for Human Rights, United Nations</a>
 	<a id="ohchr_expansion_hidden_testing_link" class="hidden" href="<%= ohchr_link %>"></a>
 </dt>
