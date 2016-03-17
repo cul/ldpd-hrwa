@@ -4,7 +4,7 @@ namespace :ldpd do
     task :updatebrowselists => :environment do
 
       solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new
-      solrTaskHandler.update_hardcoded_browse_lists
+      solrTaskHandler.update_browse_lists
 
     end
 

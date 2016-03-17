@@ -1,8 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Hrwa::BrowseListRenderHelper
 
-  include Hrwa::BrowseListHelper
-
   def render_browse_list(field_name, include_count=true, include_hidden_alphabetical_sort_field=false)
 
     valid_field_types = [ 'title__facet',
@@ -16,7 +14,14 @@ module Hrwa::BrowseListRenderHelper
     end
 
     # Dynamically calling one of the browse_list_for_ methods in BrowseListRenderHelper
-    browse_list_hash = self.send( 'browse_list_for_' + field_name )
+    #browse_list_hash = self.send( 'browse_list_for_' + field_name )
+    
+    cache_key = "browse_list_for_#{field_name}"
+    unless Rails.cache.exist?(cache_key)
+      solrTaskHandler = Hrwa::Admin::SolrTaskHandler.new
+      solrTaskHandler.update_browse_lists
+    end
+    browse_list_hash = Rails.cache.read(cache_key)
 
     html_to_return = ''
 
