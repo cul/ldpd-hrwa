@@ -23,10 +23,9 @@ gem 'honeypot-captcha'
 # Custom rsolr-ext override
 gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'cul-grouping-fixes'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
-
-gem 'libv8', '>= 3.16.14.7' # Min version for compiling on Mac OS 10.10
+# For Javascript runtime needed by the asset pipeline
+gem 'therubyracer', '>= 0.12.2',  platforms: :ruby
+gem 'libv8', '>= 3.16.14.13' # Min version for Mac OS 10.11
 
 # Soap gem to interface with hrwa jira project
 gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git"
@@ -48,7 +47,7 @@ end
 gem 'kaminari', '~> 0.13.0'
 
 group :test, :development do
-  gem 'growl'
+  #gem 'growl'
   gem 'guard'
   gem 'ruby_gntp'
   #gem 'growl_notify'
@@ -65,13 +64,6 @@ group :test, :development do
   # gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
-
-
-#Need to specifically refer to forked net-ssh version because of a capistrano deploy error (from a May 24, 2012 update of net-ssh)
-gem 'net-ssh', '~> 2.4.0'
-
-
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -83,3 +75,19 @@ gem 'net-ssh', '~> 2.4.0'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 2.12.0'
+
+group :development do
+  # Deploy with Capistrano
+  gem 'net-ssh', '2.6.5'
+  gem 'tins', '1.6.0' # Later versions require Ruby 2.0
+
+  gem 'capistrano', '3.4.0', require: false
+  # Rails and Bundler integrations were moved out from Capistrano 3
+  gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  # "idiomatic support for your preferred ruby version manager"
+  gem 'capistrano-rvm', '~> 0.1', require: false
+  # The `deploy:restart` hook for passenger applications is now in a separate gem
+  # Just add it to your Gemfile and require it in your Capfile.
+  gem 'capistrano-passenger', '~> 0.1', require: false
+end
