@@ -73,9 +73,6 @@ end
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-gem 'capistrano', '~> 2.12.0'
-
 group :development do
   # Deploy with Capistrano
   gem 'net-ssh', '2.6.5'
