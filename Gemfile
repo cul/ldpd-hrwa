@@ -8,6 +8,8 @@ gem 'nokogiri', '~> 1.5.2'
 gem 'rb-fsevent', '~> 0.9.1'
 gem 'factory_girl_rails', '3.2.0'
 
+gem 'rb-readline'
+
 # For Blacklight
 gem 'blacklight', '~> 3.4.0'
 gem 'devise'
