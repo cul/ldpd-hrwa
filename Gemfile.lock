@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/cul/jiraSOAP.git
+  remote: https://github.com/cul/jiraSOAP.git
   revision: 522f15d104ce797a8c0817136a5b56c1beab71e4
   specs:
     jiraSOAP (0.11.2)
@@ -7,7 +7,7 @@ GIT
       nokogiri (~> 1.5.0)
 
 GIT
-  remote: git@github.com:cul/rsolr-ext.git
+  remote: https://github.com/cul/rsolr-ext.git
   revision: 7be08b6fc88c48b6bb6d8de6d7e2f6716a1726ec
   branch: cul-grouping-fixes
   specs:

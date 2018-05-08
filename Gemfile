@@ -23,14 +23,14 @@ gem 'net-ldap'
 gem 'honeypot-captcha'
 
 # Custom rsolr-ext override
-gem 'rsolr-ext', :git => 'git@github.com:cul/rsolr-ext.git', :branch => 'cul-grouping-fixes'
+gem 'rsolr-ext', :git => 'https://github.com/cul/rsolr-ext.git', :branch => 'cul-grouping-fixes'
 
 # For Javascript runtime needed by the asset pipeline
 gem 'therubyracer', '>= 0.12.2',  platforms: :ruby
 gem 'libv8', '>= 3.16.14.13' # Min version for Mac OS 10.11
 
 # Soap gem to interface with hrwa jira project
-gem 'jiraSOAP', :git => "git://github.com/cul/jiraSOAP.git"
+gem 'jiraSOAP', :git => "https://github.com/cul/jiraSOAP.git"
 
 # Gems used only for assets and not required
 # in production environments by default.
