@@ -1,9 +1,0 @@
-<% # container for all documents in index view -%>
-<% if(@configurator.name == 'find_site') %>
-	<ul class="thumbnails tab-thumbnails no-cols">
-		<%= render :partial => @result_partial, :collection => @result_list, :as => @result_type %>
-	</ul>
-<% else %>
-	<%= render :partial => @result_partial, :collection => @result_list, :as => @result_type %>
-<% end %>
-<!-- REQUEST_TEST_STRING: Hrwa::CATALOG::RESULT_LIST::RENDER_SUCCESS -->

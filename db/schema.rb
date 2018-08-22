@@ -9,85 +9,31 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920175453) do
+ActiveRecord::Schema.define(version: 20180822191332) do
 
-  create_table "bookmarks", :force => true do |t|
-    t.integer  "user_id",     :null => false
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id",       null: false
+    t.string   "user_type"
     t.string   "document_id"
-    t.string   "title"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "user_type"
+    t.string   "document_type"
+    t.binary   "title"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  create_table "roles", :force => true do |t|
-    t.string   "role_sym",   :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+  add_index "bookmarks", ["document_id"], name: "index_bookmarks_on_document_id"
+  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id"
 
-  add_index "roles", ["role_sym"], :name => "index_roles_on_role_sym", :unique => true
-
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "user_id", :null => false
-    t.integer "role_id", :null => false
-  end
-
-  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
-  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
-
-  create_table "searches", :force => true do |t|
-    t.text     "query_params"
+  create_table "searches", force: :cascade do |t|
+    t.binary   "query_params"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
     t.string   "user_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "searches", ["user_id"], :name => "index_searches_on_user_id"
-
-  create_table "service_users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "username"
-  end
-
-  add_index "service_users", ["email"], :name => "index_service_users_on_email", :unique => true
-  add_index "service_users", ["reset_password_token"], :name => "index_service_users_on_reset_password_token", :unique => true
-  add_index "service_users", ["username"], :name => "index_service_users_on_username", :unique => true
-
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "login"
-    t.string   "password_salt"
-    t.string   "first_name"
-    t.string   "last_name"
-  end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id"
 
 end

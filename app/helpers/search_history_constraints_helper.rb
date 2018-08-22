@@ -1,4 +1,0 @@
-module SearchHistoryConstraintsHelper
-  include Blacklight::SearchHistoryConstraintsHelperBehavior
-  include Hrwa::SearchHistoryConstraintsHelperBehavior
-end

@@ -1,280 +1,179 @@
-# -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
-
+# frozen_string_literal: true
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include Hrwa::SolrHelper
+  include BlacklightInternetArchive
 
-  before_filter :_check_for_debug_mode, :_configure_by_controller_action, :_select_appropriate_partial
 
-  def _configure_by_controller_action
+  configure_blacklight do |config|
+    ## Class for sending and receiving requests from a search index
+    config.repository_class =  BlacklightInternetArchive::Repository
+    #
+    ## Class for converting Blacklight's url parameters to into request parameters for the search index
+    # config.search_builder_class = ::SearchBuilder
+    #
+    ## Model that maps search index responses to the blacklight response model
+    config.response_model = BlacklightInternetArchive::BlacklightResponse
 
-    case params[:action].to_s
-      when 'index'
-        if ! params[:search_type]
-          _configure_by_search_type('find_site')
-        else
-          _configure_by_search_type
-        end
-      when 'show'
-        _configure_by_search_type('site_detail')
-      when 'update'
-        _configure_by_search_type('site_detail')
-      when 'facet'
-        _configure_by_search_type
-      else
-      # In general, we use the find_site configuration, but there are certain exceptions (above)
-        _configure_by_search_type('find_site')
-      end
-    end
 
-  # get search results from the solr index
-  def index
-    _do_search
-  end
-
-  def advanced
-    if params[:submit]
-      _do_advanced_query_processing_and_redirect
-    end
-  end
-
-  def _do_advanced_query_processing_and_redirect
-
-    # Also ignore params[:catalog]
-    params.delete(:catalog)
-
-    # Also ignore params[:submit]
-    params.delete(:submit)
-
-    # Ignore all empty params items
-    params.delete_if{|key, value|
-      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
+    ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
+    config.default_solr_params = {
+      rows: 10
     }
 
-    # Combine q_and, q_phrase, q_or, q_exclude into q
+    # solr path which will be added to solr base url before the other solr params.
+    #config.solr_path = 'select'
 
-    combined_q = ''
+    # items to show per page, each number in the array represent another option to choose from.
+    #config.per_page = [10,20,50,100]
 
-    q_and = params[:q_and]                                                      unless params[:q_and].blank?
-    q_and = q_and.split( /\s+/ ).map { |term| "+#{term}" }.join( ' ' )          unless params[:q_and].blank?
-    q_phrase = '"' + params[:q_phrase] + '"'                                    unless params[:q_phrase].blank?
-    q_or = params[:q_or]                                                        unless params[:q_or].blank?
-    q_or = q_or.split( /\s+/ ).map { |term| "#{term}" }.join( ' ' )             unless params[:q_or].blank?
-    q_exclude = params[:q_exclude]                                              unless params[:q_exclude].blank?
-    q_exclude = q_exclude.split( /\s+/ ).map { |term| "-#{term}" }.join( ' ' )  unless params[:q_exclude].blank?
+    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
+    ## parameters included in the Blacklight-jetty document requestHandler.
+    #
+    #config.default_document_solr_params = {
+    #  qt: 'document',
+    #  ## These are hard-coded in the blacklight 'document' requestHandler
+    #  # fl: '*',
+    #  # rows: 1,
+    #  # q: '{!term f=id v=$id}'
+    #}
 
-    combined_q << q_and     + ' ' unless q_and.blank?
-    combined_q << q_phrase  + ' ' unless q_phrase.blank?
-    combined_q << q_or      + ' ' unless q_or.blank?
-    combined_q << q_exclude + ' ' unless q_exclude.blank?
+    # solr field configuration for search results/index views
+    config.index.title_field = 'meta_Title'
+    config.index.display_type_field = 'format'
+    #config.index.thumbnail_field = 'thumbnail_path_ss'
 
-    unless combined_q.blank?
-      combined_q = combined_q[0,combined_q.length-1]
+    # solr field configuration for document/show views
+    #config.show.title_field = 'title_display'
+    #config.show.display_type_field = 'format'
+    #config.show.thumbnail_field = 'thumbnail_path_ss'
+
+    # solr fields that will be treated as facets by the blacklight application
+    #   The ordering of the field names is the order of the display
+    #
+    # Setting a limit will trigger Blacklight's 'more' facet values link.
+    # * If left unset, then all facet values returned by solr will be displayed.
+    # * If set to an integer, then "f.somefield.facet.limit" will be added to
+    # solr request, with actual solr request being +1 your configured limit --
+    # you configure the number of items you actually want _displayed_ in a page.
+    # * If set to 'true', then no additional parameters will be sent to solr,
+    # but any 'sniffed' request limit parameters will be used for paging, with
+    # paging at requested limit -1. Can sniff from facet.limit or
+    # f.specific_field.facet.limit solr request params. This 'true' config
+    # can be used if you set limits in :default_solr_params, or as defaults
+    # on the solr side in the request handler itself. Request handler defaults
+    # sniffing requires solr requests to be made with "echoParams=all", for
+    # app code to actually have it echo'd back to see it.
+    #
+    # :show may be set to false if you don't want the facet to be drawn in the
+    # facet bar
+    #
+    # set :index_range to true if you want the facet pagination view to have facet prefix-based navigation
+    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
+    # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
+
+    config.add_facet_field 'websiteGroup', label: 'Group'
+    config.add_facet_field 'meta_Subject', label: 'Subject'
+    config.add_facet_field 'meta_Creator', label: 'Creator'
+    config.add_facet_field 'meta_Language', label: 'Language'
+    config.add_facet_field 'meta_Coverage', label: 'Coverage'
+    config.add_facet_field 'meta_Collector', label: 'Collector'    
+
+
+
+    # Have BL send all facet field names to Solr, which has been the default
+    # previously. Simply remove these lines if you'd rather use Solr request
+    # handler defaults, or have no facets.
+    config.add_facet_fields_to_solr_request!
+
+    # solr fields to be displayed in the index (search results) view
+    #   The ordering of the field names is the order of the display
+    config.add_index_field 'meta_Title', label: 'Title'
+    config.add_index_field 'linked_url', label: 'URL'
+    config.add_index_field 'description', label: 'Description'
+    config.add_index_field 'linked_numCaptures', label: '# of Captures'
+    config.add_index_field 'linked_firstCapture_date', label: 'First Captured'
+    config.add_index_field 'linked_lastCapture_date', label: 'Last Captured'    
+    config.add_index_field 'linked_numVideos', label: 'Videos'
+
+
+    config.add_index_field 'linked_meta_Subject', label: 'Subject'
+    config.add_index_field 'linked_websiteGroup', label: 'Group'
+    config.add_index_field 'linked_meta_Creator', label: 'Creator'
+    config.add_index_field 'linked_meta_Language', label: 'Language'
+    config.add_index_field 'linked_meta_Coverage', label: 'Coverage'
+    config.add_index_field 'linked_meta_Collector', label: 'Collector'
+
+
+    # "fielded" search configuration. Used by pulldown among other places.
+    # For supported keys in hash, see rdoc for Blacklight::SearchFields
+    #
+    # Search fields will inherit the :qt solr request handler from
+    # config[:default_solr_parameters], OR can specify a different one
+    # with a :qt key/value. Below examples inherit, except for subject
+    # that specifies the same :qt as default for our own internal
+    # testing purposes.
+    #
+    # The :key is what will be used to identify this BL search field internally,
+    # as well as in URLs -- so changing it after deployment may break bookmarked
+    # urls.  A display label will be automatically calculated from the :key,
+    # or can be specified manually to be different.
+
+    # This one uses all the defaults set by the solr request handler. Which
+    # solr request handler? The one set in config[:default_solr_parameters][:qt],
+    # since we aren't specifying it otherwise.
+
+    config.add_search_field 'all_fields', label: 'All Fields'
+
+
+    # Now we see how to over-ride Solr request handler defaults, in this
+    # case for a BL "search field", which is really a dismax aggregate
+    # of Solr search fields.
+
+    config.add_search_field('title') do |field|
+      # solr_parameters hash are sent to Solr as ordinary url query params.
+      field.solr_parameters = {
+        'spellcheck.dictionary': 'title',
+        qf: '${title_qf}',
+        pf: '${title_pf}'
+      }
     end
 
-    params[:q] = combined_q
+    config.add_search_field('author') do |field|
+      field.solr_parameters = {
+        'spellcheck.dictionary': 'author',
+        qf: '${author_qf}',
+        pf: '${author_pf}'
+      }
+    end
 
-    # and remove the advanced text fields from params
-    params.delete(:q_and)
-    params.delete(:q_phrase)
-    params.delete(:q_or)
-    params.delete(:q_exclude)
+    # Specifying a :qt only to show it's possible, and so our internal automated
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
+    config.add_search_field('subject') do |field|
+      field.qt = 'search'
+      field.solr_parameters = {
+        'spellcheck.dictionary': 'subject',
+        qf: '${subject_qf}',
+        pf: '${subject_pf}'
+      }
+    end
 
-    # Ignore all empty params[:f] items
-    params[:f].delete_if{|key, value|
-      value.blank? || (value.is_a?(Array) && (value.length == 0 || (value.length == 1 && value[0].blank?)))
-    }
+    # "sort results by" select (pulldown)
+    # label in pulldown is followed by the name of the SOLR field to sort by and
+    # whether the sort is ascending or descending (it must be asc or desc
+    # except in the relevancy case).
+    config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', label: 'relevance'
+    config.add_sort_field 'pub_date_sort desc, title_sort asc', label: 'year'
+    config.add_sort_field 'author_sort asc, title_sort asc', label: 'author'
+    config.add_sort_field 'title_sort asc, pub_date_sort desc', label: 'title'
 
-    redirect_to params.merge({:action => 'index'})
+    # If there are more than this many search results, no spelling ("did you
+    # mean") suggestion is offered.
+    config.spell_max = 5
+
+    # Configuration for autocomplete suggestor
+    config.autocomplete_enabled = true
+    config.autocomplete_path = 'suggest'
   end
-
-  # display hrwa_home page, and grab 12 random results from Solr
-  def hrwa_home
-
-    number_of_items_to_show = 12
-
-    # add a new solr facet query ('fq') parameter that performs a radom subject facet search
-    @random_subjects_to_choose_from =  [ 'Civil rights',
-                                      'Democracy',
-                                      'Ombudspersons',
-                                      'Civil society',
-                                      'Transitional justice',
-                                      'Indigenous peoples',
-                                      'Torture',
-                                      'Truth commissions']
-
-    # If a subject has been specified in the query string, use it.  Otherwise choose something random.
-    if(params[:subject] && @random_subjects_to_choose_from.include?(params[:subject]))
-       @featured_home_page_subject = params[:subject]
-    else
-      @featured_home_page_subject = (@random_subjects_to_choose_from.shuffle)[0] # Get random item without reordering the hash
-    end
-
-    custom_solr_search_params =  {
-                                    :rows => number_of_items_to_show,
-                                    :fq => '{!raw f=subject__facet}' + @featured_home_page_subject
-                                  }
-
-    (@response, @result_list) = get_search_results(params, custom_solr_search_params)
-
-    custom_blacklight_search_params = {
-                                        :per_page => number_of_items_to_show,
-                                        :f=>{"subject__facet"=>[@featured_home_page_subject]},
-                                        :total => @response.total
-                                      }
-
-    session[:search] = params.merge(custom_blacklight_search_params)
-
-    _append_default_debug_printout_items()
-
-  end
-
-
-  def _do_search
-    extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
-    extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
-
-    #Remove extra :search_type_mobile_button param if it exists
-    params.delete(:search_type_mobile_button)
-
-    #Cache expansion term data from csv file
-    cache_search_expansion_csv_file_data #important!
-
-    # Check for search expansion terms during archive searches IF we are not already performing a search expansion (i.e. params[:search_expansion] is set)
-    if params[:search_type] == 'archive'
-      @expanded_search_terms_found, @expanded_search_terms = find_expanded_search_terms_for_query(params[:q])
-    end
-
-    if params[:search_expansion] == 'true'
-      if @expanded_search_terms_found
-
-        @search_expansion_is_on = true
-        #Then we want to apply the expanded terms to the current query.  Let's reconstruct the query:
-        @original_query = params[:q]
-        @expanded_query = get_expanded_query_from_expanded_search_terms_array(@expanded_search_terms)
-
-      else
-        #If search_expansion is ON and we didn't find any search expansion terms, redirect to URL that doesn't contain the search_expansion param
-        params.delete(:search_expansion)
-        redirect_to params
-      end
-    end
-
-    if @search_expansion_is_on
-      params[:q] = @expanded_query
-    end
-
-    # Be ready to capture Solr errors
-    begin
-      (@response, @result_list) = get_search_results
-    rescue => ex
-      @error = ex.to_s
-      Rails.logger.error( @error )
-
-      # Check to see if the query couldn't be understood by Solr
-      if ! ex.to_s.match( /HTTP Status 400/).nil?
-        # Get query text if there is any
-        user_q_text    = ex.request[ :params ][ :q ]
-        user_query     = user_q_text.blank? ? 'your query' : %Q{your query "#{ user_q_text }"}
-        @error_type    = :user
-        @alert_type    = 'alert-info'
-        @error_message = "Sorry, #{user_query} is not valid. Please try another search with different search terms.".html_safe
-      else
-        @alert_type    = 'alert-error'
-        @error_message = "Sorry, an internal system error has occurred.".html_safe
-      end
-
-      render :error and return
-    end
-
-    # TODO: Take this out once we've resolved HRWA-377 (https://issues.cul.columbia.edu/browse/HRWA-377)
-    # Check for navigation to a nonexistent/invalid result page
-    # if search_type == asf, page > 1 and result_count == 0, THAT'S BAD!
-    if(@result_list.empty? && params[:search_type] == 'archive' && params[:page] && params[:page].to_i > 1)
-      @error_type = :invalid_result_page
-      @error_message = 'Sorry, but there are no results available on this search result page.'
-      Rails.logger.info('-------------------------------------------------------------------------------------')
-      Rails.logger.info('HRWA-377 Error: (no results on page). params == ' + params.to_s)
-      Rails.logger.info('-------------------------------------------------------------------------------------')
-      render :error and return
-    end
-
-    # Configurator might need to manipulate the @response and @result_list
-    # This is absolutely the case for an archive search
-    if @configurator.post_blacklight_processing_required?
-      @response, @result_list = @configurator.post_blacklight_processing( @response,
-                                                                          @result_list )
-    end
-
-    _append_default_debug_printout_items()
-
-    if @search_expansion_is_on
-      params[:q] = @original_query
-    end
-
-    respond_to do |format|
-      format.html { save_current_search_params }
-      format.rss  { render :layout => false }
-      format.atom { render :layout => false }
-    end
-  end
-
-  def _append_default_debug_printout_items
-    if(@debug_mode)
-      @debug_printout << "----------\n\n"
-      @debug_printout << "solr core:\n\n"
-      @debug_printout << @configurator.solr_url + "\n\n"
-      @debug_printout << "----------\n\n"
-      @debug_printout << "session[:search]:\n\n"
-      @debug_printout << session[:search].pretty_inspect + "\n"
-      @debug_printout << "----------\n\n"
-      @debug_printout << "Solr Response:\n\n"
-      @debug_printout << @response.pretty_inspect + "\n"
-      @debug_printout << "----------\n\n"
-    end
-  end
-
-  # sets @debug_mode to true if params[:debug_mode] == true
-  def _check_for_debug_mode
-    @debug_mode = (params[:debug_mode] == "true")
-    @debug_printout = ''
-  end
-
-  def _configure_by_search_type(search_type = params[:search_type])
-
-    if (search_type.nil?)
-      # We don't ever want this code to run
-      raise 'Search type should not be nil!'
-    else
-      @search_type = search_type.to_sym
-    end
-
-    @configurator = Hrwa::Configurator.new( @search_type )
-
-    # See https://issues.cul.columbia.edu/browse/HRWA-324
-    @configurator.reset_configuration( self.blacklight_config )
-
-    # CatalogController.configure_blacklight yields a Blacklight::Configuration object
-    # that expects a block/proc which sets its attributes accordingly
-    CatalogController.configure_blacklight( &@configurator.config_proc )
-
-    if(@search_type == :archive_ns || !params[:hrwa_host] || params[:hrwa_host].blank?)
-        @solr_url = @configurator.solr_url
-    else
-        #Dev override
-        @solr_url = get_solr_host_from_url(@configurator.name, params)
-    end
-
-    Blacklight.solr = RSolr::Ext.connect( :url => @solr_url, :read_timeout => 240, :open_timeout => 240 )
-  end
-
-  def _select_appropriate_partial
-    # Select appropriate partial
-    @result_partial = @configurator.result_partial
-    @result_type    = @configurator.result_type
-  end
-
-
 end
