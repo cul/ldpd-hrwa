@@ -1,10 +1,11 @@
-# config valid only for current version of Capistrano
-lock '3.10.1'
+# config valid for current version and patch releases of Capistrano
+lock "~> 3.11.0"
 
 set :department, 'ldpd'
 set :instance, fetch(:department)
 set :application, 'hrwa'
-set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
+set :repo_url, "git@example.com:me/my_repo.git"
+
 set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # used to run rake db:migrate, etc
 # Default value for :rails_env is fetch(:stage)
@@ -39,29 +40,4 @@ set :passenger_restart_with_touch, true
 
 set :linked_files, fetch(:linked_files, []).push(
   "config/database.yml",
-  "config/fedora.yml",
-  "config/app_config.yml",
-  "config/service_users.yml"
 )
-
-namespace :deploy do
-  desc "Report the environment"
-  task :report do
-    run_locally do
-      puts "cap called with stage = \"#{fetch(:stage,'none')}\""
-      puts "cap would deploy to = \"#{fetch(:deploy_to,'none')}\""
-      puts "cap would install from #{fetch(:repo_url)}"
-      puts "cap would install in Rails env #{fetch(:rails_env)}"
-    end
-  end
-
-  desc "Add tag based on current version from VERSION file"
-  task :auto_tag do
-    current_version = "v#{IO.read("VERSION").strip}/#{DateTime.now.strftime("%Y%m%d")}"
-                      
-    ask(:tag, current_version)
-    tag = fetch(:tag)
-
-    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
-  end
-end
