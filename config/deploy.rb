@@ -4,7 +4,7 @@ lock "~> 3.11.0"
 set :department, 'ldpd'
 set :instance, fetch(:department)
 set :application, 'hrwa'
-set :repo_url, "git@example.com:me/my_repo.git"
+set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
 
 set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # used to run rake db:migrate, etc
