@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Hrwa.application.routes.draw do
   
   mount Blacklight::Engine => '/'
   root to: "catalog#index"
