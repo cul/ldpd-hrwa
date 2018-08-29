@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.10'
+gem 'mysql2'
 
 gem 'blacklight'
 gem 'blacklight_internet_archive', '>= 0.1.2'
