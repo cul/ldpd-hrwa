@@ -1,5 +1,6 @@
 config/database.yml
 config/app_config.yml
+config/secrets.yml
 config/service_users.yml
 config/*.sphinx.conf
 config/s3_credentials.yml
