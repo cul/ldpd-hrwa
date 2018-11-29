@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'blacklight_internet_archive'
+
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
@@ -20,6 +22,8 @@ class CatalogController < ApplicationController
     config.default_solr_params = {
       rows: 10
     }
+
+    config.index.thumbnail_method = :get_ia_generated_thumbnail
 
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select'
@@ -77,7 +81,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'meta_Creator', label: 'Creator'
     config.add_facet_field 'meta_Language', label: 'Language'
     config.add_facet_field 'meta_Coverage', label: 'Coverage'
-    config.add_facet_field 'meta_Collector', label: 'Collector'    
+    config.add_facet_field 'meta_Collector', label: 'Collector'
 
 
 
@@ -91,9 +95,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'meta_Title', label: 'Title'
     config.add_index_field 'linked_url', label: 'URL'
     config.add_index_field 'description', label: 'Description'
-    config.add_index_field 'linked_numCaptures', label: '# of Captures'
-    config.add_index_field 'linked_firstCapture_date', label: 'First Captured'
-    config.add_index_field 'linked_lastCapture_date', label: 'Last Captured'    
     config.add_index_field 'linked_numVideos', label: 'Videos'
 
 
@@ -103,6 +104,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'linked_meta_Language', label: 'Language'
     config.add_index_field 'linked_meta_Coverage', label: 'Coverage'
     config.add_index_field 'linked_meta_Collector', label: 'Collector'
+    config.add_index_field 'linked_Captures', label: 'Captures'
 
 
     # "fielded" search configuration. Used by pulldown among other places.
