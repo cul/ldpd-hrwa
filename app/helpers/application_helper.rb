@@ -14,8 +14,8 @@ module ApplicationHelper
     rescue URI::InvalidURIError => e
       return
     end
-
-    image_tag("https://web.archive.org/thumb/#{site}?generate=1", options.merge(alt: document['meta_Title']))
+    thumbnail_url_base = Rails.application.config_for(:blacklight)['thumbnail_generator_url']
+    image_tag("#{thumbnail_url_base}/#{site}", options.merge(alt: document['meta_Title'], onerror: "this.style.display='none'"))
   end
 
 end
