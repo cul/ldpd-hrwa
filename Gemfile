@@ -6,7 +6,8 @@ gem 'rails', '4.2.10'
 gem 'mysql2', '~> 0.3.18'
 
 gem 'blacklight'
-gem 'blacklight_internet_archive', '>= 0.1.2'
+gem 'blacklight_internet_archive', '>= 0.1.3'
+#gem 'blacklight_internet_archive', :path => '/Users/jd2148/blacklight_internet_archive'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
