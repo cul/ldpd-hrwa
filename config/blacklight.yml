@@ -17,19 +17,19 @@ development:
 test: &test
  adapter: InternetArchive::Repository
  url: "https://archive-it.org/collections/1068"
-  thumbnail_generator_url: "https://web.archive.org/thumb"
+ thumbnail_generator_url: "https://web.archive.org/thumb"
 production:
  adapter: InternetArchive::Repository
  url: "https://archive-it.org/collections/1068"
-  thumbnail_generator_url: "https://web.archive.org/thumb"
+ thumbnail_generator_url: "https://web.archive.org/thumb"
 hrwa_dev:
  adapter: InternetArchive::Repository
  url: "https://archive-it.org/collections/1068"
-  thumbnail_generator_url: "https://web.archive.org/thumb"
+ thumbnail_generator_url: "https://web.archive.org/thumb"
 hrwa_test:
  adapter: InternetArchive::Repository
  url: "https://archive-it.org/collections/1068"
-  thumbnail_generator_url: "https://web.archive.org/thumb"
+ thumbnail_generator_url: "https://web.archive.org/thumb"
 hrwa_prod:
  adapter: InternetArchive::Repository
  url: "https://archive-it.org/collections/1068"
