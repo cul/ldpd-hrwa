@@ -95,7 +95,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'meta_Title', label: 'Title'
     config.add_index_field 'linked_url', label: 'URL'
     config.add_index_field 'description', label: 'Description'
-    $ config.add_index_field 'linked_numVideos', label: 'Videos'
+    # config.add_index_field 'linked_numVideos', label: 'Videos'
 
 
     config.add_index_field 'linked_meta_Subject', label: 'Subject'
